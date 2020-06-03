@@ -1,0 +1,279 @@
+{% if section.settings.announcement_enabled %}
+  {% if section.settings.announcement_homepage == false or template.name == 'index' %}
+    <div id="announcement-bar" class="py-2 text-center font-italic small {{ section.settings.announcement_color }}" role="alert">
+      <div class="container">
+        <p class="mb-0">
+          {{ section.settings.announcement_text | escape }}
+
+          {% if section.settings.announcement_link_url != blank %}
+            <a  href="{{ section.settings.announcement_link_url }}">
+              {{ section.settings.announcement_link_text | escape }}
+            </a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  {% endif %}
+{% endif %}
+
+<nav id="navbar" class="navbar navbar-expand-lg {{ section.settings.navbar_color }} {% if section.settings.shadow %}shadow-sm{% endif %}">
+  {% if section.settings.container %}
+    <div class="container">
+  {% endif %}
+
+    <a class="navbar-brand" href="/">
+      {% if section.settings.logo == blank %}
+        <span>{{ shop.name }}</span>
+      {% else %}
+        {% assign imageSize = section.settings.logo_height | prepend: 'x' %}
+        <img class="img-fluid" src="{{ section.settings.logo | img_url: imageSize }}" alt="{{ section.settings.logo.alt | default: shop.name }}" width="{{ section.settings.logo_height | times: section.settings.logo.aspect_ratio | round }}" height="{{ section.settings.logo_height }}">
+      {% endif %}
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav {{ section.settings.position }}">
+
+        {% for link in linklists[section.settings.menu].links %}
+          {% if link.links == blank %}
+            <li class="nav-item {% if link.active %}active{% endif %}">
+              <a class="nav-link" href="{{ link.url }}" aria-current="{% if link.active %}page{% endif %}">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li class="nav-item dropdown {% for childlink in link.links %}{% if childlink.active %}active{% endif %}{% endfor %}">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-{{ forloop.index0 }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ link.title }}</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown-{{ forloop.index0 }}">
+                {% for childlink in link.links %}
+                  {% if childlink.title == 'divider' %}
+                    <div class="dropdown-divider"></div>
+                  {% else %}
+                    <li>
+                      <a class="dropdown-item {% if childlink.active %}active{% endif %}" href="{{ childlink.url }}" aria-current="{% if childlink.active %}page{% endif %}">{{ childlink.title }}</a>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+  {% if section.settings.container %}
+    </div>
+  {% endif %}
+</nav>
+
+{% if section.settings.sticky %}
+  <script src="{{ 'jquery.stickybits.min.js' | asset_url }}" defer="defer"></script>
+{% endif %}
+
+{% stylesheet 'scss' %}
+#announcement-bar.bg-dark,
+#announcement-bar.bg-primary {
+  a {
+    text-decoration: underline;
+    color: white;
+  }
+}
+
+#navbar.js-is-stuck {
+  position: fixed!important;
+  width: 100%;
+  top: 0;
+}
+{% endstylesheet %}
+
+<!-- <script> -->
+{% javascript %}
+jQuery(document).ready(function ($) {
+ if (jQuery().stickybits) {
+    $("#navbar").stickybits({
+      useStickyClasses: true
+    })
+  }
+})
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Announcement bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_enabled",
+      "label": "Enable announcement bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_homepage",
+      "label": "Show on home page only",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "announcement_color",
+      "label": "Announcement bar Color",
+      "options": [
+        {
+          "value": "bg-white text-muted", "label": "White"
+        },
+        {
+          "value": "bg-light text-muted", "label": "Light"
+        },
+        {
+          "value": "bg-dark text-light", "label": "Dark"
+        },
+        {
+          "value": "bg-primary text-light", "label": "Primary"
+        }
+      ],
+      "default": "bg-dark text-light"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Announce something important here"
+    },
+    {
+      "type": "url",
+      "id": "announcement_link_url",
+      "label": "Announcement link URL"
+    },
+    {
+      "type": "text",
+      "id": "announcement_link_text",
+      "label": "Announcement link text",
+      "default": "Learn more"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_height",
+      "label": "Logo height (px)",
+      "default": "30",
+      "info": "Recommended is 30"
+    },
+    {
+      "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "Menu Position",
+      "options": [
+        {
+          "value": "mr-auto", "label": "Left"
+        },
+        {
+          "value": "ml-auto", "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "select",
+      "id": "navbar_color",
+      "label": "Navbar Color",
+      "options": [
+        {
+          "value": "bg-white navbar-light", "label": "White"
+        },
+        {
+          "value": "bg-light navbar-light", "label": "Light"
+        },
+        {
+          "value": "bg-dark navbar-dark", "label": "Dark"
+        },
+        {
+          "value": "bg-primary navbar-dark", "label": "Primary"
+        }
+      ],
+      "default": "bg-light navbar-light"
+    },
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Wrap in container",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky navbar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "shadow",
+      "label": "Shadow",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "{{ shop.name }}",
+  {% if section.settings.logo %}
+    "logo": "https:{{ section.settings.logo | img_url: 'master' }}",
+  {% endif %}
+  "sameAs": [
+    "{{ settings.social_twitter_link }}",
+    "{{ settings.social_facebook_link }}",
+    "{{ settings.social_pinterest_link }}",
+    "{{ settings.social_instagram_link }}",
+    "{{ settings.social_tumblr_link }}",
+    "{{ settings.social_snapchat_link }}",
+    "{{ settings.social_youtube_link }}",
+    "{{ settings.social_vimeo_link }}"
+  ],
+  "url": "{{ shop.url }}{{ page.url }}"
+}
+</script>
+{% if template.name == 'index' %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": "{{ shop.name }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ shop.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "url": "{{ shop.url }}{{ page.url }}"
+    }
+  </script>
+{% endif %}
