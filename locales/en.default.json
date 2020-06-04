@@ -5,5 +5,9 @@
   },
   "accessibility": {
     "skip_to_content": "Skip to content"
+  },
+  "carousel": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }
