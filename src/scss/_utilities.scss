@@ -1,0 +1,9 @@
+// Custom utility classes for our theme
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .width#{$infix}-auto    { width: auto }
+    .width#{$infix}-100     { width: 100% }
+  }
+}

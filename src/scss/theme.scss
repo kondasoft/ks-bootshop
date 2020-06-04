@@ -1,5 +1,13 @@
-// My variables
+// Required Bootstrap Imports
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// My variables (add your custom variables here)
 
 
-// Import Bootstrap
+// Import all Bootstrap
 @import "bootstrap/bootstrap";
+
+// Theme Imports
+@import "utilities"
