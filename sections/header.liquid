@@ -81,9 +81,9 @@
 }
 
 #navbar.js-is-stuck {
-  position: fixed!important;
   width: 100%;
   top: 0;
+  z-index: 1020;
 }
 {% endstylesheet %}
 
@@ -92,7 +92,9 @@
 jQuery(document).ready(function ($) {
  if (jQuery().stickybits) {
     $("#navbar").stickybits({
-      useStickyClasses: true
+      useStickyClasses: true,
+      noStyles: true,
+      useFixed: true
     })
   }
 })
