@@ -1,3 +1,21 @@
+{% case section.settings.navbar_expand %}
+  {% when 'navbar-expand-sm' %}
+    {% assign collapseOrder = 'order-sm-0' %}
+    {% assign navbarIconsFlex = 'flex-sm-grow-0' %}
+  {% when 'navbar-expand-md' %}
+    {% assign collapseOrder = 'order-md-0' %}
+    {% assign navbarIconsFlex = 'flex-md-grow-0' %}
+  {% when 'navbar-expand-lg' %}
+    {% assign collapseOrder = 'order-lg-0' %}
+    {% assign navbarIconsFlex = 'flex-lg-grow-0' %}
+  {% when 'navbar-expand-xl' %}
+    {% assign collapseOrder = 'order-xl-0' %}
+    {% assign navbarIconsFlex = 'flex-xl-grow-0' %}
+  {% else %}
+    {% assign collapseOrder = '' %}
+    {% assign navbarIconsFlex = '' %}
+{% endcase %}
+
 {% if section.settings.announcement_enabled %}
   {% if section.settings.announcement_homepage == false or template.name == 'index' %}
     <div id="announcement-bar" class="py-2 text-center font-italic small {{ section.settings.announcement_color }}" role="alert">
@@ -16,7 +34,7 @@
   {% endif %}
 {% endif %}
 
-<nav id="navbar" class="navbar navbar-expand-lg {{ section.settings.navbar_color }} {% if section.settings.shadow %}shadow-sm{% endif %}">
+<nav id="navbar" class="navbar {{ section.settings.navbar_expand }} {{ section.settings.navbar_color }} {% if section.settings.shadow %}shadow-sm{% endif %}">
   {% if section.settings.container %}
     <div class="container">
   {% endif %}
@@ -30,12 +48,12 @@
       {% endif %}
     </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler width-100 width-sm-auto mt-2 mt-sm-0 mb-1 mb-sm-0 ml-sm-3 order-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ 'header.navbar.toggle' | t }}">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav {{ section.settings.position }}">
+    <div class="collapse navbar-collapse order-2 {{ collapseOrder }}" id="navbarSupportedContent">
+      <ul class="navbar-nav {{ section.settings.menu_position }}">
 
         {% for link in linklists[section.settings.menu].links %}
           {% if link.links == blank %}
@@ -59,8 +77,45 @@
             </li>
           {% endif %}
         {% endfor %}
+
       </ul>
     </div>
+
+    <ul class="navbar-nav navbar-light ml-2 navbar-expand flex-grow-1 justify-content-end {{ navbarIconsFlex }}">
+
+      <li class="nav-item {% if template.name == 'search' %}active{% endif %}">
+        <div id="navbar-search" class="dropdown">
+          <a class="nav-link d-inline-flex px-2 align-items-center" href="{{ routes.search_url }}" role="button" id="dropdownSearchButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% include 'icon-search', width: 22, height: 22 %}
+            <span class="sr-only">{{ 'header.search.title' | t }}</span>
+          </a>
+          <div class="dropdown-menu position-absolute dropdown-menu-lg-right py-4 px-3" aria-labelledby="dropdownSearchButton">
+            <form action="/search" method="get" class="form-inline flex-nowrap" role="search">
+              <input type="search" name="q" id="Search-{{ section.id }}" class="form-control mr-1" value="{{ search.terms | escape }}" placeholder="{{ 'header.search.placeholder' | t }}" aria-label="{{ 'search.placeholder' | t }}" size="26">
+              <button type="submit" class="btn btn-primary">{{ 'header.search.submit' | t }}</button>
+            </form>
+          </div>
+        </div>
+      </li>
+
+      {% if shop.customer_accounts_enabled %}
+        <li class="nav-item {% if template.name == 'account' or template.name == 'login' %}active{% endif %}">
+          <a class="nav-link d-inline-flex px-2 align-items-center" href="{{ routes.account_url }}">
+            {% include 'icon-user', width: 22, height: 22 %}
+            <span class="sr-only">{{ 'header.account.title' | t }}</span>
+          </a>
+        </li>
+      {% endif %}
+
+      <li class="nav-item">
+        <a class="nav-link d-inline-flex px-2 align-items-center {% if template.name == 'cart' %}active{% endif %}" href="{{ routes.cart_url }}">
+          {% include 'icon-cart', width: 20, height: 20 %}
+          <span class="sr-only">{{ 'header.cart.title' | t }} {{ cart.item_count }} </span>
+          <span class="ml-2" aria-hidden="true">({{ cart.item_count }})</span>
+        </a>
+      </li>
+
+    </ul>
 
   {% if section.settings.container %}
     </div>
@@ -80,6 +135,10 @@
   }
 }
 
+#navbar:not(.js-is-stuck) {
+  position: static!important;
+}
+
 #navbar.js-is-stuck {
   width: 100%;
   top: 0;
@@ -90,13 +149,20 @@
 <!-- <script> -->
 {% javascript %}
 jQuery(document).ready(function ($) {
- if (jQuery().stickybits) {
+
+  // Sticky navbar
+  if (jQuery().stickybits) {
     $("#navbar").stickybits({
       useStickyClasses: true,
       noStyles: true,
       useFixed: true
     })
   }
+
+  // Autofocus search input
+  $('#navbar-search').on('shown.bs.dropdown', function(e) {
+    $('#navbar-search input[type=search]').focus()
+  })
 })
 {% endjavascript %}
 
@@ -186,7 +252,7 @@ jQuery(document).ready(function ($) {
     },
     {
       "type": "select",
-      "id": "position",
+      "id": "menu_position",
       "label": "Menu Position",
       "options": [
         {
@@ -199,7 +265,7 @@ jQuery(document).ready(function ($) {
     },
     {
       "type": "header",
-      "content": "Settings"
+      "content": "General Settings"
     },
     {
       "type": "select",
@@ -238,6 +304,33 @@ jQuery(document).ready(function ($) {
       "id": "shadow",
       "label": "Shadow",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Advanced Settings"
+    },
+    {
+      "type": "select",
+      "id": "navbar_expand",
+      "label": "Navbar expand",
+      "info": "Responsive behaviour [Learn more](https://getbootstrap.com/docs/4.5/components/navbar/#responsive-behaviors)",
+      "options": [
+        {
+          "value": "navbar-expand-sm", "label": "Expand small (sm)"
+        },
+        {
+          "value": "navbar-expand-md", "label": "Expand medium (md)"
+        },
+        {
+          "value": "navbar-expand-lg", "label": "Expand large (lg)"
+        },
+        {
+          "value": "navbar-expand-xl", "label": "Expand extra-large (xl)"
+        },
+        {
+          "value": "", "label": "Always collapse"
+        }
+      ]
     }
   ]
 }

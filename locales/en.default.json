@@ -9,5 +9,21 @@
   "carousel": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "header": {
+    "navbar": {
+      "toggle": "Toggle navigation"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search for...",
+      "submit": "Search"
+    },
+    "account": {
+      "title": "Account"
+    },
+    "cart": {
+      "title": "Cart"
+    }
   }
 }
