@@ -3,6 +3,12 @@
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
+    .position#{$infix}-static    { position: static!important; }
+    .position#{$infix}-relative  { position: relative!important; }
+    .position#{$infix}-absolute  { position: absolute!important; }
+    .position#{$infix}-fixed     { position: fixed!important; }
+    .position#{$infix}-sticky    { position: sticky!important; }
+
     .width#{$infix}-auto    { width: auto }
     .width#{$infix}-100     { width: 100% }
   }
