@@ -25,5 +25,9 @@
     "cart": {
       "title": "Cart"
     }
+  },
+  "featured_collection": {
+    "placeholder_title": "Product title",
+    "add_to_cart": "Add to cart"
   }
 }
