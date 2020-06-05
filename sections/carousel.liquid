@@ -169,31 +169,18 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
       })
 
-      var progressBarInterval = setInterval(progressBarCarousel, {{ section.settings.interval }})
+      var progressBarInterval = setInterval(progressBarCarousel, {{ section.settings.interval }} )
 
       carousel.hover(
         function() {
           clearInterval(progressBarInterval);
         },
         function() {
-          progressBarInterval = setInterval(progressBarCarousel, {{ section.settings.interval }})
+          progressBarInterval = setInterval(progressBarCarousel, {{ section.settings.interval }} )
         }
       )
     {% endif %}
-
-    // function carouselProgressBar() {
-    //   $('#carousel-{{ section.id }} .carousel-progress-bar').animate({
-    //     width: "100%"
-    //   }, 5000, 'linear')
-    // }
-    //
-    // carouselProgressBar()
-    //
-    // $('#carousel-{{ section.id }}').on('slide.bs.carousel', function () {
-    //   console.log('slide changed')
-    //   $('#carousel-{{ section.id }} .carousel-progress-bar').css("width", "0%")
-    //   carouselProgressBar()
-    // })
+    
   })
 })
 </script>
