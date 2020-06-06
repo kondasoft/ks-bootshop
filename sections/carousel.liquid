@@ -28,20 +28,27 @@
 
     <div class="carousel-inner">
       {% for block in section.blocks %}
-        <div class="carousel-item {% if forloop.first == true %} active {% endif %}">
+        <div class="carousel-item {% if forloop.first == true %} active {% endif %} {% if block.settings.caption_backdrop %}caption-backdrop{% endif %}">
 
           {% if block.settings.image != blank %}
+
+            {% assign img_size_600 = section.settings.image_height_aspect_ratio | times: 600 | round | prepend: '600x'  %}
+            {% assign img_size_1200 = section.settings.image_height_aspect_ratio | times: 1200 | round | prepend: '1200x'  %}
+            {% assign img_size_1800 = section.settings.image_height_aspect_ratio | times: 1800 | round | prepend: '1800x'  %}
+            {% assign img_size_2400 = section.settings.image_height_aspect_ratio | times: 2400 | round | prepend: '2400x'  %}
+
             <img
               class="d-block w-100 h-auto"
-              src="{{ block.settings.image | img_url: '1920x640', crop: 'center' }}"
+              src="{{ block.settings.image | img_url: img_size_1800, crop: 'center' }}"
               srcset="
-                {{ block.settings.image | img_url: '600x600', crop: 'center' }} 600w,
-                {{ block.settings.image | img_url: '1200x400', crop: 'center' }} 1200w,
-                {{ block.settings.image | img_url: '2400x800', crop: 'center' }} 2400w
+                {{ block.settings.image | img_url: img_size_600, crop: 'center' }} 600w,
+                {{ block.settings.image | img_url: img_size_1200, crop: 'center' }} 1200w,
+                {{ block.settings.image | img_url: img_size_1800, crop: 'center' }} 1800w,
+                {{ block.settings.image | img_url: img_size_2400, crop: 'center' }} 2400w
               "
               alt="{{ block.settings.image.alt }}"
-              width="1920"
-              height="640"
+              width="1800"
+              height="img_size_1800"
             >
           {% else %}
             {% capture current %}{% cycle 1, 2 %}{% endcapture %}
@@ -98,6 +105,17 @@
   min-height: {{ section.settings.img_min_height | append: 'px'}};
 }
 
+#carousel-{{ section.id }} .carousel-item.caption-backdrop:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 240px;
+  z-index: 1;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));
+}
+
 {% if section.settings.progress_bar and section.settings.interval > 0  %}
   #carousel-{{ section.id }} .carousel-progress-bar {
     z-index: 1;
@@ -114,8 +132,9 @@
 {% if section.settings.full_height %}
   #carousel-{{ section.id }} .carousel-item img,
   #carousel-{{ section.id }} .carousel-item svg {
-    width: 100%;
-    height: 100vh;
+    width: 100%!important;
+    height: 100vh!important;
+    min-height: -webkit-fill-available;
   }
   #shopify-section-header {
     position: fixed;
@@ -126,15 +145,15 @@
 {% if section.settings.zoom_effect %}
   #carousel-{{ section.id }} .carousel-inner .carousel-item > img,
   #carousel-{{ section.id }} .carousel-inner .carousel-item > svg {
-    transform: scale(1.4);
-    animation: carousel_zoom 12s ease-out;
+    transform: scale(1.2);
+    animation: carousel_zoom 10s ease-out;
   }
   @keyframes carousel_zoom {
     from {
        transform: scale(1);
     }
     to {
-      transform: scale(1.4);
+      transform: scale(1.2);
     }
   }
 {% endif %}
@@ -180,7 +199,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         }
       )
     {% endif %}
-    
+
   })
 })
 </script>
@@ -265,6 +284,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
       "id": "container",
       "label": "Wrap in container",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "range",
+      "id": "image_height_aspect_ratio",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.1,
+      "label": "Image height aspect ratio",
+      "default": 0.4,
+      "info": "Recommended values are between '0.3' to '0.6'. Use a higher value if you have enabled the 'Full height' setting below"
     },
     {
       "type": "header",
@@ -379,9 +412,36 @@ window.addEventListener('DOMContentLoaded', (event) => {
           "label": "Caption heading"
         },
         {
+          "type": "richtext",
+          "id": "caption_text",
+          "label": "Caption text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL",
+          "info": "Leave empty to disable button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Learn more"
+        },
+        {
+          "type": "header",
+          "content": "Block settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "caption_backdrop",
+          "label": "Caption backdrop",
+          "default": true
+        },
+        {
           "type": "select",
           "id": "caption_heading_size",
-          "label": "Caption heading Size",
+          "label": "Caption heading size",
           "default": "h4",
           "options": [
             {
@@ -403,23 +463,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
               "value": "h6", "label": "H6"
             }
           ]
-        },
-        {
-          "type": "richtext",
-          "id": "caption_text",
-          "label": "Caption text"
-        },
-        {
-          "type": "url",
-          "id": "button_url",
-          "label": "Button URL",
-          "info": "Leave empty to disable button"
-        },
-        {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button text",
-          "default": "Learn more"
         },
         {
           "type": "select",
