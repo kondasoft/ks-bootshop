@@ -1,0 +1,178 @@
+<div class="container">
+  <div class="row row-cols-{{ section.settings.row }} row-cols-sm-{{ section.settings.row_sm }} row-cols-md-{{ section.settings.row_md }} row-cols-lg-{{ section.settings.row_lg }} row-cols-xl-{{ section.settings.row_xl }}">
+    {% for block in section.blocks %}
+      <div class="col my-2 {{ block.settings.text_alignment }}">
+        {% if block.settings.heading != blank %}
+          <{{ block.settings.heading_size }} class="">
+            {{ block.settings.heading | escape }}
+          </{{ block.settings.heading_size }}>
+        {% endif %}
+
+        {% if block.settings.text != blank %}
+          <div class="rte">{{ block.settings.text }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Text Blocks",
+    "class": "contact-text-blocks",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Blocks per Row"
+      },
+      {
+        "type": "range",
+        "id": "row",
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "label": "Extra small screens (default)",
+        "default": 2
+      },
+      {
+        "type": "range",
+        "id": "row_sm",
+        "min": 1,
+        "max": 3,
+        "step": 1,
+        "label": "Small screens (sm)",
+        "default": 2
+      },
+      {
+        "type": "range",
+        "id": "row_md",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "label": "Medium screens (md)",
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "row_lg",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Large screens (lg)",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "row_xl",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "label": "Extra-large screens (xl)",
+        "default": 4
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading Size",
+            "default": "h3",
+            "options": [
+              {
+                "value": "h1", "label": "H1"
+              },
+              {
+                "value": "h2", "label": "H2"
+              },
+              {
+                "value": "h3", "label": "H3"
+              },
+              {
+                "value": "h4", "label": "H4"
+              },
+              {
+                "value": "h5", "label": "H5"
+              },
+              {
+                "value": "h6", "label": "H6"
+              }
+            ]
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "default": "text-center",
+            "options": [
+              {
+                "value": "text-left", "label": "Left"
+              },
+              {
+                "value": "text-center", "label": "Center"
+              },
+              {
+                "value": "text-right", "label": "Right"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "default": {
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "heading": "Working Days",
+            "heading_size": "h5",
+            "text": "<p>Monday - Friday</p>"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "heading": "Working Hours",
+            "heading_size": "h5",
+            "text": "<p>09:00 - 16:00</p>"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "heading": "Prefer to call?",
+            "heading_size": "h5",
+            "text": "<p><a href=\"tel:+123456789\" title=\"tel:+123456789\">+01-23-456789</a></p>"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "heading": "Another Block",
+            "heading_size": "h5",
+            "text": "<p>Write something important</p>"
+          }
+        }
+      ]
+    }
+  }
+{% endschema %}
+
+{% stylesheet 'scss' %}
+
+{% endstylesheet %}

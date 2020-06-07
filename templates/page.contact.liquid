@@ -1,14 +1,57 @@
-<h1>{{ page.title }}</h1>
-{% form 'contact' %}
-  {% if form.posted_successfully? %} Thank you for your contact {% endif %}
-  {{ form.errors | default_errors }}
-  <label for="ContactFormName">name</label>
-  <input type="text" id="ContactFormName" name="contact[name]">
-  <label for="ContactFormEmail">email</label>
-  <input type="email" id="ContactFormEmail" name="contact[email]">
-  <label for="ContactFormPhone">phone</label>
-  <input type="tel" id="ContactFormPhone" name="contact[phone]">
-  <label for="ContactFormMessage">message</label>
-  <textarea rows="10" id="ContactFormMessage" name="contact[body]"></textarea>
-  <input type="submit" value="send">
-{% endform %}
+<article>
+
+  <div class="container">
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.content != blank %}
+      <div class="rte text-muted mb-4">
+        {{ page.content }}
+      </div>
+    {% endif %}
+
+
+    {% form 'contact', class: 'contact-form mb-8' %}
+
+      {% if form.posted_successfully? %}
+        <p class="form-success alert alert-success mb-4" role="alert">
+          {{ 'contact.form.post_success' | t }}
+        </p>
+      {% endif %}
+
+      {{ form.errors | default_errors }}
+
+      <div class="form-row">
+
+        <div class="form-group col-md-4">
+          <input class="form-control" type="text" name="contact[name]" id="ContactFormName" value="{{ customer.name }}"  placeholder="{{ 'contact.form.name' | t }}" aria-label="{{ 'contact.form.name' | t }}" required>
+        </div>
+
+        <div class="form-group col-md-4">
+          <input class="form-control" type="email" name="contact[email]" id="ContactFormEmail" value="{{ customer.email }}" placeholder="{{ 'contact.form.email' | t }}" aria-label="{{ 'contact.form.email' | t }}" spellcheck="false" autocomplete="off" autocapitalize="off" required>
+        </div>
+
+        <div class="form-group col-md-4">
+          <input class="form-control" type="tel" name="contact[phone]" id="ContactFormPhone" value="{{ customer.phone }}" placeholder="{{ 'contact.form.phone' | t }}" aria-label="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <textarea class="form-control" rows="8" name="contact[body]" id="ContactFormMessage" placeholder="{{ 'contact.form.message' | t }}" aria-label="{{ 'contact.form.message' | t }}" required>
+          {%- if form.body -%}
+            {{- form.body -}}
+          {%- endif -%}
+        </textarea>
+      </div>
+
+      <input type="submit" class="btn btn-primary" value="{{ 'contact.form.send' | t }}">
+    {% endform %}
+
+  </div>
+
+  {% section 'contact-map' %}
+
+  {% section 'contact-text-blocks' %}
+
+</article>
