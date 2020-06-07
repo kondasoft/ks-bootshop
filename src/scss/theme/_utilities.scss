@@ -1,4 +1,4 @@
-// Custom utility classes for our theme
+// Responsive utility classes
 @each $breakpoint in map-keys($grid-breakpoints) {
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
@@ -12,4 +12,10 @@
     .width#{$infix}-auto    { width: auto }
     .width#{$infix}-100     { width: 100% }
   }
+}
+
+// Opacity utility classes
+$opacityList: 0, 25, 50, 75;
+@each $value in $opacityList {
+  .opacity-#{$value} { opacity: #{$value} + '%' }
 }

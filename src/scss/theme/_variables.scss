@@ -1,3 +1,13 @@
+// Colors
+$primary: #1976D2;
+$secondary: #6c757d;
+
+$theme-colors: (
+  "primary": #1976D2,
+  "secondary": #6c757d
+);
+
+
 // Spacing
 $spacer: 1rem;
 
@@ -16,6 +26,10 @@ $spacers: (
   11: ($spacer * 6),
   12: ($spacer * 7)
 );
+
+
+// Typography
+$small-font-size: 85%;
 
 
 // carousel

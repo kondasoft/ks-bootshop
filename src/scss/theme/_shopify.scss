@@ -1,0 +1,19 @@
+/*
+  Shopify related styles
+*/
+
+// Callenge
+.shopify-challenge__container {
+  .btn {
+    @extend .btn-primary;
+  }
+}
+
+
+// Errors
+.errors {
+  @extend .alert, .alert-danger;
+  ul {
+    @extend .list-unstyled, .mb-0;
+  }
+}

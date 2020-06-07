@@ -3,14 +3,14 @@
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 
-// My variables (add your custom variables here)
-
-
 // Theme Variables
-@import "variables";
+@import "theme/variables";
 
-// Import all Bootstrap
+// Import Bootstrap
 @import "bootstrap/bootstrap";
 
-// Theme Imports
-@import "utilities"
+// Theme Styles
+@import "theme/utilities";
+@import "theme/components";
+@import "theme/shopify";
+@import "theme/layout";
