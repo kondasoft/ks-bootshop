@@ -1,4 +1,4 @@
-<div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+<div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %} {{ section.settings.margin_top | prepend: 'mt-' }} {{ section.settings.margin_bottom | prepend: 'mb-' }}">
 
   {% if section.settings.heading != blank %}
     <{{ section.settings.heading_size }} class="{{ section.settings.heading_alignment }}">
@@ -6,28 +6,97 @@
     </{{ section.settings.heading_size }}>
   {% endif %}
 
-  <ul class="list-unstyled {{ section.settings.gutter_horizontal | prepend: 'mx-n' }} row row-cols-{{ section.settings.row }} row-cols-sm-{{ section.settings.row_sm }} row-cols-md-{{ section.settings.row_md }} row-cols-lg-{{ section.settings.row_lg }} row-cols-xl-{{ section.settings.row_xl }}">
+  {% if section.settings.subheading != blank %}
+    <div class="rte text-muted {{ section.settings.heading_alignment }}">
+      {{ section.settings.subheading }}
+    </div>
+  {% endif %}
+
+  <ul class="list-unstyled mx-n2 {{ section.settings.gutter_horizontal | prepend: 'mx-sm-n' }} row row-cols-{{ section.settings.row }} row-cols-sm-{{ section.settings.row_sm }} row-cols-md-{{ section.settings.row_md }} row-cols-lg-{{ section.settings.row_lg }} row-cols-xl-{{ section.settings.row_xl }}">
     {% for product in collections[section.settings.collection].products limit: section.settings.limit %}
+
+    {% if product.featured_image != blank %}
+      <li class="pb-2 px-2 {{ section.settings.gutter_horizontal | prepend: 'px-sm-' }} {{ section.settings.gutter_vertical | prepend: 'my-' }} {% if section.settings.align_center %}text-center{% endif %}">
+        <a href="{{ product.url }}" class="text-decoration-none">
+
+          <div class="
+            overflow-hidden
+            mb-3
+            {% if section.settings.image_border %}img-thumbnail{% endif %}
+            {% if section.settings.image_circle %}rounded-circle{% endif %}
+            {{ section.settings.image_hover_effect }}
+          ">
+            {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+            <img class="img-fluid" src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}" alt="{{ product.featured_image.alt | escape }}" width="{{ section.settings.image_width }}" height="{{ section.settings.image_height }}">
+
+            {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
+              <small class="product-discount-badge" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
+                {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+              </small>
+            {% endif %}
+
+          </div>
+
+          {% if section.settings.show_product_title %}
+            <{{ section.settings.product_title_size }}>
+              {{ product.title | escape }}
+            </{{ section.settings.product_title_size }}>
+          {% endif %}
+
+          {% if section.settings.show_price %}
+            <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">
+              {% if product.compare_at_price > product.price %}
+                <s class="text-muted opacity-75">{{ product.compare_at_price | money }}</s>
+                {% if product.price_varies %}
+                  {%- assign sale_price = product.price | money -%}
+                  {{ 'on_sale_from_html' | t: price: sale_price }}
+                {% else %}
+                  {{ 'product.on_sale' | t }}
+                  {{ product.price | money }}
+                {% endif %}
+              {% else %}
+                {% if product.price_varies %}
+                  {%- assign price = product.price | money -%}
+                  {{ 'product.from_text_html' | t: price: price }}
+                {% else %}
+                  {{ product.price | money }}
+                {% endif %}
+              {% endif %}
+            </p>
+          {% endif %}
+
+        </a>
+      </li>
+    {% endif %}
 
     {% else %}
       {% for i in (1..section.settings.limit) %}
         <li class="pb-4 {{ section.settings.gutter_horizontal | prepend: 'px-' }} {{ section.settings.gutter_vertical | prepend: 'my-' }} {% if section.settings.align_center %}text-center{% endif %}">
-          <a href="#" class="">
-            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg img-thumbnail mb-3' }}
+          <a href="#" class="text-decoration-none">
+
+            <div class="
+              overflow-hidden
+              mb-3
+              {% if section.settings.image_border %}img-thumbnail{% endif %}
+              {% if section.settings.image_circle %}rounded-circle{% endif %}
+              {{ section.settings.image_hover_effect }}
+            ">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg bg-light' }}
+            </div>
 
             {% if section.settings.show_product_title %}
               <{{ section.settings.product_title_size }}>
-                {{ 'featured_collection.placeholder_title' | t }}
+                {{ 'onboarding.product_title' | t }}
               </{{ section.settings.product_title_size }}>
             {% endif %}
 
             {% if section.settings.show_price %}
-              <p>{{ 1999 | money }}</p>
+              <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">{{ 1999 | money }}</p>
             {% endif %}
 
             {% if section.settings.show_add_to_cart %}
-              <a href="#" class="btn {{ section.settings.add_to_cart_style }}">{{ 'featured_collection.add_to_cart' | t }}</a>
+              <a href="#" class="btn {{ section.settings.add_to_cart_style }}">{{ 'product.add_to_cart' | t }}</a>
             {% endif %}
 
           </a>
@@ -39,6 +108,123 @@
 
 </div>
 
+
+<!-- <style> -->
+{% stylesheet 'scss' %}
+.featured-collection {
+
+  // Discount badge
+  .product-discount-badge {
+    color: white;
+    display: inline-block;
+    padding: .1rem .25rem;
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-bottom-left-radius: 4px;
+  }
+  .img-thumbnail .product-discount-badge {
+    top: 4px;
+    right: 4px;
+  }
+
+  // Image hover effects
+  .image-hover-fade-in {
+    img, svg {
+      transition: all .2s ease-out;
+      opacity: .75;
+    }
+  }
+
+  a:hover .image-hover-fade-in {
+    img, svg {
+      opacity: 1;
+    }
+  }
+
+  .image-hover-fade-out {
+    img, svg {
+      transition: all .2s ease-out;
+    }
+  }
+
+  a:hover .image-hover-fade-out {
+    img, svg {
+      opacity: 0.75;
+    }
+  }
+
+  .image-hover-scale-in {
+    img, svg {
+      transition: all .2s ease-out;
+    }
+  }
+
+  a:hover .image-hover-scale-in {
+    img, svg {
+      transform: scale(1.25);
+    }
+  }
+
+  .image-hover-scale-out {
+    img, svg {
+      transition: all .2s ease-out;
+      transform: scale(1.25);
+    }
+  }
+
+  a:hover .image-hover-scale-out {
+    img, svg {
+      transform: scale(1);
+    }
+  }
+
+  a:hover .image-hover-flashing {
+    img, svg {
+      opacity: 1;
+      animation: image_hover_flashing 1.5s;
+    }
+  }
+
+  .image-hover-shine {
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+    	top: 0;
+    	left: -75%;
+    	z-index: 2;
+    	display: block;
+    	width: 50%;
+    	height: 100%;
+    	background: linear-gradient(to right, rgba(white, 0) 0%, rgba(white, .3) 100%);
+    	transform: skewX(-25deg);
+    }
+  }
+
+  a:hover .image-hover-shine:before {
+  	animation: image_hover_shine 1s;
+  }
+}
+
+@keyframes image_hover_flashing {
+  0% {
+    opacity: .4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes image_hover_shine {
+  100% {
+    left: 150%;
+  }
+}
+
+{% endstylesheet %}
+
 {% schema %}
   {
     "name": "Featured collection",
@@ -46,57 +232,16 @@
     "class": "featured-collection",
     "settings": [
       {
-        "type": "header",
-        "content": "Heading"
-      },
-      {
         "type": "text",
         "id": "heading",
         "label": "Heading text",
         "default": "Featured collection"
       },
       {
-        "type": "select",
-        "id": "heading_size",
-        "label": "Heading Size",
-        "default": "h2",
-        "options": [
-          {
-            "value": "h1", "label": "H1"
-          },
-          {
-            "value": "h2", "label": "H2"
-          },
-          {
-            "value": "h3", "label": "H3"
-          },
-          {
-            "value": "h4", "label": "H4"
-          },
-          {
-            "value": "h5", "label": "H5"
-          },
-          {
-            "value": "h6", "label": "H6"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "heading_alignment",
-        "label": "Heading alignment",
-        "default": "text-left",
-        "options": [
-          {
-            "value": "text-left", "label": "Left"
-          },
-          {
-            "value": "text-center", "label": "Center"
-          },
-          {
-            "value": "text-right", "label": "Right"
-          }
-        ]
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Subheading text",
+        "default": "<p>Inspired by simplicity, driven by performance</p>"
       },
       {
         "id": "collection",
@@ -107,8 +252,8 @@
         "type": "range",
         "id": "limit",
         "min": 2,
-        "max": 20,
-        "step": 2,
+        "max": 24,
+        "step": 1,
         "label": "Total products to display",
         "default": 4
       },
@@ -166,10 +311,57 @@
         "content": "General settings"
       },
       {
+        "type": "select",
+        "id": "heading_size",
+        "label": "Heading Size",
+        "default": "h2",
+        "options": [
+          {
+            "value": "h1", "label": "H1"
+          },
+          {
+            "value": "h2", "label": "H2"
+          },
+          {
+            "value": "h3", "label": "H3"
+          },
+          {
+            "value": "h4", "label": "H4"
+          },
+          {
+            "value": "h5", "label": "H5"
+          },
+          {
+            "value": "h6", "label": "H6"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading alignment",
+        "default": "text-left",
+        "options": [
+          {
+            "value": "text-left", "label": "Left"
+          },
+          {
+            "value": "text-center", "label": "Center"
+          },
+          {
+            "value": "text-right", "label": "Right"
+          }
+        ]
+      },
+      {
         "type": "checkbox",
         "id": "container",
         "label": "Wrap in container",
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Product settings"
       },
       {
         "type": "checkbox",
@@ -180,7 +372,7 @@
       {
         "type": "checkbox",
         "id": "show_product_title",
-        "label": "Show title",
+        "label": "Show product title",
         "default": true
       },
       {
@@ -191,15 +383,21 @@
       },
       {
         "type": "checkbox",
+        "id": "show_discount_badge",
+        "label": "Show discount badge",
+        "default": true
+      },
+      {
+        "type": "checkbox",
         "id": "show_add_to_cart",
-        "label": "Show Add to cart",
+        "label": "Show 'Add to cart' button",
         "default": true
       },
       {
         "type": "select",
         "id": "product_title_size",
         "label": "Product title size",
-        "default": "h5",
+        "default": "h6",
         "options": [
           {
             "value": "h1", "label": "H1"
@@ -252,71 +450,106 @@
       },
       {
         "type": "header",
-        "content": "Spacing between products"
+        "content": "Product image settings"
+      },
+      {
+        "type": "text",
+        "id": "image_width",
+        "label": "Image width (px)",
+        "default": "480"
+      },
+      {
+        "type": "text",
+        "id": "image_height",
+        "label": "Image height (px)",
+        "default": "480"
+      },
+      {
+        "type": "checkbox",
+        "id": "image_border",
+        "label": "Border",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "image_circle",
+        "label": "Circle",
+        "default": false
       },
       {
         "type": "select",
-        "id":  "gutter_horizontal",
+        "id":  "image_hover_effect",
+        "label": "Hover effect",
+        "default": "image-hover",
+        "options": [
+          {
+            "value": "image-hover", "label": "No effect"
+          },
+          {
+            "value": "image-hover-fade-in", "label": "Fade in"
+          },
+          {
+            "value": "image-hover-fade-out", "label": "Fade out"
+          },
+          {
+            "value": "image-hover-scale-in", "label": "Scale in"
+          },
+          {
+            "value": "image-hover-scale-out", "label": "Scale out"
+          },
+          {
+            "value": "image-hover-flashing", "label": "Flashing"
+          },
+          {
+            "value": "image-hover-shine", "label": "Shine"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "paragraph",
+        "content": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin top",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin bottom",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "default": 6
+      },
+      {
+        "type": "range",
+        "id": "gutter_horizontal",
         "label": "Horizontal gutter",
-        "default": "2",
-        "options": [
-          {
-            "value": "1", "label": "S"
-          },
-          {
-            "value": "2", "label": "M"
-          },
-          {
-            "value": "3", "label": "L"
-          },
-          {
-            "value": "4", "label": "XL"
-          },
-          {
-            "value": "5", "label": "2XL"
-          },
-          {
-            "value": "6", "label": "3XL"
-          },
-          {
-            "value": "7", "label": "4XL"
-          },
-          {
-            "value": "8", "label": "5XL"
-          }
-        ]
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "default": 3,
+        "info": "Spacing between products"
       },
       {
-        "type": "select",
-        "id":  "gutter_vertical",
+        "type": "range",
+        "id": "gutter_vertical",
         "label": "Vertical gutter",
-        "default": "2",
-        "options": [
-          {
-            "value": "1", "label": "S"
-          },
-          {
-            "value": "2", "label": "M"
-          },
-          {
-            "value": "3", "label": "L"
-          },
-          {
-            "value": "4", "label": "XL"
-          },
-          {
-            "value": "5", "label": "2XL"
-          },
-          {
-            "value": "6", "label": "3XL"
-          },
-          {
-            "value": "7", "label": "4XL"
-          },
-          {
-            "value": "8", "label": "5XL"
-          }
-        ]
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "default": 3,
+        "info": "Spacing between products"
       }
     ],
     "presets": [
