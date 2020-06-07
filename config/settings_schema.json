@@ -6,5 +6,28 @@
     "theme_author": "KondaSoft",
     "theme_documentation_url": "https://github.com/Shopify/themekit",
     "theme_support_url": "https://github.com/alvinkonda/ks-bootshop/issues"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#1976D2"
+      },
+      {
+        "type": "color",
+        "id": "color_price",
+        "label": "Price color",
+        "default": "#43A047"
+      },
+      {
+        "type": "color",
+        "id": "color_on_sale",
+        "label": "Discount badge color",
+        "default": "#D32F2F"
+      }
+    ]
   }
 ]
