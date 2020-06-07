@@ -10,6 +10,42 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "cart": {
+    "general": {
+      "title": "Cart",
+      "subtitle_html": "Need help with your order? <a href=\"/pages/contact\">Contact us</a> ",
+      "summary": "Summary",
+      "remove": "Remove",
+      "note": "Special instructions for your order",
+      "subtotal": "Subtotal",
+      "shipping_at_checkout": "Shipping & taxes calculated at checkout",
+      "update": "Update Cart",
+      "checkout": "Check Out",
+      "empty_html": "Your cart is currently empty. <a href=\"/collections/all\">Continue browsing</a>.",
+      "cookies_required": "Enable cookies to use the shopping cart",
+      "item_quantity": "Item quantity",
+      "savings": "You're saving"
+    },
+    "label": {
+      "product": "Product",
+      "price": "Price",
+      "quantity": "Quantity",
+      "qty": "Qty",
+      "total": "Total",
+      "discounted_price": "Discounted price",
+      "original_price": "Original price"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "message": "Message",
+      "send": "Send",
+      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
+    }
+  },
   "header": {
     "navbar": {
       "toggle": "Toggle navigation"
@@ -26,8 +62,17 @@
       "title": "Cart"
     }
   },
-  "featured_collection": {
-    "placeholder_title": "Product title",
-    "add_to_cart": "Add to cart"
+  "onboarding": {
+    "product_title": "Product title"
+  },
+  "product": {
+    "regular_price": "Regular price",
+    "sold_out": "Sold Out",
+    "unavailable": "Unavailable",
+    "on_sale": "On Sale",
+    "on_sale_from_html": "On Sale from {{ price }}",
+    "from_text_html": "From {{ price }}",
+    "quantity": "Quantity",
+    "add_to_cart": "Add to Cart"
   }
 }
