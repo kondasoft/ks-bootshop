@@ -48,7 +48,7 @@
               "
               alt="{{ block.settings.image.alt }}"
               width="1800"
-              height="img_size_1800"
+              height="{{ section.settings.image_height_aspect_ratio | times: 1800 | round }}"
             >
           {% else %}
             {% capture current %}{% cycle 1, 2 %}{% endcapture %}
@@ -300,6 +300,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
       "info": "Recommended values are between '0.3' to '0.6'. Use a higher value if you have enabled the 'Full height' setting below"
     },
     {
+      "type": "text",
+      "id": "img_min_height",
+      "label": "Image Minimum Height (px)",
+      "default": "280",
+      "info": "Useful for mobile view"
+    },
+    {
       "type": "header",
       "content": "Transition"
     },
@@ -307,13 +314,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
       "type": "select",
       "id":  "transition",
       "label": "Transition effect",
-      "default": "slide",
+      "default": "slide carousel-fade",
       "options": [
         {
           "value": "slide", "label": "Slide"
         },
         {
-          "value": " slide carousel-fade", "label": "Fade"
+          "value": "slide carousel-fade", "label": "Fade"
         }
       ]
     },
@@ -371,19 +378,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
       "max": 12,
       "step": 1,
       "label": "Margin bottom",
-      "default": 6,
+      "default": 8,
       "info": "Based on Bootstrap scaling [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
-    },
-    {
-      "type": "header",
-      "content": "Advanced Settings"
-    },
-    {
-      "type": "text",
-      "id": "img_min_height",
-      "label": "Image Min Height (px)",
-      "default": "280",
-      "info": "Useful in mobile view"
     },
     {
       "type": "header",
