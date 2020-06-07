@@ -1,0 +1,274 @@
+<article class="container">
+
+  {% if cart.item_count > 0 %}
+
+    <form action="/cart" method="post" novalidate>
+
+      <div class="row">
+        <div class="col-lg-8">
+
+          <h1>{{ 'cart.general.title' | t }}</h1>
+          {% if section.settings.show_subtitle %}
+            <p class="text-muted">{{ 'cart.general.subtitle_html' | t }}</p>
+          {% endif %}
+
+          {% for item in cart.items %}
+            <div id="cart-item-{{ item.key | replace: ":", "_" }}" class="d-flex py-4 border-bottom">
+
+              {% if item.image != blank %}
+                {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+                <a href="{{ item.url | within: collections.all }}">
+                  <img class="img-fluid mr-3 {% if section.settings.image_border %}img-thumbnail{% endif %}" src="{{ item.image | img_url: image_size, crop: 'center'  }}" alt="{{ item.image.alt | escape }}" width="{{ section.settings.image_width }}" height="{{ section.settings.image_height }}">
+                </a>
+              {% endif %}
+
+              <div class="flex-grow-1 mt-2">
+                <h6>
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h6>
+
+                {% unless item.product.has_only_default_variant %}
+                  <p>{{ item.variant.title }}</p>
+                {% endunless %}
+
+                {% if section.settings.show_vendor %}
+                  <p class="text-muted">{{ item.vendor }}</p>
+                {% endif %}
+
+                {%- assign property_size = item.properties | size -%}
+
+                {% if property_size > 0 %}
+                  {% for p in item.properties %}
+                    {% unless p.last == blank %}
+                    {{ p.first }}:
+
+                    {% if p.last contains '/uploads/' %}
+                      <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                    {% else %}
+                      {{ p.last }}
+                    {% endif %}
+
+                    {% endunless %}
+                  {% endfor %}
+                {% endif %}
+
+                {% if section.settings.show_quantity %}
+                  <div class="input-group mt-3 mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="mb-0 text-muted small" for="updates_{{ item.key }}">
+                          {{ 'cart.label.qty' | t }}
+                        </label>
+                      </div>
+                    </div>
+                    <input
+                      class="form-control mr-2"
+                      size="10"
+                      type="number"
+                      name="updates[]"
+                      data-key="{{ item.key }}"
+                      value="{{ item.quantity }}"
+                      min="1"
+                      style="max-width: 60px"
+                      aria-label="{{ 'cart.label.quantity' | t }}"
+                    >
+                  </div>
+                {% endif %}
+
+                <a id="cart-item-{{ item.key | replace: ":", "_" }}-remove" class="small text-secondary text-decoration-underline" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                  {{ 'cart.general.remove' | t }}
+                </a>
+
+              </div>
+
+              <div id="cart-item-{{ item.key | replace: ":", "_" }}-price" class="mt-2">
+                {{ item.line_price | money }}
+              </div>
+
+            </div>
+          {% endfor %}
+
+        </div>
+
+        <div class="col-lg">
+
+          <div class="cart-summary mt-4 bg-light border rounded p-3 {% if section.settings.sticky_summary %}sticky-cart-summary{% endif %}">
+            <h2 class="h4 mb-3">{{ 'cart.general.summary' | t }}</h2>
+
+            {% if section.settings.note %}
+              <textarea rows="3" class="form-control mb-3" name="note" placeholder="{{ 'cart.general.note' | t }}" aria-label-"{{ 'cart.general.note' | t }}">{{ cart.note }}</textarea>
+            {% endif %}
+
+            <p class="d-flex justify-content-between my-5">
+              <span>{{ 'cart.general.subtotal' | t }}</span>
+              <strong id="cart-subtotal">{{ cart.total_price | money }}</strong>
+            </p>
+
+            {% if cart.total_discounts > 0 %}
+              <p>{{ 'cart.general.savings' | t }} {{ cart.total_discounts | money }}</p>
+            {% endif %}
+
+            <hr>
+
+            <p class="text-muted text-center font-italic">{{ 'cart.general.shipping_at_checkout' | t }}</p>
+
+            <input type="submit" name="checkout" class="btn btn-primary btn-block" value="{{ 'cart.general.checkout' | t }}">
+
+            <noscript>
+              <input class="btn btn-link btn-block mt-2" type="submit" name="update" value="{{ 'cart.general.update' | t }}">
+            </noscript>
+
+          </div>
+
+        </div>
+
+      </div>
+    </form>
+
+  {% else %}
+    <h1>{{ 'cart.general.title' | t }}</h1>
+
+    {% comment %}
+    Cart empty state
+    {% endcomment %}
+    <div class="supports-cookies d-none">
+      <p class="text-muted">{{ 'cart.general.empty_html' | t }}</p>
+    </div>
+
+    {% comment %}
+    Cart no cookies state
+    ---------------------
+    Browser cookies are required to use the cart. If cookies aren't enabled in the
+    browser a message is displayed prompting the user to enable them.
+    {% endcomment %}
+    <div class="supports-no-cookies">
+      <p class="alert alert-warning" role="alert">{{ 'cart.general.cookies_required' | t }}</p>
+    </div>
+  {% endif %}
+
+</div>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    jQuery(document).ready(function ($) {
+
+      // Update quantity for line items
+      $("input[name='updates[]']").on("keyup click", function() {
+        const qty = $(this).val()
+        const key = $(this).data('key')
+
+        // if (qty == 0) {
+        //   let result = confirm("Remove product from cart?")
+        //   if (!result) {
+        //     $("input[name='updates[]']").val(1)
+        //     return;
+        //   }
+        // }
+
+        jQuery.post('/cart/change.js', { quantity: qty, id: key }, function(data) {
+          console.log(data)
+
+          const subTotalPrice = data.items_subtotal_price
+          let itemPrice
+
+          if (subTotalPrice == 0)
+            location.reload()
+
+          data.items.forEach((item, i) => {
+            if (item.key == key)
+              itemPrice = item.final_line_price
+          });
+
+          $(`#cart-item-${key.replace(':', '_')}-price`).text(Shopify.formatMoney(itemPrice, ""))
+          $('#cart-subtotal').text(Shopify.formatMoney(subTotalPrice, ""))
+
+        }, 'json')
+      });
+    })
+  })
+</script>
+
+{% javascript %}
+jQuery(document).ready(function ($) {
+
+  // Sticky summary
+  let header = $('#shopify-section-header')
+  let top = 20
+
+  if($(header).css('position') == 'sticky') {
+    top += header.outerHeight()
+  }
+
+  $('.sticky-cart-summary').css({
+    'position': 'sticky',
+    'top': top,
+    'z-index': 1019
+  })
+
+})
+{% endjavascript %}
+
+{% schema %}
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_subtitle",
+        "label": "Show subtitle",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "note",
+        "label": "Show note field",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_quantity",
+        "label": "Show quanity",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_summary",
+        "label": "Sticky summary",
+        "info": "Fix summary details when page scrolls. Not applicable on mobile view",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Product image settings"
+      },
+      {
+        "type": "text",
+        "id": "image_width",
+        "label": "Image width (px)",
+        "default": "160"
+      },
+      {
+        "type": "text",
+        "id": "image_height",
+        "label": "Image height (px)",
+        "default": "160"
+      },
+      {
+        "type": "checkbox",
+        "id": "image_border",
+        "label": "Border",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
