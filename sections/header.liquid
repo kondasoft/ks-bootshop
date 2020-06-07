@@ -65,8 +65,10 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-{{ forloop.index0 }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ link.title }}</a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown-{{ forloop.index0 }}">
                 {% for childlink in link.links %}
-                  {% if childlink.title == 'divider' %}
+                  {% if childlink.title contains "--divider" %}
                     <div class="dropdown-divider"></div>
+                  {% elsif childlink.title contains '--header' %}
+                    <h6 class="dropdown-header">{{ childlink.title | remove: "--header" }}</h6>
                   {% else %}
                     <li>
                       <a class="dropdown-item {% if childlink.active %}active{% endif %}" href="{{ childlink.url }}" aria-current="{% if childlink.active %}page{% endif %}">{{ childlink.title }}</a>
@@ -133,6 +135,8 @@
 </style>
 
 {% stylesheet 'scss' %}
+
+// Announcement bar
 #announcement-bar.bg-dark,
 #announcement-bar.bg-primary {
   a {
@@ -145,15 +149,6 @@
 <!-- <script> -->
 {% javascript %}
 jQuery(document).ready(function ($) {
-
-  // Sticky navbar
-  if (jQuery().stickybits) {
-    $("#navbar").stickybits({
-      useStickyClasses: true,
-      // noStyles: true,
-      useFixed: true
-    })
-  }
 
   // Autofocus search input
   $('#navbar-search').on('shown.bs.dropdown', function(e) {
