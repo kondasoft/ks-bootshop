@@ -110,7 +110,7 @@
       {% endif %}
 
       <li class="nav-item">
-        <a class="nav-link d-inline-flex px-2 align-items-center {% if template.name == 'cart' %}active{% endif %}" href="{{ routes.cart_url }}">
+        <a  class="nav-link d-inline-flex px-2 align-items-center {% if template.name == 'cart' %}active{% endif %}" href="{{ routes.cart_url }}">
           {% include 'icon-cart', width: 20, height: 20 %}
           <span class="sr-only">{{ 'header.cart.title' | t }} {{ cart.item_count }} </span>
           <span class="ml-2" aria-hidden="true">({{ cart.item_count }})</span>
@@ -124,7 +124,12 @@
   {% endif %}
 </nav>
 
+
 <style>
+/*
+  We wrap with a style tag to enable editor styling
+*/
+
 {% if section.settings.sticky %}
   #shopify-section-header {
     position: sticky;
@@ -132,10 +137,8 @@
     z-index: 1020;
   }
 {% endif %}
-</style>
 
 {% stylesheet 'scss' %}
-
 // Announcement bar
 #announcement-bar.bg-dark,
 #announcement-bar.bg-primary {
@@ -145,8 +148,13 @@
   }
 }
 {% endstylesheet %}
+</style>
 
-<!-- <script> -->
+<script>
+/*
+  We wrap with a script tag to enable editor styling
+*/
+
 {% javascript %}
 jQuery(document).ready(function ($) {
 
@@ -154,9 +162,15 @@ jQuery(document).ready(function ($) {
   $('#navbar-search').on('shown.bs.dropdown', function(e) {
     $('#navbar-search input[type=search]').focus()
   })
+
 })
 {% endjavascript %}
+</script>
 
+<script>
+/*
+  We wrap with a script tag to enable editor styling
+*/
 {% schema %}
 {
   "name": "Header",
@@ -326,6 +340,7 @@ jQuery(document).ready(function ($) {
   ]
 }
 {% endschema %}
+</script>
 
 <script type="application/ld+json">
 {
