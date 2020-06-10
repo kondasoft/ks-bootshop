@@ -1,4 +1,8 @@
-<div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %} {{ section.settings.margin_top | prepend: 'mt-' }} {{ section.settings.margin_bottom | prepend: 'mb-' }}">
+<div class="
+  {% if section.settings.container %} container {% else %} container-fluid {% endif %}
+  {{ section.settings.margin_top | prepend: 'mt-' }}
+  {{ section.settings.margin_bottom | prepend: 'mb-' }}
+">
 
   {% if section.settings.heading != blank %}
     <{{ section.settings.heading_size }} class="{{ section.settings.heading_alignment }}">
@@ -12,93 +16,226 @@
     </div>
   {% endif %}
 
-  <ul class="list-unstyled mx-n2 {{ section.settings.gutter_horizontal | prepend: 'mx-sm-n' }} row row-cols-{{ section.settings.row }} row-cols-sm-{{ section.settings.row_sm }} row-cols-md-{{ section.settings.row_md }} row-cols-lg-{{ section.settings.row_lg }} row-cols-xl-{{ section.settings.row_xl }}">
+  <ul class="
+    list-unstyled
+    mx-n2
+    {{ section.settings.gutter_horizontal | prepend: 'mx-sm-n' }}
+    row
+    row-cols-{{ section.settings.row }}
+    row-cols-sm-{{ section.settings.row_sm }}
+    row-cols-md-{{ section.settings.row_md }}
+    row-cols-lg-{{ section.settings.row_lg }}
+    row-cols-xl-{{ section.settings.row_xl }}"
+  >
     {% for product in collections[section.settings.collection].products limit: section.settings.limit %}
 
-    {% if product.featured_image != blank %}
-      <li class="pb-2 px-2 {{ section.settings.gutter_horizontal | prepend: 'px-sm-' }} {{ section.settings.gutter_vertical | prepend: 'my-' }} {% if section.settings.align_center %}text-center{% endif %}">
-        <a href="{{ product.url }}" class="text-decoration-none">
-
-          <div class="
-            overflow-hidden
-            mb-3
-            {% if section.settings.image_border %}img-thumbnail{% endif %}
-            {% if section.settings.image_circle %}rounded-circle{% endif %}
-            {{ section.settings.image_hover_effect }}
-          ">
-            {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
-            <img class="img-fluid" src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}" alt="{{ product.featured_image.alt | escape }}" width="{{ section.settings.image_width }}" height="{{ section.settings.image_height }}">
-
-            {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
-              <small class="product-discount-badge" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
-                {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
-              </small>
-            {% endif %}
-
-          </div>
-
-          {% if section.settings.show_product_title %}
-            <{{ section.settings.product_title_size }}>
-              {{ product.title | escape }}
-            </{{ section.settings.product_title_size }}>
-          {% endif %}
-
-          {% if section.settings.show_price %}
-            <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">
-              {% if product.compare_at_price > product.price %}
-                <s class="text-muted opacity-75">{{ product.compare_at_price | money }}</s>
-                {% if product.price_varies %}
-                  {%- assign sale_price = product.price | money -%}
-                  {{ 'on_sale_from_html' | t: price: sale_price }}
-                {% else %}
-                  {{ 'product.on_sale' | t }}
-                  {{ product.price | money }}
-                {% endif %}
-              {% else %}
-                {% if product.price_varies %}
-                  {%- assign price = product.price | money -%}
-                  {{ 'product.from_text_html' | t: price: price }}
-                {% else %}
-                  {{ product.price | money }}
-                {% endif %}
-              {% endif %}
-            </p>
-          {% endif %}
-
-        </a>
-      </li>
-    {% endif %}
-
-    {% else %}
-      {% for i in (1..section.settings.limit) %}
-        <li class="pb-4 {{ section.settings.gutter_horizontal | prepend: 'px-' }} {{ section.settings.gutter_vertical | prepend: 'my-' }} {% if section.settings.align_center %}text-center{% endif %}">
-          <a href="#" class="text-decoration-none">
+      {% if product.featured_image != blank %}
+        <li class="
+          pb-2
+          px-2
+          {{ section.settings.gutter_horizontal | prepend: 'px-sm-' }}
+          {{ section.settings.gutter_vertical | prepend: 'my-' }}
+          {% if section.settings.align_center %}text-center{% endif %}
+        ">
+          <a href="{{ product.url }}" class="d-block text-decoration-none">
 
             <div class="
+              position-relative
               overflow-hidden
               mb-3
               {% if section.settings.image_border %}img-thumbnail{% endif %}
               {% if section.settings.image_circle %}rounded-circle{% endif %}
               {{ section.settings.image_hover_effect }}
             ">
-              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg bg-light' }}
+              {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+              <img
+                class="img-fluid"
+                src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
+                alt="{{ product.featured_image.alt | escape }}"
+                width="{{ section.settings.image_width }}"
+                height="{{ section.settings.image_height }}"
+              >
+
+              {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
+                <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
+                  {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+                </small>
+              {% endif %}
+
             </div>
 
             {% if section.settings.show_product_title %}
               <{{ section.settings.product_title_size }}>
-                {{ 'onboarding.product_title' | t }}
+                {{ product.title | escape }}
               </{{ section.settings.product_title_size }}>
             {% endif %}
 
             {% if section.settings.show_price %}
-              <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">{{ 1999 | money }}</p>
+              <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">
+                {% if product.compare_at_price > product.price %}
+                  <s class="text-muted opacity-75 mr-1">{{ product.compare_at_price | money }}</s>
+                  {% if product.price_varies %}
+                    {%- assign sale_price = product.price | money -%}
+                    {{ 'on_sale_from_html' | t: price: sale_price }}
+                  {% else %}
+                    {{ 'product.on_sale' | t }}
+                    {{ product.price | money }}
+                  {% endif %}
+                {% else %}
+                  {% if product.price_varies %}
+                    {%- assign price = product.price | money -%}
+                    {{ 'product.from_text_html' | t: price: price }}
+                  {% else %}
+                    {{ product.price | money }}
+                  {% endif %}
+                {% endif %}
+              </p>
             {% endif %}
 
-            {% if section.settings.show_add_to_cart %}
-              <a href="#" class="btn {{ section.settings.add_to_cart_style }}">{{ 'product.add_to_cart' | t }}</a>
-            {% endif %}
+          </a>
 
+          {% if section.settings.show_quick_view_button %}
+
+            {%- assign current_variant = product.selected_or_first_available_variant -%}
+            {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+            <button type="button" class="mb-4 btn {{ section.settings.quick_view_button_style }}" data-toggle="modal" data-target="#exampleModal-{{ forloop.index0 }}">
+              {{ 'product.quick_view' | t }}
+            </button>
+
+            <!-- Modal -->
+            <div class="modal {{ section.settings.quick_view_transition }}" id="exampleModal-{{ forloop.index0 }}" tabindex="-1" role="dialog" aria-labelledby="#exampleModal-{{ forloop.index0 }}-Label" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                  <div class="modal-body text-left">
+                    <div class="row mx-n2">
+
+                      <div class="col-lg px-2 mb-4 mb-lg-0">
+                        <div class="
+                          position-relative
+                          overflow-hidden
+                          mb-2
+                          {% if section.settings.image_border %}img-thumbnail{% endif %}
+                        ">
+                          {% assign image_size = section.settings.quick_view_image_width | append: 'x' | append: section.settings.quick_view_image_height %}
+                          <img
+                            class="img-fluid lazyload"
+                            data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
+                            alt="{{ product.featured_image.alt | escape }}"
+                            width="{{ section.settings.quick_view_image_width }}"
+                            height="{{ section.settings.quick_view_image_height }}"
+                            loading="lazy"
+                          >
+                          {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
+                            <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
+                              {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+                            </small>
+                          {% endif %}
+                        </div>
+                        {% if product.images.size > 1 %}
+                          <ul class="list-unstyled row row-cols-4 mx-n1">
+                            {% for image in product.images %}
+                              <li class="p-1">
+                                <a href="">
+                                  <div class="
+                                    overflow-hidden
+                                    {% if section.settings.image_border %}img-thumbnail{% endif %}
+                                    {{ section.settings.image_hover_effect }}
+                                  ">
+                                    <img
+                                      class="img-fluid lazyload"
+                                      data-src="{{ image.src | img_url: '120x120', crop: 'center' }}"
+                                      alt="{{ image.alt | escape }}"
+                                      width="120"
+                                      height="120"
+                                      loading="lazy"
+                                    >
+                                  </div>
+                                </a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </div>
+
+                      <div class="col-lg px-2">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+
+                        <{{ section.settings.quick_view_heading_size }} id="exampleModal-{{ forloop.index0 }}-Label" class="mt-1">
+                          {{ product.title | escape }}
+                        </{{ section.settings.quick_view_heading_size }}>
+
+                        <div class="mb-3 font-size-120">
+                          {% if product.compare_at_price_max > product.price %}
+                            <span class="sr-only">{{ 'product.regular_price' | t }}</span>
+                            {% if current_variant.compare_at_price > current_variant.price %}
+                            <s class="text-muted opacity-75 mr-2">
+                              {{ current_variant.compare_at_price | money }}
+                            </s>
+                            {% endif %}
+                          {% endif %}
+                          <span style="{{ settings.color_price | prepend: 'color: ' }}">
+                            {{ current_variant.price | money }}
+                          </span>
+                        </div>
+
+                        {% form 'product', product, class: '' %}
+                          <select name="id" id="variant-select" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
+                            {% for variant in product.variants %}
+                              <option
+                                {% unless variant.available %}disabled="disabled"{% endunless %}
+                                value="{{ variant.id }}">
+                                  {{ variant.title }} - {{ variant.price | money }}
+                              </option>
+                            {% endfor %}
+                          </select>
+
+                          <div class="bg-light py-3 px-3 mb-3 d-flex justify-content-center">
+                            <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
+                            <button class="btn btn-primary" type="submit" name="add">{{ 'product.add_to_cart' | t }}</button>
+                          </div>
+                        {% endform %}
+
+                        <div class="rte">
+                          {{ product.description | truncate: section.settings.quick_view_desc_truncate }}
+                        </div>
+
+                        {% if section.settings.quick_view_show_view_product_button %}
+                          <p><a href="{{ product.url }}" class="btn {{ section.settings.quick_view_view_product_button_style }}">{{ 'product.view_product' | t }}</a></p>
+                        {% endif %}
+
+                        {% if section.settings.quick_view_show_share_buttons %}
+                          <hr class="mt-5">
+                          {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+                       {% endif %}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+        </li>
+      {% endif %}
+
+    {% else %}
+
+      {% for i in (1..section.settings.limit) %}
+        <li class="pb-4 px-2 my-3 text-center">
+          <a href="#" class="text-decoration-none">
+            <div class="overflow-hidden mb-3 img-thumbnail">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg bg-light' }}
+            </div>
+            <h6>
+              {{ 'onboarding.product_title' | t }}
+            </h6>
+            <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">{{ 1999 | money }}</p>
           </a>
         </li>
       {% endfor %}
@@ -109,7 +246,7 @@
 </div>
 
 
-<!-- <style> -->
+<style>
 {% stylesheet 'scss' %}
 .featured-collection {
 
@@ -121,13 +258,25 @@
     z-index: 2;
     position: absolute;
     top: 0;
-    right: 0;
-    border-bottom-left-radius: 4px;
+    &.badge-left {
+      left: 0;
+      border-bottom-right-radius: 4px;
+    }
+    &.badge-right {
+      right: 0;
+      border-bottom-left-radius: 4px;
+    }
   }
   .img-thumbnail .product-discount-badge {
     top: 4px;
-    right: 4px;
+    &.badge-left {
+      left: 4px;
+    }
+    &.badge-right {
+      right: 4px;
+    }
   }
+
 
   // Image hover effects
   .image-hover-fade-in {
@@ -224,7 +373,33 @@
 }
 
 {% endstylesheet %}
+</style>
 
+<script>
+{% javascript %}
+// // initialize multi selector for product
+// {% unless product.has_only_default_variant %}
+//   new Shopify.OptionSelectors("variant-select", {
+//     product: {{ product | json }},
+//     onVariantSelected: selectCallback,
+//     enableHistoryState: true
+//   })
+// {% endunless %}
+
+// Lazyload images
+if ('loading' in HTMLImageElement.prototype) {
+  const images = document.querySelectorAll('img[loading="lazy"]');
+  images.forEach(img => {
+    img.src = img.dataset.src;
+  });
+} else {
+  // Dynamically import the LazySizes library
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js';
+  document.body.appendChild(script);
+}
+{% endjavascript %}
+</script>
 {% schema %}
   {
     "name": "Featured collection",
@@ -389,8 +564,8 @@
       },
       {
         "type": "checkbox",
-        "id": "show_add_to_cart",
-        "label": "Show 'Add to cart' button",
+        "id": "show_quick_view_button",
+        "label": "Show 'Quick view' button",
         "default": true
       },
       {
@@ -421,9 +596,9 @@
       },
       {
         "type": "select",
-        "id":  "add_to_cart_style",
-        "label": "Add to cart button style",
-        "default": "btn-primary",
+        "id":  "quick_view_button_style",
+        "label": "'Quick view' button style",
+        "default": "btn-outline-primary",
         "options": [
           {
             "value": "btn-primary", "label": "Primary color"
@@ -450,18 +625,129 @@
       },
       {
         "type": "header",
+        "content": "Quick view settings"
+      },
+      {
+        "type": "select",
+        "id":  "quick_view_transition",
+        "label": "Modal transition effect",
+        "default": "fade zoom-in",
+        "options": [
+          {
+            "value": "fade", "label": "Fade/Translate"
+          },
+          {
+            "value": "fade zoom-in", "label": "Fade/Zoom-in"
+          },
+          {
+            "value": "fade zoom-out", "label": "Fade/Zoom-out"
+          },
+          {
+            "value": "", "label": "No effect"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "quick_view_heading_size",
+        "label": "Product title size",
+        "default": "h3",
+        "options": [
+          {
+            "value": "h1", "label": "H1"
+          },
+          {
+            "value": "h2", "label": "H2"
+          },
+          {
+            "value": "h3", "label": "H3"
+          },
+          {
+            "value": "h4", "label": "H4"
+          },
+          {
+            "value": "h5", "label": "H5"
+          },
+          {
+            "value": "h6", "label": "H6"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "quick_view_desc_truncate",
+        "label": "Decription truncate",
+        "default": "200",
+        "info": "The number of characters for the product description"
+      },
+      {
+        "type": "checkbox",
+        "id": "quick_view_show_view_product_button",
+        "label": "Show 'View product' button",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id":  "quick_view_view_product_button_style",
+        "label": "'View product' button style",
+        "default": "btn-outline-primary",
+        "options": [
+          {
+            "value": "btn-primary", "label": "Primary color"
+          },
+          {
+            "value": "btn-outline-primary", "label": "Outline primary"
+          },
+          {
+            "value": "btn-secondary", "label": "Secondary color"
+          },
+          {
+            "value": "btn-outline-secondary", "label": "Outline secondary"
+          },
+          {
+            "value": "btn-light", "label": "Light color"
+          },
+          {
+            "value": "btn-dark", "label": "Dark color"
+          },
+          {
+            "value": "btn-outline-dark", "label": "Outline dark"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "quick_view_show_share_buttons",
+        "label": "Show share buttons",
+        "info": "Note: You can adjust options for share buttons under 'Theme Settings'",
+        "default": true
+      },
+      {
+        "type": "header",
         "content": "Product image settings"
       },
       {
         "type": "text",
         "id": "image_width",
         "label": "Image width (px)",
-        "default": "480"
+        "default": "360"
       },
       {
         "type": "text",
         "id": "image_height",
         "label": "Image height (px)",
+        "default": "360"
+      },
+      {
+        "type": "text",
+        "id": "quick_view_image_width",
+        "label": "'Quick View' image width (px)",
+        "default": "480"
+      },
+      {
+        "type": "text",
+        "id": "quick_view_image_height",
+        "label": "'Quick View' image height (px)",
         "default": "480"
       },
       {
