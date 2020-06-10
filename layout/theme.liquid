@@ -9,12 +9,12 @@
   {{ content_for_header }} <!-- Header hook for plugins -->
   {{ 'theme.min.css' | asset_url | stylesheet_tag }}
 </head>
-<body>
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
   <a class="sr-only sr-only-focusable" href="#main">{{ 'accessibility.skip_to_content' | t }}</a>
 
   {% section 'header' %}
 
-  <main id="main">
+  <main id="main" class="mb-8">
     {{ content_for_layout }}
   </main>
 
