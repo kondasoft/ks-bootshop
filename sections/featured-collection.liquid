@@ -49,16 +49,17 @@
             ">
               {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
               <img
-                class="img-fluid"
-                src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
+                class="img-fluid lazyload"
+                data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
                 alt="{{ product.featured_image.alt | escape }}"
                 width="{{ section.settings.image_width }}"
                 height="{{ section.settings.image_height }}"
+                loading="lazy"
               >
 
               {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
                 <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
-                  {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+                  {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
                 </small>
               {% endif %}
 
@@ -76,7 +77,7 @@
                   <s class="text-muted opacity-75 mr-1">{{ product.compare_at_price | money }}</s>
                   {% if product.price_varies %}
                     {%- assign sale_price = product.price | money -%}
-                    {{ 'on_sale_from_html' | t: price: sale_price }}
+                    {{ 'product.on_sale_from_html' | t: price: sale_price }}
                   {% else %}
                     {{ 'product.on_sale' | t }}
                     {{ product.price | money }}
@@ -99,14 +100,22 @@
             {%- assign current_variant = product.selected_or_first_available_variant -%}
             {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
 
-            <button type="button" class="mb-4 btn {{ section.settings.quick_view_button_style }}" data-toggle="modal" data-target="#exampleModal-{{ forloop.index0 }}">
+            <button type="button" class="mb-4 btn {{ section.settings.quick_view_button_style }}" data-toggle="modal" data-target="#{{ product.id | prepend: 'quick-view-modal-' }}">
               {{ 'product.quick_view' | t }}
             </button>
 
             <!-- Modal -->
-            <div class="modal {{ section.settings.quick_view_transition }}" id="exampleModal-{{ forloop.index0 }}" tabindex="-1" role="dialog" aria-labelledby="#exampleModal-{{ forloop.index0 }}-Label" aria-hidden="true">
+            <div class="modal {{ section.settings.quick_view_transition }}" id="{{ product.id | prepend: 'quick-view-modal-' }}" tabindex="-1" role="dialog" aria-labelledby="#{{ product.id | prepend: 'quick-view-modal-label-' }}" aria-hidden="true">
               <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
+
+                  <div class="modal-header d-lg-none">
+                    <h6 class="modal-title">{{ product.title | escape }}</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
                   <div class="modal-body text-left">
                     <div class="row mx-n2">
 
@@ -119,7 +128,7 @@
                         ">
                           {% assign image_size = section.settings.quick_view_image_width | append: 'x' | append: section.settings.quick_view_image_height %}
                           <img
-                            class="img-fluid lazyload"
+                            class="product-featured-image img-fluid lazyload"
                             data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
                             alt="{{ product.featured_image.alt | escape }}"
                             width="{{ section.settings.quick_view_image_width }}"
@@ -128,18 +137,25 @@
                           >
                           {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
                             <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
-                              {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+                              {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
                             </small>
                           {% endif %}
                         </div>
                         {% if product.images.size > 1 %}
-                          <ul class="list-unstyled row row-cols-4 mx-n1">
+                          <ul class="product-image-gallery list-unstyled row row-cols-4 mx-n1">
                             {% for image in product.images %}
                               <li class="p-1">
-                                <a href="">
+                                <a
+                                  id="{{ image.id | prepend: 'product-image-' }}"
+                                  href="{{ image.src | img_url: 'master' }}"
+                                  data-featured-img="{{ image.src | img_url: image_size, crop: 'center' }}"
+                                  class="{% if product.featured_image == image %}active{% endif %}"
+                                  {% if product.featured_image == image %} aria-current="true"{% endif %}
+                                >
                                   <div class="
                                     overflow-hidden
                                     {% if section.settings.image_border %}img-thumbnail{% endif %}
+                                    {% if product.featured_image == image %}border-secondary{% endif %}
                                     {{ section.settings.image_hover_effect }}
                                   ">
                                     <img
@@ -160,43 +176,56 @@
 
                       <div class="col-lg px-2">
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
+                        <button type="button" class="close d-none d-lg-block" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
                           <span aria-hidden="true">&times;</span>
                         </button>
 
-                        <{{ section.settings.quick_view_heading_size }} id="exampleModal-{{ forloop.index0 }}-Label" class="mt-1">
-                          {{ product.title | escape }}
+                        <{{ section.settings.quick_view_heading_size }} id="{{ product.id | prepend: 'quick-view-modal-label-' }}" class="mt-1">
+                          <a href="{{ product.url }}" class="text-dark">
+                            {{ product.title | escape }}
+                          </a>
                         </{{ section.settings.quick_view_heading_size }}>
 
-                        <div class="mb-3 font-size-120">
-                          {% if product.compare_at_price_max > product.price %}
-                            <span class="sr-only">{{ 'product.regular_price' | t }}</span>
-                            {% if current_variant.compare_at_price > current_variant.price %}
-                            <s class="text-muted opacity-75 mr-2">
-                              {{ current_variant.compare_at_price | money }}
-                            </s>
+                        {% form 'product', product, class: 'mb-3' %}
+
+                          <div class="product-price mb-3 font-size-120" style="{{ settings.color_price | prepend: 'color: ' }}">
+                            {% if product.compare_at_price_max > product.price %}
+                              <span class="sr-only">{{ 'product.regular_price' | t }}</span>
+                              {% if current_variant.compare_at_price > current_variant.price %}
+                              <s class="text-muted opacity-75 mr-2">
+                                {{ current_variant.compare_at_price | money }}
+                              </s>
+                              {% endif %}
                             {% endif %}
-                          {% endif %}
-                          <span style="{{ settings.color_price | prepend: 'color: ' }}">
-                            {{ current_variant.price | money }}
-                          </span>
-                        </div>
-
-                        {% form 'product', product, class: '' %}
-                          <select name="id" id="variant-select" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
-                            {% for variant in product.variants %}
-                              <option
-                                {% unless variant.available %}disabled="disabled"{% endunless %}
-                                value="{{ variant.id }}">
-                                  {{ variant.title }} - {{ variant.price | money }}
-                              </option>
-                            {% endfor %}
-                          </select>
-
-                          <div class="bg-light py-3 px-3 mb-3 d-flex justify-content-center">
-                            <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
-                            <button class="btn btn-primary" type="submit" name="add">{{ 'product.add_to_cart' | t }}</button>
+                            <span>
+                              {{ current_variant.price | money }}
+                            </span>
                           </div>
+
+                          <div class="bg-light py-3 px-3">
+
+                            <select name="id" id="{{ product.id | prepend: 'variant-select-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
+                              {% for variant in product.variants %}
+                                <option
+                                  {% unless variant.available %}disabled="disabled"{% endunless %}
+                                  value="{{ variant.id }}">
+                                    {{ variant.title }} - {{ variant.price | money }}
+                                </option>
+                              {% endfor %}
+                            </select>
+
+                            <hr class="mt-4 mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
+
+                            <div class="d-flex justify-content-center">
+                              <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
+                              <button class="add-to-cart-btn btn btn-primary" type="submit" name="add" data-loading-text="{{ 'misc.loading' | t }}" data-add-to-cart-text="{{ 'product.add_to_cart' | t }}">
+                                <div class="d-none bs-spinner spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></div>
+                                <span>{{ 'product.add_to_cart' | t }}</span>
+                              </button>
+                            </div>
+
+                          </div>
+
                         {% endform %}
 
                         <div class="rte">
@@ -217,7 +246,65 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div><!-- /Modal -->
+
+            <script>
+              window.addEventListener('DOMContentLoaded', () => {
+                jQuery(document).ready(function ($) {
+
+                  // Initialize multi selector for product
+                  {% unless product.has_only_default_variant %}
+                    new Shopify.OptionSelectors("{{ product.id | prepend: 'variant-select-' }}", {
+                      product: {{ product | json }},
+                      onVariantSelected: function(variant, selector) {
+                        // console.log(variant)
+                        // console.log(selector)
+
+                        let modalId = $(`#quick-view-modal-${selector.product.id}`)
+
+                        if (variant) {
+                          if (variant.available) {
+                            modalId.find(':input[type="number"]').prop("disabled", false).fadeTo(200, 1)
+                            modalId.find('.add-to-cart-btn').prop("disabled", false).find('span').html("{{ 'product.add_to_cart' | t }}").fadeTo(200, 1)
+                          }
+                          else {
+                            modalId.find(':input[type="number"]').prop("disabled", true).fadeTo(200, 0.5)
+                            modalId.find('.add-to-cart-btn').prop("disabled", true).find('span').html("{{ 'product.sold_out' | t }}").fadeTo(200, 0.5)
+                          }
+
+                          if (variant.compare_at_price > variant.price) {
+                            // {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+
+                            modalId.find('.product-discount-badge')
+                              .removeClass('d-none')
+                              .addClass('d-block')
+                              .html(`-${Math.round((variant.compare_at_price - variant.price) / variant.compare_at_price * 100)}%`)
+                            modalId.find('.product-price').html(`
+                                <span class="sr-only">{{ 'product.regular_price' | t }}</span>
+                                <s class="text-muted opacity-75 mr-2">
+                                  ${Shopify.formatMoney(variant.compare_at_price, "")}
+                                </s>
+                                <span>${Shopify.formatMoney(variant.price, "")}</span>
+                              `)
+                          } else {
+                            modalId.find('.product-discount-badge').removeClass('d-block').addClass('d-none')
+                            modalId.find('.product-price').html('<span>'+ Shopify.formatMoney(variant.price, "") + '</span>' )
+                          }
+
+                          if (variant.featured_image)
+                            selectCurrentGalleryImage($(`a#product-image-${variant.featured_image.id}`))
+                          else
+                            selectCurrentGalleryImage($('a#product-image-{{ product.featured_image.id }}'))
+                        }
+                      },
+                      enableHistoryState: false
+                    })
+                  {% endunless %}
+
+                })
+              })
+            </script>
+
           {% endif %}
 
         </li>
@@ -247,6 +334,11 @@
 
 
 <style>
+/*
+  We wrap with a style tag to enable editor styling on
+  stylesheet liquid tag
+*/
+
 {% stylesheet 'scss' %}
 .featured-collection {
 
@@ -375,31 +467,32 @@
 {% endstylesheet %}
 </style>
 
-<script>
-{% javascript %}
-// // initialize multi selector for product
-// {% unless product.has_only_default_variant %}
-//   new Shopify.OptionSelectors("variant-select", {
-//     product: {{ product | json }},
-//     onVariantSelected: selectCallback,
-//     enableHistoryState: true
-//   })
-// {% endunless %}
 
-// Lazyload images
-if ('loading' in HTMLImageElement.prototype) {
-  const images = document.querySelectorAll('img[loading="lazy"]');
-  images.forEach(img => {
-    img.src = img.dataset.src;
-  });
-} else {
-  // Dynamically import the LazySizes library
-  const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js';
-  document.body.appendChild(script);
-}
+<script>
+/*
+  We wrap with a script tag to enable editor styling on
+  javascript liquid tag
+*/
+// window.addEventListener('DOMContentLoaded', () => {
+//   jQuery(document).ready(function ($) {
+//     // jQuery inline code
+//
+//   })
+// })
+
+{% javascript %}
+$('.product-image-gallery a').click(function(event) {
+  event.preventDefault()
+  selectCurrentGalleryImage($(this))
+})
 {% endjavascript %}
 </script>
+
+<script>
+/*
+  We wrap with a script tag to enable editor styling on
+  schemd liquid tag
+*/
 {% schema %}
   {
     "name": "Featured collection",
@@ -846,3 +939,4 @@ if ('loading' in HTMLImageElement.prototype) {
     ]
   }
 {% endschema %}
+</script>
