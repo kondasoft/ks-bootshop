@@ -17,3 +17,12 @@
     @extend .list-unstyled, .mb-0;
   }
 }
+
+
+// OptionSelectors script
+.selector-wrapper {
+  @extend .form-group;
+  select {
+    @extend .custom-select;
+  }
+}
