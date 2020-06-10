@@ -2,7 +2,8 @@
   "misc": {
     "close": "Close",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "loading": "Loading"
   },
   "404": {
     "title": "404 - Not found",
