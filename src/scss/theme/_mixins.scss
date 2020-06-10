@@ -1,0 +1,59 @@
+// Buttons
+@mixin button-3d-variant($background, $border-bottom: darken($background, 12.5%), $hover-background: lighten($background, 7.5%), $hover-border-bottom: lighten($border-bottom, 12.5%), $active-background: darken($background, 7.5%), $active-border-bottom: darken($border-bottom, 7.5%)) {
+  color: color-yiq($background);
+  @include gradient-bg($background);
+  border-bottom-width: 4px;
+  border-bottom-color: $border-bottom;
+  @include box-shadow($btn-box-shadow);
+
+  @include hover() {
+    color: color-yiq($hover-background);
+    @include gradient-bg($hover-background);
+    border-color: $hover-border-bottom;
+  }
+
+  &:focus,
+  &.focus {
+    color: color-yiq($hover-background);
+    @include gradient-bg($hover-background);
+    border-bottom-color: $hover-border-bottom;
+    @if $enable-shadows {
+      @include box-shadow($btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border-bottom, 15%), .5));
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border-bottom, 15%), .5);
+    }
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    color: color-yiq($background);
+    background-color: $background;
+    border-bottom-color: $border-bottom;
+    // Remove CSS gradients if they're enabled
+    @if $enable-gradients {
+      background-image: none;
+    }
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    color: color-yiq($active-background);
+    background-color: $active-background;
+    @if $enable-gradients {
+      background-image: none; // Remove the gradient for the pressed/active state
+    }
+    border-color: $active-border-bottom;
+
+    &:focus {
+      @if $enable-shadows and $btn-active-box-shadow != none {
+        @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border-bottom, 15%), .5));
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border-bottom, 15%), .5);
+      }
+    }
+  }
+}
