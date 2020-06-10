@@ -1,21 +1,19 @@
-// Responsive utility classes
+// Responsive
 @each $breakpoint in map-keys($grid-breakpoints) {
   @include media-breakpoint-up($breakpoint) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-    .position#{$infix}-static    { position: static!important; }
-    .position#{$infix}-relative  { position: relative!important; }
-    .position#{$infix}-absolute  { position: absolute!important; }
-    .position#{$infix}-fixed     { position: fixed!important; }
-    .position#{$infix}-sticky    { position: sticky!important; }
 
     .width#{$infix}-auto    { width: auto }
     .width#{$infix}-100     { width: 100% }
   }
 }
 
-// Opacity utility classes
-$opacityList: 0, 25, 50, 75;
-@each $value in $opacityList {
+// Opacity
+@each $value in $opacities {
   .opacity-#{$value} { opacity: #{$value} + '%' }
+}
+
+// Font Sizes
+@each $value in $font-sizes {
+  .font-size-#{$value} { font-size: #{$value} + '%' }
 }
