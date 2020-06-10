@@ -12,3 +12,25 @@
 .dropdown-item {
   transition: all .2s ease-out;
 }
+
+
+// Modal
+.modal-dialog {
+  .modal.zoom-in & {
+    transform: $modal-zoom-in-transform;
+  }
+  .modal.zoom-out & {
+    transform: $modal-zoom-out-transform;
+  }
+  .modal.show & {
+    transform: $modal-show-transform;
+  }
+}
+
+
+// Buttons
+@each $color, $value in $theme-colors {
+  .btn-3d-#{$color} {
+    @include button-3d-variant($value);
+  }
+}
