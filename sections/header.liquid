@@ -34,7 +34,10 @@
   {% endif %}
 {% endif %}
 
-<nav id="navbar" class="navbar {{ section.settings.navbar_expand }} {{ section.settings.navbar_color }} {% if section.settings.shadow %}shadow-sm{% endif %}">
+<nav
+  id="navbar"
+  class="navbar {{ section.settings.navbar_expand }} {{ section.settings.navbar_color }} {% if section.settings.shadow %}shadow-sm{% endif %}"
+  >
   {% if section.settings.container %}
     <div class="container">
   {% endif %}
@@ -66,7 +69,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown-{{ forloop.index0 }}">
                 {% for childlink in link.links %}
                   {% if childlink.title contains "--divider" %}
-                    <div class="dropdown-divider"></div>
+                    <hr class="dropdown-divider"></hr>
                   {% elsif childlink.title contains '--header' %}
                     <h6 class="dropdown-header">{{ childlink.title | remove: "--header" }}</h6>
                   {% else %}
@@ -126,9 +129,11 @@
 
 
 <style>
+{% comment %}
 /*
-  We wrap with a style tag to enable editor styling
+  Wrapped with style tag to enable editor styling
 */
+{% endcomment %}
 
 {% if section.settings.sticky %}
   #shopify-section-header {
@@ -165,12 +170,7 @@ jQuery(document).ready(function ($) {
 
 })
 {% endjavascript %}
-</script>
 
-<script>
-/*
-  We wrap with a script tag to enable editor styling
-*/
 {% schema %}
 {
   "name": "Header",
