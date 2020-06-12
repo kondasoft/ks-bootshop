@@ -1,17 +1,39 @@
 <div class="{% if section.settings.container %}container{% endif %}">
 
-  <div
+  <section
     id="{{ 'carousel-' | append: section.id }}"
-    class="carousel {{ section.settings.transition | escape }} {{ section.settings.margin_top | prepend: 'mt-' }} {{ section.settings.margin_bottom | prepend: 'mb-' }}"
+    class="
+      carousel
+      {{ section.settings.transition | escape }}
+      {{ section.settings.margin_top | prepend: 'mt-' }}
+      {{ section.settings.margin_bottom | prepend: 'mb-' }}
+      {% if section.settings.full_height %} carousel-full-height {% endif %}
+      {% if section.settings.zoom_effect %} carousel-zoom-effect {% endif %}
+    "
     data-ride="carousel"
     data-pause="{% if section.settings.pause_hover %}hover{% else %}false{% endif %}"
     data-interval="{{ section.settings.interval | times: 1000 }}"
+    aria-roledescription="carousel"
+    aria-label="{{ 'carousel.carousel' | t }}"
   >
 
     {% if section.settings.heading != blank %}
       <{{ section.settings.heading_size }} class="{{ section.settings.heading_alignment }}">
         {{ section.settings.heading | escape }}
       </{{ section.settings.heading_size }}>
+    {% endif %}
+
+    {% if section.settings.interval > 0 %}
+      <button
+        class="carousel-autoplay-btn is-playing"
+        title="{{ 'carousel.label_stop' | t }}"
+        aria-label="{{ 'carousel.label_stop' | t }}"
+        data-label-play="{{ 'carousel.label_play' | t }}"
+        data-label-stop="{{ 'carousel.label_stop' | t }}"
+      >
+        <span class="icon-pause">{% include 'icon-pause_circle_outline.liquid', width: '32', height: '32' %}</span>
+        <span class="icon-play">{% include 'icon-play_circle_outline.liquid', width: '32', height: '32' %}</span>
+      </button>
     {% endif %}
 
     {% if section.settings.indicators %}
@@ -26,9 +48,14 @@
       </ol>
     {% endif %}
 
-    <div class="carousel-inner">
+    <div id="{{ 'carousel-inner' | append: section.id }}" class="carousel-inner" aria-live="off">
       {% for block in section.blocks %}
-        <div class="carousel-item {% if forloop.first == true %} active {% endif %} {% if block.settings.caption_backdrop %}caption-backdrop{% endif %}">
+        <div
+          class="carousel-item {% if forloop.first == true %} active {% endif %} {% if block.settings.caption_backdrop %}caption-backdrop{% endif %}"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="{{ 'carousel.slide_number_off' | t: slide_number: forloop.index, total_slides: section.blocks.size }}"
+        >
 
           {% if block.settings.image != blank %}
 
@@ -49,6 +76,7 @@
               alt="{{ block.settings.image.alt }}"
               width="1800"
               height="{{ section.settings.image_height_aspect_ratio | times: 1800 | round }}"
+              style="{{ section.settings.img_min_height | prepend: 'min-height: ' | append: 'px' }}"
             >
           {% else %}
             {% capture current %}{% cycle 1, 2 %}{% endcapture %}
@@ -80,11 +108,11 @@
     </div>
 
     {% if section.settings.controls %}
-      <a class="carousel-control-prev" href="#{{ 'carousel-' | append: section.id }}" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#{{ 'carousel-' | append: section.id }}" role="button" data-slide="prev" aria-controls="{{ 'carousel-inner' | append: section.id }}">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">{{ 'misc.previous' | t }}</span>
       </a>
-      <a class="carousel-control-next" href="#{{ 'carousel-' | append: section.id }}" role="button" data-slide="next">
+      <a class="carousel-control-next" href="#{{ 'carousel-' | append: section.id }}" role="button" data-slide="next" aria-controls="{{ 'carousel-inner' | append: section.id }}">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">{{ 'misc.next' | t }}</span>
       </a>
@@ -94,120 +122,201 @@
       <div class="carousel-progress-bar"></div>
     {% endif %}
 
-  </div>
+  </section>
 
 </div>
 
+
 <style>
-#carousel-{{ section.id }} .carousel-item img,
-#carousel-{{ section.id }} .carousel-item svg {
-  object-fit: cover;
-  min-height: {{ section.settings.img_min_height | append: 'px'}};
-}
+{% comment %}
+/*
+  Wrapped with style tag to enable editor styling
+*/
+{% endcomment %}
 
-#carousel-{{ section.id }} .carousel-item.caption-backdrop:before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 240px;
-  z-index: 1;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));
-}
+{% stylesheet 'scss' %}
 
-{% if section.settings.progress_bar and section.settings.interval > 0  %}
-  #carousel-{{ section.id }} .carousel-progress-bar {
+.carousel {
+  .carousel-item {
+    img, svg {
+      object-fit: cover;
+    }
+    &.caption-backdrop:before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 240px;
+      z-index: 1;
+      background: linear-gradient(rgba(black, 0), rgba(black, .5));
+    }
+  }
+
+  .carousel-autoplay-btn {
+    background: transparent;
+    border: none;
+    padding: .25rem;
+    color: white;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    opacity: .5;
+    transition: all .2s ease-out;
+    &:hover,
+    &:focus {
+      opacity: 1;
+      outline: none;
+    }
+    &:focus {
+      background: rgba(black, .25);
+      border-radius: 4px;
+    }
+    &.is-playing {
+      .icon-play { display: none }
+    }
+    &.is-paused {
+      .icon-pause { display: none }
+    }
+  }
+
+  .carousel-progress-bar {
     z-index: 1;
     height: 3px;
     width: 0%;
     position: absolute;
     bottom: 0;
     left: 0;
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(white, 0.75);
     border-radius: 3px;
   }
-{% endif %}
+
+  &.carousel-full-height {
+    .carousel-item {
+      img, svg {
+        width: 100%!important;
+        height: 100vh!important;
+        min-height: -webkit-fill-available;
+      }
+    }
+  }
+
+  &.carousel-zoom-effect {
+    .carousel-item {
+      img, svg {
+        transform: scale(1.2);
+        animation: carousel_zoom_effect 10s ease-out;
+      }
+    }
+  }
+}
+
+@keyframes carousel_zoom_effect {
+  from {
+     transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+{% endstylesheet %}
 
 {% if section.settings.full_height %}
-  #carousel-{{ section.id }} .carousel-item img,
-  #carousel-{{ section.id }} .carousel-item svg {
-    width: 100%!important;
-    height: 100vh!important;
-    min-height: -webkit-fill-available;
-  }
   #shopify-section-header {
     position: fixed;
     width: 100%;
   }
 {% endif %}
 
-{% if section.settings.zoom_effect %}
-  #carousel-{{ section.id }} .carousel-inner .carousel-item > img,
-  #carousel-{{ section.id }} .carousel-inner .carousel-item > svg {
-    transform: scale(1.2);
-    animation: carousel_zoom 10s ease-out;
-  }
-  @keyframes carousel_zoom {
-    from {
-       transform: scale(1);
-    }
-    to {
-      transform: scale(1.2);
-    }
-  }
-{% endif %}
 </style>
 
 <script>
-window.addEventListener('DOMContentLoaded', (event) => {
-  jQuery(document).ready(function ($) {
+{% comment %}
+/*
+  Wrapped with script tag to enable editor styling
+*/
+{% endcomment %}
 
-    {% if section.settings.progress_bar and section.settings.interval > 0  %}
-      let percent = 0
-      let progressBar = $('#carousel-{{ section.id }} .carousel-progress-bar')
-      let carousel = $('#carousel-{{ section.id }}')
+// window.addEventListener('DOMContentLoaded', (event) => {
+//
+// })
 
-      function progressBarCarousel() {
-        progressBar.css({
-          width: percent + '%'
-        })
+{% javascript %}
+jQuery(document).ready(function ($) {
+  let carousel = $('.carousel')
+  let interval = carousel.attr('data-interval')
 
-        percent = percent + .1;
 
-        if (percent > 100) {
-          percent = 0
-          carousel.carousel('next');
+  if (interval > 0) {
+    let carousel = $('.carousel')
+    let interval = carousel.attr('data-interval')
+
+    if (interval > 0) {
+      let width = 0
+      let paused = false
+      let stopped = false
+
+      let startInterval = setInterval(function handleInterval() {
+        if (!paused)
+          width++
+
+        $(carousel.find('.carousel-progress-bar')).css('width', width * (1000 / interval) + '%')
+      }, 10);
+
+      carousel.on('slide.bs.carousel', function () {
+        if (!stopped) {
+          width = 0
+          paused = false
         }
-      }
-
-      carousel.carousel({
-        interval: false,
-        pause: true
-      }).on('slid.bs.carousel', function () {
-
       })
-
-      var progressBarInterval = setInterval(progressBarCarousel, {{ section.settings.interval }} )
 
       carousel.hover(
         function() {
-          clearInterval(progressBarInterval);
+          paused = true
         },
         function() {
-          progressBarInterval = setInterval(progressBarCarousel, {{ section.settings.interval }} )
+          if (!stopped) {
+            paused = false
+            width = 0
+          }
         }
       )
-    {% endif %}
 
-  })
+      $(carousel.find('.carousel-autoplay-btn')).click(function () {
+        if ($(this).hasClass('is-playing')) {
+          $(this)
+            .removeClass('is-playing')
+            .addClass('is-paused')
+            .attr('aria-label', $(this).attr('data-label-play'))
+          carousel.find('.carousel-inner').attr('aria-live', 'polite')
+          paused = true
+          stopped = true
+          carousel.carousel('pause')
+        } else {
+          $(this)
+            .removeClass('is-paused')
+            .addClass('is-playing')
+            .attr('aria-label', $(this).attr('data-label-stop'))
+          carousel.find('.carousel-inner').attr('aria-live', 'off')
+          paused = false
+          stopped = false
+          width = 0
+          carousel.carousel('cycle')
+        }
+      })
+
+    }
+
+  }
 })
+{% endjavascript %}
 </script>
 
 {% schema %}
 {
   "name": "Carousel",
-  "tag": "section",
   "settings": [
     {
       "type": "header",
@@ -523,9 +632,3 @@ window.addEventListener('DOMContentLoaded', (event) => {
   ]
 }
 {% endschema %}
-
-{% stylesheet 'scss' %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}
