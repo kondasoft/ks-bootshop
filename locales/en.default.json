@@ -12,6 +12,12 @@
   "accessibility": {
     "skip_to_content": "Skip to content"
   },
+  "carousel": {
+    "carousel": "Carousel",
+    "label_play": "Start autoplay",
+    "label_stop": "Stop autoplay",
+    "slide_number_off": "{{ slide_number }} of {{ total_slides }}"
+  },
   "cart": {
     "general": {
       "title": "Cart",
