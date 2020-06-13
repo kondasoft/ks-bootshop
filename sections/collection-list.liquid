@@ -64,7 +64,7 @@
           {% endif %}
 
           {% if section.settings.show_collection_title %}
-            <p class="h6 mb-0">
+            <p class="{{ section.settings.collection_title_size }} mb-0">
               {%- assign default_label = 'onboarding.collection_title' | t -%}
               {{ collection.title | default: default_label }}
 
@@ -263,6 +263,32 @@
         "default": true
       },
       {
+        "type": "select",
+        "id": "collection_title_size",
+        "label": "Collection title size",
+        "default": "h6",
+        "options": [
+          {
+            "value": "h1", "label": "H1"
+          },
+          {
+            "value": "h2", "label": "H2"
+          },
+          {
+            "value": "h3", "label": "H3"
+          },
+          {
+            "value": "h4", "label": "H4"
+          },
+          {
+            "value": "h5", "label": "H5"
+          },
+          {
+            "value": "h6", "label": "H6"
+          }
+        ]
+      },
+      {
         "type": "checkbox",
         "id": "show_collection_count",
         "label": "Show number of products",
@@ -296,13 +322,13 @@
       {
         "type": "checkbox",
         "id": "image_border",
-        "label": "Border",
+        "label": "Image border",
         "default": false
       },
       {
         "type": "checkbox",
         "id": "image_circle",
-        "label": "Circle",
+        "label": "Image as circle",
         "default": true
       },
       {
