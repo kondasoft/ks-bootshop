@@ -1,4 +1,4 @@
-<article class="mt-8 container">
+<div class="mt-8 container">
 
   {% if cart.item_count > 0 %}
 
@@ -12,81 +12,97 @@
             <p class="text-muted">{{ 'cart.general.subtitle_html' | t }}</p>
           {% endif %}
 
-          {% for item in cart.items %}
-            <div id="cart-item-{{ item.key | replace: ":", "_" }}" class="d-flex py-4 border-bottom">
+          <ul class="list-unstyled">
+            {% for item in cart.items %}
+              <li id="cart-item-{{ item.key | replace: ":", "_" }}" class="d-flex py-4 border-bottom">
 
-              {% if item.image != blank %}
-                {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
-                <a href="{{ item.url | within: collections.all }}">
-                  <img class="img-fluid mr-3 {% if section.settings.image_border %}img-thumbnail{% endif %}" src="{{ item.image | img_url: image_size, crop: 'center'  }}" alt="{{ item.image.alt | escape }}" width="{{ section.settings.image_width }}" height="{{ section.settings.image_height }}">
-                </a>
-              {% endif %}
-
-              <div class="flex-grow-1 mt-2">
-                <h6>
-                  <a href="{{ item.url }}">{{ item.product.title }}</a>
-                </h6>
-
-                {% unless item.product.has_only_default_variant %}
-                  <p>{{ item.variant.title }}</p>
-                {% endunless %}
-
-                {% if section.settings.show_vendor %}
-                  <p class="text-muted">{{ item.vendor }}</p>
+                {% if item.image != blank %}
+                  {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+                  <a href="{{ item.url | within: collections.all }}" class="flex-shrink-0">
+                    <img class="img-fluid mr-3 {% if section.settings.image_border %}img-thumbnail{% endif %}" src="{{ item.image | img_url: image_size, crop: 'center'  }}" alt="{{ item.image.alt | escape }}" width="{{ section.settings.image_width }}" height="{{ section.settings.image_height }}">
+                  </a>
                 {% endif %}
 
-                {%- assign property_size = item.properties | size -%}
+                <div class="flex-grow-1 mt-2">
+                  <h6>
+                    <a href="{{ item.url }}">{{ item.product.title }}</a>
+                  </h6>
 
-                {% if property_size > 0 %}
-                  {% for p in item.properties %}
-                    {% unless p.last == blank %}
-                    {{ p.first }}:
-
-                    {% if p.last contains '/uploads/' %}
-                      <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
-                    {% else %}
-                      {{ p.last }}
-                    {% endif %}
-
-                    {% endunless %}
-                  {% endfor %}
-                {% endif %}
-
-                {% if section.settings.show_quantity %}
-                  <div class="input-group mt-3 mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <label class="mb-0 text-muted small" for="updates_{{ item.key }}">
-                          {{ 'cart.label.qty' | t }}
-                        </label>
-                      </div>
-                    </div>
-                    <input
-                      class="form-control mr-2"
-                      size="10"
-                      type="number"
-                      name="updates[]"
-                      data-key="{{ item.key }}"
-                      value="{{ item.quantity }}"
-                      min="1"
-                      style="max-width: 60px"
-                      aria-label="{{ 'cart.label.quantity' | t }}"
-                    >
+                  <div
+                    class="cart-item-{{ item.key | replace: ":", "_" }}-price mt-1 mb-1 d-md-none"
+                    style="{{ settings.color_price | prepend: 'color: ' }}"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {{ item.line_price | money }}
                   </div>
-                {% endif %}
 
-                <a id="cart-item-{{ item.key | replace: ":", "_" }}-remove" class="small text-secondary text-decoration-underline" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
-                  {{ 'cart.general.remove' | t }}
-                </a>
+                  {% unless item.product.has_only_default_variant %}
+                    <p>{{ item.variant.title }}</p>
+                  {% endunless %}
 
-              </div>
+                  {% if section.settings.show_vendor %}
+                    <p class="text-muted">{{ item.vendor }}</p>
+                  {% endif %}
 
-              <div id="cart-item-{{ item.key | replace: ":", "_" }}-price" class="mt-2">
-                {{ item.line_price | money }}
-              </div>
+                  {%- assign property_size = item.properties | size -%}
 
-            </div>
-          {% endfor %}
+                  {% if property_size > 0 %}
+                    {% for p in item.properties %}
+                      {% unless p.last == blank %}
+                      {{ p.first }}:
+
+                      {% if p.last contains '/uploads/' %}
+                        <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                      {% else %}
+                        {{ p.last }}
+                      {% endif %}
+
+                      {% endunless %}
+                    {% endfor %}
+                  {% endif %}
+
+                  {% if section.settings.show_quantity %}
+                    <div class="input-group mt-3 mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <label class="mb-0 text-muted small" for="updates_{{ item.key }}">
+                            {{ 'cart.label.qty' | t }}
+                          </label>
+                        </div>
+                      </div>
+                      <input
+                        class="form-control mr-2"
+                        size="10"
+                        type="number"
+                        name="updates[]"
+                        data-key="{{ item.key }}"
+                        value="{{ item.quantity }}"
+                        min="1"
+                        style="max-width: 60px"
+                        aria-label="{{ 'cart.label.quantity' | t }}"
+                      >
+                    </div>
+                  {% endif %}
+
+                  <a id="cart-item-{{ item.key | replace: ":", "_" }}-remove" class="small text-secondary text-decoration-underline" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                    {{ 'cart.general.remove' | t }}
+                  </a>
+
+                </div>
+
+                <div
+                  class="cart-item-{{ item.key | replace: ":", "_" }}-price mt-2 d-none d-md-block"
+                  style="{{ settings.color_price | prepend: 'color: ' }}"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  {{ item.line_price | money }}
+                </div>
+
+              </li>
+            {% endfor %}
+          </ul>
 
         </div>
 
@@ -179,7 +195,7 @@
               itemPrice = item.final_line_price
           });
 
-          $(`#cart-item-${key.replace(':', '_')}-price`).text(Shopify.formatMoney(itemPrice, ""))
+          $(`.cart-item-${key.replace(':', '_')}-price`).text(Shopify.formatMoney(itemPrice, ""))
           $('#cart-subtotal').text(Shopify.formatMoney(subTotalPrice, ""))
 
         }, 'json')
