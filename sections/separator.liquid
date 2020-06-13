@@ -1,0 +1,50 @@
+<div class="{% if section.settings.container %} container {% else %} container-fluid {% endif %}">
+  <hr 
+    class="{{ section.settings.margin_top | prepend: 'mt-' }} {{ section.settings.margin_bottom | prepend: 'mb-' }}" 
+    style="{{ section.settings.color | prepend: 'border-color: ' }}"
+  >
+</div>
+
+{% schema %}
+{
+  "name": "Separator",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Border color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Wrap in container",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Separator",
+      "category": "Separator"
+    }
+  ]
+}
+{% endschema %}
