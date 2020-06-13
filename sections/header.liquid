@@ -113,10 +113,22 @@
       {% endif %}
 
       <li class="nav-item">
-        <a  class="nav-link d-inline-flex px-2 align-items-center {% if template.name == 'cart' %}active{% endif %}" href="{{ routes.cart_url }}">
+        <a
+          id="cart-icon"
+          class="
+            nav-link
+            d-inline-flex
+            px-2 align-items-center
+            {% if template.name == 'cart' %}active{% endif %}
+            {% if  cart.item_count > 0 %}text-primary{% endif %}
+          "
+          href="{{ routes.cart_url }}"
+        >
           {% include 'icon-cart', width: 20, height: 20 %}
-          <span class="sr-only">{{ 'header.cart.title' | t }} {{ cart.item_count }} </span>
-          <span class="ml-2" aria-hidden="true">({{ cart.item_count }})</span>
+          <span class="sr-only">{{ 'header.cart.title' | t }}</span>
+          <span class="ml-2">
+            (<span id="cart-icon-count">{{ cart.item_count }}</span>)
+          </span>
         </a>
       </li>
 
@@ -174,7 +186,6 @@ jQuery(document).ready(function ($) {
 {% schema %}
 {
   "name": "Header",
-  "tag": "header",
   "settings": [
     {
       "type": "header",
