@@ -71,7 +71,8 @@
     }
   },
   "onboarding": {
-    "product_title": "Product title"
+    "product_title": "Product title",
+    "collection_title": "Collection title"
   },
   "product": {
     "regular_price": "Regular price",
@@ -83,9 +84,12 @@
     "quantity": "Quantity",
     "quick_view": "Quick view",
     "view_product": "View product",
-    "add_to_cart": "Add to Cart"
+    "add_to_cart": "Add to Cart",
+    "added_to_cart": "Added to your cart",
+    "view_cart": "View cart"
   },
   "social": {
+    "share_label": "Share on social media",
     "share_on_facebook": "Share",
     "share_on_twitter": "Tweet",
     "share_on_pinterest": "Pin it",
