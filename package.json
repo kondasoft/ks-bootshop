@@ -1,0 +1,17 @@
+{
+  "name": "ks-bootshop",
+  "version": "1.0.0",
+  "scripts": {
+    "sass": "sass src/scss/theme.scss:assets/theme.min.css --style=compressed && postcss assets/theme.min.css --replace --use autoprefixer",
+    "js": "terser src/js/theme.js --output assets/theme.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kondasoft/ks-bootshop.git"
+  },
+  "author": "KondaSoft",
+  "bugs": {
+    "url": "https://github.com/kondasoft/ks-bootshop/issues"
+  },
+  "homepage": "https://github.com/kondasoft/ks-bootshop#readme"
+}
