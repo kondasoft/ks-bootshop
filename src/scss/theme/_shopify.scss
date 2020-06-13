@@ -26,3 +26,31 @@
     @extend .custom-select;
   }
 }
+
+
+// Product Discount badge
+.product-discount-badge {
+  color: white;
+  display: inline-block;
+  padding: .1rem .25rem;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  &.badge-left {
+    left: 0;
+    border-bottom-right-radius: 4px;
+  }
+  &.badge-right {
+    right: 0;
+    border-bottom-left-radius: 4px;
+  }
+}
+.img-thumbnail .product-discount-badge {
+  top: 4px;
+  &.badge-left {
+    left: 4px;
+  }
+  &.badge-right {
+    right: 4px;
+  }
+}
