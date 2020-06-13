@@ -34,3 +34,109 @@
     @include button-3d-variant($value);
   }
 }
+
+
+// Toasts
+.toast {
+  &.toast-bottom-center {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1080;
+    min-width: 280px;
+  }
+  &.toast-bottom-right {
+    position: fixed;
+    bottom: 0px;
+    right: 20px;
+    z-index: 1080;
+    min-width: 280px;
+  }
+}
+
+// Images
+.image-hover-fade-in {
+  img, svg {
+    transition: all .2s ease-out;
+    opacity: .75;
+    @at-root a:hover .image-hover-fade-in {
+      img, svg {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.image-hover-fade-out {
+  img, svg {
+    transition: all .2s ease-out;
+     @at-root a:hover .image-hover-fade-out {
+       img, svg {
+         opacity: 0.75;
+       }
+     }
+  }
+}
+
+.image-hover-scale-in {
+  img, svg {
+    transition: all .2s ease-out;
+    @at-root a:hover .image-hover-scale-in {
+      img, svg {
+        transform: scale(1.25);
+      }
+    }
+  }
+}
+
+.image-hover-scale-out {
+  img, svg {
+    transition: all .2s ease-out;
+    transform: scale(1.25);
+    @at-root a:hover .image-hover-scale-out {
+      img, svg {
+        transform: scale(1);
+      }
+    }
+  }
+}
+
+.image-hover-flashing {
+  img, svg {
+    @at-root a:hover .image-hover-flashing {
+      img, svg {
+        opacity: 1;
+        animation: image_hover_flashing 1.5s;
+      }
+    }
+  }
+}
+
+.image-hover-shine {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    z-index: 2;
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(white, 0) 0%, rgba(white, .3) 100%);
+    transform: skewX(-25deg);
+    @at-root a:hover .image-hover-shine:before {
+      animation: image_hover_shine 1s;
+    }
+  }
+}
+
+@keyframes image_hover_flashing {
+  0% { opacity: .4; }
+  100% { opacity: 1; }
+}
+
+@keyframes image_hover_shine {
+  100% { left: 150%; }
+}
