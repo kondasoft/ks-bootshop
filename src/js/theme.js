@@ -19,7 +19,7 @@ $(function() {
   if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]')
     images.forEach(img => {
-      img.src = img.dataset.src;
+      img.src = img.dataset.src
     })
   } else {
     // Browser does not support "loeading" attribute. Use fallback alternative
