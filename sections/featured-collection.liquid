@@ -66,9 +66,9 @@
             </div>
 
             {% if section.settings.show_product_title %}
-              <{{ section.settings.product_title_size }}>
+              <p class="{{ section.settings.product_title_size }}">
                 {{ product.title | escape }}
-              </{{ section.settings.product_title_size }}>
+              </p>
             {% endif %}
 
             {% if section.settings.show_price %}
@@ -105,7 +105,14 @@
             </button>
 
             <!-- Modal -->
-            <div class="modal {{ section.settings.quick_view_transition }}" id="{{ product.id | prepend: 'quick-view-modal-' }}" tabindex="-1" role="dialog" aria-labelledby="#{{ product.id | prepend: 'quick-view-modal-label-' }}" aria-hidden="true">
+            <div
+              class="modal {{ section.settings.quick_view_transition }}"
+              id="{{ product.id | prepend: 'quick-view-modal-' }}"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="{{ product.id | prepend: 'quick-view-modal-label-' }}"
+              aria-hidden="true"
+            >
               <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
 
@@ -218,7 +225,15 @@
 
                             <div class="d-flex justify-content-center">
                               <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
-                              <button class="add-to-cart-btn btn btn-primary" type="submit" name="add" data-loading-text="{{ 'misc.loading' | t }}" data-add-to-cart-text="{{ 'product.add_to_cart' | t }}">
+                              <button
+                                class="add-to-cart-btn btn btn-primary"
+                                type="submit"
+                                name="add"
+                                data-loading-text="{{ 'misc.loading' | t }}"
+                                data-add-to-cart-text="{{ 'product.add_to_cart' | t }}"
+                                data-view-cart-text="{{ 'product.view_cart' | t }}"
+                                aria-controls="cart-toast-wrapper"
+                              >
                                 <div class="d-none bs-spinner spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></div>
                                 <span>{{ 'product.add_to_cart' | t }}</span>
                               </button>
@@ -292,9 +307,9 @@
                           }
 
                           if (variant.featured_image)
-                            selectCurrentGalleryImage($(`a#product-image-${variant.featured_image.id}`))
+                            handleProductImageGallery($(`a#product-image-${variant.featured_image.id}`))
                           else
-                            selectCurrentGalleryImage($('a#product-image-{{ product.featured_image.id }}'))
+                            handleProductImageGallery($('a#product-image-{{ product.featured_image.id }}'))
                         }
                       },
                       enableHistoryState: false
@@ -342,128 +357,7 @@
 {% stylesheet 'scss' %}
 .featured-collection {
 
-  // Discount badge
-  .product-discount-badge {
-    color: white;
-    display: inline-block;
-    padding: .1rem .25rem;
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    &.badge-left {
-      left: 0;
-      border-bottom-right-radius: 4px;
-    }
-    &.badge-right {
-      right: 0;
-      border-bottom-left-radius: 4px;
-    }
-  }
-  .img-thumbnail .product-discount-badge {
-    top: 4px;
-    &.badge-left {
-      left: 4px;
-    }
-    &.badge-right {
-      right: 4px;
-    }
-  }
-
-
-  // Image hover effects
-  .image-hover-fade-in {
-    img, svg {
-      transition: all .2s ease-out;
-      opacity: .75;
-    }
-  }
-
-  a:hover .image-hover-fade-in {
-    img, svg {
-      opacity: 1;
-    }
-  }
-
-  .image-hover-fade-out {
-    img, svg {
-      transition: all .2s ease-out;
-    }
-  }
-
-  a:hover .image-hover-fade-out {
-    img, svg {
-      opacity: 0.75;
-    }
-  }
-
-  .image-hover-scale-in {
-    img, svg {
-      transition: all .2s ease-out;
-    }
-  }
-
-  a:hover .image-hover-scale-in {
-    img, svg {
-      transform: scale(1.25);
-    }
-  }
-
-  .image-hover-scale-out {
-    img, svg {
-      transition: all .2s ease-out;
-      transform: scale(1.25);
-    }
-  }
-
-  a:hover .image-hover-scale-out {
-    img, svg {
-      transform: scale(1);
-    }
-  }
-
-  a:hover .image-hover-flashing {
-    img, svg {
-      opacity: 1;
-      animation: image_hover_flashing 1.5s;
-    }
-  }
-
-  .image-hover-shine {
-    position: relative;
-    &:before {
-      content: '';
-      position: absolute;
-    	top: 0;
-    	left: -75%;
-    	z-index: 2;
-    	display: block;
-    	width: 50%;
-    	height: 100%;
-    	background: linear-gradient(to right, rgba(white, 0) 0%, rgba(white, .3) 100%);
-    	transform: skewX(-25deg);
-    }
-  }
-
-  a:hover .image-hover-shine:before {
-  	animation: image_hover_shine 1s;
-  }
 }
-
-@keyframes image_hover_flashing {
-  0% {
-    opacity: .4;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes image_hover_shine {
-  100% {
-    left: 150%;
-  }
-}
-
 {% endstylesheet %}
 </style>
 
@@ -483,7 +377,7 @@
 {% javascript %}
 $('.product-image-gallery a').click(function(event) {
   event.preventDefault()
-  selectCurrentGalleryImage($(this))
+  handleProductImageGallery($(this))
 })
 {% endjavascript %}
 </script>
@@ -509,7 +403,7 @@ $('.product-image-gallery a').click(function(event) {
         "type": "richtext",
         "id": "subheading",
         "label": "Subheading text",
-        "default": "<p>Inspired by simplicity, driven by performance</p>"
+        "default": "<p>Write something catchy here.</p>"
       },
       {
         "id": "collection",
@@ -625,7 +519,7 @@ $('.product-image-gallery a').click(function(event) {
         "type": "checkbox",
         "id": "container",
         "label": "Wrap in container",
-        "default": false
+        "default": true
       },
       {
         "type": "header",
@@ -771,7 +665,7 @@ $('.product-image-gallery a').click(function(event) {
         "id": "quick_view_desc_truncate",
         "label": "Decription truncate",
         "default": "200",
-        "info": "The number of characters for the product description"
+        "info": "The maximum number of characters for the product description"
       },
       {
         "type": "checkbox",
