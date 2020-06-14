@@ -108,6 +108,11 @@
     "added_to_cart": "Added to your cart",
     "view_cart": "View cart"
   },
+  "newsletter": {
+    "email": "Your email address",
+    "confirmation": "Thanks for subscribing",
+    "submit": "Subscribe"
+  },
   "social": {
     "share_label": "Share on social media",
     "share_on_facebook": "Share",
