@@ -1,0 +1,242 @@
+<div class="
+  {{ section.settings.margin_top | prepend: 'mt-' }}
+  {{ section.settings.margin_bottom | prepend: 'mb-' }}
+  {{ section.settings.padding_top | prepend: 'pt-' }}
+  {{ section.settings.padding_bottom | prepend: 'pb-' }}
+  {% if section.settings.align_center %}text-center{% endif %}
+  {{ section.settings.bg_color }}
+">
+
+  <div class="container">
+
+    {% if section.settings.heading != blank %}
+      <{{ section.settings.heading_size }} class="">
+        {{ section.settings.heading | escape }}
+      </{{ section.settings.heading_size }}>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+
+      {% assign subheading_color = 'text-muted' %}
+      {% if section.settings.bg_color contains 'bg-dark' or section.settings.bg_color contains 'bg-primary' %}
+        {% assign subheading_color = 'text-white opacity-75' %}
+      {% endif %}
+      
+      <div class="rte {{ subheading_color }}">
+        {{ section.settings.subheading }}
+      </div>
+    {% endif %}
+
+    {% form 'customer', id: 'newsletter-form', class: 'mt-4 mb-2' %}
+      
+      <div role="alert" aria-live="polite" aria-atomic="true">
+        {{ form.errors | default_errors }}
+
+        {% if form.posted_successfully? %}
+          <p class="alert alert-success">
+            {{ 'newsletter.confirmation' | t }}
+          </p>
+        {% endif %}
+      </div>
+      
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      
+      <div class="form-inline flex-nowrap justify-content-center">
+        <input type="email" name="contact[email]" size="30" id="Email" class="form-control mr-2" value="{% if customer.email != blank %}{{ customer.email }}{% endif %}" placeholder="{{ 'newsletter.email' | t }}" aria-label="{{ 'newsletter.email' | t }}" autocorrect="off" autocapitalize="off">
+        <button type="submit" name="commit" id="Subscribe" class="btn {{ section.settings.button_style }}">{{ 'newsletter.submit' | t }}</button>
+      </div>
+
+    {% endform %}
+
+    {% if section.settings.note != blank %}
+      {% assign note_color = 'text-muted' %}
+      {% if section.settings.bg_color contains 'bg-dark' or section.settings.bg_color contains 'bg-primary' %}
+        {% assign note_color = 'text-white opacity-75' %}
+      {% endif %}
+      
+      <div class="rte mt-3 font-size-90 font-italic opacity-75 mb-n2 {{ note_color }}">
+        {{ section.settings.note }}
+      </div>
+    {% endif %}
+
+  </div>
+
+</div>
+
+
+{% javascript %}
+  // Newsletter ajax form
+  // jQuery(document).ready(function ($) {
+  //  $('form#newsletter-form').submit(function(e) {
+  //   e.preventDefault()
+  //    jQuery.post('/contact', $(this).serialize(), function(data) {
+  //      console.log(data)
+  //    })
+  //   })
+  // })
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "Newsletter subscribe"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading text",
+      "default": "<p>Be the first to get notified about our latest offers.</p>",
+      "info": "Leave empty to disable"
+    },
+    {
+      "type": "richtext",
+      "id": "note",
+      "label": "Bottom text",
+      "default": "<p>We usually send once a week</p>",
+      "info": "Leave empty to disable"
+    },
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "options": [
+        {
+          "value": "bg-white border-top border-bottom", "label": "White"
+        },
+        {
+          "value": "bg-light border-top border-bottom", "label": "Light"
+        },
+        {
+          "value": "bg-dark text-white", "label": "Dark"
+        },
+        {
+          "value": "bg-primary text-white", "label": "Primary"
+        }
+      ],
+      "default": "bg-light border-top border-bottom"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "align_center",
+      "label": "Align center",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id":  "button_style",
+      "label": "Button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "paragraph",
+      "content": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}
