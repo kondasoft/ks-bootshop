@@ -4,6 +4,7 @@
 
 // Callenge
 .shopify-challenge__container {
+  @extend .mt-8;
   .btn {
     @extend .btn-primary;
   }
