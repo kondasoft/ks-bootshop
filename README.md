@@ -18,16 +18,36 @@ There are 2 ways to install our theme (or any other theme for that matter) on yo
 
 2- The second option is by using [Theme kit](https://shopify.github.io/themekit/), the the official command line tool from Shopify. This is the option which we will be covering below, as it gives you far more freedom to customize and modify our theme.
 
-### Installation
+## Installation
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), official documentation before proceding. We are assuming that at this point you have already installed Theme Kit.
 
-#### 1- Install theme package (.zip file) in your Shopify admin.
-Get the latest package (.zip file) from our [releases](https://github.com/kondasoft/ks-bootshop/releases/). and install it from your Shopify admin. Read the [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/adding-themes#add-a-free-theme-from-the-admin) in case you need help with this point.
+### 1- Clone this repository (download theme files)
+Create a new folder on your computer, `cd` to it and run the following command to copy all theme files from our GitHub repository master branch. Note: Include the dot at the end of the command to clone into the current directory.
 
-#### 2- Configure theme with Theme Kit
-Find the theme id that you have just installed by running the following command:
+`git clone https://github.com/kondasoft/ks-bootshop .`
 
-`theme get --list -p=[your-password] -s=[you-store.myshopify.com]`
+### 2- Create and configure theme with Theme Kit
+Run the folowing command to create a new theme in your Shopify store along with our theme files that you have just downloaded:
 
-### Upgrading
+`theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="KS BootShop"`
+
+Now, you may run this command to open your shopify store with our theme in preview mode.
+
+`theme open`
+
+### 3- Modifing styles (SCSS) and javascript.
+You can run this 2 commands to compile and compress styles and scripts.
+
+`npm run styles` will compile your Sass files from the `src/scss` folder to the `assets` folder
+`npm run styles` will compile your JavaScript files from the `src/js` folder to the `assets` folder
+
+Then, after you have finished making changes to your site, run the following command from Theme Kit to upload your changes to your Shopify store.
+
+`theme deploy`
+
+better yet, run the following command to start watching for changes and deploy them automatically.
+
+`theme watch`
+
+## Upgrading
 This part will be covered soon.
