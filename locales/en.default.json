@@ -91,6 +91,7 @@
   },
   "onboarding": {
     "product_title": "Product title",
+    "product_desc_html": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer consequat at purus vel dapibus. Integer eu nibh eget erat placerat congue eget id neque.</p>",
     "collection_title": "Collection title",
     "blog_post_title": "Blog post title"
   },
