@@ -49,7 +49,7 @@
             ">
               {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
               <img
-                class="img-fluid lazyload"
+                class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
                 data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
                 alt="{{ product.featured_image.alt | escape }}"
                 width="{{ section.settings.image_width }}"
@@ -126,7 +126,7 @@
                   <div class="modal-body text-left">
                     <div class="row mx-n2">
 
-                      <div class="col-lg px-2 mb-4 mb-lg-0">
+                      <div class="product-images col-lg px-2 mb-4 mb-lg-0">
                         <div class="
                           position-relative
                           overflow-hidden
@@ -211,7 +211,7 @@
 
                           <div class="bg-light py-3 px-3">
 
-                            <select name="id" id="{{ product.id | prepend: 'variant-select-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
+                            <select name="id" id="{{ product.id | prepend: 'featured-collection-variant-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
                               {% for variant in product.variants %}
                                 <option
                                   {% unless variant.available %}disabled="disabled"{% endunless %}
@@ -269,7 +269,7 @@
 
                   // Initialize multi selector for product
                   {% unless product.has_only_default_variant %}
-                    new Shopify.OptionSelectors("{{ product.id | prepend: 'variant-select-' }}", {
+                    new Shopify.OptionSelectors("{{ product.id | prepend: 'featured-collection-variant-' }}", {
                       product: {{ product | json }},
                       onVariantSelected: function(variant, selector) {
                         // console.log(variant)
@@ -753,7 +753,7 @@ $('.product-image-gallery a').click(function(event) {
         "type": "select",
         "id":  "image_hover_effect",
         "label": "Hover effect",
-        "default": "image-hover",
+        "default": "image-hover-shine",
         "options": [
           {
             "value": "image-hover", "label": "No effect"
