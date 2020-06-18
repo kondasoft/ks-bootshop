@@ -1,15 +1,14 @@
 // WARNING
 // Do not edit any theme file directly as you will loose your changes
 // when you upgrade. Instead create a new SCSS file named "_custom.scss"
-// and uncomment the line below to include it in your imports
-//
+// under "src/scss" folder uncomment the line below to include it in 
+// your imports
+// 
 // Learn more about Bootstrap theming:
 // https://getbootstrap.com/docs/4.5/getting-started/theming/
 
-
 // Uncomment the following line to create your own SCSS styles
-// @import "custom.css"
-
+// @import "custom"
 
 // Theme Variables
 @import "theme/variables";
