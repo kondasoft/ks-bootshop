@@ -93,7 +93,9 @@ function handleProductImageGallery(el) {
   el.addClass('active').attr('aria-current', 'true')
   el.children('.img-thumbnail').addClass('border-secondary')
 
-  el.closest('.modal-body').find('img.product-featured-image')
+  console.log(el.closest('.product-images'))
+
+  el.closest('.product-images').find('img.product-featured-image')
     .attr('src', el.attr('data-featured-img'))
     .attr('alt', el.find('img').attr('alt'))
 }
