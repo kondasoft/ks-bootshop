@@ -12,7 +12,7 @@ In case you are interested in our Premium Shoipfy Themes, please visit our websi
 https://kondasoft.com
 
 ## Getting started
-There are 2 ways to install our theme (or any other theme for that matter) on your Shopify store. 
+There are 2 ways to install our theme (or any other Shopify theme) on your Shopify store. 
 
 1- The simpliest option, is by going to you Shopify Admin and installing the latest package (.zip file) from our [releases](https://github.com/kondasoft/ks-bootshop/releases/). In case you need help with this please check the [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/adding-themes#add-a-free-theme-from-the-admin) from Shopify. 
 
@@ -22,7 +22,7 @@ There are 2 ways to install our theme (or any other theme for that matter) on yo
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), official documentation before proceding. We are assuming that at this point you have already installed Theme Kit.
 
 ### 1- Clone this repository (download theme files)
-Create a new folder on your computer, `cd` to it and run the following command to copy all theme files from our GitHub repository master branch. Note: Include the dot at the end of the command to clone into the current directory.
+Create a new folder on your computer, `cd` to it and run the following command to copy all theme files from our GitHub repository master branch. Note: Include the dot at the end of the command to clone into your current directory.
 
 `git clone https://github.com/kondasoft/ks-bootshop .`
 
@@ -31,24 +31,50 @@ Run the folowing command to create a new theme in your Shopify store along with 
 
 `theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="KS BootShop"`
 
-Now, you may run this command to open your shopify store with our theme in preview mode.
+Optional: Run this command to open your shopify store with our theme in preview mode.
 
 `theme open`
 
-### 3- Modifing styles (SCSS) and javascript.
-You can run this 2 commands to compile and compress styles and scripts.
+## Customization
+It is advised to not directly modify theme files as you will loose changes when you upgrade our theme. The recommended way to handle this is by creating a copy of our theme and then modify it. Please follow this [offical tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/managing-themes/duplicating-themes) to learn more.
 
-`npm run styles` will compile your Sass files from the `src/scss` folder to the `assets` folder
+In case you want to customize styles and scripts please continue reading below. 
 
-`npm run styles` will compile your JavaScript files from the `src/js` folder to the `assets` folder
+### Modifing styles (SCSS)
+To customize theme styles in the proper way as recommended by Bootstrap as well, is by working with [Sass](https://sass-lang.com/). 
 
-Then, after you have finished making changes to your site, run the following command from Theme Kit to upload your changes to your Shopify store.
+First, create a new file called `_custom.scss` inside the `scr/scss` folder and start adding your Sass variables and styles. To learn more about what you do in your _custom.scss file, please refer to the official Bootstrap [documentation for Theming](https://getbootstrap.com/docs/4.5/getting-started/theming/)
 
-`theme deploy`
+E.g:
+```scss
+// src/scss/_custom.scss
 
-better yet, run the following command to start watching for changes and deploy them automatically.
+// My variables
+$primary: green;
 
-`theme watch`
+// My styles
+body { 
+  background-color: red; // Dont' try this :)
+}
+```
+
+Make sure you have Sass, Postcss and Autoprefixer installed globally by running the following command
+
+`npm i -g sass postcss-cli autoprefixer`
+
+Now, you can run this comand to compile your Sass files into the the theme assets folder
+
+`npm run styles`
+
+To deploy your changes on your Shopify store run the following Theme Kit command:
+
+`theme deploy` or: `theme watch`
+
+### Modifying scripts (JS)
+This part will be documented soon.
 
 ## Upgrading
-This part will be covered soon.
+This part will be documented soon.
+
+## Support
+Please submit a [new issue](https://github.com/kondasoft/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additonaly, you may visit our [Support Forum](https://forum.kondasoft.com/) to discuss with other users and to get support from our Support team.
