@@ -65,13 +65,13 @@
         
         <div class="col px-2">
           {% if section.settings.show_post_title %}
-            <a href="{{ article.url }}" class="d-block pb-2 text-decoration-none {{ section.settings.post_title_size }}">
+            <a href="{{ article.url }}" class="d-block mb-2 text-decoration-none {{ section.settings.post_title_size }}">
               {{ article.title }}
             </a>
           {% endif %}
           
           {% if section.settings.blog_post_author or section.settings.show_post_date or section.settings.show_comments_number %}
-            <p class="text-muted opacity-75">
+            <p class="text-muted font-size-90 opacity-75">
               {% if section.settings.blog_post_author %}
                 {{ article.author }}
               {% endif %}
