@@ -39,6 +39,7 @@ Now, you may run this command to open your shopify store with our theme in previ
 You can run this 2 commands to compile and compress styles and scripts.
 
 `npm run styles` will compile your Sass files from the `src/scss` folder to the `assets` folder
+
 `npm run styles` will compile your JavaScript files from the `src/js` folder to the `assets` folder
 
 Then, after you have finished making changes to your site, run the following command from Theme Kit to upload your changes to your Shopify store.
