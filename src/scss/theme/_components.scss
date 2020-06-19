@@ -38,11 +38,6 @@ hr {
 
 
 // Buttons
-@each $color, $value in $theme-colors {
-  .btn-3d-#{$color} {
-    @include button-3d-variant($value);
-  }
-}
 
 
 // Toasts
