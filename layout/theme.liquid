@@ -27,9 +27,11 @@
     </div>
   </div>
 
-  <main id="main" class="mb-8">
+  <main id="site-main" class="mb-8">
     {{ content_for_layout }}
   </main>
+
+  {% section 'footer' %}
 
   {{ 'jquery-3.5.1.min.js' | asset_url | script_tag }}
   {{ 'bootstrap.bundle.min.js' | asset_url | script_tag }}
