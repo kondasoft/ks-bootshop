@@ -10,7 +10,8 @@
     "subtext_html": "The page you were looking for does not exist"
   },
   "accessibility": {
-    "skip_to_content": "Skip to content"
+    "skip_to_content": "Skip to content",
+    "skip_to_footer": "Skip to footer"
   },
   "blog": {
     "readmore": "Read more",
@@ -72,6 +73,11 @@
       "send": "Send",
       "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
     }
+  },
+  "footer": {
+    "social_platform": "{{ name }} on {{ platform }}",
+    "copyright": "Copyright",
+    "payment_methods": "Accepted payment methods"
   },
   "header": {
     "navbar": {
