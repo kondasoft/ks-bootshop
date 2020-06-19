@@ -2,6 +2,15 @@
   Bootstrap components enhanced or modifed
 */
 
+// Horizontal rules
+hr {
+  .bg-dark &,
+  .bg-primary & {
+    border-top-color: $hr-white-border-color;
+  }
+}
+
+
 // Nav
 .nav-link {
   transition: all .2s ease-out;
