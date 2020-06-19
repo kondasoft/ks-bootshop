@@ -101,6 +101,15 @@
     "collection_title": "Collection title",
     "blog_post_title": "Blog post title"
   },
+  "password_page": {
+    "store_will_open": "Store will open on",
+    "spread_the_word": "Spread the word",
+    "powered_by_shopify_html": "This shop will be powered by {{ shopify }}",
+    "form": {
+      "password_placeholder": "Enter using password",
+      "submit": "Enter"
+    }
+  },
   "product": {
     "regular_price": "Regular price",
     "sold_out": "Sold Out",
