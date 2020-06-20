@@ -2,10 +2,24 @@
   Theme layout styles
 */
 
-// Header
+// General
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
+// Header
+#site-header {
+
+}
 
 // Main
-
+#site-main {
+  flex: 1;
+}
 
 // Footer
+#site-footer {
+
+}
