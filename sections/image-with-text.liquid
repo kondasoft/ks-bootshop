@@ -1,0 +1,298 @@
+<div class="
+  {% if section.settings.container %} container {% else %} container-fluid {% endif %}
+  {{ section.settings.margin_top | prepend: 'mt-' }}
+  {{ section.settings.margin_bottom | prepend: 'mb-' }}
+">
+  <div class="row align-items-center {{ section.settings.image_alignment }}">
+
+    <div class="col{{ section.settings.breakpoint }} mb-3">
+      
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="d-inline-block text-decoration-none text-center">
+      {% endif %}
+      
+        <div class="
+          position-relative
+          overflow-hidden
+          {% if section.settings.image_border %}img-thumbnail{% endif %}
+          {% if section.settings.image_circle %}rounded-circle{% endif %}
+          {{ section.settings.image_hover_effect }}
+        ">
+          {% if section.settings.image != blank %}
+            {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+            <img
+              class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+              data-src="{{ section.settings.image | img_url: image_size, crop: 'center'  }}"
+              alt="{{ section.settings.image.alt | escape }}"
+              width="{{ section.settings.image_width }}"
+              height="{{ section.settings.image_height }}"
+              loading="lazy"
+            >
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg bg-light' }}
+          {% endif %}
+        </div>
+
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        </a>
+      {% endif %}
+
+    </div>
+
+    <div class="col{{ section.settings.breakpoint }} mb-3">
+      
+      {% if section.settings.heading != blank %}
+        <{{ section.settings.heading_size }} class="">
+          {{ section.settings.heading | escape }}
+        </{{ section.settings.heading_size }}>
+      {% endif %}
+
+      {% if section.settings.content != blank %}
+        <div class="rte mb-4">{{ section.settings.content }}</div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn {{ section.settings.button_style }}">
+          {{ section.settings.button_label | escape }}
+        </a>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</div>
+
+    
+{% schema %}
+  {
+    "name": "Image with text",
+    "class": "image-with-text",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Image settings"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "image_width",
+        "label": "Image width (px)",
+        "default": "600"
+      },
+      {
+        "type": "text",
+        "id": "image_height",
+        "label": "Image height (px)",
+        "default": "600"
+      },
+      {
+        "type": "checkbox",
+        "id": "image_border",
+        "label": "Border",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "image_circle",
+        "label": "Circle",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "image_alignment",
+        "label": "Image Alignment",
+        "info": "Note: On mobile view the image will always be on top and content on bottom",
+        "default": "flex-row",
+        "options": [
+          {
+            "value": "flex-row", "label": "Left"
+          },
+          {
+            "value": "flex-row-reverse", "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id":  "image_hover_effect",
+        "label": "Hover effect",
+        "default": "image-hover-shine",
+        "options": [
+          {
+            "value": "image-hover", "label": "No effect"
+          },
+          {
+            "value": "image-hover-fade-in", "label": "Fade in"
+          },
+          {
+            "value": "image-hover-fade-out", "label": "Fade out"
+          },
+          {
+            "value": "image-hover-scale-in", "label": "Scale in"
+          },
+          {
+            "value": "image-hover-scale-out", "label": "Scale out"
+          },
+          {
+            "value": "image-hover-flashing", "label": "Flashing"
+          },
+          {
+            "value": "image-hover-shine", "label": "Shine"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Content settings"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "label": "Heading Size",
+        "default": "h2",
+        "options": [
+          {
+            "value": "h1", "label": "H1"
+          },
+          {
+            "value": "h2", "label": "H2"
+          },
+          {
+            "value": "h3", "label": "H3"
+          },
+          {
+            "value": "h4", "label": "H4"
+          },
+          {
+            "value": "h5", "label": "H5"
+          },
+          {
+            "value": "h6", "label": "H6"
+          }
+        ]
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      },
+      {
+        "type": "select",
+        "id":  "button_style",
+        "label": "Button style",
+        "default": "btn-outline-primary",
+        "options": [
+          {
+            "value": "btn-primary", "label": "Primary color"
+          },
+          {
+            "value": "btn-outline-primary", "label": "Outline primary"
+          },
+          {
+            "value": "btn-secondary", "label": "Secondary color"
+          },
+          {
+            "value": "btn-outline-secondary", "label": "Outline secondary"
+          },
+          {
+            "value": "btn-light", "label": "Light color"
+          },
+          {
+            "value": "btn-dark", "label": "Dark color"
+          },
+          {
+            "value": "btn-outline-dark", "label": "Outline dark"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "General settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "container",
+        "label": "Wrap in container",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id":  "breakpoint",
+        "label": "Responsive breakpoint",
+        "info": "Define at what screen size point the layout should switch from row to column. [Learn more](https://getbootstrap.com/docs/4.5/layout/overview/#responsive-breakpoints)",
+        "default": "-md",
+        "options": [
+          {
+            "value": "", "label": "No breakpoint"
+          },
+          {
+            "value": "-sm", "label": "Small screens (sm)"
+          },
+          {
+            "value": "-md", "label": "Medium screens (md)"
+          },
+          {
+            "value": "-lg", "label": "Large screens (lg)"
+          },
+          {
+            "value": "-xl", "label": "Extra-large screens (xl)"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Spacing"
+      },
+      {
+        "type": "paragraph",
+        "content": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "label": "Margin top",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "label": "Margin bottom",
+        "min": 0,
+        "max": 12,
+        "step": 1,
+        "default": 6
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image with text",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
