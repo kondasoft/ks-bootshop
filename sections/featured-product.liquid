@@ -24,8 +24,8 @@
   {% else %}
 
     <div class="row align-items-center {{ section.settings.image_alignment }}">
-      <div class="product-images col-md mb-3">
-        <a href="{{ product.url }}" class="d-block text-decoration-none">
+      <div class="product-images col{{ section.settings.breakpoint }} mb-3">
+        <a href="{{ product.url }}" class="d-inline-block text-decoration-none">
           <div class="
             position-relative
             overflow-hidden
@@ -53,14 +53,14 @@
         </a>
 
         {% if section.settings.show_image_gallery and product.images.size > 1 %}
-          <ul class="product-image-gallery list-unstyled row row-cols-4 mx-n1">
+          <ul class="product-image-gallery list-unstyled row row-cols-4 mx-n1 d-inline-flex">
             {% for image in product.images %}
               <li class="p-1">
                 <a
                   id="{{ image.id | prepend: 'product-image-' }}"
                   href="{{ image.src | img_url: 'master' }}"
                   data-featured-img="{{ image.src | img_url: image_size, crop: 'center' }}"
-                  class="{% if product.featured_image == image %}active{% endif %}"
+                  class="d-inline-block {% if product.featured_image == image %}active{% endif %}"
                   {% if product.featured_image == image %} aria-current="true"{% endif %}
                 >
                   <div class="
@@ -85,7 +85,7 @@
         {% endif %}
 
       </div>
-      <div class="col-md mb-3">
+      <div class="col{{ section.settings.breakpoint }} mb-3">
         
         {% if section.settings.show_product_title %}
           <h2 class="{{ section.settings.product_title_size }}">
@@ -393,6 +393,34 @@
       "id": "show_image_gallery",
       "label": "Show image gallery",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "select",
+      "id":  "breakpoint",
+      "label": "Responsive breakpoint",
+      "info": "Define at what screen size point the layout should switch from row to column. [Learn more](https://getbootstrap.com/docs/4.5/layout/overview/#responsive-breakpoints)",
+      "default": "-md",
+      "options": [
+        {
+          "value": "", "label": "No breakpoint"
+        },
+        {
+          "value": "-sm", "label": "Small screens (sm)"
+        },
+        {
+          "value": "-md", "label": "Medium screens (md)"
+        },
+        {
+          "value": "-lg", "label": "Large screens (lg)"
+        },
+        {
+          "value": "-xl", "label": "Extra-large screens (xl)"
+        }
+      ]
     },
     {
       "type": "header",
