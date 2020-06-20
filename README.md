@@ -1,6 +1,15 @@
 # BootShop - Shopify Theme
 Shopify Starter Theme powered by Bootstrap framework (v4), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experince in developing themes for more than 15 years now.
 
+## Highlighted features:
+* Powered by [Bootstrap framework](https://getbootstrap.com/) (v4.5)
+* Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
+* All elements are fully accessible with [aria attributes](https://www.w3.org/WAI/standards-guidelines/aria/)
+* Support for [native image lazy-loading](https://web.dev/native-lazy-loading/)
+* Ajax "Add to cart" [native image lazy-loading](https://web.dev/native-lazy-loading/)
+* Product "Quick view" mode
+* Other features will be added soon as we finish with developing our theme. 
+
 ## Note: 
 Currently work in progress. We are constantly working with this project, and it should be completed within August 2020.
 
