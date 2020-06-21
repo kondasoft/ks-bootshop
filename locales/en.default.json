@@ -113,6 +113,10 @@
       "submit": "Enter"
     }
   },
+  "products": {
+    "empty": "No products found!",
+    "filter_by_tag": "Filter by tag:"
+  },
   "product": {
     "regular_price": "Regular price",
     "sold_out": "Sold Out",
