@@ -92,40 +92,26 @@
 
 </div>
 
-<style>
-/*
-  We wrap with a style tag to enable editor styling on stylesheet liquid tag
-*/
 
 {% stylesheet 'scss' %}
 .featured-collection {
 
 }
 {% endstylesheet %}
-</style>
 
 
 <script>
-/*
-  We wrap with a script tag to enable editor styling on javascript liquid tag
-*/
 // window.addEventListener('DOMContentLoaded', () => {
 //   jQuery(document).ready(function ($) {
 //     // jQuery inline code
 //
 //   })
 // })
-
-{% javascript %}
-
-{% endjavascript %}
 </script>
 
-<script>
-/*
-  We wrap with a script tag to enable editor styling on
-  schemd liquid tag
-*/
+{% javascript %}
+{% endjavascript %}
+
 {% schema %}
   {
     "name": "Collection list",
@@ -454,4 +440,3 @@
     ]
   }
 {% endschema %}
-</script>
