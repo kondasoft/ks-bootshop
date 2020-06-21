@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 config.yml
 chrome/
 -svg-placeholders.html
