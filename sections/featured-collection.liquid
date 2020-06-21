@@ -100,8 +100,18 @@
             {%- assign current_variant = product.selected_or_first_available_variant -%}
             {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
 
-            <button type="button" class="mb-4 btn {{ section.settings.quick_view_button_style }}" data-toggle="modal" data-target="#{{ product.id | prepend: 'quick-view-modal-' }}">
-              {{ 'product.quick_view' | t }}
+            <button 
+              type="button" 
+              class="mb-4 btn {{ section.settings.quick_view_button_style }}" 
+              data-toggle="modal" 
+              data-target="#{{ product.id | prepend: 'quick-view-modal-' }}"
+              {% if product.available == false %}disabled{% endif %} 
+            >
+              {% if product.available %} 
+                {{ 'product.quick_view' | t }}
+              {% else %} 
+              {{ 'product.sold_out' | t }}
+              {% endif %}
             </button>
 
             <!-- Modal -->
@@ -213,10 +223,11 @@
 
                             <select name="id" id="{{ product.id | prepend: 'featured-collection-variant-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
                               {% for variant in product.variants %}
-                                <option
-                                  {% unless variant.available %}disabled="disabled"{% endunless %}
-                                  value="{{ variant.id }}">
-                                    {{ variant.title }} - {{ variant.price | money }}
+                                <option 
+                                  {% unless variant.available %}disabled{% endunless %}
+                                  value="{{ variant.id }}"
+                                >
+                                  {{ variant.title }} - {{ variant.price | money }}
                                 </option>
                               {% endfor %}
                             </select>
@@ -224,6 +235,7 @@
                             <hr class="mt-4 mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
 
                             <div class="d-flex justify-content-center">
+                              
                               <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
                               <button
                                 class="add-to-cart-btn btn btn-primary"
