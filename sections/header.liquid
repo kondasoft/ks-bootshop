@@ -142,12 +142,6 @@
 
 
 <style>
-{% comment %}
-/*
-  Wrapped with style tag to enable editor styling
-*/
-{% endcomment %}
-
 {% if section.settings.sticky %}
   #shopify-section-header {
     position: sticky;
@@ -155,6 +149,7 @@
     z-index: 1020;
   }
 {% endif %}
+</style>
 
 {% stylesheet 'scss' %}
 // Announcement bar
@@ -166,12 +161,7 @@
   }
 }
 {% endstylesheet %}
-</style>
 
-<script>
-/*
-  We wrap with a script tag to enable editor styling
-*/
 
 {% javascript %}
 jQuery(document).ready(function ($) {
