@@ -3,7 +3,9 @@
     "close": "Close",
     "previous": "Previous",
     "next": "Next",
-    "loading": "Loading"
+    "loading": "Loading",
+    "page": "Page",
+    "pagination": "Pagination"
   },
   "404": {
     "title": "404 - Not found",
@@ -86,7 +88,8 @@
     "search": {
       "title": "Search",
       "placeholder": "Search for...",
-      "submit": "Search"
+      "submit": "Search",
+      "search_in": "Search in..."
     },
     "account": {
       "title": "Account"
@@ -128,6 +131,27 @@
     "email": "Your email address",
     "confirmation": "Thanks for subscribing",
     "submit": "Subscribe"
+  },
+  "search": {
+    "title": "Search all products",
+    "title_short": "Search",
+    "placeholder": "Search for...",
+    "submit": "Search",
+    "search_in": "Search in...",
+    "types": {
+      "products": "Products",
+      "articles": "Articles",
+      "pages": "Pages"
+    },
+    "heading": {
+      "one": "Search result",
+      "other": "Search results"
+    },
+    "results_with_count": {
+      "one": "{{ count }} result found!",
+      "other": "{{ count }} results found!"
+    },
+    "no_results_html": "No result found!"
   },
   "social": {
     "share_label": "Share on social media",
