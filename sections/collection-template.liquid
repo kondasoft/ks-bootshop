@@ -1,0 +1,486 @@
+<div class="
+  pt-7
+  {% if section.settings.container %} container {% else %} container-fluid {% endif %}
+">
+
+  <header class="row {{ section.settings.collection_image_alignment}} align-items-center mb-5">
+
+    {% if section.settings.show_collection_image and collection.image %}
+      <div class="col-md mb-3 text-center">
+        {% assign collection_image_size = section.settings.collection_image_width | append: 'x' | append: section.settings.collection_image_width %}
+        <img 
+          class="{% if section.settings.collection_image_border %}img-thumbnail{% endif %}" 
+          src="{{ collection.image | img_url: collection_image_size, crop: 'center'  }}" 
+          alt="{{ collection.image.alt | escape }}"
+          width="{{ section.settings.collection_image_width }}"
+          height="{{ section.settings.collection_image_height }}"
+        >
+      </div>
+    {% endif %}
+    
+    <div class="col-md">
+
+      <h1>{{ collection.title }}</h1>
+      
+      {% if collection.description != blank %}
+        <div class="rte text-muted mb-4">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+
+
+      {% if section.settings.show_tags and collection.all_tags.size > 0 %}
+        
+        <ul class="list-unstyled d-flex flex-wrap align-items-center mx-n1">
+
+          <p class="small text-muted px-1 mb-0 mr-1">{{ 'products.filter_by_tag' | t }}</p>
+
+          {% for tag in collection.all_tags %}
+            {% if current_tags contains tag %}
+              <li class="active p-1" style="line-height: normal">
+                {{ link_to_remove_tag }}
+                {{ tag | link_to_remove_tag: tag | replace: 'title=', 'class="badge badge-primary" title=' | replace: '</a>', '<span class="ml-1" aria-hidden="true">&times;</span></a>'  }}
+              </li>
+            {% else %}
+              <li class="p-1" style="line-height: normal">
+                {{ tag | link_to_tag: tag | replace: 'title=', 'class="badge badge-light" title=' }}
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
+  
+  </header>
+
+  {% if collection.products_count == 0 %}
+    <p class="alert alert-warning" role="alert">{{ 'products.empty' | t}}</p>
+
+  {% else %}
+
+    <select class="custom-select d-block w-auto ml-auto mb-2" name="sort_by" onchange="javascript:location.href = window.location.href.split('?')[0] + `?sort_by=${this.value}`;">
+      {% for option in collection.sort_options %}
+        <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+      {% endfor %}
+    </select>
+
+    {% paginate collection.products by section.settings.results_per_page %}
+
+      {% assign product_list = collection.products %}
+      {% include 'products-list' %}
+
+      {% include 'pagination' %}
+
+    {% endpaginate %}
+
+  {% endif %}
+
+</div>
+
+{% schema %}
+{
+  "name": "Collection pages",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Wrap in container",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Results per page",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Collection image settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "label": "Show collection image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "collection_image_alignment",
+      "label": "Image Alignment",
+      "info": "Note: On mobile view the image will always be on top and content on bottom",
+      "default": "flex-row-reverse",
+      "options": [
+        {
+          "value": "flex-row", "label": "Left"
+        },
+        {
+          "value": "flex-row-reverse", "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "collection_image_width",
+      "label": "Collection image width (px)",
+      "default": "600"
+    },
+    {
+      "type": "text",
+      "id": "collection_image_height",
+      "label": "Collection image height (px)",
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_image_border",
+      "label": "Collection image border",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Adjust products per Row"
+    },
+    {
+      "type": "range",
+      "id": "row",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Extra small screens (default)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_sm",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Small screens (sm)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_md",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Medium screens (md)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "row_lg",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Large screens (lg)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "row_xl",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "label": "Extra-large screens (xl)",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Product settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "align_center",
+      "label": "Align center",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_title",
+      "label": "Show product title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "label": "Show discount badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view_button",
+      "label": "Show 'Quick view' button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "default": "h6",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id":  "quick_view_button_style",
+      "label": "'Quick view' button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Quick view settings"
+    },
+    {
+      "type": "select",
+      "id":  "quick_view_transition",
+      "label": "Modal transition effect",
+      "default": "fade zoom-in",
+      "options": [
+        {
+          "value": "fade", "label": "Fade/Translate"
+        },
+        {
+          "value": "fade zoom-in", "label": "Fade/Zoom-in"
+        },
+        {
+          "value": "fade zoom-out", "label": "Fade/Zoom-out"
+        },
+        {
+          "value": "", "label": "No effect"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "quick_view_heading_size",
+      "label": "Product title size",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "quick_view_desc_truncate",
+      "label": "Decription truncate",
+      "default": "200",
+      "info": "The maximum number of characters for the product description"
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_view_show_view_product_button",
+      "label": "Show 'View product' button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id":  "quick_view_view_product_button_style",
+      "label": "'View product' button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_view_show_share_buttons",
+      "label": "Show share buttons",
+      "info": "Note: You can adjust options for share buttons under 'Theme Settings'",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product image settings"
+    },
+    {
+      "type": "text",
+      "id": "image_width",
+      "label": "Image width (px)",
+      "default": "360"
+    },
+    {
+      "type": "text",
+      "id": "image_height",
+      "label": "Image height (px)",
+      "default": "360"
+    },
+    {
+      "type": "text",
+      "id": "quick_view_image_width",
+      "label": "'Quick View' image width (px)",
+      "default": "480"
+    },
+    {
+      "type": "text",
+      "id": "quick_view_image_height",
+      "label": "'Quick View' image height (px)",
+      "default": "480"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_border",
+      "label": "Border",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "image_circle",
+      "label": "Circle",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id":  "image_hover_effect",
+      "label": "Hover effect",
+      "default": "image-hover-shine",
+      "options": [
+        {
+          "value": "image-hover", "label": "No effect"
+        },
+        {
+          "value": "image-hover-fade-in", "label": "Fade in"
+        },
+        {
+          "value": "image-hover-fade-out", "label": "Fade out"
+        },
+        {
+          "value": "image-hover-scale-in", "label": "Scale in"
+        },
+        {
+          "value": "image-hover-scale-out", "label": "Scale out"
+        },
+        {
+          "value": "image-hover-flashing", "label": "Flashing"
+        },
+        {
+          "value": "image-hover-shine", "label": "Shine"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "paragraph",
+      "content": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
+    },
+    {
+      "type": "range",
+      "id": "gutter_horizontal",
+      "label": "Horizontal gutter",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 2,
+      "info": "Spacing between products"
+    },
+    {
+      "type": "range",
+      "id": "gutter_vertical",
+      "label": "Vertical gutter",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "info": "Spacing between products"
+    }
+  ]
+}
+{% endschema %}
