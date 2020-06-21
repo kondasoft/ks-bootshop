@@ -53,7 +53,7 @@
             {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
           
             <img
-              class="img-fluid lazyload"
+              class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
               data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
               alt="{{ article.image.alt | escape }}"
               width="{{ section.settings.image_width }}"
@@ -91,7 +91,7 @@
           {% endif %}
 
           {% if section.settings.show_post_excerpt %}
-            <div class="rte text-muted mb-3">
+            <div class="rte mb-4">
               {% if article.excerpt.size > 0 %}
                 {{ article.excerpt }}
               {% else %}
@@ -411,13 +411,13 @@
         "type": "checkbox",
         "id": "image_border",
         "label": "Image border",
-        "default": false
+        "default": true
       },
       {
         "type": "checkbox",
         "id": "image_circle",
         "label": "Image as circle",
-        "default": true
+        "default": false
       },
       {
         "type": "select",
