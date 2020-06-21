@@ -90,3 +90,6 @@ This part will be documented soon.
 
 ## Support
 Please submit a [new issue](https://github.com/kondasoft/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [Support Forum](https://forum.kondasoft.com/) to discuss with other users and to get support from our Support team.
+
+## Copyright and license
+Copyright 2020 [KondaSoft.com](https://www.kondasoft.com). Code released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).
