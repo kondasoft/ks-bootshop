@@ -1,5 +1,5 @@
 # BootShop - Shopify Theme
-Shopify Starter Theme powered by Bootstrap framework (v4), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experince in developing themes for more than 15 years now.
+Shopify Starter Theme powered by Bootstrap framework (v4), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
 
 Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for Bootstrap framework.
 
