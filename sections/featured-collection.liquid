@@ -16,389 +16,31 @@
     </div>
   {% endif %}
 
-  <ul class="
-    list-unstyled
-    mx-n2
-    {{ section.settings.gutter_horizontal | prepend: 'mx-sm-n' }}
-    row
-    row-cols-{{ section.settings.row }}
-    row-cols-sm-{{ section.settings.row_sm }}
-    row-cols-md-{{ section.settings.row_md }}
-    row-cols-lg-{{ section.settings.row_lg }}
-    row-cols-xl-{{ section.settings.row_xl }}"
-  >
-    {% for product in collections[section.settings.collection].products limit: section.settings.limit %}
-
-      {% if product.featured_image != blank %}
-        <li class="
-          pb-2
-          px-2
-          {{ section.settings.gutter_horizontal | prepend: 'px-sm-' }}
-          {{ section.settings.gutter_vertical | prepend: 'my-' }}
-          {% if section.settings.align_center %}text-center{% endif %}
-        ">
-          <a href="{{ product.url }}" class="d-block text-decoration-none">
-
-            <div class="
-              position-relative
-              overflow-hidden
-              mb-3
-              {% if section.settings.image_border %}img-thumbnail{% endif %}
-              {% if section.settings.image_circle %}rounded-circle{% endif %}
-              {{ section.settings.image_hover_effect }}
-            ">
-              {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
-              <img
-                class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
-                data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
-                alt="{{ product.featured_image.alt | escape }}"
-                width="{{ section.settings.image_width }}"
-                height="{{ section.settings.image_height }}"
-                loading="lazy"
-              >
-
-              {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
-                <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
-                  {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
-                </small>
-              {% endif %}
-
-            </div>
-
-            {% if section.settings.show_product_title %}
-              <p class="{{ section.settings.product_title_size }}">
-                {{ product.title | escape }}
-              </p>
-            {% endif %}
-
-            {% if section.settings.show_price %}
-              <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">
-                {% if product.compare_at_price > product.price %}
-                  <s class="text-muted opacity-75 mr-1">{{ product.compare_at_price | money }}</s>
-                  {% if product.price_varies %}
-                    {%- assign sale_price = product.price | money -%}
-                    {{ 'product.on_sale_from_html' | t: price: sale_price }}
-                  {% else %}
-                    {{ 'product.on_sale' | t }}
-                    {{ product.price | money }}
-                  {% endif %}
-                {% else %}
-                  {% if product.price_varies %}
-                    {%- assign price = product.price | money -%}
-                    {{ 'product.from_text_html' | t: price: price }}
-                  {% else %}
-                    {{ product.price | money }}
-                  {% endif %}
-                {% endif %}
-              </p>
-            {% endif %}
-
-          </a>
-
-          {% if section.settings.show_quick_view_button %}
-
-            {%- assign current_variant = product.selected_or_first_available_variant -%}
-            {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
-
-            <button 
-              type="button" 
-              class="mb-4 btn {{ section.settings.quick_view_button_style }}" 
-              data-toggle="modal" 
-              data-target="#{{ product.id | prepend: 'quick-view-modal-' }}"
-              {% if product.available == false %}disabled{% endif %} 
-            >
-              {% if product.available %} 
-                {{ 'product.quick_view' | t }}
-              {% else %} 
-              {{ 'product.sold_out' | t }}
-              {% endif %}
-            </button>
-
-            <!-- Modal -->
-            <div
-              class="modal {{ section.settings.quick_view_transition }}"
-              id="{{ product.id | prepend: 'quick-view-modal-' }}"
-              tabindex="-1"
-              role="dialog"
-              aria-labelledby="{{ product.id | prepend: 'quick-view-modal-label-' }}"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-
-                  <div class="modal-header d-lg-none">
-                    <h6 class="modal-title">{{ product.title | escape }}</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <div class="modal-body text-left">
-                    <div class="row mx-n2">
-
-                      <div class="product-images col-lg px-2 mb-4 mb-lg-0">
-                        <div class="
-                          position-relative
-                          overflow-hidden
-                          mb-2
-                          {% if section.settings.image_border %}img-thumbnail{% endif %}
-                        ">
-                          {% assign image_size = section.settings.quick_view_image_width | append: 'x' | append: section.settings.quick_view_image_height %}
-                          <img
-                            class="product-featured-image img-fluid lazyload"
-                            data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
-                            alt="{{ product.featured_image.alt | escape }}"
-                            width="{{ section.settings.quick_view_image_width }}"
-                            height="{{ section.settings.quick_view_image_height }}"
-                            loading="lazy"
-                          >
-                          {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
-                            <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
-                              {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
-                            </small>
-                          {% endif %}
-                        </div>
-                        {% if product.images.size > 1 %}
-                          <ul class="product-image-gallery list-unstyled row row-cols-4 mx-n1">
-                            {% for image in product.images %}
-                              <li class="p-1">
-                                <a
-                                  id="{{ image.id | prepend: 'product-image-' }}"
-                                  href="{{ image.src | img_url: 'master' }}"
-                                  data-featured-img="{{ image.src | img_url: image_size, crop: 'center' }}"
-                                  class="{% if product.featured_image == image %}active{% endif %}"
-                                  {% if product.featured_image == image %} aria-current="true"{% endif %}
-                                >
-                                  <div class="
-                                    overflow-hidden
-                                    {% if section.settings.image_border %}img-thumbnail{% endif %}
-                                    {% if product.featured_image == image %}border-secondary{% endif %}
-                                    {{ section.settings.image_hover_effect }}
-                                  ">
-                                    <img
-                                      class="img-fluid lazyload"
-                                      data-src="{{ image.src | img_url: '120x120', crop: 'center' }}"
-                                      alt="{{ image.alt | escape }}"
-                                      width="120"
-                                      height="120"
-                                      loading="lazy"
-                                    >
-                                  </div>
-                                </a>
-                              </li>
-                            {% endfor %}
-                          </ul>
-                        {% endif %}
-                      </div>
-
-                      <div class="col-lg px-2">
-
-                        <button type="button" class="close d-none d-lg-block" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-
-                        <{{ section.settings.quick_view_heading_size }} id="{{ product.id | prepend: 'quick-view-modal-label-' }}" class="mt-1">
-                          <a href="{{ product.url }}" class="text-dark">
-                            {{ product.title | escape }}
-                          </a>
-                        </{{ section.settings.quick_view_heading_size }}>
-
-                        {% form 'product', product, class: 'mb-3' %}
-
-                          <div class="product-price mb-3 font-size-120" style="{{ settings.color_price | prepend: 'color: ' }}">
-                            {% if product.compare_at_price_max > product.price %}
-                              <span class="sr-only">{{ 'product.regular_price' | t }}</span>
-                              {% if current_variant.compare_at_price > current_variant.price %}
-                              <s class="text-muted opacity-75 mr-2">
-                                {{ current_variant.compare_at_price | money }}
-                              </s>
-                              {% endif %}
-                            {% endif %}
-                            <span>
-                              {{ current_variant.price | money }}
-                            </span>
-                          </div>
-
-                          <div class="bg-light py-3 px-3">
-
-                            <select name="id" id="{{ product.id | prepend: 'featured-collection-variant-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
-                              {% for variant in product.variants %}
-                                <option 
-                                  {% unless variant.available %}disabled{% endunless %}
-                                  value="{{ variant.id }}"
-                                >
-                                  {{ variant.title }} - {{ variant.price | money }}
-                                </option>
-                              {% endfor %}
-                            </select>
-
-                            <hr class="mt-4 mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
-
-                            <div class="d-flex justify-content-center">
-                              
-                              <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
-                              <button
-                                class="add-to-cart-btn btn btn-primary"
-                                type="submit"
-                                name="add"
-                                data-loading-text="{{ 'misc.loading' | t }}"
-                                data-add-to-cart-text="{{ 'product.add_to_cart' | t }}"
-                                data-view-cart-text="{{ 'product.view_cart' | t }}"
-                                aria-controls="cart-toast-wrapper"
-                              >
-                                <div class="d-none bs-spinner spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></div>
-                                <span>{{ 'product.add_to_cart' | t }}</span>
-                              </button>
-                            </div>
-
-                          </div>
-
-                        {% endform %}
-
-                        <div class="rte">
-                          {{ product.description | truncate: section.settings.quick_view_desc_truncate }}
-                        </div>
-
-                        {% if section.settings.quick_view_show_view_product_button %}
-                          <p><a href="{{ product.url }}" class="btn {{ section.settings.quick_view_view_product_button_style }}">{{ 'product.view_product' | t }}</a></p>
-                        {% endif %}
-
-                        {% if section.settings.quick_view_show_share_buttons %}
-                          <hr class="mt-5">
-                          {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
-                       {% endif %}
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div><!-- /Modal -->
-
-            <script>
-              window.addEventListener('DOMContentLoaded', () => {
-                jQuery(document).ready(function ($) {
-
-                  // Initialize multi selector for product
-                  {% unless product.has_only_default_variant %}
-                    new Shopify.OptionSelectors("{{ product.id | prepend: 'featured-collection-variant-' }}", {
-                      product: {{ product | json }},
-                      onVariantSelected: function(variant, selector) {
-                        // console.log(variant)
-                        // console.log(selector)
-
-                        let modalId = $(`#quick-view-modal-${selector.product.id}`)
-
-                        if (variant) {
-                          if (variant.available) {
-                            modalId.find(':input[type="number"]').prop("disabled", false).fadeTo(200, 1)
-                            modalId.find('.add-to-cart-btn').prop("disabled", false).find('span').html("{{ 'product.add_to_cart' | t }}").fadeTo(200, 1)
-                          }
-                          else {
-                            modalId.find(':input[type="number"]').prop("disabled", true).fadeTo(200, 0.5)
-                            modalId.find('.add-to-cart-btn').prop("disabled", true).find('span').html("{{ 'product.sold_out' | t }}").fadeTo(200, 0.5)
-                          }
-
-                          if (variant.compare_at_price > variant.price) {
-                            // {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
-
-                            modalId.find('.product-discount-badge')
-                              .removeClass('d-none')
-                              .addClass('d-block')
-                              .html(`-${Math.round((variant.compare_at_price - variant.price) / variant.compare_at_price * 100)}%`)
-                            modalId.find('.product-price').html(`
-                                <span class="sr-only">{{ 'product.regular_price' | t }}</span>
-                                <s class="text-muted opacity-75 mr-2">
-                                  ${Shopify.formatMoney(variant.compare_at_price, "")}
-                                </s>
-                                <span>${Shopify.formatMoney(variant.price, "")}</span>
-                              `)
-                          } else {
-                            modalId.find('.product-discount-badge').removeClass('d-block').addClass('d-none')
-                            modalId.find('.product-price').html('<span>'+ Shopify.formatMoney(variant.price, "") + '</span>' )
-                          }
-
-                          if (variant.featured_image)
-                            handleProductImageGallery($(`a#product-image-${variant.featured_image.id}`))
-                          else
-                            handleProductImageGallery($('a#product-image-{{ product.featured_image.id }}'))
-                        }
-                      },
-                      enableHistoryState: false
-                    })
-                  {% endunless %}
-
-                })
-              })
-            </script>
-
-          {% endif %}
-
-        </li>
-      {% endif %}
-
-    {% else %}
-
-      {% for i in (1..section.settings.limit) %}
-        <li class="pb-4 px-2 my-3 text-center">
-          <a href="#" class="text-decoration-none">
-            <div class="overflow-hidden mb-3 img-thumbnail">
-              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg bg-light' }}
-            </div>
-            <h6>
-              {{ 'onboarding.product_title' | t }}
-            </h6>
-            <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">{{ 1999 | money }}</p>
-          </a>
-        </li>
-      {% endfor %}
-
-    {% endfor %}
-  </ul>
+  {% assign product_list = collections[section.settings.collection].products %}
+  {% include 'products-list' %}
 
 </div>
 
-
-<style>
-/*
-  We wrap with a style tag to enable editor styling on
-  stylesheet liquid tag
-*/
 
 {% stylesheet 'scss' %}
 .featured-collection {
 
 }
 {% endstylesheet %}
-</style>
 
 
 <script>
-/*
-  We wrap with a script tag to enable editor styling on
-  javascript liquid tag
-*/
 // window.addEventListener('DOMContentLoaded', () => {
 //   jQuery(document).ready(function ($) {
-//     // jQuery inline code
 //
 //   })
 // })
-
-{% javascript %}
-$('.product-image-gallery a').click(function(event) {
-  event.preventDefault()
-  handleProductImageGallery($(this))
-})
-{% endjavascript %}
 </script>
 
-<script>
-/*
-  We wrap with a script tag to enable editor styling on
-  schemd liquid tag
-*/
+{% javascript %}
+{% endjavascript %}
+
+
 {% schema %}
   {
     "name": "Featured collection",
@@ -823,7 +465,7 @@ $('.product-image-gallery a').click(function(event) {
         "min": 0,
         "max": 12,
         "step": 1,
-        "default": 3,
+        "default": 2,
         "info": "Spacing between products"
       },
       {
@@ -845,4 +487,3 @@ $('.product-image-gallery a').click(function(event) {
     ]
   }
 {% endschema %}
-</script>
