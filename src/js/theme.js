@@ -77,6 +77,29 @@ $(function() {
       toast.focus()
 
     }, 'json')
+    .fail(function(error) {
+      console.log(error)
+      
+      const response = error.responseJSON
+
+      // Update cart button back to normal state
+      addToCartBtn.prop("disabled", false).fadeTo(200, 1)
+      addToCartBtn.find('.bs-spinner').addClass('d-none')
+      addToCartBtn.find('span').html(addToCartBtn.attr('data-add-to-cart-text'))
+      
+      // Display Bootstrap toast component as error
+      toast.find('.toast-header strong').html(`${response.status} - ${response.message}`)
+
+      toast.toast('dispose').toast('show').find('.toast-body')
+        .html(`
+          <div>
+            <p class="mb-0">
+              ${response.description}
+            </p>
+          </div>
+        `)
+
+    })
   })
 
 })
