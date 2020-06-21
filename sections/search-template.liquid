@@ -1,0 +1,1142 @@
+<article class="mt-6 {% if section.settings.container %} container {% else %} container-fluid {% endif %}">
+
+  <h1 class="text-center">
+    {% if search.performed %}
+      <span class="sr-only">{{ 'search.heading' | t: count: search.results_count }}:</span>
+        {{ 'search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+    {% else %}
+      {{ 'search.title' | t }}
+    {% endif %}
+  </h1>
+
+  <form action="/search" method="get" role="search" id="search-page-form" class="bg-light mt-3 mb-5 py-4 px-4 rounded {% if section.settings.enable_search_types %}has-search-types{% endif %}">
+
+    <div class="input-group input-group-{{ section.settings.search_form_size }} mb-0">
+      <input 
+        type="search" 
+        name="q" 
+        id="Search" 
+        class="form-control" 
+        value="{{ search.terms | escape }}" 
+        placeholder="{{ 'search.placeholder' | t }}" 
+        aria-label="{{ 'search.placeholder' | t }}"  
+        required
+      >
+
+      {% if section.settings.enable_search_types %}
+        <select class="custom-select" name="type">
+          <option disabled>{{ 'search.search_in' | t }}</option>
+          <option value="product" {% if search.types == blank or search.types contains 'product' %} selected{% endif %}>{{ 'search.types.products' | t }}</option>
+          <option value="article" {% if search.types contains 'article' %}selected{% endif %}>{{ 'search.types.articles' | t }}</option>
+          <option value="page" {% if search.types contains 'page' %}selected{% endif %}>{{ 'search.types.pages' | t }}</option>
+        </select>
+      {% endif %}
+
+      <div class="input-group-append">
+        <button class="btn {{ section.settings.search_form_button_style }}" type="submit">{{ 'search.submit' | t }}</button>
+      </div>
+    </div>
+  </form>
+  
+  {% if search.performed %}
+  
+    {% if search.results_count == 0 %}
+      <p class="alert alert-warning" role="alert">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+    
+    {% else %}
+      <h2 class="sr-only">
+        {{ 'search.heading' | t: count: search.results_count }}
+      </h2>
+      
+      {% paginate search.results by section.settings.results_per_page %}
+
+        {% comment %} 
+          "Product" search type
+        {% endcomment %}
+        {% if search.types contains 'product' %}
+          <ul class="
+            mb-n2
+            list-unstyled
+            mx-n2
+            {{ section.settings.gutter_horizontal | prepend: 'mx-sm-n' }}
+            row
+            row-cols-{{ section.settings.row }}
+            row-cols-sm-{{ section.settings.row_sm }}
+            row-cols-md-{{ section.settings.row_md }}
+            row-cols-lg-{{ section.settings.row_lg }}
+            row-cols-xl-{{ section.settings.row_xl }}"
+          >
+            {% for product in search.results %}
+              
+              {% if product.featured_image != blank %}
+                <li class="
+                  pb-2
+                  px-2
+                  {{ section.settings.gutter_horizontal | prepend: 'px-sm-' }}
+                  {{ section.settings.gutter_vertical | prepend: 'my-' }}
+                  {% if section.settings.align_center %}text-center{% endif %}
+                ">
+                  <a href="{{ product.url }}" class="d-block text-decoration-none">
+        
+                    <div class="
+                      position-relative
+                      overflow-hidden
+                      mb-3
+                      {% if section.settings.image_border %}img-thumbnail{% endif %}
+                      {% if section.settings.image_circle %}rounded-circle{% endif %}
+                      {{ section.settings.image_hover_effect }}
+                    ">
+                      {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+                      <img
+                        class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+                        data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
+                        alt="{{ product.featured_image.alt | escape }}"
+                        width="{{ section.settings.image_width }}"
+                        height="{{ section.settings.image_height }}"
+                        loading="lazy"
+                      >
+        
+                      {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
+                        <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
+                          {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+                        </small>
+                      {% endif %}
+        
+                    </div>
+        
+                    {% if section.settings.show_product_title %}
+                      <p class="{{ section.settings.product_title_size }}">
+                        {{ product.title | escape }}
+                      </p>
+                    {% endif %}
+        
+                    {% if section.settings.show_price %}
+                      <p class="mb-3" style="{{ settings.color_price | prepend: 'color: ' }}">
+                        {% if product.compare_at_price > product.price %}
+                          <s class="text-muted opacity-75 mr-1">{{ product.compare_at_price | money }}</s>
+                          {% if product.price_varies %}
+                            {%- assign sale_price = product.price | money -%}
+                            {{ 'product.on_sale_from_html' | t: price: sale_price }}
+                          {% else %}
+                            {{ 'product.on_sale' | t }}
+                            {{ product.price | money }}
+                          {% endif %}
+                        {% else %}
+                          {% if product.price_varies %}
+                            {%- assign price = product.price | money -%}
+                            {{ 'product.from_text_html' | t: price: price }}
+                          {% else %}
+                            {{ product.price | money }}
+                          {% endif %}
+                        {% endif %}
+                      </p>
+                    {% endif %}
+        
+                  </a>
+        
+                  {% if section.settings.show_quick_view_button %}
+        
+                    {%- assign current_variant = product.selected_or_first_available_variant -%}
+                    {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+        
+                    <button 
+                      type="button" 
+                      class="mb-4 btn {{ section.settings.quick_view_button_style }}" 
+                      data-toggle="modal" 
+                      data-target="#{{ product.id | prepend: 'quick-view-modal-' }}"
+                      {% if product.available == false %}disabled{% endif %} 
+                    >
+                      {% if product.available %} 
+                        {{ 'product.quick_view' | t }}
+                      {% else %} 
+                      {{ 'product.sold_out' | t }}
+                      {% endif %}
+                    </button>
+        
+                    <!-- Modal -->
+                    <div
+                      class="modal {{ section.settings.quick_view_transition }}"
+                      id="{{ product.id | prepend: 'quick-view-modal-' }}"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="{{ product.id | prepend: 'quick-view-modal-label-' }}"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+        
+                          <div class="modal-header d-lg-none">
+                            <h6 class="modal-title">{{ product.title | escape }}</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+        
+                          <div class="modal-body text-left">
+                            <div class="row mx-n2">
+        
+                              <div class="product-images col-lg px-2 mb-4 mb-lg-0">
+                                <div class="
+                                  position-relative
+                                  overflow-hidden
+                                  mb-2
+                                  {% if section.settings.image_border %}img-thumbnail{% endif %}
+                                ">
+                                  {% assign image_size = section.settings.quick_view_image_width | append: 'x' | append: section.settings.quick_view_image_height %}
+                                  <img
+                                    class="product-featured-image img-fluid lazyload"
+                                    data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
+                                    alt="{{ product.featured_image.alt | escape }}"
+                                    width="{{ section.settings.quick_view_image_width }}"
+                                    height="{{ section.settings.quick_view_image_height }}"
+                                    loading="lazy"
+                                  >
+                                  {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
+                                    <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
+                                      {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+                                    </small>
+                                  {% endif %}
+                                </div>
+                                {% if product.images.size > 1 %}
+                                  <ul class="product-image-gallery list-unstyled row row-cols-4 mx-n1">
+                                    {% for image in product.images %}
+                                      <li class="p-1">
+                                        <a
+                                          id="{{ image.id | prepend: 'product-image-' }}"
+                                          href="{{ image.src | img_url: 'master' }}"
+                                          data-featured-img="{{ image.src | img_url: image_size, crop: 'center' }}"
+                                          class="{% if product.featured_image == image %}active{% endif %}"
+                                          {% if product.featured_image == image %} aria-current="true"{% endif %}
+                                        >
+                                          <div class="
+                                            overflow-hidden
+                                            {% if section.settings.image_border %}img-thumbnail{% endif %}
+                                            {% if product.featured_image == image %}border-secondary{% endif %}
+                                            {{ section.settings.image_hover_effect }}
+                                          ">
+                                            <img
+                                              class="img-fluid lazyload"
+                                              data-src="{{ image.src | img_url: '120x120', crop: 'center' }}"
+                                              alt="{{ image.alt | escape }}"
+                                              width="120"
+                                              height="120"
+                                              loading="lazy"
+                                            >
+                                          </div>
+                                        </a>
+                                      </li>
+                                    {% endfor %}
+                                  </ul>
+                                {% endif %}
+                              </div>
+        
+                              <div class="col-lg px-2">
+        
+                                <button type="button" class="close d-none d-lg-block" data-dismiss="modal" aria-label="{{ 'misc.close' | t }}">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+        
+                                <{{ section.settings.quick_view_heading_size }} id="{{ product.id | prepend: 'quick-view-modal-label-' }}" class="mt-1">
+                                  <a href="{{ product.url }}" class="text-dark">
+                                    {{ product.title | escape }}
+                                  </a>
+                                </{{ section.settings.quick_view_heading_size }}>
+        
+                                {% form 'product', product, class: 'mb-3' %}
+        
+                                  <div class="product-price mb-3 font-size-120" style="{{ settings.color_price | prepend: 'color: ' }}">
+                                    {% if product.compare_at_price_max > product.price %}
+                                      <span class="sr-only">{{ 'product.regular_price' | t }}</span>
+                                      {% if current_variant.compare_at_price > current_variant.price %}
+                                      <s class="text-muted opacity-75 mr-2">
+                                        {{ current_variant.compare_at_price | money }}
+                                      </s>
+                                      {% endif %}
+                                    {% endif %}
+                                    <span>
+                                      {{ current_variant.price | money }}
+                                    </span>
+                                  </div>
+        
+                                  <div class="bg-light py-3 px-3">
+        
+                                    <select name="id" id="{{ product.id | prepend: 'featured-collection-variant-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
+                                      {% for variant in product.variants %}
+                                        <option
+                                          {% unless variant.available %}disabled="disabled"{% endunless %}
+                                          value="{{ variant.id }}">
+                                            {{ variant.title }} - {{ variant.price | money }}
+                                        </option>
+                                      {% endfor %}
+                                    </select>
+        
+                                    <hr class="mt-4 mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
+        
+                                    <div class="d-flex justify-content-center">
+                                      <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
+                                      <button
+                                        class="add-to-cart-btn btn btn-primary"
+                                        type="submit"
+                                        name="add"
+                                        data-loading-text="{{ 'misc.loading' | t }}"
+                                        data-add-to-cart-text="{{ 'product.add_to_cart' | t }}"
+                                        data-view-cart-text="{{ 'product.view_cart' | t }}"
+                                        aria-controls="cart-toast-wrapper"
+                                      >
+                                        <div class="d-none bs-spinner spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></div>
+                                        <span>{{ 'product.add_to_cart' | t }}</span>
+                                      </button>
+                                    </div>
+        
+                                  </div>
+        
+                                {% endform %}
+        
+                                <div class="rte">
+                                  {{ product.description | truncate: section.settings.quick_view_desc_truncate }}
+                                </div>
+        
+                                {% if section.settings.quick_view_show_view_product_button %}
+                                  <p><a href="{{ product.url }}" class="btn {{ section.settings.quick_view_view_product_button_style }}">{{ 'product.view_product' | t }}</a></p>
+                                {% endif %}
+        
+                                {% if section.settings.quick_view_show_share_buttons %}
+                                  <hr class="mt-5">
+                                  {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+                              {% endif %}
+        
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- /Modal -->
+        
+                    <script>
+                      window.addEventListener('DOMContentLoaded', () => {
+                        jQuery(document).ready(function ($) {
+        
+                          // Initialize multi selector for product
+                          {% unless product.has_only_default_variant %}
+                            new Shopify.OptionSelectors("{{ product.id | prepend: 'featured-collection-variant-' }}", {
+                              product: {{ product | json }},
+                              onVariantSelected: function(variant, selector) {
+                                // console.log(variant)
+                                // console.log(selector)
+        
+                                let modalId = $(`#quick-view-modal-${selector.product.id}`)
+        
+                                if (variant) {
+                                  if (variant.available) {
+                                    modalId.find(':input[type="number"]').prop("disabled", false).fadeTo(200, 1)
+                                    modalId.find('.add-to-cart-btn').prop("disabled", false).find('span').html("{{ 'product.add_to_cart' | t }}").fadeTo(200, 1)
+                                  }
+                                  else {
+                                    modalId.find(':input[type="number"]').prop("disabled", true).fadeTo(200, 0.5)
+                                    modalId.find('.add-to-cart-btn').prop("disabled", true).find('span').html("{{ 'product.sold_out' | t }}").fadeTo(200, 0.5)
+                                  }
+        
+                                  if (variant.compare_at_price > variant.price) {
+                                    // {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
+        
+                                    modalId.find('.product-discount-badge')
+                                      .removeClass('d-none')
+                                      .addClass('d-block')
+                                      .html(`-${Math.round((variant.compare_at_price - variant.price) / variant.compare_at_price * 100)}%`)
+                                    modalId.find('.product-price').html(`
+                                        <span class="sr-only">{{ 'product.regular_price' | t }}</span>
+                                        <s class="text-muted opacity-75 mr-2">
+                                          ${Shopify.formatMoney(variant.compare_at_price, "")}
+                                        </s>
+                                        <span>${Shopify.formatMoney(variant.price, "")}</span>
+                                      `)
+                                  } else {
+                                    modalId.find('.product-discount-badge').removeClass('d-block').addClass('d-none')
+                                    modalId.find('.product-price').html('<span>'+ Shopify.formatMoney(variant.price, "") + '</span>' )
+                                  }
+        
+                                  if (variant.featured_image)
+                                    handleProductImageGallery($(`a#product-image-${variant.featured_image.id}`))
+                                  else
+                                    handleProductImageGallery($('a#product-image-{{ product.featured_image.id }}'))
+                                }
+                              },
+                              enableHistoryState: false
+                            })
+                          {% endunless %}
+        
+                        })
+                      })
+                    </script>
+        
+                  {% endif %}
+        
+                </li>
+              {% endif %}
+
+            {% endfor %}
+
+          </ul>
+        {% endif %}
+        
+        {% comment %} 
+          "Article" search type
+        {% endcomment %}
+        {% if search.types contains 'article' %}
+          <ul class="list-unstyled mb-6">
+            {% for article in search.results %}
+            <li class="row align-items-center {{ section.settings.gutter_vertical | prepend: 'my-' }}">
+
+              {% if section.settings.show_image and article.image %}
+                <div class="col-md-4 col-lg-3">
+                  <a class="d-inline-block col px-2" href="{{ article.url }}">
+                    <div class="
+                      d-inline-block
+                      mx-auto
+                      mb-3
+                      position-relative
+                      overflow-hidden
+                      {% if section.settings.article_image_border %}img-thumbnail{% endif %}
+                      {% if section.settings.article_image_circle %}rounded-circle{% endif %}
+                      {{ section.settings.article_image_hover_effect }}
+                    ">
+                      {% assign image_size = section.settings.article_image_width | append: 'x' | append: section.settings.article_image_height %}
+                    
+                      <img
+                        class="img-fluid lazyload {% if section.settings.article_image_circle %}rounded-circle{% endif %}"
+                        data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
+                        alt="{{ article.image.alt | escape }}"
+                        width="{{ section.settings.article_image_width }}"
+                        height="{{ section.settings.article_image_height }}"
+                        loading="lazy"
+                      >
+                    </div>
+                  </a>
+                </div>
+              {% endif %}
+              
+      
+              <div class="col-md">
+      
+                {% if section.settings.show_post_title %}
+                  <h2 class="{{ section.settings.post_title_size }}"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                {% endif %}
+
+                {% if section.settings.blog_post_author or section.settings.show_post_date or section.settings.show_comments_number %}
+                  <p class="text-muted font-size-90 opacity-75">
+                    {% if section.settings.blog_post_author %}
+                      {{ article.author }}
+                    {% endif %}
+                    {% if section.settings.blog_post_author and section.settings.show_post_date %}
+                      <span class="opacity-75 mx-1"> | </span> 
+                    {% endif %}
+                    {% if section.settings.show_post_date %}
+                      {{ article.created_at | time_tag: '%b %d, %Y' }}
+                    {% endif %}
+                    {% if section.settings.show_post_date and section.settings.show_comments_number %}
+                      <span class="opacity-75 mx-1"> | </span> 
+                    {% endif %}
+                    {% if section.settings.show_comments_number %}
+                      {{ 'blog.comments.with_count' | t: count: article.comments_count }}
+                    {% endif %}
+                  </p>
+                {% endif %}
+
+                {% if section.settings.show_post_excerpt %}
+                  <div class="rte mb-4">
+                    {% if article.excerpt.size > 0 %}
+                      {{ article.excerpt }}
+                    {% else %}
+                      {{ article.content | strip_html | truncate: section.settings.post_excerpt_truncate }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+                {% if section.settings.show_post_readmore_button %}
+                  <a href="{{ article.url }}" class="mb-3 btn {{ section.settings.post_readmore_button_style }}">
+                    {{ 'blog.readmore' | t }}
+                  </a>
+                {% endif %}
+      
+              </li>
+              <div class="overflow-hidden" aria-hidden="true"></div>
+            {% endfor %}
+          </ul>
+        {% endif %}
+                 
+        {% comment %} 
+          "Page" search type
+        {% endcomment %}
+        {% if search.types contains 'page' %}
+          <ul class="list-unstyled mb-6">
+            {% for page in search.results %}
+              <li class="{{ section.settings.gutter_vertical | prepend: 'my-' }}">
+                
+                <h2 class="{{ section.settings.page_title_size }}"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+                
+                {% if section.settings.show_page_content %}
+                  <div class="rte mb-4">
+                    {{ page.content | strip_html | truncate: section.settings.page_content_truncate }}
+                  </div>
+                {% endif %}
+
+              </li>
+              <div class="overflow-hidden" aria-hidden="true"></div>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        
+        {% include 'pagination' %}
+
+      {% endpaginate %}
+
+    {% endif %}
+  {% endif %}
+
+</article>
+
+<script>
+  /*
+    We wrap with a script tag to enable editor styling on
+    javascript liquid tag
+  */
+  // window.addEventListener('DOMContentLoaded', () => {
+  //   jQuery(document).ready(function ($) {
+  //     // jQuery inline code
+  //
+  //   })
+  // })
+  
+  {% javascript %}
+  $('.product-image-gallery a').click(function(event) {
+    event.preventDefault()
+    handleProductImageGallery($(this))
+  })
+  {% endjavascript %}
+  </script>
+
+{% schema %}
+{
+  "name": "Search page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Search form"
+    },
+    {
+      "type": "select",
+      "id":  "search_form_size",
+      "label": "Form elements size",
+      "default": "lg",
+      "options": [
+        {
+          "value": "sm", "label": "Small (sm)"
+        },
+        {
+          "value": "md", "label": "Medium (md)"
+        },
+        {
+          "value": "lg", "label": "Large (lg)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id":  "search_form_button_style",
+      "label": "Search button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search_types",
+      "label": "Enable \"Search in\" selectbox",
+      "info": "If you disable this, the results will only be for products",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Wrap in container",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Results per page",
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Adjust products per Row"
+    },
+    {
+      "type": "range",
+      "id": "row",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Extra small screens (default)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_sm",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Small screens (sm)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_md",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Medium screens (md)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "row_lg",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Large screens (lg)",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "row_xl",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "label": "Extra-large screens (xl)",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Product settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "align_center",
+      "label": "Align center",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_title",
+      "label": "Show product title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_discount_badge",
+      "label": "Show discount badge",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_view_button",
+      "label": "Show 'Quick view' button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "default": "h6",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id":  "quick_view_button_style",
+      "label": "'Quick view' button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Quick view settings"
+    },
+    {
+      "type": "select",
+      "id":  "quick_view_transition",
+      "label": "Modal transition effect",
+      "default": "fade zoom-in",
+      "options": [
+        {
+          "value": "fade", "label": "Fade/Translate"
+        },
+        {
+          "value": "fade zoom-in", "label": "Fade/Zoom-in"
+        },
+        {
+          "value": "fade zoom-out", "label": "Fade/Zoom-out"
+        },
+        {
+          "value": "", "label": "No effect"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "quick_view_heading_size",
+      "label": "Product title size",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "quick_view_desc_truncate",
+      "label": "Decription truncate",
+      "default": "200",
+      "info": "The maximum number of characters for the product description"
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_view_show_view_product_button",
+      "label": "Show 'View product' button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id":  "quick_view_view_product_button_style",
+      "label": "'View product' button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_view_show_share_buttons",
+      "label": "Show share buttons",
+      "info": "Note: You can adjust options for share buttons under 'Theme Settings'",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Product image settings"
+    },
+    {
+      "type": "text",
+      "id": "image_width",
+      "label": "Image width (px)",
+      "default": "360"
+    },
+    {
+      "type": "text",
+      "id": "image_height",
+      "label": "Image height (px)",
+      "default": "360"
+    },
+    {
+      "type": "text",
+      "id": "quick_view_image_width",
+      "label": "'Quick View' image width (px)",
+      "default": "480"
+    },
+    {
+      "type": "text",
+      "id": "quick_view_image_height",
+      "label": "'Quick View' image height (px)",
+      "default": "480"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_border",
+      "label": "Border",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "image_circle",
+      "label": "Circle",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id":  "image_hover_effect",
+      "label": "Hover effect",
+      "default": "image-hover-shine",
+      "options": [
+        {
+          "value": "image-hover", "label": "No effect"
+        },
+        {
+          "value": "image-hover-fade-in", "label": "Fade in"
+        },
+        {
+          "value": "image-hover-fade-out", "label": "Fade out"
+        },
+        {
+          "value": "image-hover-scale-in", "label": "Scale in"
+        },
+        {
+          "value": "image-hover-scale-out", "label": "Scale out"
+        },
+        {
+          "value": "image-hover-flashing", "label": "Flashing"
+        },
+        {
+          "value": "image-hover-shine", "label": "Shine"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Article Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_title",
+      "label": "Show title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "post_title_size",
+      "label": "Title Size",
+      "default": "h5",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_post_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments_number",
+      "label": "Show comments number",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_excerpt",
+      "label": "Show post excerpt",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "post_excerpt_truncate",
+      "label": "Post excerpt truncate",
+      "default": "200",
+      "info": "The maximum number of characters for the post excerpt"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_readmore_button",
+      "label": "Show readmore button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id":  "post_readmore_button_style",
+      "label": "Readmore button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Article image settings"
+    },
+    {
+      "type": "text",
+      "id": "article_image_width",
+      "label": "Post image width (px)",
+      "default": "600"
+    },
+    {
+      "type": "text",
+      "id": "artcle_image_height",
+      "label": "Post image height (px)",
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "article_image_border",
+      "label": "Image border",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "article_image_circle",
+      "label": "Image as circle",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id":  "article_image_hover_effect",
+      "label": "Hover effect",
+      "default": "image-hover-fade-out",
+      "options": [
+        {
+          "value": "image-hover", "label": "No effect"
+        },
+        {
+          "value": "image-hover-fade-in", "label": "Fade in"
+        },
+        {
+          "value": "image-hover-fade-out", "label": "Fade out"
+        },
+        {
+          "value": "image-hover-scale-in", "label": "Scale in"
+        },
+        {
+          "value": "image-hover-scale-out", "label": "Scale out"
+        },
+        {
+          "value": "image-hover-flashing", "label": "Flashing"
+        },
+        {
+          "value": "image-hover-shine", "label": "Shine"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Page settings"
+    },
+    {
+      "type": "select",
+      "id": "page_title_size",
+      "label": "Title Size",
+      "default": "h5",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_content",
+      "label": "Show page content",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "page_content_truncate",
+      "label": "Page content truncate",
+      "default": "200",
+      "info": "The maximum number of characters for the post excerpt"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "paragraph",
+      "content": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
+    },
+    {
+      "type": "range",
+      "id": "gutter_horizontal",
+      "label": "Horizontal gutter",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "info": "Spacing between products"
+    },
+    {
+      "type": "range",
+      "id": "gutter_vertical",
+      "label": "Vertical gutter",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "info": "Spacing between products"
+    }
+  ]
+}
+{% endschema %}
