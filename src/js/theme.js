@@ -3,17 +3,14 @@ $(function() {
   // Detect that Javascript is enabled
   $("html").removeClass("no-js").addClass('js')
 
-
   // Detect that Cookies are enabled
   if (navigator.cookieEnabled) {
     $(".supports-cookies").removeClass("d-none")
     $(".supports-no-cookies").addClass("d-none")
   }
 
-
   // Initialize Bootstrap Tooltips
   $('[data-toggle="tooltip"]').tooltip()
-
 
   // Lazyload images
   if ('loading' in HTMLImageElement.prototype) {
@@ -22,11 +19,17 @@ $(function() {
       img.src = img.dataset.src
     })
   } else {
-    // Browser does not support "loeading" attribute. Use fallback alternative
+    // Browser does not support "loading" attribute. Use fallback alternative
     const script = document.createElement('script')
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js'
     document.body.appendChild(script)
   }
+
+  // Initialize product image gallery on click
+  $('.product-image-gallery a').click(function(event) {
+    event.preventDefault()
+    handleProductImageGallery($(this))
+  })
 
   // Add to cart with Ajax
   $('form[action="/cart/add"]').submit(function(e) {
