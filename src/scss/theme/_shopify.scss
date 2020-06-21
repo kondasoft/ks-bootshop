@@ -55,3 +55,33 @@
     right: 4px;
   }
 }
+
+
+// Search page
+body.template-search {
+  #search-page-form {
+
+    &.has-search-types {
+
+      .custom-select {
+        max-width: 220px;
+      }
+      
+      @include media-breakpoint-down(md) {
+        input[type=search] {
+          border-radius: $input-border-radius;
+        }
+        .custom-select {
+          width: 100%;
+          max-width: none;
+          margin: .75rem 0;
+          border-radius: $input-border-radius;
+        }
+        .btn {
+          border-radius: $btn-border-radius;
+        }
+      }
+
+    }
+  }
+}
