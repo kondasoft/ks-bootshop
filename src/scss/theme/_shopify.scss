@@ -56,6 +56,23 @@
   }
 }
 
+// Search form on header
+#navbar-search {
+  .dropdown-menu {
+    width: calc(100vw - 1.75rem);
+    input[type=search] {
+      width: 100% !important;
+    }
+    
+    @include media-breakpoint-up(sm) {
+      width: auto;
+      input[type=search] {
+        width: auto;
+      }
+    }
+  }
+}
+
 
 // Search page
 body.template-search {
