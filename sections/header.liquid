@@ -97,7 +97,7 @@
           <div class="dropdown-menu position-absolute dropdown-menu-right py-4 px-3" aria-labelledby="dropdownSearchButton">
             <form action="/search" method="get" class="d-flex" role="search">
               <input type="hidden" name="type" value="product">
-              <input type="search" name="q" id="Search-{{ section.id }}" class="form-control w-auto mr-1" value="{{ search.terms | escape }}" placeholder="{{ 'header.search.placeholder' | t }}" aria-label="{{ 'header.search.placeholder' | t }}" size="24">
+              <input type="search" name="q" id="Search-{{ section.id }}" class="form-control mr-1" value="{{ search.terms | escape }}" placeholder="{{ 'header.search.placeholder' | t }}" aria-label="{{ 'header.search.placeholder' | t }}" size="26">
               <button type="submit" class="btn btn-primary">{{ 'header.search.submit' | t }}</button>
             </form>
           </div>
