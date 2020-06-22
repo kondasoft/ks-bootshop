@@ -122,4 +122,7 @@ function handleProductImageGallery(el) {
   el.closest('.product-images').find('img.product-featured-image')
     .attr('src', el.attr('data-featured-img'))
     .attr('alt', el.find('img').attr('alt'))
+
+  el.closest('.product-images').find('a[data-toggle=modal]')
+    .attr('href', el.attr('data-modal-img'))
 }
