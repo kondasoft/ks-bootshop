@@ -64,7 +64,7 @@
     @include media-breakpoint-up(sm) {
       width: auto;
       input[type=search] {
-        width: auto;
+        width: auto !important;
       }
     }
   }
