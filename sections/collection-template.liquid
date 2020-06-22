@@ -56,7 +56,8 @@
 
   {% else %}
 
-    <select class="custom-select d-block w-auto ml-auto mb-2" name="sort_by" onchange="javascript:location.href = window.location.href.split('?')[0] + `?sort_by=${this.value}`;">
+    <select class="custom-select d-block w-auto ml-auto mb-2" name="sort_by" aria-label="{{ 'products.sort_by' | t }}>
+      <option disabled>{{ 'products.sort_by' | t }}</option>
       {% for option in collection.sort_options %}
         <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
       {% endfor %}
@@ -64,7 +65,7 @@
 
     {% paginate collection.products by section.settings.results_per_page %}
 
-      {% assign product_list = collection.products %}
+      {% assign products_list = collection.products %}
       {% include 'products-list' %}
 
       {% include 'pagination' %}
@@ -74,6 +75,34 @@
   {% endif %}
 
 </div>
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  jQuery(document).ready(function ($) {
+    
+    $('select[name=sort_by]').on('change', function() {
+      location.href = window.location.href.split('?')[0] + `?sort_by=${this.value}`
+
+      // const url = `/collections/men?sort_by=${this.value}`
+      // console.log(url)
+
+    //   $.ajax(url, {
+    //     success: function(data) {
+    //       console.log(data)
+    //       history.pushState({}, null, url);
+    //       document.documentElement.innerHTML = data
+    //     },
+    //     error: function(error) {
+    //       console.log(error)
+    //     }
+    //   });
+    
+    });
+
+  })
+})
+</script>
 
 {% schema %}
 {
