@@ -1,0 +1,11 @@
+<ul class="nav nav-tabs justify-content-center mb-3">
+  <li class="nav-item">
+    <a class="nav-link {% if selectedIndex == 0 %}active{% endif %}" href="/account">{{ 'customer.account.nav.orders' | t }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if selectedIndex == 1 %}active{% endif %}" href="/account/addresses">{{ 'customer.account.nav.addresses' | t }} ({{ customer.addresses_count }})</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/account/logout">{{ 'customer.account.nav.logout' | t }}</a>
+  </li>
+</ul>
