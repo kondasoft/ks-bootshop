@@ -1,5 +1,5 @@
 /*
-  Bootstrap components enhanced or modifed
+  Mostly Bootstrap components enhanced or modified
 */
 
 // Horizontal rules
@@ -10,18 +10,15 @@ hr {
   }
 }
 
-
 // Nav
 .nav-link {
   transition: all .2s ease-out;
 }
 
-
 // Dropdown
 .dropdown-item {
   transition: background-color .2s ease-out;
 }
-
 
 // Modal
 .modal-dialog {
@@ -41,7 +38,6 @@ hr {
     max-width: calc(100vh - 3.5rem);
   }
 }
-
 
 // Buttons
 
@@ -65,6 +61,50 @@ hr {
   }
 }
 
+// Tables
+.table-responsive-collapse {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+        thead {
+          display: none;
+        }
+        tbody tr {
+          border: 1px solid $border-color;
+          border-radius: 4px;
+          display: block;
+          margin-bottom: 1rem;
+          padding-bottom: .5rem;
+          td {
+            width: auto;
+            display: block;
+            border: none;
+            text-align: left!important;
+            padding-top: .25rem;
+            padding-bottom: .25rem;
+            &:before {
+              content: attr(data-label);
+              font-weight: bold;
+              display: inline-block;
+              margin-right: 1rem;
+              width: calc(50% - .5rem);
+              text-align: right;
+            }
+            &:first-child {
+              background: $light;
+              margin-bottom: .75rem;
+              padding-top: .75rem;
+              padding-bottom: .75rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 // Images
 .image-hover-fade-in {
   img, svg {
