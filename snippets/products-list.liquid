@@ -32,6 +32,7 @@
               {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
               <img
                 class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+                src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
                 data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
                 alt="{{ product.featured_image.alt | escape }}"
                 width="{{ section.settings.image_width }}"
@@ -128,6 +129,7 @@
                           {% assign image_size = section.settings.quick_view_image_width | append: 'x' | append: section.settings.quick_view_image_height %}
                           <img
                             class="product-featured-image img-fluid lazyload"
+                            src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
                             data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
                             alt="{{ product.featured_image.alt | escape }}"
                             width="{{ section.settings.quick_view_image_width }}"
@@ -159,6 +161,7 @@
                                   ">
                                     <img
                                       class="img-fluid lazyload"
+                                      src="{{ 'no-image.jpg' | asset_img_url: '120x120', crop: 'center' }}"
                                       data-src="{{ image.src | img_url: '120x120', crop: 'center' }}"
                                       alt="{{ image.alt | escape }}"
                                       width="120"

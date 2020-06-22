@@ -54,6 +54,7 @@
           
             <img
               class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+              src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
               data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
               alt="{{ article.image.alt | escape }}"
               width="{{ section.settings.image_width }}"

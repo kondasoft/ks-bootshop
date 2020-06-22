@@ -51,6 +51,7 @@
               {%- assign image_object = collection.image | default: collection.products.first.featured_image -%}
               <img
                 class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+                src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
                 data-src="{{ image_object | img_url: image_size, crop: 'center'  }}"
                 alt="{{ image_object.alt | escape }}"
                 width="{{ section.settings.image_width }}"
