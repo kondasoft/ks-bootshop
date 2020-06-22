@@ -36,6 +36,12 @@ hr {
   }
 }
 
+@include media-breakpoint-up(lg) {
+  .modal-full {
+    max-width: calc(100vh - 3.5rem);
+  }
+}
+
 
 // Buttons
 
