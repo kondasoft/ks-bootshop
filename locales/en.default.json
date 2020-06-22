@@ -5,7 +5,8 @@
     "next": "Next",
     "loading": "Loading",
     "page": "Page",
-    "pagination": "Pagination"
+    "pagination": "Pagination",
+    "image": "Image"
   },
   "404": {
     "title": "404 - Not found",
@@ -115,7 +116,8 @@
   },
   "products": {
     "empty": "No products found!",
-    "filter_by_tag": "Filter by tag:"
+    "filter_by_tag": "Filter by tag:",
+    "sort_by": "Sort products by:"
   },
   "product": {
     "regular_price": "Regular price",
