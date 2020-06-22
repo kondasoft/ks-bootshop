@@ -9,7 +9,7 @@
     row-cols-lg-{{ section.settings.row_lg }}
     row-cols-xl-{{ section.settings.row_xl }}"
   >
-    {% for product in product_list limit: section.settings.limit %}
+    {% for product in products_list limit: section.settings.limit %}
 
       {% if product.featured_image != blank %}
         <li class="
