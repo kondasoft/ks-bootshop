@@ -1,4 +1,4 @@
-<article class="mt-6 {% if section.settings.container %} container {% else %} container-fluid {% endif %}">
+<div class="mt-6 {% if section.settings.container %} container {% else %} container-fluid {% endif %}">
 
   <h1 class="text-center">
     {% if search.performed %}
@@ -55,7 +55,7 @@
           "Product" search type
         {% endcomment %}
         {% if search.types contains 'product' %}
-          {% assign product_list = search.results %}
+          {% assign products_list = search.results %}
           {% include 'products-list' %}
         {% endif %}
         
@@ -173,7 +173,7 @@
     {% endif %}
   {% endif %}
 
-</article>
+        </div>
 
 <script>
   // window.addEventListener('DOMContentLoaded', () => {
@@ -190,6 +190,7 @@
 {% schema %}
 {
   "name": "Search page",
+  "tag": "article",
   "settings": [
     {
       "type": "header",
