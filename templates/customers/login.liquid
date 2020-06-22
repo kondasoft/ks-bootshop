@@ -1,1 +1,154 @@
-<!-- /templates/customers/login.liquid -->
+<article class="py-6 container" style="max-width: 500px;">
+
+  <div class="bg-light py-4 px-4 rounded">
+
+    {% form 'customer_login' %}
+
+      <h1 class="h3 mb-4 text-center">{{ 'customer.login.title' | t }}</h1>
+
+      <div id="recover-success"></div>
+
+      {{ form.errors | default_errors }}
+
+      <div class="form-group">
+        <input 
+          type="email" 
+          name="customer[email]" 
+          id="CustomerEmail" 
+          class="form-control" 
+          spellcheck="false" 
+          autocomplete="off" 
+          autocapitalize="off" 
+          autofocus 
+          required
+          placeholder="{{ 'customer.login.email' | t }}"
+          aria-label="{{ 'customer.login.email' | t }}"
+        >
+      </div>
+
+      {% if form.password_needed %}
+        <div class="form-group">
+          <input 
+            type="password" 
+            name="customer[password]" 
+            id="CustomerPassword" 
+            class="form-control" 
+            spellcheck="false" 
+            autocomplete="off" 
+            autocapitalize="off" 
+            required
+            placeholder="{{ 'customer.login.password' | t }}"
+            aria-label="{{ 'customer.login.password' | t }}"
+          >
+        </div>
+      {% endif %}
+
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-block" value="{{ 'customer.login.sign_in' | t }}">
+      </div>
+
+      <ul class="nav justify-content-center">
+        {% if form.password_needed %}
+          <li class="nav-item">
+            <a class="nav-link" href="#recover" role="button">{{ 'customer.login.forgot_password' | t }}</a>
+          </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link"  href="/account/register">{{ 'customer.login.create_account' | t }}</a>
+        </li>
+      </ul>
+
+    {% endform %}
+
+    {% form 'recover_customer_password', id: 'customer_recover', style: 'display: none' %}
+
+      <h1 class="h3 text-center">{{ 'customer.recover_password.title' | t }}</h1>
+      <p class="text-muted text-center mb-4">{{ 'customer.recover_password.subtext' | t }}</p>
+
+      {% if form.posted_successfully? %}
+        <div id="recover-success-hidden" class="d-none">
+          <p class="alert alert-success" role="alert">
+            {{ 'customer.recover_password.success' | t }}
+          </p>
+        </div>
+      {% endif %}
+
+      {{ form.errors | default_errors }}
+
+      <div class="form-group">
+        <input 
+          type="email" 
+          name="email" 
+          id="RecoverEmail" 
+          class="form-control" 
+          spellcheck="false" 
+          autofocus 
+          autocomplete="off" 
+          autocapitalize="off" 
+          required
+          placeholder="{{ 'customer.recover_password.email' | t }}"
+          aria-label="{{ 'customer.recover_password.email' | t }}"
+        >
+      </div>
+
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-block" value="{{ 'customer.recover_password.submit' | t }}">
+      </div>
+
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link" href="#login" role="button">{{ 'customer.recover_password.cancel' | t }}</a>
+        </li>
+      </ul>
+
+    {% endform %}
+
+
+    {% if shop.checkout.guest_login %}
+      <hr class="mt-7 mb-4">
+      <h2 class="h4 mb-3">{{ 'customer.login.guest_title' | t }}</h2>
+
+      {% form 'guest_login' %}
+        <input type="submit" class="btn btn-outline-primary" value="{{ 'customer.login.guest_continue' | t }}">
+      {% endform %}
+    {% endif %}
+
+  </div>
+
+</article>
+
+<style>
+  #site-main {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  jQuery(document).ready(function ($) {
+    
+    if (window.location.href.indexOf('#recover') != -1) {
+      handleRecover(true)
+    }
+
+    $(window).on('hashchange', function(e) {
+      handleRecover(location.hash == '#recover')
+    })
+
+    function handleRecover(showRecover) {
+      if (showRecover) {
+        $('#customer_login').hide()
+        $('#customer_recover').show()
+      }
+      else {
+        $('#customer_login').show()
+        $('#customer_recover').hide()
+      }
+    }
+
+  $('#recover-success').append($('#recover-success-hidden p'))
+
+  })
+})
+</script>
