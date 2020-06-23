@@ -18,6 +18,8 @@
   },
   "blog": {
     "readmore": "Read more",
+    "filter_by_tag": "Filter by tag",
+    "tagged_under": "Tagged under",
     "comments": {
       "title": "Leave a comment",
       "name": "Name",
