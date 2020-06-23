@@ -1,0 +1,359 @@
+<div class="
+  pt-7
+  {% if section.settings.container %} 
+    container 
+  {% else %} 
+    container-fluid 
+  {% endif %}
+">
+
+  <div class="mb-4 {{ section.settings.heading_alignment }}">
+    <h1>{{ blog.title }}</h1>
+
+    {% if section.settings.show_tags and blog.all_tags.size > 0 %}
+      <ul class="list-unstyled d-inline-flex flex-wrap align-items-center mx-n1">
+
+        <p class="small text-muted px-1 mb-0 mr-1">{{ 'blog.filter_by_tag' | t }}</p>
+
+        {% for tag in blog.all_tags %}
+          {% if current_tags contains tag %}
+            <li class="active p-1" style="line-height: normal">
+              {{ link_to_remove_tag }}
+              {{ tag | link_to_remove_tag: tag | replace: 'title=', 'class="badge badge-primary" title=' | replace: '</a>', '<span class="ml-1" aria-hidden="true">&times;</span></a>'  }}
+            </li>
+          {% else %}
+            <li class="p-1" style="line-height: normal">
+              {{ tag | link_to_tag: tag | replace: 'title=', 'class="badge badge-light" title=' }}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  {% paginate blog.articles by section.settings.results_per_page %}
+    
+    {% for article in blog.articles %}
+      
+      <article class="row align-items-center mb-6">
+
+        {% if article.image %}
+          <div class="col{{ section.settings.breakpoint }} text-center mb-3">
+            <a class="d-inline-block px-2" href="{{ article.url }}">
+              <div class="
+                d-inline-block
+                mx-auto
+                position-relative
+                overflow-hidden
+                {% if section.settings.image_border %}img-thumbnail{% endif %}
+                {% if section.settings.image_circle %}rounded-circle{% endif %}
+                {{ section.settings.image_hover_effect }}
+              ">
+                {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+              
+                <img
+                  class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+                  src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
+                  data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
+                  alt="{{ article.image.alt | escape }}"
+                  width="{{ section.settings.image_width }}"
+                  height="{{ section.settings.image_height }}"
+                  loading="lazy"
+                >
+              </div>
+            </a>
+          </div>
+        {% endif %}
+
+        <div class="col{{ section.settings.breakpoint }}">
+
+          {% if section.settings.show_post_title %}
+            <h2 class="{{ section.settings.post_title_size }}">
+              <a href="{{ article.url }}" class="">
+                {{ article.title }}
+              </a>
+            </h2>
+          {% endif %}
+          
+          {% if section.settings.blog_post_author or section.settings.show_post_date or section.settings.show_comments_number %}
+            <p class="text-muted opacity-75">
+              {% if section.settings.blog_post_author %}
+                {{ article.author }}
+              {% endif %}
+              {% if section.settings.blog_post_author and section.settings.show_post_date %}
+                <span class="opacity-75 mx-1"> | </span> 
+              {% endif %}
+              {% if section.settings.show_post_date %}
+                {{ article.created_at | time_tag: '%b %d, %Y' }}
+              {% endif %}
+              {% if section.settings.show_post_date and section.settings.show_comments_number %}
+                <span class="opacity-75 mx-1"> | </span> 
+              {% endif %}
+              {% if section.settings.show_comments_number %}
+                {{ 'blog.comments.with_count' | t: count: article.comments_count }}
+              {% endif %}
+            </p>
+          {% endif %}
+
+          {% if section.settings.show_post_excerpt %}
+            <div class="rte mb-4">
+              {% if article.excerpt.size > 0 %}
+                {{ article.excerpt }}
+              {% else %}
+                {{ article.content | strip_html | truncate: section.settings.post_excerpt_truncate }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if section.settings.show_post_readmore_button %}
+            <a href="{{ article.url }}" class="mb-3 btn {{ section.settings.post_readmore_button_style }}">
+              {{ 'blog.readmore' | t }}
+            </a>
+          {% endif %}
+
+        </div>
+
+      </article>
+    {% endfor %}
+
+    {% include 'pagination' %}
+
+  {% endpaginate %}
+
+</div>
+
+{% schema %}
+{
+  "name": "Blogs pages",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "container",
+      "label": "Wrap in container",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "default": "text-center",
+      "options": [
+        {
+          "value": "text-left", "label": "Left"
+        },
+        {
+          "value": "text-center", "label": "Center"
+        },
+        {
+          "value": "text-right", "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Results per page",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Blog post settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_title",
+      "label": "Show title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "post_title_size",
+      "label": "Title Size",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1", "label": "H1"
+        },
+        {
+          "value": "h2", "label": "H2"
+        },
+        {
+          "value": "h3", "label": "H3"
+        },
+        {
+          "value": "h4", "label": "H4"
+        },
+        {
+          "value": "h5", "label": "H5"
+        },
+        {
+          "value": "h6", "label": "H6"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_post_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments_number",
+      "label": "Show comments number",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_excerpt",
+      "label": "Show post excerpt",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "post_excerpt_truncate",
+      "label": "Post excerpt truncate",
+      "default": "200",
+      "info": "The maximum number of characters for the post excerpt"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_readmore_button",
+      "label": "Show readmore button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id":  "post_readmore_button_style",
+      "label": "Readmore button style",
+      "default": "btn-outline-primary",
+      "options": [
+        {
+          "value": "btn-primary", "label": "Primary color"
+        },
+        {
+          "value": "btn-outline-primary", "label": "Outline primary"
+        },
+        {
+          "value": "btn-secondary", "label": "Secondary color"
+        },
+        {
+          "value": "btn-outline-secondary", "label": "Outline secondary"
+        },
+        {
+          "value": "btn-light", "label": "Light color"
+        },
+        {
+          "value": "btn-dark", "label": "Dark color"
+        },
+        {
+          "value": "btn-outline-dark", "label": "Outline dark"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "text",
+      "id": "image_width",
+      "label": "Post image width (px)",
+      "default": "600"
+    },
+    {
+      "type": "text",
+      "id": "image_height",
+      "label": "Post image height (px)",
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_border",
+      "label": "Image border",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "image_circle",
+      "label": "Image as circle",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id":  "image_hover_effect",
+      "label": "Hover effect",
+      "default": "image-hover-fade-out",
+      "options": [
+        {
+          "value": "image-hover", "label": "No effect"
+        },
+        {
+          "value": "image-hover-fade-in", "label": "Fade in"
+        },
+        {
+          "value": "image-hover-fade-out", "label": "Fade out"
+        },
+        {
+          "value": "image-hover-scale-in", "label": "Scale in"
+        },
+        {
+          "value": "image-hover-scale-out", "label": "Scale out"
+        },
+        {
+          "value": "image-hover-flashing", "label": "Flashing"
+        },
+        {
+          "value": "image-hover-shine", "label": "Shine"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Advanced settings"
+    },
+    {
+      "type": "select",
+      "id":  "breakpoint",
+      "label": "Responsive breakpoint",
+      "info": "Define at what screen size point the layout should switch from row to column. [Learn more](https://getbootstrap.com/docs/4.5/layout/overview/#responsive-breakpoints)",
+      "default": "-lg",
+      "options": [
+        {
+          "value": "", "label": "No breakpoint"
+        },
+        {
+          "value": "-sm", "label": "Small screens (sm)"
+        },
+        {
+          "value": "-md", "label": "Medium screens (md)"
+        },
+        {
+          "value": "-lg", "label": "Large screens (lg)"
+        },
+        {
+          "value": "-xl", "label": "Extra-large screens (xl)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
