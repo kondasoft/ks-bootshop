@@ -1,0 +1,224 @@
+<div class="pt-7 container">  
+  
+  <h1>{{ article.title }}</h1>
+
+  <!-- Post meta -->
+  {% if section.settings.blog_post_author or section.settings.show_post_date or section.settings.show_comments_number %}
+    <p class="text-muted opacity-75">
+      {% if section.settings.blog_post_author %}
+        {{ article.author }}
+      {% endif %}
+      {% if section.settings.blog_post_author and section.settings.show_post_date %}
+        <span class="opacity-75 mx-1"> | </span> 
+      {% endif %}
+      {% if section.settings.show_post_date %}
+        {{ article.created_at | time_tag: '%b %d, %Y' }}
+      {% endif %}
+      {% if section.settings.show_post_date and section.settings.show_comments_number %}
+        <span class="opacity-75 mx-1"> | </span> 
+      {% endif %}
+      {% if section.settings.show_comments_number %}
+        {{ 'blog.comments.with_count' | t: count: article.comments_count }}
+      {% endif %}
+    </p>
+  {% endif %}
+
+  <!-- Article image -->
+  {% if article.image %}
+    <div class="
+      d-inline-block
+      mx-auto
+      mb-3
+      position-relative
+      overflow-hidden
+      {% if section.settings.image_border %}img-thumbnail{% endif %}
+    ">
+      {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+      <img
+        class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+        src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
+        data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
+        alt="{{ article.image.alt | escape }}"
+        width="{{ section.settings.image_width }}"
+        height="{{ section.settings.image_height }}"
+        loading="lazy"
+      >
+    </div>
+  {% endif %}
+
+  <!-- Content -->
+  <div class="rte mx-auto mb-4" style="max-width: {{ section.settings.content_max_width | append: 'px'}};">
+    {{ article.content }}
+    
+    <!-- Tags -->
+    {% if section.settings.show_tags and article.tags.size > 0 %}
+      <ul class="list-unstyled d-inline-flex flex-wrap align-items-center mx-n1">
+
+        <p class="small text-muted px-1 mb-0 mr-1">{{ 'blog.tagged_under' | t }}</p>
+
+        {% for tag in article.tags %}
+          <li class="p-1" style="line-height: normal">
+            {{ tag | link_to_tag: tag | replace: 'title=', 'class="badge badge-light" title=' }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <!-- Social sharing -->
+    {% if section.settings.enable_social_sharing %}
+      <hr class="mt-2">
+      <div class="text-center mb-5">
+        {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+      </div>
+    {% endif %}
+
+    <!-- Comments -->
+    {% if blog.comments_enabled? %}
+      <div id="comments">
+
+        {% if article.comments_count == 0 %}
+          <h3 class="mb-3">{{ 'blog.comments.no_comments' | t }}</h3>
+          <p class="alert alert-info" role="alert">{{ 'blog.comments.be_first' | t }}</p>
+
+        {% else %}
+          <h3 class="mb-3">{{ 'blog.comments.with_count' | t: count: article.comments_count }}</h3>
+
+          {% paginate article.comments by section.settings.comments_per_page %}
+
+            <ul class="list-unstyled">
+              {% for comment in article.comments %}
+                <li id="comment-{{ comment.id }}" class="card mb-3">
+                  <div class="card-header">
+                    <p class="text-muted font-size-90 mb-0">
+                      {{ comment.author }}
+                      &nbsp; <span class="opacity-75"> | </span> &nbsp;
+                      {{ comment.created_at | time_tag: '%B %d, %Y - %I:%M %p' }}
+                    </p>
+                  </div>
+                  <div class="card-body rte pb-1">
+                    {{ comment.content }}
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+
+            {% include 'pagination' %}
+
+          {% endpaginate %}
+
+        {% endif %}
+
+        <!-- New Comment -->
+        {% form 'new_comment', article %}
+          <h3 class="mt-4 mb-3">{{ 'blog.comments.title' | t }}</h3>
+
+          {{ form.errors | default_errors }}
+
+          <div class="form-row">
+            <div class="form-group col-sm">
+              <input type="text" name="comment[author]" id="CommentAuthor" class="form-control {% if form.errors contains 'author' %}is-invalid{% endif %}" placeholder="{{ 'blog.comments.name' | t }}" aria-label="{{ 'blog.comments.name' | t }}"  value="{{ form.author }}" autocapitalize="words" required>
+            </div>
+
+            <div class="form-group col-sm">
+              <input type="email" name="comment[email]" id="CommentEmail" class="form-control {% if form.errors contains 'email' %}is-invalide{% endif %}" placeholder="{{ 'blog.comments.email' | t }}" aria-label="{{ 'blog.comments.email' | t }}"  value="{{ form.email }}" autocorrect="off" autocapitalize="off" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea name="comment[body]" id="CommentBody" class="form-control {% if form.errors contains 'body' %}is-invalid{% endif %}" placeholder="{{ 'blog.comments.message' | t }}" aria-label="{{ 'blog.comments.message' | t }}" rows="4" required>{{ form.body }}</textarea>
+          </div>
+
+          {% if blog.moderated? %}
+            <p class="text-muted">{{ 'blog.comments.moderated' | t }}</p>
+          {% endif %}
+
+          <input type="submit" class="btn btn-primary" value="{{ 'blog.comments.post' | t }}">
+
+        {% endform %}
+
+      </div>
+    {% endif %}
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_post_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_post_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_comments_number",
+      "label": "Show comments number",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "content_max_width",
+      "label": "Content max-width (px)",
+      "info": "Increase legibility with narrow content width (recommended words per sentence is 20-25)",
+      "default": "767"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_social_sharing",
+      "label": "Enable social sharing",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "comments_per_page",
+      "label": "Comments per page",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "text",
+      "id": "image_width",
+      "label": "Post image width (px)",
+      "default": "1200"
+    },
+    {
+      "type": "text",
+      "id": "image_height",
+      "label": "Post image height (px)",
+      "default": "600"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_border",
+      "label": "Image border",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
