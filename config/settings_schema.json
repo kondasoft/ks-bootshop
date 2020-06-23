@@ -4,7 +4,7 @@
     "theme_name": "BootShop",
     "theme_version": "0.1.0",
     "theme_author": "KondaSoft",
-    "theme_documentation_url": "https://github.com/Shopify/themekit",
+    "theme_documentation_url": "https://github.com/kondasoft/ks-bootshop",
     "theme_support_url": "https://github.com/alvinkonda/ks-bootshop/issues"
   },
   {
@@ -46,12 +46,6 @@
       {
         "type": "header",
         "content": "Social sharing options"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_sharing_blog",
-        "label": "Enable sharing for blog articles",
-        "default": true
       },
       {
         "type": "checkbox",
