@@ -176,7 +176,22 @@
             
             {% for image in product.images %}
               <div class="carousel-item {% if forloop.index0 == 0 %}active{% endif %}">
-                <img src="{{ image.src | img_url: modal_image_size, crop: 'center' }}" class="d-block w-100 h-auto" alt="{{ image.alt | escape }}" width="{{ section.settings.modal_image_width }}" height="{{ section.settings.modal_image_height }}">
+                
+                {% if forloop.index0 == 0 %}
+                  <img 
+                    src="{{ image.src | img_url: modal_image_size, crop: 'center' }}" 
+                    class="lazyload d-block w-100 h-auto" alt="{{ image.alt | escape }}" 
+                    width="{{ section.settings.modal_image_width }}" 
+                    height="{{ section.settings.modal_image_height }}"
+                    >
+                {% else %}
+                  <img 
+                    data-src="{{ image.src | img_url: modal_image_size, crop: 'center' }}" 
+                    class="lazyload d-block w-100 h-auto" alt="{{ image.alt | escape }}" 
+                    width="{{ section.settings.modal_image_width }}" 
+                    height="{{ section.settings.modal_image_height }}"
+                    >
+                {% endif %}
                 
                 {% if section.settings.modal_carousel_show_caption %}
                   <div class="carousel-caption" style="bottom: 0">
@@ -322,6 +337,11 @@
         $('#product-photo-gallery-carousel').on('slide.bs.carousel', function (event) {
           // adjust counter on carousel slide
           counterEl.text(`${Number(event.to) + 1}/${count}`)
+
+          // lazy load slide image
+          var image = $(event.relatedTarget).find('img[data-src]');
+          image.attr('src', image.data('src'));
+          image.removeAttr('data-src');
         })
 
       })
