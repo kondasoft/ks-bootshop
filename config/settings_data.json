@@ -1,6 +1,98 @@
 {
   "current": "Default",
   "presets": {
-    "Default": { }
+    "Default": { 
+      "sections": {
+        "carousel": {
+          "type": "carousel",
+          "blocks": {
+            "carousel-0": {
+              "type": "image",
+              "settings": {
+                "caption_heading": "First slide title",
+                "caption_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
+              }
+            },
+            "carousel-1": {
+              "type": "image",
+              "settings": {
+                "caption_heading": "Second slide title",
+                "caption_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
+              }
+            },
+            "carousel-2": {
+              "type": "image",
+              "settings": {
+                "caption_heading": "Third slide title",
+                "caption_text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
+              }
+            } 
+          },
+          "block_order": [
+            "carousel-0",
+            "carousel-1",
+            "carousel-2"
+          ]
+        },
+        "featured-collection": {
+          "type": "featured-collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "collection-list": {
+          "type": "collection-list",
+          "blocks": {
+            "collection-list-0": {
+              "type": "collection"
+            },
+            "collection-list-1": {
+              "type": "collection"
+            },
+            "collection-list-2": {
+              "type": "collection"
+            },
+            "collection-list-3": {
+              "type": "collection"
+            }
+          },
+          "block_order": [
+            "collection-list-0",
+            "collection-list-1",
+            "collection-list-2",
+            "collection-list-3"
+          ]
+        },
+        "separator-1": {
+          "type": "separator"
+        },
+        "featured-product": {
+          "type": "featured-product"
+        },
+        "separator-2": {
+          "type": "separator"
+        },
+        "blog-posts": {
+          "type": "blog-posts"
+        },
+        "newsletter": {
+          "type": "newsletter"
+        },
+        "image-with-text": {
+          "type": "image-with-text"
+        }
+      },
+      "content_for_index": [
+        "carousel",
+        "featured-collection",
+        "collection-list",
+        "separator-1",
+        "featured-product",
+        "separator-2",
+        "blog-posts",
+        "newsletter",
+        "image-with-text"
+      ]
+    }
   }
 }
