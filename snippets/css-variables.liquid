@@ -1,0 +1,11 @@
+<style>
+  {{ settings.font_heading | font_face }}
+  
+  :root {
+    --color-price: {{ settings.color_price }};
+    --color-sale: {{ settings.color_on_sale }};
+
+    --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+  }
+
+</style>
