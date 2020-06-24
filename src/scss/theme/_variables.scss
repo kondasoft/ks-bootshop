@@ -8,6 +8,28 @@
 
 
 // Color system
+// Changed from Bootstrap to Material
+// https://material.io/design/color/the-color-system.html
+$red:         #D32F2F !default;
+$pink:        #D81B60 !default;
+$purple:      #9C27B0 !default;
+$deep-purple: #9C27B0 !default;
+$indigo:      #3949AB !default;
+$blue:        #1976D2 !default;
+$light-blue:  #0277BD !default;
+$cyan:        #00838F !default;
+$teal:        #00796B !default;
+$green:       #2E7D32 !default;
+$light-green: #558B2F !default;
+$lime:        #827717 !default;
+$orange:      #E65100 !default;
+$deep-orange: #BF360C !default;
+$brown:       #5D4037 !default;
+$blue-grey:   #455A64 !default;
+
+// Set primary color
+$primary: $blue !default;
+// $secondary: $lime !default;
 
 // Options
 $enable-gradients: true !default;
@@ -43,6 +65,7 @@ $link-white-hover-decoration: underline !default;
 
 // Typography
 $small-font-size: 85% !default;
+$headings-font-family: var(--font-heading) !default;
 $headings-line-height: 1.3 !default;
 $hr-white-border-color: rgba(white, .2) !default;
 $opacities: [0, 25, 50, 75, 100] !default;
