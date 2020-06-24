@@ -37,34 +37,36 @@
       {% if section.settings.align_center %}text-center{% endif %}
     ">
         
-      <div class="row row-cols-1 row-cols-sm-2 mx-n2 align-items-center">
-
-        <a class="d-inline-block col px-2" href="{{ article.url }}">
-          <div class="
-            d-inline-block
-            mx-auto
-            mb-3
-            position-relative
-            overflow-hidden
-            {% if section.settings.image_border %}img-thumbnail{% endif %}
-            {% if section.settings.image_circle %}rounded-circle{% endif %}
-            {{ section.settings.image_hover_effect }}
-          ">
-            {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
-          
-            <img
-              class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
-              src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
-              data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
-              alt="{{ article.image.alt | escape }}"
-              width="{{ section.settings.image_width }}"
-              height="{{ section.settings.image_height }}"
-              loading="lazy"
-            >
-          </div>
-        </a>
+      <div class="row mx-n2 align-items-center">
         
-        <div class="col px-2">
+        {% if article.image != blank %}
+          <a class="col-md d-inline-block col px-2" href="{{ article.url }}">
+            <div class="
+              d-inline-block
+              mx-auto
+              mb-3
+              position-relative
+              overflow-hidden
+              {% if section.settings.image_border %}img-thumbnail{% endif %}
+              {% if section.settings.image_circle %}rounded-circle{% endif %}
+              {{ section.settings.image_hover_effect }}
+            ">
+              {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
+            
+              <img
+                class="img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
+                src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
+                data-src="{{ article.image | img_url: image_size, crop: 'center'  }}"
+                alt="{{ article.image.alt | escape }}"
+                width="{{ section.settings.image_width }}"
+                height="{{ section.settings.image_height }}"
+                loading="lazy"
+              >
+            </div>
+          </a>
+        {% endif %}
+        
+        <div class="col-md px-2">
           {% if section.settings.show_post_title %}
             <a href="{{ article.url }}" class="d-block mb-2 text-decoration-none {{ section.settings.post_title_size }}">
               {{ article.title }}
