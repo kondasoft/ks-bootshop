@@ -31,6 +31,8 @@
 
   {% include 'social-meta-tags' %}
 
+  {% include 'css-variables' %}
+
   {{ 'theme.min.css' | asset_url | stylesheet_tag }}
 
   {{ content_for_header }}
