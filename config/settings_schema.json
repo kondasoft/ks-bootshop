@@ -11,10 +11,12 @@
     "name": "Colors",
     "settings": [
       {
-        "type": "color",
-        "id": "color_primary",
-        "label": "Primary color",
-        "default": "#1976D2"
+        "type": "paragraph",
+        "content": "NOTICE: Our theme uses [Sass](https://sass-lang.com/) to generate CSS styles. To change the \"primary\" color or any other value you should create your own \"_custom.scss\" as described on the [guide](https://github.com/kondasoft/ks-bootshop#modifying-styles-scss)"
+      },
+      {
+        "type": "header",
+        "content": "Utility colors"
       },
       {
         "type": "color",
@@ -27,6 +29,17 @@
         "id": "color_on_sale",
         "label": "Discount badge color",
         "default": "#D32F2F"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "default": "helvetica_n4",
+        "label": "Headings"
       }
     ]
   },
@@ -108,6 +121,17 @@
         "type": "text",
         "id": "social_vimeo_link",
         "label": "Vimeo link"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32x32"
       }
     ]
   }
