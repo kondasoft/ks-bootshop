@@ -9,12 +9,9 @@ Our goal is to make this project the most completed, robust and of course the mo
 * All elements are fully accessible with [aria attributes](https://www.w3.org/WAI/standards-guidelines/aria/)
 * Support for [native image lazy-loading](https://web.dev/native-lazy-loading/)
 * PageSeed score 93/100 [check results](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fks-bootshop.myshopify.com%2F) 
+* All Shopify templates (cart, product, etc) have their corresponding settings
 * Add to cart via Ajax
 * Product "Quick view" mode
-* Note: Other features will be added soon as we finish with developing our theme. 
-
-## Note: 
-Currently work in progress. We are constantly working with this project, and it should be completed within August 2020.
 
 ## Demo 
 https://ks-bootshop.myshopify.com/
