@@ -100,7 +100,7 @@
               <div class="col-md">
       
                 {% if section.settings.show_post_title %}
-                  <h2 class="{{ section.settings.post_title_size }}"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+                  <h2 class="{{ section.settings.post_title_size }}"><a href="{{ article.url }}" class="theme-link-color">{{ article.title }}</a></h2>
                 {% endif %}
 
                 {% if section.settings.blog_post_author or section.settings.show_post_date or section.settings.show_comments_number %}
@@ -153,7 +153,7 @@
             {% for page in search.results %}
               <li class="{{ section.settings.gutter_vertical | prepend: 'my-' }}">
                 
-                <h2 class="{{ section.settings.page_title_size }}"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+                <h2 class="{{ section.settings.page_title_size }}"><a href="{{ page.url }}" class="theme-link-color">{{ page.title }}</a></h2>
                 
                 {% if section.settings.show_page_content %}
                   <div class="rte mb-4">

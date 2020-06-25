@@ -31,7 +31,7 @@
         {% for line_item in order.line_items %}
           <tr id="{{ line_item.key }}" class="responsive-table-row">
             <td class="align-middle" data-label="{{ 'customer.order.product' | t }}">
-              {{ line_item.title | link_to: line_item.product.url }}
+              {{ line_item.title | link_to: line_item.product.url | replace: '<a', '<a class="theme-link-color"' }}
               {% if line_item.fulfillment %}
                 <dl class="mb-0">
                   <dt>{{ 'customer.order.fulfilled_at' | t }}</dt>
@@ -40,7 +40,7 @@
                   {% if line_item.fulfillment.tracking_url %}
                     <dt>{{ 'customer.order.tracking_url' | t }}</dt>
                     <dd>
-                      <a href="{{ line_item.fulfillment.tracking_url }}">
+                      <a class="theme-link-color" href="{{ line_item.fulfillment.tracking_url }}">
                         {{ 'customer.order.track_shipment' | t }}
                       </a>
                     </dd>

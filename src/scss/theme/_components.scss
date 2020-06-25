@@ -2,11 +2,63 @@
   Mostly Bootstrap components enhanced or modified
 */
 
+// Reboot
+a.theme-link-color {
+  @each $key, $value in $material-colors {
+    .theme-#{$key} & {
+      color: $value;
+      &:hover {
+        color: darken($value, 15%);
+      }
+    }
+  }
+}
+
+// Backgrounds
+.bg-primary {
+  @each $key, $value in $material-colors {
+    .theme-#{$key} & {
+      background-color: $value !important;
+    }
+  }
+}
+@if $enable-gradients {
+  @each $key, $value in $material-colors {
+    .theme-#{$key} {
+      @include bg-gradient-variant(".bg-gradient-#{$key}", $value, true);
+    }
+  }
+}
+
+// Badges
+.badge-primary {
+  @each $key, $value in $material-colors {
+    .theme-#{$key} & {
+      @include badge-variant($value);
+    }
+  }
+}
+
 // Horizontal rules
 hr {
   .bg-dark &,
   .bg-primary & {
     border-top-color: $hr-white-border-color;
+  }
+}
+
+// Pagination
+@each $key, $value in $material-colors {
+  .page-link {
+    .theme-#{$key} & {
+      color: $value;
+    }
+  }
+  .page-item.active .page-link {
+    .theme-#{$key} & {
+      background-color: $value;
+      border-color: $value;
+    }
   }
 }
 
@@ -18,6 +70,16 @@ hr {
 // Dropdown
 .dropdown-item {
   transition: background-color .2s ease-out;
+}
+.dropdown-item {
+  &.active,
+  &:active {
+    @each $key, $value in $material-colors {
+      .theme-#{$key} & {
+        @include gradient-bg($value);
+      }
+    }
+  }
 }
 
 // Modal
@@ -40,7 +102,20 @@ hr {
 }
 
 // Buttons
-
+.btn-primary {
+  @each $key, $value in $material-colors {
+    .theme-#{$key} & {
+      @include button-variant($value, $value);
+    }
+  }
+}
+.btn-outline-primary {
+  @each $key, $value in $material-colors {
+    .theme-#{$key} & {
+      @include button-outline-variant($value);
+    }
+  }
+}
 
 // Toasts
 .toast {

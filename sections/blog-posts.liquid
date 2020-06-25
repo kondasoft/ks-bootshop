@@ -68,7 +68,7 @@
         
         <div class="col-md px-2">
           {% if section.settings.show_post_title %}
-            <a href="{{ article.url }}" class="d-block mb-2 text-decoration-none {{ section.settings.post_title_size }}">
+            <a href="{{ article.url }}" class="theme-link-color d-block mb-2 text-decoration-none {{ section.settings.post_title_size }}">
               {{ article.title }}
             </a>
           {% endif %}
@@ -118,7 +118,7 @@
 
     {% for i in (1..section.settings.limit) %}
       <li class="pb-4 px-2 my-3 text-center">
-        <a href="#" class="text-decoration-none">
+        <a href="#" class="theme-link-color text-decoration-none">
           <div class="overflow-hidden mb-3 img-thumbnail">
             {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
             {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg bg-light' }}

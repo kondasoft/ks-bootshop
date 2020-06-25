@@ -113,15 +113,13 @@
         </li>
       {% endif %}
 
-      <li class="nav-item">
+      <li class="nav-item {% if  cart.item_count > 0 %}active{% endif %}">
         <a
           id="cart-icon"
           class="
             nav-link
             d-inline-flex
             px-2 align-items-center
-            {% if template.name == 'cart' %}active{% endif %}
-            {% if  cart.item_count > 0 %}text-primary{% endif %}
           "
           href="{{ routes.cart_url }}"
         >

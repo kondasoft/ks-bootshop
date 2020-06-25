@@ -60,7 +60,7 @@ $(function() {
       $('.modal').modal('hide')
 
       // Update cart icon on header
-      cartIconEl.closest('#cart-icon').addClass('text-primary')
+      cartIconEl.closest('.nav-item').addClass('active')
       cartIconEl.text(parseInt(cartIconEl.text()) + quantity)
 
       // Display Bootstrap toast component with the new item added to cart

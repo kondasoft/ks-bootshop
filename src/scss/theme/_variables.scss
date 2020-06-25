@@ -25,11 +25,30 @@ $lime:        #827717 !default;
 $orange:      #E65100 !default;
 $deep-orange: #BF360C !default;
 $brown:       #5D4037 !default;
-$blue-grey:   #455A64 !default;
+$blue-gray:   #455A64 !default;
 
-// Set primary color
-$primary: $blue !default;
-// $secondary: $lime !default;
+$material-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$material-colors: map-merge(
+  (
+    "red":          $red,
+    "pink":         $pink,
+    "purple":       $purple,
+    "deep-purple":  $deep-purple,
+    "indigo":       $indigo,
+    "blue":         $blue,
+    "light-blue":   $light-blue,
+    "cyan":         $cyan,
+    "teal":         $teal,
+    "green":        $green,
+    "light-green":  $light-green,
+    "lime":         $lime,
+    "orange":       $orange,
+    "deep-orange":  $deep-orange,
+    "blue-gray":    $blue-gray,
+  ),
+  $material-colors
+);
 
 // Options
 $enable-gradients: true !default;
@@ -58,10 +77,6 @@ $spacers: map-merge(
 );
 
 // Links
-$link-white-color: white !default;
-$link-white-decoration: underline !default;
-$link-white-hover-color: darken($link-white-color, 15%) !default;
-$link-white-hover-decoration: underline !default;
 
 // Typography
 $small-font-size: 85% !default;

@@ -21,5 +21,15 @@ body {
 
 // Footer
 #site-footer {
-
+  &.bg-dark,
+  &.bg-primary {
+    a {
+      color: white;
+      text-decoration: underline;
+      &:hover {
+        color: rgba(white, .75);
+        text-decoration: underline;
+      }
+    }
+  }
 }

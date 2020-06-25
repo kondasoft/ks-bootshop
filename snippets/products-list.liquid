@@ -19,7 +19,7 @@
           {{ section.settings.gutter_vertical | prepend: 'my-' }}
           {% if section.settings.align_center %}text-center{% endif %}
         ">
-          <a href="{{ product.url }}" class="d-block text-decoration-none">
+          <a href="{{ product.url }}" class="theme-link-color d-block text-decoration-none">
 
             <div class="
               position-relative
@@ -326,7 +326,7 @@
 
       {% for i in (1..section.settings.limit) %}
         <li class="pb-4 px-2 my-3 text-center">
-          <a href="#" class="text-decoration-none">
+          <a href="#" class="theme-link-color text-decoration-none">
             <div class="overflow-hidden mb-3 img-thumbnail">
               {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
               {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg bg-light' }}

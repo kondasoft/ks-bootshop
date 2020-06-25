@@ -37,7 +37,7 @@
         {{ section.settings.gutter_vertical | prepend: 'my-' }}
         {% if section.settings.align_center %}text-center{% endif %}
       ">
-        <a href="{{ collection.url | default: '#' }}" class="d-block pb-2 text-decoration-none">
+        <a href="{{ collection.url | default: '#' }}" class="theme-link-color d-block pb-2 text-decoration-none">
           {% if collection.image != blank or collection.products.first != blank %}
             <div class="
               position-relative
