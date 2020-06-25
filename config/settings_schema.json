@@ -11,8 +11,62 @@
     "name": "Colors",
     "settings": [
       {
-        "type": "paragraph",
-        "content": "NOTICE: Our theme uses [Sass](https://sass-lang.com/) to generate CSS styles. To change the \"primary\" color or any other value you should create your own \"_custom.scss\" as described on the [guide](https://github.com/kondasoft/ks-bootshop#modifying-styles-scss)"
+        "type": "header",
+        "content": "Theme style"
+      },
+      {
+        "type": "select",
+        "id": "color_primary",
+        "label": "Primary color",
+        "info": "Main theme color. It is used in different parts of our theme.",
+        "default": "theme-blue",
+        "options": [
+          {
+            "value": "theme-red", "label": "Red"
+          },
+          {
+            "value": "theme-pink", "label": "Pink"
+          },
+          {
+            "value": "theme-purple", "label": "Purple"
+          },
+          {
+            "value": "theme-deep-purple", "label": "Deep purple"
+          },
+          {
+            "value": "theme-indigo", "label": "Indigo"
+          },
+          {
+            "value": "theme-blue", "label": "Blue"
+          },
+          {
+            "value": "theme-light-blue", "label": "Light blue"
+          },
+          {
+            "value": "theme-cyan", "label": "Cyan"
+          },
+          {
+            "value": "theme-teal", "label": "Teal"
+          },
+          {
+            "value": "theme-green", "label": "Green"
+          },
+          {
+            "value": "theme-light-green", "label": "Light green"
+          },
+          {
+            "value": "theme-lime", "label": "Lime"
+          },
+          {
+            "value": "theme-orange", "label": "Orange"
+          },
+          {
+            "value": "theme-brown", "label": "Brown"
+          },
+          {
+            "value": "theme-blue-gray", "label": "Blue Gray"
+          }
+        ]
       },
       {
         "type": "header",
