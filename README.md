@@ -12,6 +12,7 @@ Our goal is to make this project the most completed, robust and of course the mo
 * All Shopify templates (cart, product, etc) have their corresponding settings
 * Add to cart via Ajax
 * Product "Quick view" mode
+* NEW: Setting to select primary color from 16 available colors based on [Material color system](https://material.io/design/color/the-color-system.html)
 
 ## Demo 
 https://ks-bootshop.myshopify.com/
