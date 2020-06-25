@@ -38,7 +38,7 @@
   {{ content_for_header }}
 
 </head>
-<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {{ settings.color_primary }}">
   <a class="sr-only sr-only-focusable" href="#site-main">{{ 'accessibility.skip_to_content' | t }}</a>
   <a class="sr-only sr-only-focusable" href="#site-footer">{{ 'accessibility.skip_to_footer' | t }}</a>
 
