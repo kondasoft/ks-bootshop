@@ -1,192 +1,197 @@
 [
-  {
-    "name": "theme_info",
-    "theme_name": "BootShop",
-    "theme_version": "0.1.0",
-    "theme_author": "KondaSoft",
-    "theme_documentation_url": "https://github.com/kondasoft/ks-bootshop",
-    "theme_support_url": "https://github.com/alvinkonda/ks-bootshop/issues"
-  },
-  {
-    "name": "Colors",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Theme style"
-      },
-      {
-        "type": "select",
-        "id": "color_primary",
-        "label": "Primary color",
-        "info": "Main theme color. It is used in different parts of our theme.",
-        "default": "theme-blue",
-        "options": [
-          {
-            "value": "theme-red", "label": "Red"
-          },
-          {
-            "value": "theme-pink", "label": "Pink"
-          },
-          {
-            "value": "theme-purple", "label": "Purple"
-          },
-          {
-            "value": "theme-deep-purple", "label": "Deep purple"
-          },
-          {
-            "value": "theme-indigo", "label": "Indigo"
-          },
-          {
-            "value": "theme-blue", "label": "Blue"
-          },
-          {
-            "value": "theme-light-blue", "label": "Light blue"
-          },
-          {
-            "value": "theme-cyan", "label": "Cyan"
-          },
-          {
-            "value": "theme-teal", "label": "Teal"
-          },
-          {
-            "value": "theme-green", "label": "Green"
-          },
-          {
-            "value": "theme-light-green", "label": "Light green"
-          },
-          {
-            "value": "theme-lime", "label": "Lime"
-          },
-          {
-            "value": "theme-orange", "label": "Orange"
-          },
-          {
-            "value": "theme-brown", "label": "Brown"
-          },
-          {
-            "value": "theme-blue-gray", "label": "Blue Gray"
-          }
+    {
+        "name": "theme_info",
+        "theme_name": "ks-bootshop",
+        "theme_version": "2.0.0",
+        "theme_author": "KondaSoft",
+        "theme_documentation_url": "https://docs.kondasoft.com",
+        "theme_support_url": "https://github.com/kondasoft/ks-bootshop/issues"
+    },
+    {
+        "name": "Colors",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Base"
+            },
+            {
+                "type": "color",
+                "id": "color_primary",
+                "label": "Primary",
+                "default": "#0d6efd"
+            },
+            {
+                "type": "color",
+                "id": "color_secondary",
+                "label": "Secondary",
+                "default": "#6c757d"
+            },
+            {
+                "type": "color",
+                "id": "color_dark",
+                "label": "Dark",
+                "default": "#212529"
+            },
+            {
+                "type": "color",
+                "id": "color_light",
+                "label": "Light",
+                "default": "#f8f9fa"
+            },
+            {
+                "type": "header",
+                "content": "Body"
+            },
+            {
+                "type": "color",
+                "id": "color_body_bg",
+                "label": "Background",
+                "default": "#ffffff"
+            },
+            {
+                "type": "color",
+                "id": "color_body_text",
+                "label": "Text",
+                "default": "#212529"
+            },
+            {
+                "type": "header",
+                "content": "Utilities"
+            },
+            {
+                "type": "color",
+                "id": "color_price",
+                "label": "Price",
+                "default": "#28a745"
+            }
         ]
-      },
-      {
-        "type": "header",
-        "content": "Utility colors"
-      },
-      {
-        "type": "color",
-        "id": "color_price",
-        "label": "Price color",
-        "default": "#43A047"
-      },
-      {
-        "type": "color",
-        "id": "color_on_sale",
-        "label": "Discount badge color",
-        "default": "#D32F2F"
-      }
-    ]
-  },
-  {
-    "name": "Typography",
-    "settings": [
-      {
-        "type": "font_picker",
-        "id": "font_heading",
-        "default": "helvetica_n4",
-        "label": "Headings"
-      }
-    ]
-  },
-  {
-    "name": "Social media",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Social sharing image"
-      },
-      {
-        "type": "image_picker",
-        "id": "share_image",
-        "label": "Image",
-        "info": "Shown when sharing a link on social media. [Learn more](https://help.shopify.com/manual/using-themes/troubleshooting/showing-social-media-thumbnail-images/) about image thumbnails."
-      },
-      {
-        "type": "header",
-        "content": "Social sharing options"
-      },
-      {
-        "type": "checkbox",
-        "id": "share_facebook",
-        "label": "Share on Facebook",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "share_twitter",
-        "label": "Tweet on Twitter",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "share_pinterest",
-        "label": "Pin on Pinterest",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Sharing links"
-      },
-      {
-        "type": "text",
-        "id": "social_twitter_link",
-        "label": "Twitter link"
-      },
-      {
-        "type": "text",
-        "id": "social_facebook_link",
-        "label": "Facebook link"
-      },
-      {
-        "type": "text",
-        "id": "social_pinterest_link",
-        "label": "Pinterest link"
-      },
-      {
-        "type": "text",
-        "id": "social_instagram_link",
-        "label": "Instagram link"
-      },
-      {
-        "type": "text",
-        "id": "social_snapchat_link",
-        "label": "Snapchat link"
-      },
-      {
-        "type": "text",
-        "id": "social_tumblr_link",
-        "label": "Tumblr link"
-      },
-      {
-        "type": "text",
-        "id": "social_youtube_link",
-        "label": "Youtube link"
-      },
-      {
-        "type": "text",
-        "id": "social_vimeo_link",
-        "label": "Vimeo link"
-      }
-    ]
-  },
-  {
-    "name": "Favicon",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon image",
-        "info": "Will be scaled down to 32x32"
-      }
-    ]
-  }
+    },
+    {
+        "name": "Minicart",
+        "settings": [
+            {
+                "type": "header",
+                "content": "General settings"
+            },
+            {
+                "type": "text",
+                "id": "minicart_min_width",
+                "label": "Min width (px)",
+                "info": "Will not shrink below this value (in pixels)",
+                "default": "260"
+            },
+            {
+                "type": "checkbox",
+                "id": "minicart_show_view_cart_btn",
+                "label": "Show \"View cart\" button",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "minicart_show_checkout_btn",
+                "label": "Show \"Checkout\" button",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Product settings"
+            },
+            {
+                "type": "text",
+                "id": "minicart_img_width",
+                "label": "Image width (px)",
+                "default": "90"
+            },
+            {
+                "type": "text",
+                "id": "minicart_img_height",
+                "label": "Image height (px)",
+                "default": "90"
+            },
+            {
+                "type": "checkbox",
+                "id": "minicart_img_thumbnail",
+                "label": "Image border",
+                "default": true
+            }
+        ]
+    },
+    {
+        "name": "Social media",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Social sharing buttons"
+            },
+            {
+                "type": "checkbox",
+                "id": "share_facebook",
+                "label": "Share on Facebook",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_twitter",
+                "label": "Tweet on Twitter",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_pinterest",
+                "label": "Pin on Pinterest",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_whatsapp",
+                "label": "Share on Whatsapp",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_email",
+                "label": "Send via Email",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Social media links"
+            },
+            {
+                "type": "text",
+                "id": "social_facebook_link",
+                "label": "Facebook link"
+            },
+            {
+                "type": "text",
+                "id": "social_twitter_link",
+                "label": "Twitter link"
+            },
+            {
+                "type": "text",
+                "id": "social_instagram_link",
+                "label": "Instagram link"
+            },
+            {
+                "type": "text",
+                "id": "social_pinterest_link",
+                "label": "Pinterest link"
+            },
+            {
+                "type": "text",
+                "id": "social_snapchat_link",
+                "label": "Snapchat link"
+            },
+            {
+                "type": "text",
+                "id": "social_youtube_link",
+                "label": "Youtube link"
+            },
+            {
+                "type": "text",
+                "id": "social_linkedin_link",
+                "label": "Linkedin link"
+            }
+        ]
+    }
 ]

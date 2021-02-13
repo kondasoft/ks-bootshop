@@ -1,521 +1,351 @@
+{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
 {% assign product = all_products[section.settings.product] %}
 
-<div id="{{ product.id | prepend: 'featured-product-' }}" class="
-  container
-  {{ section.settings.margin_top | prepend: 'mt-' }}
-  {{ section.settings.margin_bottom | prepend: 'mb-' }}
-">
+<section 
+    id="featured-product-{{ section.id }}" 
+    class="featured-product {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
 
-  {% if product == blank %}
-    
-  <div class="row align-items-center">
-      <div class="col-md mb-3">
-        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg bg-light' }}
-      </div>
-      <div class="col-md mb-3">
-        <h2>{{ 'onboarding.product_title' | t }}</h2>
-        <div class="rte mb-4">
-          {{ 'onboarding.product_desc_html' | t }}
-        </div>
-        <button class="btn btn-primary">{{ 'product.add_to_cart' | t }}</button>
-      </div>
-    </div>
 
-  {% else %}
+        {% if product == blank %}
 
-    <div class="row align-items-center {{ section.settings.image_alignment }}">
-      <div class="product-images col{{ section.settings.breakpoint }} mb-3">
-        <a href="{{ product.url }}" class="d-inline-block text-decoration-none">
-          <div class="
-            position-relative
-            overflow-hidden
-            mb-3
-            {% if section.settings.image_border %}img-thumbnail{% endif %}
-            {% if section.settings.image_circle %}rounded-circle{% endif %}
-            {{ section.settings.image_hover_effect }}
-          ">
-            {% assign image_size = section.settings.image_width | append: 'x' | append: section.settings.image_height %}
-            <img
-              class="product-featured-image img-fluid lazyload {% if section.settings.image_circle %}rounded-circle{% endif %}"
-              src="{{ 'no-image.jpg' | asset_img_url: image_size, crop: 'center' }}"
-              data-src="{{ product.featured_image | img_url: image_size, crop: 'center'  }}"
-              alt="{{ product.featured_image.alt | escape }}"
-              width="{{ section.settings.image_width }}"
-              height="{{ section.settings.image_height }}"
-              loading="lazy"
-            >
-
-            {% if section.settings.show_discount_badge and product.compare_at_price > product.price %}
-              <small class="product-discount-badge badge-right" style="{{ settings.color_on_sale | prepend: 'background-color: ' }}">
-                {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
-              </small>
-            {% endif %}
-          </div>
-        </a>
-
-        {% if section.settings.show_image_gallery and product.images.size > 1 %}
-          <ul class="product-image-gallery list-unstyled row row-cols-4 mx-n1 d-inline-flex">
-            {% for image in product.images %}
-              <li class="p-1">
-                <a
-                  id="{{ image.id | prepend: 'product-image-' }}"
-                  href="{{ image.src | img_url: 'master' }}"
-                  data-featured-img="{{ image.src | img_url: image_size, crop: 'center' }}"
-                  class="d-inline-block {% if product.featured_image == image %}active{% endif %}"
-                  {% if product.featured_image == image %} aria-current="true"{% endif %}
-                >
-                  <div class="
-                    overflow-hidden
-                    {% if section.settings.image_border %}img-thumbnail{% endif %}
-                    {% if product.featured_image == image %}border-secondary{% endif %}
-                    {{ section.settings.image_hover_effect }}
-                  ">
-                    <img
-                      class="img-fluid lazyload"
-                      src="{{ 'no-image.jpg' | asset_img_url: '120x120', crop: 'center' }}"
-                      data-src="{{ image.src | img_url: '120x120', crop: 'center' }}"
-                      alt="{{ image.alt | escape }}"
-                      width="120"
-                      height="120"
-                      loading="lazy"
-                    >
-                  </div>
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-
-      </div>
-      <div class="col{{ section.settings.breakpoint }} mb-3">
-        
-        {% if section.settings.show_product_title %}
-          <h2 class="{{ section.settings.product_title_size }}">
-            <a href="{{ product.url }}" class="theme-link-color">
-              {{ product.title | escape }}
-            </a>
-          </h2>
-        {% endif %}
-
-        {% if section.settings.show_product_desc %}
-          <div class="rte">
-            {{ product.description | truncate: section.settings.product_desc_truncate  }}
-          </div>
-        {% endif %}
-        
-        {% if section.settings.show_product_price %}
-          <div class="product-price mb-4 font-size-120" style="{{ settings.color_price | prepend: 'color: ' }}">
-            {% if product.compare_at_price_max > product.price %}
-              <span class="sr-only">{{ 'product.regular_price' | t }}</span>
-              {% if product.compare_at_price > product.price %}
-              <s class="text-muted opacity-75 mr-2">
-                {{ product.compare_at_price | money }}
-              </s>
-              {% endif %}
-            {% endif %}
-            <span>
-              {{ product.price | money }}
-            </span>
-          </div>
-        {% endif %}
-
-        {% if section.settings.show_add_to_cart %}
-          {% form 'product', product, class: 'mb-3' %}
-            
-            <div class="bg-light py-3 px-3">
-
-              <select name="id" id="{{ product.id | prepend: 'featured-product-variant-' }}" class="custom-select mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
-                {% for variant in product.variants %}
-                  <option
-                    {% unless variant.available %}disabled="disabled"{% endunless %}
-                    value="{{ variant.id }}">
-                      {{ variant.title }} - {{ variant.price | money }}
-                  </option>
-                {% endfor %}
-              </select>
-
-              <hr class="mt-4 mb-3 {% if product.has_only_default_variant %}d-none{% endif %}">
-
-              <div class="d-flex justify-content-center">
-                <input type="number" class="form-control w-auto mr-2" style="max-width: 80px;" size="20" name="quantity" value="1" min="1" aria-label="{{ 'product.quantity' | t }}">
-                <button
-                  class="add-to-cart-btn btn btn-primary"
-                  type="submit"
-                  name="add"
-                  data-loading-text="{{ 'misc.loading' | t }}"
-                  data-add-to-cart-text="{{ 'product.add_to_cart' | t }}"
-                  data-view-cart-text="{{ 'product.view_cart' | t }}"
-                  aria-controls="cart-toast-wrapper"
-                >
-                  <div class="d-none bs-spinner spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></div>
-                  <span>{{ 'product.add_to_cart' | t }}</span>
-                </button>
-              </div>
-
+            <!-- Placeholder -->
+            <div class="row align-items-center">
+                <div class="col-md mb-4 mb-md-0">
+                    <div class="img-thumbnail">
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg bg-light img-fluid' }}
+                    </div>
+                </div>
+                <div class="col-md">
+                    <h2>
+                        {{ 'general.onboarding.product_title' | t }}
+                    </h2>
+                    <p class="product-price mb-1">
+                        <span class="price">
+                            {{ 4000 | money }}
+                        </span>
+                    </p>
+                    <div class="rte mb-1">
+                        {{ 'general.onboarding.desc_html' | t }}
+                    </div>
+                    <a
+                        class="btn btn-outline-primary"
+                        role="button">
+                        {{ 'product.quick_view' | t }}
+                    </a>
+                </div>
             </div>
 
-          {% endform %}
+        {% else %}
+
+            <!-- Product -->
+            <div class="row align-items-center">
+                <div class="col-md mb-4 mb-md-0">
+
+                    <!-- Product Image Wrapper -->
+                    <a href="{{ product.url | within: collection }}">
+                        
+                        {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                        <img 
+                            class="product-img img-fluid {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
+                            src="{{ product.featured_image.src | img_url: img_size, crop: 'center' }}"
+                            alt="{{ product.featured_image.alt | escape }}" 
+                            width="{{ section.settings.img_width }}"
+                            height="{{ section.settings.img_height }}" 
+                            loading="lazy">
+                    </a>
+
+                </div>
+
+                <div class="col-md">
+
+                    <!-- Subheading -->
+                    {% unless section.settings.badge == blank %}
+                        <span class="product-badge badge mb-1 {{ section.settings.badge_color }}">
+                            {{ section.settings.badge }}
+                        </span>
+                    {% endunless %}
+
+                    <!-- Product title -->
+                    <h3 class="product-title mb-2 {{ section.settings.heading_size }}">
+                        <a href="{{ product.url | within: collection }}">
+                            {{ product.title }}
+                        </a>
+                    </h3>
+
+                    <!-- Product vendor -->
+                    {% if section.settings.show_vendor %}
+                        <p class="product-vendor text-muted text-uppercase">
+                            {{ product.vendor }}
+                        </p>
+                    {% endif %}
+
+                    <!-- Product price -->
+                    {% if section.settings.show_price %}
+                        <p class="product-price lead mb-2">
+                            {% if product.compare_at_price > product.price %}
+                                <s class="price-compare text-muted me-1">
+                                    <span class="visually-hidden">
+                                        {{ 'product.old_price' | t }}
+                                    </span>
+                                    {{ product.compare_at_price | money }}
+                                </s>
+                            {% endif %}
+                            <span class="price">
+                                {% if product.price_varies %}
+                                    <span class="price-from">
+                                        {{ 'product.price_from' | t }}
+                                    </span>
+                                {% endif %}
+                                {{ product.price | money }}
+                            </span>
+                        </p>
+                    {% endif %}
+
+                    <!-- Product Description -->
+                    {% if section.settings.show_description %}
+                        <div class="product-description rte">
+                            {% assign truncate = section.settings.description_truncate | plus: 0 %}
+
+                            {% if truncate > 0 %}
+                                {{ product.description | truncate: section.settings.description_truncate, '...' }}
+                            {% else %}
+                                {{ product.description }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                
+                    <!-- Quick view -->
+                    {% if section.settings.show_quick_view %}
+                        <a
+                            class="btn-quick-view btn mb-4 {{ section.settings.quick_view_btn_color }} {{ section.settings.quick_view_btn_size }}"
+                            href="{{ product.url | within: collection }}"
+                            role="button">
+                            {{ 'product.quick_view' | t }}
+                        </a>
+                    {% endif %}
+
+                    <!-- Social sharing -->
+                    {% if section.settings.show_social_sharing %}
+                        <div class="product-social-sharing mb-4">
+                            {% render 'social-sharing' with share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+                        </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+
         {% endif %}
 
-        {% if section.settings.show_share_buttons %}
-          <hr class="mt-5">
-          {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
-        {% endif %}
-
-      </div>
     </div>
-
-  {% endif %}
-
-</div>
-
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    jQuery(document).ready(function ($) {
-      
-      // Initialize image gallery
-      $('.product-image-gallery a').click(function(event) {
-        event.preventDefault()
-        handleProductImageGallery($(this))
-      })
-
-      // Initialize multi selector for product
-      {% unless product.has_only_default_variant %}
-        new Shopify.OptionSelectors("{{ product.id | prepend: 'featured-product-variant-' }}", {
-          product: {{ product | json }},
-          onVariantSelected: function(variant, selector) {
-            // console.log(variant)
-            // console.log(selector)
-
-            const productSelector = $(`#featured-product-${selector.product.id}`)
-
-            if (variant) {
-              if (variant.available) {
-                productSelector.find(':input[type="number"]').prop("disabled", false).fadeTo(200, 1)
-                productSelector.find('.add-to-cart-btn').prop("disabled", false).find('span').html("{{ 'product.add_to_cart' | t }}").fadeTo(200, 1)
-              }
-              else {
-                productSelector.find(':input[type="number"]').prop("disabled", true).fadeTo(200, 0.5)
-                productSelector.find('.add-to-cart-btn').prop("disabled", true).find('span').html("{{ 'product.sold_out' | t }}").fadeTo(200, 0.5)
-              }
-
-              if (variant.compare_at_price > variant.price) {
-                // {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0' | prepend: '-' | append: '%' }}
-
-                productSelector.find('.product-discount-badge')
-                  .removeClass('d-none')
-                  .addClass('d-block')
-                  .html(`-${Math.round((variant.compare_at_price - variant.price) / variant.compare_at_price * 100)}%`)
-                  productSelector.find('.product-price').html(`
-                    <span class="sr-only">{{ 'product.regular_price' | t }}</span>
-                    <s class="text-muted opacity-75 mr-2">
-                      ${Shopify.formatMoney(variant.compare_at_price, "")}
-                    </s>
-                    <span>${Shopify.formatMoney(variant.price, "")}</span>
-                  `)
-              } else {
-                productSelector.find('.product-discount-badge').removeClass('d-block').addClass('d-none')
-                productSelector.find('.product-price').html('<span>'+ Shopify.formatMoney(variant.price, "") + '</span>' )
-              }
-
-              if (variant.featured_image)
-                handleProductImageGallery($(`a#product-image-${variant.featured_image.id}`))
-              else
-                handleProductImageGallery($('a#product-image-{{ product.featured_image.id }}'))
-            }
-          },
-          enableHistoryState: false
-        })
-      {% endunless %}
-
-    })
-  })
-</script>
+</section>
 
 {% schema %}
 {
-  "name": "Featured product",
-  "tag": "section",
-  "class": "featured-product",
-  "settings": [
-    {
-      "type": "product",
-      "id": "product",
-      "label": "Product"
-    },
-    {
-      "type": "header",
-      "content": "Product settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_title",
-      "label": "Show product title",
-      "default": true
-    },
-
-    {
-      "type": "select",
-      "id": "product_title_size",
-      "label": "Product title size",
-      "default": "h2",
-      "options": [
+    "name": "Featured product",
+    "settings": [
         {
-          "value": "h1", "label": "H1"
+            "type": "product",
+            "id": "product",
+            "label": "Product"
         },
         {
-          "value": "h2", "label": "H2"
+            "type": "header",
+            "content": "General settings"
         },
         {
-          "value": "h3", "label": "H3"
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in container",
+            "default": true
         },
         {
-          "value": "h4", "label": "H4"
+            "type": "checkbox",
+            "id": "light_bg",
+            "label": "Light background",
+            "default": false
         },
         {
-          "value": "h5", "label": "H5"
+            "type": "text",
+            "id": "badge",
+            "label": "Badge",
+            "default": "Featured product"
         },
         {
-          "value": "h6", "label": "H6"
+            "type": "select",
+            "id": "badge_color",
+            "label": "Badge color",
+            "default": "bg-light text-secondary",
+            "options": [
+                { "value": "bg-light text-secondary", "label": "Light" },
+                { "value": "bg-dark", "label": "Dark" },
+                { "value": "bg-primary", "label": "Primary" },
+                { "value": "bg-secondary", "label": "Secondary" },
+                { "value": "bg-success", "label": "Success" },
+                { "value": "bg-danger", "label": "Danger" },
+                { "value": "bg-warning", "label": "Warning" },
+                { "value": "bg-info", "label": "Info" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading Size",
+            "default": "h2",
+            "options": [
+                { "value": "h1", "label": "H1" },
+                { "value": "h2", "label": "H2" },
+                { "value": "h3", "label": "H3" },
+                { "value": "h4", "label": "H4" },
+                { "value": "h5", "label": "H5" },
+                { "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Product settings"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "720"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "720"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image border",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_vendor",
+            "label": "Show vendor",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_price",
+            "label": "Show price",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_description",
+            "label": "Show description",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "description_truncate",
+            "label": "Truncate description",
+            "default": "240",
+            "info": "The maximum number of characters for the product description. Leave empty to show all description."
+        },
+        {
+            "type": "checkbox",
+            "id": "show_quick_view",
+            "label": "Show quick view button",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "quick_view_btn_color",
+            "label": "Quick view button color",
+            "default": "btn-outline-primary",
+            "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "quick_view_btn_size",
+            "label": "Quick view button size",
+            "default": "",
+            "options": [
+                { "value": "btn-sm", "label": "Small" },
+                { "value": "", "label": "Normal" },
+                { "value": "btn-lg", "label": "Large" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_sharing",
+            "label": "Show social sharing",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
         }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_desc",
-      "label": "Show product description",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "product_desc_truncate",
-      "label": "Product decription truncate",
-      "default": "175",
-      "info": "The maximum number of characters for the product description"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_price",
-      "label": "Show product price",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_discount_badge",
-      "label": "Show discount badge",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_add_to_cart",
-      "label": "Show Add to Cart",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_share_buttons",
-      "label": "Show share buttons",
-      "info": "Note: You can adjust options for share buttons under 'Theme Settings'",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Product image settings"
-    },
-    {
-      "type": "select",
-      "id": "image_alignment",
-      "label": "Image Alignment",
-      "info": "Note: On mobile view the image will always be on top and content on bottom",
-      "default": "flex-row",
-      "options": [
+    ],
+    "presets": [
         {
-          "value": "flex-row", "label": "Left"
-        },
-        {
-          "value": "flex-row-reverse", "label": "Right"
+            "name": "Featured product",
+            "category": "Product"
         }
-      ]
-    },
-    {
-      "type": "text",
-      "id": "image_width",
-      "label": "Image width (px)",
-      "default": "600"
-    },
-    {
-      "type": "text",
-      "id": "image_height",
-      "label": "Image height (px)",
-      "default": "600"
-    },
-    {
-      "type": "checkbox",
-      "id": "image_border",
-      "label": "Border",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "image_circle",
-      "label": "Circle",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id":  "image_hover_effect",
-      "label": "Hover effect",
-      "default": "image-hover-shine",
-      "options": [
-        {
-          "value": "image-hover", "label": "No effect"
-        },
-        {
-          "value": "image-hover-fade-in", "label": "Fade in"
-        },
-        {
-          "value": "image-hover-fade-out", "label": "Fade out"
-        },
-        {
-          "value": "image-hover-scale-in", "label": "Scale in"
-        },
-        {
-          "value": "image-hover-scale-out", "label": "Scale out"
-        },
-        {
-          "value": "image-hover-flashing", "label": "Flashing"
-        },
-        {
-          "value": "image-hover-shine", "label": "Shine"
-        }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "show_image_gallery",
-      "label": "Show image gallery",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "General settings"
-    },
-    {
-      "type": "select",
-      "id":  "breakpoint",
-      "label": "Responsive breakpoint",
-      "info": "Define at what screen size point the layout should switch from row to column. [Learn more](https://getbootstrap.com/docs/4.5/layout/overview/#responsive-breakpoints)",
-      "default": "-md",
-      "options": [
-        {
-          "value": "", "label": "No breakpoint"
-        },
-        {
-          "value": "-sm", "label": "Small screens (sm)"
-        },
-        {
-          "value": "-md", "label": "Medium screens (md)"
-        },
-        {
-          "value": "-lg", "label": "Large screens (lg)"
-        },
-        {
-          "value": "-xl", "label": "Extra-large screens (xl)"
-        }
-      ]
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    },
-    {
-      "type": "paragraph",
-      "content": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/4.5/utilities/spacing/)"
-    },
-    {
-      "type": "range",
-      "id": "margin_top",
-      "label": "Margin top",
-      "min": 0,
-      "max": 12,
-      "step": 1,
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "label": "Margin bottom",
-      "min": 0,
-      "max": 12,
-      "step": 1,
-      "default": 6
-    }
-  ],
-  "presets": [
-    {
-      "name": "Featured product",
-      "category": "Product"
-    }
-  ]
+    ]
 }
 {% endschema %}
-
-<script type="application/ld+json">
-{
-"@context": "http://schema.org/",
-"@type": "Product",
-"name": "{{ product.title | escape }}",
-"url": "{{ shop.url }}{{ product.url }}",
-{% if product.featured_image %}
-  {% assign image_size = product.featured_image.width | append: 'x' %}
-  "image": [
-    "https:{{ product.featured_image.src | img_url: image_size }}"
-  ],
-{% endif %}
-"description": "{{ product.description | strip_html | escape }}",
-{% if current_variant.sku != blank %}
-  "sku": "{{ current_variant.sku }}",
-{% endif %}
-"brand": {
-  "@type": "Thing",
-  "name": "{{ product.vendor | escape }}"
-},
-{% if product.variants %}
-  "offers": [
-    {% for variant in product.variants %}
-      {
-        "@type" : "Offer",
-        "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
-        "price" : "{{ variant.price | divided_by: 100.00 }}",
-        "priceCurrency" : "{{ shop.currency }}",
-        "url" : "{{ shop.url }}{{ variant.url }}",
-        "itemOffered" :
-        {
-            "@type" : "Product",
-            {% if variant.image %}
-              {% assign variant_image_size = variant.image.width | append: 'x' %}
-              "image": "http:{{ variant.image.src | img_url: variant_image_size }}",
-            {% endif %}
-            {% if variant.title != blank %}
-              "name" : "{{ variant.title | escape }}",
-            {% endif %}
-            {% if variant.sku != blank %}
-              "sku": "{{ variant.sku }}",
-            {% endif %}
-            {% if variant.weight != blank %}
-              "weight": {
-                "@type": "QuantitativeValue",
-                {% if variant.weight_unit != blank %}
-                  "unitCode": "{{ variant.weight_unit }}",
-                {% endif %}
-                "value": "{{ variant.weight | weight_with_unit: variant.weight_unit }}"
-              },
-            {% endif %}
-            "url": "{{ shop.url }}{{ variant.url }}"
-        }
-      }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ]
-{% endif %}
-}
-</script>

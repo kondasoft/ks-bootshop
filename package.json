@@ -1,17 +1,28 @@
 {
-  "name": "ks-bootshop",
-  "version": "1.0.0",
-  "scripts": {
-    "styles": "sass src/scss/theme.scss:assets/theme.min.css --style=compressed && postcss assets/theme.min.css --replace --use autoprefixer",
-    "scripts": "terser src/js/theme.js --output assets/theme.min.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kondasoft/ks-bootshop.git"
-  },
-  "author": "KondaSoft",
-  "bugs": {
-    "url": "https://github.com/kondasoft/ks-bootshop/issues"
-  },
-  "homepage": "https://github.com/kondasoft/ks-bootshop#readme"
+    "name": "ks-bootshop",
+    "version": "2.0.0",
+    "description": "Free Shopify Theme powered by Bootstrap v5",
+    "scripts": {
+        "scss": "sass --no-source-map scss/theme.scss:assets/theme.css && postcss assets/theme.css --replace --use autoprefixer && minify assets/theme.css > assets/theme.min.css",
+        "watch": "npm-watch",
+        "lint": "eslint ./"
+    },
+    "watch": {
+        "scss": {
+            "patterns": [
+                "scss"
+            ],
+            "extensions": "scss"
+        }
+    },
+    "dependencies": {
+        "autoprefixer": "^10.2.4",
+        "minify": "^7.0.0",
+        "npm-watch": "^0.7.0",
+        "postcss": "^8.2.4",
+        "sass": "^1.32.6"
+    },
+    "devDependencies": {
+        "eslint": "^7.19.0"
+    }
 }

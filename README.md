@@ -1,5 +1,8 @@
+# IMPORTANT NOTICE
+This branch (master) is for our new version of KS BootShop theme, which is powered by Bootstrap v5. If you are looking for our the Bootstrap v4 version please check our [v1 branch](https://github.com/kondasoft/ks-bootshop/tree/v1-bs4)
+
 # BootShop - Shopify Theme
-Shopify Starter Theme powered by Bootstrap framework (v4), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
+Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
 
 Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for Bootstrap framework.
 
@@ -19,12 +22,12 @@ https://ks-bootshop.myshopify.com/
 
 ## Premium Shopify Themes 
 In case you are interested in our Premium Shopify Themes, please visit our website
-https://www.icetheme.com
+https://www.kondasoft.com
 
 ## Getting started
 There are 2 ways to install our theme (or any other Shopify theme) on your Shopify store. 
 
-1- The simplest option is by going to your Shopify Admin and installing the latest package (.zip file) from our [releases](https://github.com/icetheme/ks-bootshop/releases/). In case you need help with this please check the [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/adding-themes#add-a-free-theme-from-the-admin) from Shopify. 
+1- The simplest option is by going to your Shopify Admin and installing the latest package (.zip file) from our [releases](https://github.com/kondasoft/ks-bootshop/releases/). In case you need help with this please check the [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/adding-themes#add-a-free-theme-from-the-admin) from Shopify. 
 
 2- The second option is by using [Theme kit](https://shopify.github.io/themekit/), the the official command line tool from Shopify. This is the option which we will be covering below, as it gives you far more freedom to customize and modify our theme.
 
@@ -34,7 +37,7 @@ There are 2 ways to install our theme (or any other Shopify theme) on your Shopi
 ### 1- Clone this repository (download theme files)
 Create a new folder on your computer, `cd` to it and run the following command to copy all theme files from our GitHub repository master branch. Note: Include the dot at the end of the command to clone into your current directory.
 
-`git clone https://github.com/icetheme/it-bootshop .`
+`git clone https://github.com/kondasoft/ks-bootshop .`
 
 ### 2- Create and configure theme with Theme Kit
 Run the following command to create a new theme in your Shopify store along with our theme files that you have just downloaded:
@@ -87,7 +90,7 @@ This part will be documented soon.
 This part will be documented soon.
 
 ## Support
-Please submit a [new issue](https://github.com/icetheme/it-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [website](https://icetheme.com/) for further help.
+Please submit a [new issue](https://github.com/kondasoft/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [website](https://kondasoft.com/) for further help.
 
 ## Copyright and license
-Copyright 2020 [IceTheme.com](https://www.icetheme.com). Code released under the [MIT License](https://github.com/icetheme/it-bootshop/blob/master/LICENSE).
+Copyright 2020 [KondaSoft.com](https://www.kondasoft.com). Code released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).

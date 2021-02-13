@@ -1,0 +1,161 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+/* Body */
+body {
+    background-color: var(--color-body-bg);
+    color: var(--color-body-text);
+}
+
+
+/* Links */
+a { 
+    color: var(--color-primary); 
+}
+
+a:hover { 
+    color: var(--color-primary-darken-10); 
+}
+
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--color-primary-alpha-25);
+    box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
+}
+
+
+/* Backgrounds */
+.bg-primary     { background-color: var(--color-primary) !important; }
+.bg-secondary   { background-color: var(--color-secondary) !important; }
+.bg-dark        { background-color: var(--color-dark) !important; }
+.bg-light       { background-color: var(--color-light) !important; }
+
+
+// Text
+.text-primary   { color: var(--color-primary) !important; }
+.text-secondary { color: var(--color-secondary) !important; }
+.text-dark      { color: var(--color-dark) !important; }
+
+
+/* Buttons - Primary */
+.btn-primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-outline-primary {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: var(--color-primary-darken-10);
+    border-color: var(--color-primary-darken-10);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:focus,
+.btn-primary:active:focus,
+.btn-outline-primary:focus,
+.btn-outline-primary:active:focus {
+    box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
+}
+
+
+/* Buttons - Secondary */
+.btn-secondary {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.btn-outline-secondary {
+    color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus {
+    background-color: var(--color-secondary-darken-10);
+    border-color: var(--color-secondary-darken-10);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:active {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.btn-secondary:focus,
+.btn-secondary:active:focus,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active:focus {
+    box-shadow: 0 0 0 0.25rem var(--color-secondary-alpha-25);;
+}
+
+
+/* Buttons - Dark */
+.btn-dark {
+    background: var(--color-dark);
+    border-color: var(--color-dark);
+}
+
+.btn-outline-dark {
+    color: var(--color-dark);
+    border-color: var(--color-dark);
+}
+
+.btn-dark:hover,
+.btn-dark:active,
+.btn-dark:focus {
+    background-color: var(--color-dark-darken-10);
+    border-color: var(--color-dark-darken-10);
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:active {
+    background-color: var(--color-dark);
+    border-color: var(--color-dark);
+}
+
+.btn-dark:focus,
+.btn-dark:active:focus,
+.btn-outline-dark:focus,
+.btn-outline-dark:active:focus {
+    box-shadow: 0 0 0 0.25rem var(--color-dark-alpha-25);
+}
+
+
+/* Buttons - Light */
+.btn-light {
+    background: var(--color-light);
+    border-color: var(--color-light);
+}
+
+.btn-light:hover,
+.btn-light:active,
+.btn-light:focus {
+    background-color: var(--color-light-darken-10);
+    border-color: var(--color-light-darken-10);
+}
+
+.btn-light:focus,
+.btn-light:active:focus {
+    box-shadow: 0 0 0 0.25rem var(--color-dark-alpha-25);
+}
+
+
+/* Price */
+.price { 
+    color: var(--color-price); 
+}

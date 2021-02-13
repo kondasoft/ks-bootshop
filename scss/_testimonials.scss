@@ -1,0 +1,26 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+.testimonials {
+    .carousel {
+        &.has-controls {
+            .carousel-inner {
+                width: 70%;
+                margin: 0 auto;
+            }
+        }
+        &.has-indicators {
+            padding-bottom: 2.5rem;
+        }
+    }
+    .blockquote-footer {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: inherit;
+        &::before {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+.logo-list {
+    img {
+        transition: all .2s ease-out;
+    }
+    a:hover,
+    a:focus {
+        img {
+            opacity: .85;
+        }
+    }
+}

@@ -1,63 +1,29 @@
-{% section 'product-template' %}
-
-{% section 'product-recommendations' %}
-
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org/",
-    "@type": "Product",
-    "name": "{{ product.title | escape }}",
-    "url": "{{ shop.url }}{{ product.url }}",
-    {% if product.featured_image %}
-      {% assign image_size = product.featured_image.width | append: 'x' %}
-      "image": [
-        "https:{{ product.featured_image.src | img_url: image_size }}"
-      ],
-    {% endif %}
-    "description": "{{ product.description | strip_html | escape }}",
-    {% if current_variant.sku != blank %}
-      "sku": "{{ current_variant.sku }}",
-    {% endif %}
-    "brand": {
-      "@type": "Thing",
-      "name": "{{ product.vendor | escape }}"
-    },
-    {% if product.variants %}
-      "offers": [
-        {% for variant in product.variants %}
-          {
-            "@type" : "Offer",
-            "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
-            "price" : "{{ variant.price | divided_by: 100.00 }}",
-            "priceCurrency" : "{{ shop.currency }}",
-            "url" : "{{ shop.url }}{{ variant.url }}",
-            "itemOffered" :
-            {
-                "@type" : "Product",
-                {% if variant.image %}
-                  {% assign variant_image_size = variant.image.width | append: 'x' %}
-                  "image": "http:{{ variant.image.src | img_url: variant_image_size }}",
-                {% endif %}
-                {% if variant.title != blank %}
-                  "name" : "{{ variant.title | escape }}",
-                {% endif %}
-                {% if variant.sku != blank %}
-                  "sku": "{{ variant.sku }}",
-                {% endif %}
-                {% if variant.weight != blank %}
-                  "weight": {
-                    "@type": "QuantitativeValue",
-                    {% if variant.weight_unit != blank %}
-                      "unitCode": "{{ variant.weight_unit }}",
-                    {% endif %}
-                    "value": "{{ variant.weight | weight_with_unit: variant.weight_unit }}"
-                  },
-                {% endif %}
-                "url": "{{ shop.url }}{{ variant.url }}"
-            }
-          }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-      ]
-    {% endif %}
-  }
-  </script>
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+<img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
+{% for image in product.images %}
+  <a href="{{ image.src | img_url: 'large' }}">
+    <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+  </a>
+{% endfor %}
+<h1>{{ product.title }}</h1>
+<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+  <select name="id" id="productSelect">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option value="{{ variant.id }}">
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - sold out
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+  {{ current_variant.price | money }}
+  <label for="Quantity">quantity</label>
+  <input type="number" id="Quantity" name="quantity" value="1" min="1">
+  <button type="submit" name="add" id="AddToCart">Add to cart</button>
+</form>
+<div>{{ product.description }}</div>

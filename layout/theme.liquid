@@ -1,76 +1,78 @@
 <!doctype html>
-<html class="no-js" lang="{{ shop.locale }}">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="{{ canonical_url }}">
+<html>
+    <head>
+        <!-- Page title -->
+        {% render 'seo-title' %}
 
-  {%- if settings.favicon != blank -%}
-    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-  {%- endif -%}
+        <!-- Metas -->
+        <meta charset="utf-8">
+        <meta 
+            http-equiv="X-UA-Compatible" 
+            content="IE=edge, chrome=1">
+        {% if page_description %}
+            <meta 
+                name="description" 
+                content="{{ page_description | escape }}">
+        {% endif %}
+        <meta 
+            name="viewport" 
+            content="width=device-width, initial-scale=1">
 
-  {%- capture seo_title -%}
-    {{ page_title }}
-    {%- if current_tags -%}
-      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
-    {%- endif -%}
-    {%- if current_page != 1 -%}
-      &ndash; {{ 'general.meta.page' | t: page: current_page }}
-    {%- endif -%}
-    {%- assign escaped_page_title = page_title | escape -%}
-    {%- unless escaped_page_title contains shop.name -%}
-      &ndash; {{ shop.name }}
-    {%- endunless -%}
-  {%- endcapture -%}
-  <title>{{ seo_title | strip }}</title>
+        <!-- Canonical url -->
+        <link 
+            rel="canonical" 
+            href="{{ canonical_url }}">
+        
+        <!-- Header hook for plugins -->
+        {{ content_for_header }} 
 
-  {%- if page_description -%}
-    <meta name="description" content="{{ page_description | escape }}">
-  {%- endif -%}
+        <!-- Load Styles -->
+        <link 
+            href="{{ 'variables.css' | asset_url }}" 
+            rel="stylesheet">
+        <link 
+            href="{{ 'theme.css' | asset_url }}" 
+            rel="stylesheet">
+        <link 
+            href="{{ 'custom.css' | asset_url }}" 
+            rel="stylesheet">
 
-  {% include 'social-meta-tags' %}
+         <!-- Load Scripts -->
+        <script 
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" 
+            crossorigin="anonymous"
+            defer>
+        </script>
+        <script 
+            src="{{ 'theme.js' | asset_url }}" 
+            defer>
+        </script>
+        <script 
+            src="{{ 'custom.js' | asset_url }}" 
+            defer>
+        </script>
 
-  {% include 'css-variables' %}
+    </head>
+    <body>
 
-  {{ 'theme.min.css' | asset_url | stylesheet_tag }}
+        <!-- Skip to content link -->
+        <a
+            id="skip-to-content-link"
+            class="visually-hidden-focusable" 
+            href="#main">
+            {{ 'general.accessibility.skip_to_content' | t }}
+        </a>
+        
+        {% section 'announcement-bar' %}
+        {% section 'navbar' %}
 
-  {{ content_for_header }}
+        <!-- Main -->
+        <main 
+            id="main" 
+            role="main">
+            {{ content_for_layout }}
+        </main>
 
-</head>
-<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }} {{ settings.color_primary }}">
-  <a class="sr-only sr-only-focusable" href="#site-main">{{ 'accessibility.skip_to_content' | t }}</a>
-  <a class="sr-only sr-only-focusable" href="#site-footer">{{ 'accessibility.skip_to_footer' | t }}</a>
-
-  {% section 'header' %}
-
-  <div id="cart-toast" class="toast toast-bottom-right hide" data-delay="20000" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong class="mr-auto">{{ 'product.added_to_cart' | t }}</strong>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="{{ 'misc.close' | t }}">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="toast-body">
-      <!-- Content filled via ajax -->
-    </div>
-  </div>
-
-  <main id="site-main" class="mb-8">
-    {{ content_for_layout }}
-  </main>
-
-  {% section 'footer' %}
-
-  {{ 'jquery-3.5.1.min.js' | asset_url | script_tag }}
-  {{ 'bootstrap.bundle.min.js' | asset_url | script_tag }}
-  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
-  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
-  {{ 'theme.min.js' | asset_url | script_tag }}
-
-  <script>
-    Shopify.money_format = {{ shop.money_format | json }}
-  </script>
-
-</body>
+    </body>
 </html>

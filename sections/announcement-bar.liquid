@@ -1,0 +1,68 @@
+<!-- Announcement bar -->
+{% if section.settings.show %}
+    {% if section.settings.homepage_only == false or template.name == 'index' %}
+        
+        <div
+            id="announcement-bar" 
+            class="text-center py-2 {{ section.settings.text_color }}"
+            style="{{ section.settings.bg_color | prepend: 'background-color: ' | append: ';' }}">
+            <div 
+                class="container">
+                <div class="rte small fst-italic">
+                    {{ section.settings.announcement | replace: '<p>', '<p class="mb-0">' }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+
+{% schema %}
+{
+    "name": "Announcement bar",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Announcement"   
+        },
+        {
+            "type": "richtext",
+            "id": "announcement",
+            "label": "Announcement",
+            "default": "<p>Announce something important here.</p>"
+        },
+        {
+            "type": "header",
+            "content": "General settings"   
+        },
+        {
+            "type": "checkbox",
+            "id": "show",
+            "label": "Show announcement",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "homepage_only",
+            "label": "Show only on homepage",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "#6C757D"
+        },
+        {
+            "type": "select",
+            "id": "text_color",
+            "label": "Text color",
+            "options": [
+                { "value": "text-body", "label": "Body" },
+                { "value": "text-muted", "label": "Muted" },
+                { "value": "text-white", "label": "White" }
+            ],
+            "default": "text-white"
+        }
+    ]
+}
+{% endschema %}

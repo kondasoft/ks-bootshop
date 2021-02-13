@@ -1,5 +1,3 @@
 .DS_Store
-.vscode
+node_modules
 config.yml
-chrome/
--svg-placeholders.html

@@ -1,0 +1,441 @@
+{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+{% assign row_    = section.settings.row_ | prepend: 'row-cols-' %}
+{% assign row_sm  = section.settings.row_sm | prepend: 'row-cols-sm-' %}
+{% assign row_md  = section.settings.row_md | prepend: 'row-cols-md-' %}
+{% assign row_lg  = section.settings.row_lg | prepend: 'row-cols-lg-' %}
+{% assign row_xl  = section.settings.row_xl | prepend: 'row-cols-xl-' %}
+{% assign row_xxl = section.settings.row_xxl | prepend: 'row-cols-xxl-' %}
+
+{% assign gutter_mobile  = section.settings.gutter_mobile | prepend: 'g-' %}
+{% assign gutter_tablet  = section.settings.gutter_tablet | prepend: 'g-sm-' %}
+{% assign gutter_desktop = section.settings.gutter_desktop | prepend: 'g-xl-' %}
+
+<section 
+    id="text-columns-with-image-{{ section.id }}" 
+    class="text-columns-with-image {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+
+        <div class="heading-wrapper mb-3 overflow-hidden">
+
+            <!-- Heading -->
+            {% unless section.settings.heading == blank %}
+                <h2 class="heading mb-1 {{ section.settings.heading_alignment }} {{ section.settings.heading_size }}">
+                    {{ section.settings.heading }}
+                </h2>
+            {% endunless %}
+
+            <!-- Subheading -->
+            {% unless section.settings.subheading == blank %}
+                <div class="subheading rte text-muted {{ section.settings.heading_alignment }}">
+                    {{ section.settings.subheading }}
+                </div>
+            {% endunless %}
+
+        </div>
+        
+        {% if section.blocks.size == 0 %}
+            
+            <p class="alert alert-warning">
+                Add at least one block!
+            </p>
+
+        {% else %}
+
+            <ul class="text-columns-with-image-list list-unstyled row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
+               
+                {% for block in section.blocks %}
+                    <li class="text-columns-with-image-item col pb-5 {{ section.settings.block_text_alignment }}">
+                       
+                        <!-- Image -->
+                        {% unless block.settings.img == blank %}
+                            {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                            <img 
+                                class="product-item-img img-fluid mb-3 {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
+                                src="{{ block.settings.img | img_url: img_size, crop: 'center' }}"
+                                alt="{{ block.settings.img.alt | escape }}" 
+                                width="{{ section.settings.img_width }}"
+                                height="{{ section.settings.img_height }}" 
+                                loading="lazy">
+                        {% endunless %}
+
+                        <!-- Heading -->
+                        {% unless block.settings.heading == blank %}
+                            <h3 class="heading mb-1 {{ section.settings.block_heading_size }}">
+                                {{ block.settings.heading }}
+                            </h3>
+                        {% endunless %}
+
+                        <!-- Text -->
+                        {% unless block.settings.text == blank %}
+                            <div class="rte">
+                                {{ block.settings.text }}
+                            </div>
+                        {% endunless %}
+
+                        <!-- Button -->
+                        {% if block.settings.btn_label != blank and block.settings.btn_url != blank %}
+                            <a
+                                class="btn my-2 {{ section.settings.btn_color }} {{ section.settings.btn_size }}"
+                                href="{{ block.settings.btn_url }}">
+                                {{ block.settings.btn_label }}
+                            </a>
+                        {% endif %}
+
+                    </li>
+                {% endfor %}
+
+            </ul>
+            
+        {% endif %}
+
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Text column with image",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Text column with image"
+        },
+        {
+            "type": "richtext",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "<p>Write something catchy for this section.</p>"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in container",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "light_bg",
+            "label": "Light background",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "h2",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_alignment",
+            "label": "Heading alignment",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" },
+                { "value": "text-end", "label": "Right" }
+            ],
+            "default": "text-center"
+        },
+        {
+            "type": "header",
+            "content": "Content settings"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "480"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "480"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image border",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "block_text_alignment",
+            "label": "Text alignment",
+            "default": "text-start",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" },
+                { "value": "text-end", "label": "Right" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "block_heading_size",
+            "label": "Block heading size",
+            "default": "h4",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_color",
+            "label": "Button color",
+            "default": "btn-outline-primary",
+            "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Button size",
+            "default": "btn-sm",
+            "options": [
+                { "value": "btn-sm", "label": "Small" },
+                { "value": "", "label": "Normal" },
+                { "value": "btn-lg", "label": "Large" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Grid",
+            "info": "Adjust items per row. [Learn more](https://getbootstrap.com/docs/5.0/layout/grid/#auto-layout-columns)"
+        },
+        {
+            "type": "range",
+            "id": "row_",
+            "label": "X-Small <576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Small ≥576px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_md",
+            "label": "Medium ≥768px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_lg",
+            "label": "Large ≥992px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "row_xl",
+            "label": "Extra large ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "row_xxl",
+            "label": "Extra extra large ≥1400px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "header",
+            "content": "Gutter",
+            "info": "Spacing between items. [Learn more](https://getbootstrap.com/docs/5.0/layout/gutters/)"
+        },
+        {
+            "type": "range",
+            "id": "gutter_mobile",
+            "label": "Mobile <576px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "gutter_tablet",
+            "label": "Tablet ≥576px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "gutter_desktop",
+            "label": "Desktop ≥1200px",
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "default": 6
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
+        }
+    ],
+    "blocks": [
+        {
+            "type": "content",
+            "name": "Content",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "img",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_label",
+                    "label": "Button label",
+                    "default": "Learn more"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Text columns with image",
+            "category": "Text",
+            "blocks": [
+                {
+                    "type": "content",
+                    "settings": {
+                        "heading": "Add a title or tagline",
+                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+                    }
+                },
+                {
+                    "type": "content",
+                    "settings": {
+                        "heading": "Add a title or tagline",
+                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+                    }
+                },
+                {
+                    "type": "content",
+                    "settings": {
+                        "heading": "Add a title or tagline",
+                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+                    }
+                },
+                {
+                    "type": "content",
+                    "settings": {
+                        "heading": "Add a title or tagline",
+                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+                    }
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+// Callenge
+.shopify-challenge__container {
+    .btn { 
+        @extend .btn-primary; 
+    }
+}
+
+
+// Addresses
+input[id*=address_default_address] {
+    // @extend .custom-control-input;
+}
+
+
+// Errors
+.errors {
+    @extend .alert, .alert-danger;
+    ul {
+        @extend .list-unstyled;
+        margin-bottom: 0;
+    }
+}

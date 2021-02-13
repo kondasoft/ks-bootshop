@@ -1,0 +1,301 @@
+{% if section.settings.background_style == "navbar-dark" %}
+    {% assign dropdown_style = 'dropdown-menu-dark' %}
+{% endif %}
+
+<!-- Navbar -->
+<nav
+    id="navbar" 
+    class="navbar navbar-expand-{{ section.settings.breakpoint }} {{ section.settings.background_style }} {{ section.settings.shadow }} {% if section.settings.sticky %}navbar-sticky{% endif %}"
+    style="{{ section.settings.bg_color | prepend: 'background-color: ' | append: ';' }}">
+    <div 
+        class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+
+        <!-- Navbar toggle -->
+        <button 
+            class="navbar-toggler me-3" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbar-collapse" 
+            aria-controls="navbar-collapse" 
+            aria-expanded="false" 
+            aria-label="{{ 'general.accessibility.toogle_nav' | t }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Navbar brand -->
+        <a
+            id="navbar-brand" 
+            class="navbar-brand py-1 me-0 me-{{ section.settings.breakpoint }}-3" 
+            href="/">
+            {% if section.settings.logo == blank %}
+                {{ shop.name | escape }}
+            {% else %}
+                {% assign logo_size = section.settings.logo_height | prepend: 'x' %}
+                <img 
+                    src="{{ section.settings.logo | img_url: logo_size }}" 
+                    alt="{{ shop.name | escape }}"
+                    height="{{ section.settings.logo_height | escape }}">
+            {% endif %}
+        </a>
+
+        <!-- Navbar icons nav -->
+        <div class="navbar-expand ms-0 ms-{{ section.settings.breakpoint }}-3 order-{{ section.settings.breakpoint }}-1">
+            <ul
+                id="navbar-icons-nav" 
+                class="navbar-nav align-items-center">
+                {% if section.settings.show_search %}
+                    <li
+                        id="search-dropdown"
+                        class="nav-item dropdown">
+                        <a 
+                            id="minisearch-button"
+                            class="nav-link d-flex {% if template.name == 'search' %}active{% endif %}" 
+                            href="#"
+                            data-bs-toggle="dropdown"
+                            aria-current="{% if template.name == 'search' %}page{% endif %}"
+                            aria-expanded="false"
+                            role="button">
+                            {% render 'bi-search' size: 20 %}
+                            <span class="visually-hidden">
+                                {{ 'general.navbar.search' | t }}
+                            </span>
+                        </a>
+                        <div
+                            class="dropdown-menu dropdown-menu-end p-3 {{ dropdown_style }}"
+                            aria-labelledby="minisearch-button">
+                            {% render 'mini-search' %}
+                        </div>
+                    </li>
+                {% endif %}
+                {% if section.settings.show_account and shop.customer_accounts_enabled %}
+                    <li class="nav-item d-none d-{{ section.settings.breakpoint }}-block">
+                        <a 
+                            class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
+                            href="{{ routes.account_url }}"
+                            aria-current="{% if template.name == 'account' or template.name == 'login' %}page{% endif %}">
+                            {% render 'bi-person' size: 24 %}
+                            <span class="visually-hidden">
+                                {{ 'general.navbar.account' | t }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a
+                        id="minicart-button"
+                        class="nav-link d-flex {% if template.name == 'cart' %}active{% endif %}" 
+                        href="#"
+                        data-bs-toggle="dropdown"
+                        aria-current="{% if template.name == 'cart' %}page{% endif %}"
+                        aria-expanded="false"
+                        role="button">
+                        {% if cart.item_count == 0 %}
+                            {% render 'bi-cart' size: 22 %}
+                        {% else %}
+                            {% render 'bi-cart-check' size: 21 %}
+                        {% endif %}
+                        <span class="visually-hidden">
+                            {{ 'general.navbar.cart' | t }}
+                        </span>
+                    </a>
+                    <div
+                        class="dropdown-menu dropdown-menu-end p-3 {{ dropdown_style }}"
+                        aria-labelledby="minicart-button">
+                        {% render 'mini-cart' %}
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Navbar collapse -->
+        <div
+            id="navbar-collapse"
+            class="collapse navbar-collapse">
+            
+            <!-- Navbar nav -->
+            <ul
+                id="navbar-nav" 
+                class="navbar-nav my-2 my-{{ section.settings.breakpoint }}-0 {{ section.settings.menu_position | escape }}">
+                {% for link in linklists[section.settings.menu].links %}
+                    {% if link.links == blank %}
+                        {% assign has_dropdown = false %}
+                    {% else %}
+                        {% assign has_dropdown = true %}
+                    {% endif %}
+                    
+                    <li class="nav-item {% if has_dropdown %}dropdown{% endif %}">
+                        <a 
+                            id="{{ forloop.index | prepend: 'nav-link-' }}" 
+                            class="nav-link {% if link.active %}active{% endif %} {% if has_dropdown %}dropdown-toggle{% endif %}" 
+                            href="{{ link.url }}"
+                            aria-current="{% if link.active %}page{% endif %}" 
+                            {% if has_dropdown %}
+                                role="button" 
+                                data-bs-toggle="dropdown" 
+                                aria-expanded="false"
+                            {% endif %}>
+                            {{ link.title }}
+                        </a>
+                        {% if has_dropdown %}
+                            <ul 
+                                class="dropdown-menu {{ dropdown_style }}" 
+                                aria-labelledby="{{ forloop.index | prepend: 'nav-link-' }}">
+                                {% for child_link in link.links %}
+                                    {% if child_link.title contains "-divider" %}
+                                        <div class="dropdown-divider"></div>
+                                    {% else %}
+                                        <li>
+                                            <a 
+                                                class="dropdown-item {% if child_link.active %}active{% endif %}" 
+                                                href="{{ child_link.url }}"
+                                                aria-current="{% if child_link.active %}page{% endif %}">
+                                                {{ child_link.title }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                {% if section.settings.show_account and shop.customer_accounts_enabled %}
+                    <li class="nav-item d-{{ section.settings.breakpoint }}-none">
+                        <a 
+                            class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
+                            href="{{ routes.account_url }}"
+                            aria-current="{% if template.name == 'account' or template.name == 'login' %}page{% endif %}">
+                            {% render 'bi-person' size: 24 %}
+                            <span class="ms-2">
+                                {{ 'general.navbar.account' | t }}
+                            </span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            
+        </div>
+            
+    </div>
+</nav>
+
+{% schema %}
+{
+    "name": "Navbar",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"   
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "#ffffff"
+        },
+        {
+            "type": "select",
+            "id": "background_style",
+            "label": "Background style",
+            "options": [
+                { "value": "navbar-light", "label": "Light" },
+                { "value": "navbar-dark", "label": "Dark" }
+            ],
+            "default": "navbar-light"
+        },
+        {
+            "type": "select",
+            "id": "shadow",
+            "label": "Shadow",
+            "default": "shadow-sm",
+            "options": [
+                { "value": "shadow-none", "label": "No Shadow" },
+                { "value": "shadow-sm", "label": "Shadow sm" },
+                { "value": "shadow", "label": "Shadow" },
+                { "value": "shadow-lg", "label": "Shadow lg" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "sticky",
+            "label": "Sticky navbar",
+            "info": "Fixed position on scroll",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Logo"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+        },
+        {
+            "type": "text",
+            "id": "logo_height",
+            "label": "Logo height",
+            "info": "Preferred height for your logo in pixels. We recommended a value between 30 to 40",
+            "default": "30"
+        },
+        {
+            "type": "header",
+            "content": "Menu"
+        },
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu",
+            "default": "main-menu"
+        },
+        {
+            "type": "select",
+            "id": "menu_position",
+            "label": "Menu Position",
+            "options": [
+                { "value": "me-auto", "label": "Left" },
+                { "value": "mx-auto", "label": "Center" },
+                { "value": "ms-auto", "label": "Right" }
+            ],
+            "default": "mx-auto"
+        },
+        {
+            "type": "header",
+            "content": "Icon menu"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_search",
+            "label": "Show search",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_account",
+            "label": "Show Account",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Advanced"
+        },
+        {
+            "type": "select",
+            "id": "breakpoint",
+            "label": "Breakpoint",
+            "info": "At what point the navbar should collapse. Do not change this setting unless you know what you are doing. [Learn more](https://getbootstrap.com/docs/5.0/components/navbar/#responsive-behaviors)",
+            "options": [
+                { "value": "md", "label": "md" },
+                { "value": "lg", "label": "lg" },
+                { "value": "xl", "label": "xl" }
+            ],
+            "default": "lg"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,322 @@
+{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+{% if section.settings.interval > 0 %}
+    {% assign interval = section.settings.interval | times: 1000 %}
+{% else %}
+    {% assign interval = false %}
+{% endif %}
+
+<section 
+    id="testimonials-{{ section.id }}" 
+    class="testimonials {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container">
+
+        <div class="heading-wrapper mb-2 overflow-hidden">
+
+            <!-- Heading -->
+            <h2 class="heading mb-1 {{ section.settings.heading_alignment }} {{ section.settings.heading_size }}">
+                {{ section.settings.heading }}
+            </h2>
+
+            <!-- Subheading -->
+            {% unless section.settings.subheading == blank %}
+                <div class="subheading rte text-muted {{ section.settings.heading_alignment }}">
+                    {{ section.settings.subheading }}
+                </div>
+            {% endunless %}
+
+        </div>
+
+        <!-- Carousel -->
+        <div
+            id="{{ 'testimonials-carousel-' | append: section.id }}"
+            class="testimonials-carousel carousel slide carousel-dark {% if section.settings.controls %}has-controls{% endif %} {% if section.settings.indicators %}has-indicators{% endif %} "
+            data-bs-ride="carousel"
+            data-bs-pause="hover"
+            data-bs-interval="{{ interval }}">
+
+            <!-- Indicators -->
+            {% if section.settings.indicators %}
+                <ol class="carousel-indicators mb-3">
+                    {% for block in section.blocks %}
+                        <li
+                            data-bs-target="#{{ 'testimonials-carousel-' | append: section.id }}"
+                            data-bs-slide-to="{{ forloop.index0 }}"
+                            class="{% if forloop.first == true %} active {% endif %}">
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+            
+            <div class="carousel-inner">
+                {% for block in section.blocks %}
+                    <div
+                        class="carousel-item {% if forloop.first == true %}active{% endif %}">
+                        
+                        <figure class="text-center">
+                            <blockquote class="blockquote">
+                                {{ block.settings.text }}
+                            </blockquote>
+
+                            <figcaption class="blockquote-footer">
+                                {% unless block.settings.img == blank %}
+                                    {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                                    <img
+                                        class="img-fluid mb-2 {% if section.settings.img_circle %}rounded-circle{% endif %}"
+                                        src="{{ block.settings.img | img_url: img_size, crop: 'center' }}"
+                                        alt="{{ block.settings.image.alt }}"
+                                        width="{{ section.settings.img_width }}"
+                                        height="{{ section.settings.img_height }}"
+                                        loading="lazy">
+                                {% endunless %}
+
+                                <span class="d-block fst-italic">
+                                    {{ block.settings.name }}
+                                </span>
+
+                            </figcaption>
+
+                        </figure>
+
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if section.settings.controls %}
+                <a 
+                    class="carousel-control-prev" 
+                    href="#{{ 'testimonials-carousel-' | append: section.id }}" 
+                    role="button" 
+                    data-bs-slide="prev">
+                    <span 
+                        class="carousel-control-prev-icon" 
+                        aria-hidden="true">
+                    </span>
+                    <span 
+                        class="visually-hidden">
+                        {{ 'general.previous' | t }}
+                    </span>
+                </a>
+                <a 
+                    class="carousel-control-next" 
+                    href="#{{ 'testimonials-carousel-' | append: section.id }}" 
+                    role="button" 
+                    data-bs-slide="next">
+                    <span 
+                        class="carousel-control-next-icon" 
+                        aria-hidden="true">
+                    </span>
+                    <span 
+                        class="visually-hidden">
+                        {{ 'general.next' | t }}
+                    </span>
+                </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Testimonials",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Customer testimonials"
+        },
+        {
+            "type": "richtext",
+            "id": "subheading",
+            "label": "Subheading",
+            "default": "<p>Write something catchy for this section.</p>"
+        },
+        {
+            "type": "checkbox",
+            "id": "light_bg",
+            "label": "Light background",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "h2",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_alignment",
+            "label": "Heading alignment",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" },
+                { "value": "text-end", "label": "Right" }
+            ],
+            "default": "text-center"
+        },
+        {
+            "type": "header",
+            "content": "Testimonial settings"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Customer photo width (px)",
+            "default": "60"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Customer photo height (px)",
+            "default": "60"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_circle",
+            "label": "Customer photo circle",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Carousel settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "controls",
+            "default": true,
+            "label": "Show Controls",
+            "info": "Previous/Next arrow buttons"
+        },
+        {
+            "type": "checkbox",
+            "id": "indicators",
+            "default": true,
+            "label": "Show Indicators",
+            "info": "Small rectangles at the bottom"
+        },
+        {
+            "type": "range",
+            "id": "interval",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": "sec",
+            "label": "Interval",
+            "info": "The amount of time to delay between automatically cycling an item. If 0, carousel will not automatically cycle.",
+            "default": 6
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
+        }
+    ],
+    "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "label": "Customer name"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img",
+                    "label": "Customer photo",
+                    "info": "Leave empty to disable."
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Testimonials",
+            "category": "Text",
+            "blocks": [
+                {
+                    "type": "testimonial",
+                    "settings": {
+                        "text": "<p>I love KondaSoft Shopify Themes, not only they are beautiful and attractive but they are super-fast as well. I have tried different theme providers before but with KondaSoft's themes I could finish my store very quickly (within 1 week). I can recommend KondaSoft, that's for sure... A+++</p>",
+                        "name": "John Doe"
+                    }
+                },
+                {
+                    "type": "testimonial",
+                    "settings": {
+                        "text": "<p>I have been successfully running my store with KondaSoft's theme, IT WatchShop for 2 months now, and I'm really impressed with the performance and speed it has. The speed-rank for my Shopify store has increased dramatically after I switched to this theme...</p>",
+                        "name": "Jane Doe"
+                    }
+                },
+                {
+                    "type": "testimonial",
+                    "settings": {
+                        "text": "<p>I thought to try KondaSoft Themes for one of my new Ecommerce adventures (a gift shop for my fiancé) and oh i was really blown away by the performance. They are just fast. Also, their themes have many sections available so that i can adjust the homepage exactly as I want to....</p>",
+                        "name": "Jim Doe"
+                    }
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}
