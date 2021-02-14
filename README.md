@@ -7,7 +7,7 @@ Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting 
 Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for Bootstrap framework.
 
 ## Highlighted features:
-* Powered by [Bootstrap framework](https://getbootstrap.com/) (v4.5)
+* Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
 * Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
 * All elements are fully accessible with [aria attributes](https://www.w3.org/WAI/standards-guidelines/aria/)
 * Support for [native image lazy-loading](https://web.dev/native-lazy-loading/)
