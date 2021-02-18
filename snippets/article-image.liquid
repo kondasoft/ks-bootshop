@@ -1,0 +1,17 @@
+{% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+
+{% unless request.page_type == 'article' %}
+    <a href="{{ article.url }}">
+{% endunless %}
+
+    <img 
+        class="article-img img-fluid d-block {{ class }} {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
+        src="{{ article.image | img_url: img_size, crop: 'center' }}"
+        alt="{{ article.image.alt | escape }}" 
+        width="{{ section.settings.img_width }}"
+        height="{{ section.settings.img_height }}" 
+        loading="lazy">
+
+{% unless request.page_type == 'article' %}
+    </a>
+{% endunless %}

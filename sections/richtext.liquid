@@ -1,0 +1,176 @@
+{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+{% capture max_width %}
+    {% unless section.settings.max_width == blank %}
+        {{ section.settings.max_width | prepend: 'max-width: ' | append: 'px;' }}
+    {% endunless %}
+{% endcapture %}
+
+<section 
+    id="richtext-{{ section.id }}" 
+    class="richtext {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div 
+        class="container"
+        style="{{ max_width }}">
+
+        <div class="heading-wrapper mb-0 overflow-hidden {{ section.settings.text_alignment }}">
+
+            <h2 class="heading mb-1 {{ section.settings.heading_size }}">
+                {{ section.settings.heading }}
+            </h2>
+
+            {% unless section.settings.subheading == blank %}
+                <div class="subheading rte text-muted {{ section.settings.subheading_size }}">
+                    {{ section.settings.subheading }}
+                </div>
+            {% endunless %}
+
+        </div>
+
+        <div class="text rte {{ section.settings.text_alignment }} {{ section.settings.text_size }}">
+            {{ section.settings.text }}
+        </div>
+
+    </div>
+</section>
+
+
+{% schema %}
+{
+    "name": "Richtext",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "info": "Leave empty to disable",
+            "default": "Richtext"
+        },
+        {
+            "type": "richtext",
+            "id": "subheading",
+            "label": "Subheading",
+            "info": "Leave empty to disable",
+            "default": "<p>Write something catchy for this section.</p>"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        },
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "light_bg",
+            "label": "Light background",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "h2",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "subheading_size",
+            "label": "Subheading size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
+        },
+        {
+            "type": "select",
+            "id": "text_size",
+            "label": "Text size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
+        },
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" },
+                { "value": "text-end", "label": "Right" }
+            ],
+            "default": "text-center"
+        },
+        {
+            "type": "text",
+            "id": "max_width",
+            "label": "Max width (px)",
+            "info": "Adjust container width (in pixels)",
+            "default": "768"
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
+        }
+    ],
+    "presets": [
+        {
+            "name": "Richtext",
+            "category": "Text"
+        }
+    ]
+}
+{% endschema %}

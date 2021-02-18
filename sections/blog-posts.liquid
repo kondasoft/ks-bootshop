@@ -1,7 +1,9 @@
-{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
-{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
-{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
-{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+{% assign blog = blogs[section.settings.blog] %}
+
+{% assign pt =  section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb =  section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt =  section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb =  section.settings.margin_bottom | prepend: 'mb-' %}
 
 {% assign row_    = section.settings.row_ | prepend: 'row-cols-' %}
 {% assign row_sm  = section.settings.row_sm | prepend: 'row-cols-sm-' %}
@@ -15,81 +17,79 @@
 {% assign gutter_desktop = section.settings.gutter_desktop | prepend: 'g-xl-' %}
 
 <section 
-    id="text-columns-with-image-{{ section.id }}" 
-    class="text-columns-with-image {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    id="blog-posts-{{ section.id }}" 
+    class="blog-posts {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
     <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
 
         {% if section.settings.heading != blank or section.settings.subheading != blank %}
-            <div class="heading-wrapper mb-3 overflow-hidden">
+            <div class="heading-wrapper mb-3 overflow-hidden {{ section.settings.heading_alignment }}">
 
                 {% unless section.settings.heading == blank %}
-                    <h2 class="heading mb-1 {{ section.settings.heading_alignment }} {{ section.settings.heading_size }}">
+                    <h2 class="heading mb-1 {{ section.settings.heading_size }}">
                         {{ section.settings.heading }}
                     </h2>
                 {% endunless %}
 
                 {% unless section.settings.subheading == blank %}
-                    <div class="subheading rte text-muted {{ section.settings.subheading_size }} {{ section.settings.heading_alignment }}">
+                    <div class="subheading rte text-muted {{ section.settings.subheading_size }}">
                         {{ section.settings.subheading }}
                     </div>
                 {% endunless %}
 
             </div>
         {% endif %}
-        
-        {% if section.blocks.size == 0 %}
-            
-            <p class="alert alert-warning">
-                Add at least one block!
-            </p>
 
-        {% else %}
-
-            <ul class="text-columns-with-image-grid list-unstyled row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
-               
-                {% for block in section.blocks %}
-                    <li class="text-columns-with-image-item col pb-5 {{ section.settings.block_text_alignment }}">
-                       
-                        <!-- Image -->
-                        {% unless block.settings.img == blank %}
-                            {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
-                            <img 
-                                class="product-item-img img-fluid mb-3 {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
-                                src="{{ block.settings.img | img_url: img_size, crop: 'center' }}"
-                                alt="{{ block.settings.img.alt | escape }}" 
-                                width="{{ section.settings.img_width }}"
-                                height="{{ section.settings.img_height }}" 
-                                loading="lazy">
-                        {% endunless %}
-
-                        <!-- Heading -->
-                        {% unless block.settings.heading == blank %}
-                            <h3 class="heading mb-1 {{ section.settings.block_heading_size }}">
-                                {{ block.settings.heading }}
-                            </h3>
-                        {% endunless %}
-
-                        <!-- Text -->
-                        {% unless block.settings.text == blank %}
-                            <div class="rte">
-                                {{ block.settings.text }}
-                            </div>
-                        {% endunless %}
-
-                        <!-- Button -->
-                        {% if block.settings.btn_label != blank and block.settings.btn_url != blank %}
-                            <a
-                                class="btn my-2 {{ section.settings.btn_color }} {{ section.settings.btn_size }}"
-                                href="{{ block.settings.btn_url }}">
-                                {{ block.settings.btn_label }}
+        <ul class="blog-posts-grid list-unstyled row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
+              
+            <!-- Placeholders -->
+            {% if blog and blog.articles.size == 0 %}
+                {% for i in (1..section.settings.limit) %}
+                    <article 
+                        class="blog-posts-grid-item article col pb-5"
+                        role="listitem">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg bg-light img-fluid mb-3' }}
+                        <h3 class="h6">
+                            <a href="#">
+                                {{ 'general.onboarding.post_title' | t }}
                             </a>
-                        {% endif %}
-
-                    </li>
+                        </h3>
+                        <div class="rte mb-4">
+                            {{ 'general.onboarding.desc_html' | t }}
+                        </div>
+                        <a href="#" class="btn btn-outline-primary">
+                            {{ 'blogs.article.readmore' | t }}
+                        </a>
+                    </article>
                 {% endfor %}
 
-            </ul>
-            
+            <!-- Posts -->
+            {% else %}
+                {% for article in blog.articles limit: section.settings.limit %}
+                    <article 
+                        class="blog-posts-grid-item article col pb-5"
+                        role="listitem">
+                        
+                        {% render 'article-image' with article as article, class: 'mb-3' %}
+                        {% render 'article-title' with article as article, heading: 'h3' %}
+                        {% render 'article-meta' with article as article %}
+                        {% render 'article-excerpt' with article as article %}
+                        {% render 'article-posted-in' with article as article %}
+                        {% render 'article-readmore' with article as article %}
+                        {% render 'social-sharing' with share_title: article.title, share_permalink: article.url, share_image: article.image %}
+                    </article>
+                {% endfor %}
+            {% endif %}
+
+        </ul>
+
+        {% if blog and section.settings.show_view_all_btn %}
+            <div class="blog-view-all text-center my-5">
+                <a
+                    class="blog-view-all-btn btn {{ section.settings.view_all_btn_color }} {{ section.settings.view_all_btn_size }}"
+                    href="{{ blog.url }}">
+                    {{ 'blogs.article.view_all' | t }}
+                </a>
+            </div>
         {% endif %}
 
     </div>
@@ -97,8 +97,22 @@
 
 {% schema %}
 {
-    "name": "Text column with image",
+    "name": "Blog posts",
     "settings": [
+        {
+            "id": "blog",
+            "type": "blog",
+            "label": "Blog"
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Posts limit",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "default": 4
+        },
         {
             "type": "header",
             "content": "General settings"
@@ -107,8 +121,7 @@
             "type": "text",
             "id": "heading",
             "label": "Heading",
-            "info": "Leave empty to disable",
-            "default": "Text column with image"
+            "default": "Blog posts"
         },
         {
             "type": "richtext",
@@ -132,7 +145,7 @@
         {
             "type": "select",
             "id": "heading_size",
-            "label": "Heading size",
+            "label": "Heading Size",
             "default": "h2",
             "options": [
                 {  "value": "h1", "label": "H1" },
@@ -148,9 +161,9 @@
             "id": "heading_alignment",
             "label": "Heading alignment",
             "options": [
-                { "value": "text-start", "label": "Left" },
+                { "value": "text-left", "label": "Left" },
                 { "value": "text-center", "label": "Center" },
-                { "value": "text-end", "label": "Right" }
+                { "value": "text-right", "label": "Right" }
             ],
             "default": "text-center"
         },
@@ -165,8 +178,75 @@
             "default": ""
         },
         {
+            "type": "checkbox",
+            "id": "show_view_all_btn",
+            "label": "Show 'View all' button",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "view_all_btn_color",
+            "label": "View all button color",
+            "default": "btn-secondary",
+            "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "view_all_btn_size",
+            "label": "View all button size",
+            "default": "",
+            "options": [
+                { "value": "btn-sm", "label": "Small" },
+                { "value": "", "label": "Normal" },
+                { "value": "btn-lg", "label": "Large" }
+            ]
+        },
+        {
             "type": "header",
-            "content": "Content settings"
+            "content": "Post settings"
+        },
+        {
+            "type": "select",
+            "id": "article_heading_size",
+            "label": "Heading Size",
+            "default": "h6",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
+            "default": true
         },
         {
             "type": "text",
@@ -187,34 +267,40 @@
             "default": true
         },
         {
-            "type": "select",
-            "id": "block_text_alignment",
-            "label": "Text alignment",
-            "default": "text-start",
-            "options": [
-                { "value": "text-start", "label": "Left" },
-                { "value": "text-center", "label": "Center" },
-                { "value": "text-end", "label": "Right" }
-            ]
+            "type": "checkbox",
+            "id": "show_excerpt",
+            "label": "Show excerpt",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "excerpt_length",
+            "label": "Excerpt length",
+            "info": "Leave empty to show all text",
+            "default": "240"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_posted_in",
+            "label": "Show posted in (tags)",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_readmore",
+            "label": "Show readmore button",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_comments",
+            "label": "Show comments button",
+            "default": true
         },
         {
             "type": "select",
-            "id": "block_heading_size",
-            "label": "Block heading size",
-            "default": "h4",
-            "options": [
-                {  "value": "h1", "label": "H1" },
-                {  "value": "h2", "label": "H2" },
-                {  "value": "h3", "label": "H3" },
-                {  "value": "h4", "label": "H4" },
-                {  "value": "h5", "label": "H5" },
-                {  "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "btn_color",
-            "label": "Button color",
+            "id": "readmore_btn_color",
+            "label": "Readmore button color",
             "default": "btn-outline-primary",
             "options": [
                 { "group": "Normal", "value": "btn-link", "label": "Link" },
@@ -237,14 +323,20 @@
         },
         {
             "type": "select",
-            "id": "btn_size",
-            "label": "Button size",
+            "id": "readmore_btn_size",
+            "label": "Readmore button size",
             "default": "btn-sm",
             "options": [
                 { "value": "btn-sm", "label": "Small" },
                 { "value": "", "label": "Normal" },
                 { "value": "btn-lg", "label": "Large" }
             ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_sharing",
+            "label": "Show social sharing",
+            "default": false
         },
         {
             "type": "header",
@@ -285,7 +377,7 @@
             "min": 1,
             "max": 6,
             "step": 1,
-            "default": 4
+            "default": 3
         },
         {
             "type": "range",
@@ -294,7 +386,7 @@
             "min": 1,
             "max": 6,
             "step": 1,
-            "default": 4
+            "default": 3
         },
         {
             "type": "range",
@@ -303,7 +395,7 @@
             "min": 1,
             "max": 6,
             "step": 1,
-            "default": 4
+            "default": 3
         },
         {
             "type": "header",
@@ -379,74 +471,10 @@
             "default": 7
         }
     ],
-    "blocks": [
-        {
-            "type": "content",
-            "name": "Content",
-            "settings": [
-                {
-                    "type": "image_picker",
-                    "id": "img",
-                    "label": "Image"
-                },
-                {
-                    "type": "text",
-                    "id": "heading",
-                    "label": "Heading"
-                },
-                {
-                    "type": "richtext",
-                    "id": "text",
-                    "label": "Text"
-                },
-                {
-                    "type": "text",
-                    "id": "btn_label",
-                    "label": "Button label",
-                    "default": "Learn more"
-                },
-                {
-                    "type": "url",
-                    "id": "btn_url",
-                    "label": "Button link"
-                }
-            ]
-        }
-    ],
     "presets": [
         {
-            "name": "Text columns with image",
-            "category": "Text",
-            "blocks": [
-                {
-                    "type": "content",
-                    "settings": {
-                        "heading": "Add a title or tagline",
-                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
-                    }
-                },
-                {
-                    "type": "content",
-                    "settings": {
-                        "heading": "Add a title or tagline",
-                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
-                    }
-                },
-                {
-                    "type": "content",
-                    "settings": {
-                        "heading": "Add a title or tagline",
-                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
-                    }
-                },
-                {
-                    "type": "content",
-                    "settings": {
-                        "heading": "Add a title or tagline",
-                        "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
-                    }
-                }
-            ]
+            "name": "Blog posts",
+            "category": "Blog"
         }
     ]
 }

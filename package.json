@@ -3,26 +3,35 @@
     "version": "2.0.0",
     "description": "Free Shopify Theme powered by Bootstrap v5",
     "scripts": {
-        "scss": "sass --no-source-map scss/theme.scss:assets/theme.css && postcss assets/theme.css --replace --use autoprefixer && minify assets/theme.css > assets/theme.min.css",
+        "css": "sass --no-source-map scss/theme.scss:assets/theme.min.css",
+        "js": "browserify js/theme.js -o assets/theme.min.js",
         "watch": "npm-watch",
+        "prod": "minify assets/theme.css > assets/theme.min.css",
         "lint": "eslint ./"
     },
     "watch": {
-        "scss": {
+        "css": {
             "patterns": [
                 "scss"
             ],
             "extensions": "scss"
+        },
+        "js": {
+            "patterns": [
+                "js"
+            ],
+            "extensions": "js"
         }
     },
-    "dependencies": {
+    "dependencies": {},
+    "devDependencies": {
         "autoprefixer": "^10.2.4",
+        "browserify": "^17.0.0",
+        "eslint": "^7.19.0",
         "minify": "^7.0.0",
         "npm-watch": "^0.7.0",
         "postcss": "^8.2.4",
-        "sass": "^1.32.6"
-    },
-    "devDependencies": {
-        "eslint": "^7.19.0"
+        "sass": "^1.32.6",
+        "terser": "^5.6.0"
     }
 }

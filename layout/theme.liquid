@@ -31,7 +31,7 @@
             href="{{ 'variables.css' | asset_url }}" 
             rel="stylesheet">
         <link 
-            href="{{ 'theme.css' | asset_url }}" 
+            href="{{ 'theme.min.css' | asset_url }}" 
             rel="stylesheet">
         <link 
             href="{{ 'custom.css' | asset_url }}" 
@@ -45,7 +45,7 @@
             defer>
         </script>
         <script 
-            src="{{ 'theme.js' | asset_url }}" 
+            src="{{ 'theme.min.js' | asset_url }}" 
             defer>
         </script>
         <script 
@@ -54,7 +54,7 @@
         </script>
 
     </head>
-    <body>
+    <body class="template-{{ request.page_type | handle }}">
 
         <!-- Skip to content link -->
         <a
@@ -69,7 +69,8 @@
 
         <!-- Main -->
         <main 
-            id="main" 
+            id="main"
+            class="{% if request.page_type != 'index' %}py-7{% endif %}"
             role="main">
             {{ content_for_layout }}
         </main>

@@ -1,16 +1,16 @@
-/* 
+/*
     © 2021 KondaSoft
     https://www.kondasoft.com
 */
 
-/* Body */
+// Body
 body {
     background-color: var(--color-body-bg);
     color: var(--color-body-text);
 }
 
 
-/* Links */
+// Links
 a { 
     color: var(--color-primary); 
 }
@@ -20,14 +20,14 @@ a:hover {
 }
 
 
-/* Forms */
+// Forms
 .form-control:focus {
     border-color: var(--color-primary-alpha-25);
     box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
 }
 
 
-/* Backgrounds */
+// Backgrounds
 .bg-primary     { background-color: var(--color-primary) !important; }
 .bg-secondary   { background-color: var(--color-secondary) !important; }
 .bg-dark        { background-color: var(--color-dark) !important; }
@@ -40,7 +40,20 @@ a:hover {
 .text-dark      { color: var(--color-dark) !important; }
 
 
-/* Buttons - Primary */
+// Buttons - Link
+.btn-link {
+    color: var(--color-primary);
+    &:hover,
+    &:focus {
+        color: var(--color-primary-darken-10);
+    }
+    &:focus {
+        box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
+    }
+}
+
+
+// Buttons - Primary
 .btn-primary {
     background: var(--color-primary);
     border-color: var(--color-primary);
@@ -72,7 +85,7 @@ a:hover {
 }
 
 
-/* Buttons - Secondary */
+// Buttons - Secondary
 .btn-secondary {
     background: var(--color-secondary);
     border-color: var(--color-secondary);
@@ -104,7 +117,7 @@ a:hover {
 }
 
 
-/* Buttons - Dark */
+// Buttons - Dark
 .btn-dark {
     background: var(--color-dark);
     border-color: var(--color-dark);
@@ -136,7 +149,7 @@ a:hover {
 }
 
 
-/* Buttons - Light */
+// Buttons - Light
 .btn-light {
     background: var(--color-light);
     border-color: var(--color-light);
@@ -155,7 +168,43 @@ a:hover {
 }
 
 
-/* Price */
+// Alerts
+.alert-primary,
+.alert-primary,
+.alert-primary {
+    border-color: transparent;
+    color: white;
+    &.alert-primary {
+        background: var(--color-primary); 
+    }
+    &.alert-secondary {
+        background: var(--color-secondary); 
+    }
+    &.alert-dark {
+        background: var(--color-dark); 
+    }
+}
+
+
+// Pagination
+.page-link {
+    color: var(--color-primary);
+    &:hover,
+    &:focus {
+        color: var(--color-primary-darken-10);
+    }
+    &:focus {
+        box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
+    }
+}
+
+.page-item.active .page-link {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+
+// Price
 .price { 
     color: var(--color-price); 
 }

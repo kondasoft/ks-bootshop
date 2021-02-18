@@ -1,0 +1,51 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+.google-map-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.google-map {
+    position: absolute !important;
+    width: 100%;
+    height: 100%;
+}
+
+.google-map-content-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.google-map-content {
+    position: absolute;
+    left: .75rem;
+    width: 320px;
+    padding: 1.5rem 1rem;
+    background: rgba(white, .75);
+    backdrop-filter: saturate(180%) blur(10px);
+    border-radius: $border-radius;
+    transition: all .2s ease-out;
+    @include media-breakpoint-down(sm) { 
+        width: 260px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    &.hide {
+        opacity: 0;
+        visibility: hidden;
+        margin-bottom: -20px;
+    }
+}
+
+.google-map-btn-close  {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: .6rem;
+    padding: .75rem;
+}

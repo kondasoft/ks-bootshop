@@ -25,14 +25,12 @@
         <div class="image-with-text-overlay-inner-wrapper">
             <div class="image-with-text-overlay-inner text-center py-4 {% if section.settings.container %}px-4{% else %}container{% endif %}">
                 
-                <!-- Heading -->
                 {% unless section.settings.heading == blank %}
                     <h2 class="heading mb-2 {{ section.settings.heading_size }}">
                         {{ section.settings.heading }}
                     </h2>
                 {% endunless %}
 
-                <!-- Subheading -->
                 {% unless section.settings.subheading == blank %}
                     <div class="subheading rte text-muted {% if section.settings.lead %}lead{% endif %}"">
                         {{ section.settings.subheading }}
@@ -134,12 +132,14 @@
             "type": "text",
             "id": "heading",
             "label": "Heading",
+            "info": "Leave empty to disable",
             "default": "Image with text overlay"
         },
         {
             "type": "richtext",
             "id": "subheading",
             "label": "Subheading",
+            "info": "Leave empty to disable",
             "default": "<p>Write something catchy for this section.</p>"
         },
         {

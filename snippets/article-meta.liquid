@@ -1,0 +1,15 @@
+<div class="article-meta text-muted mb-3">
+                    
+    {% if section.settings.show_author %}
+        <span class="article-meta-author">
+            {{ 'blogs.article.by_author' | t: author: article.author }}
+        </span>
+    {% endif %}
+    
+    {% if section.settings.show_date %}
+        <span class="article-meta-data {% if section.settings.show_author %}ms-3{% endif %}">
+            {{ article.published_at | time_tag: format: 'date' }}
+        </span>
+    {% endif %}
+
+</div>

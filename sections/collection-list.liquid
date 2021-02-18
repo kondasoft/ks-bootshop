@@ -17,19 +17,16 @@
 <section 
     id="collection-list-{{ section.id }}"
     class="collection-list {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div 
-        class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
 
         <div class="heading-wrapper mb-3 overflow-hidden">
 
-            <!-- Heading -->
             <h2 class="heading mb-1 {{ section.settings.heading_alignment }} {{ section.settings.heading_size }}">
                 {{ section.settings.heading }}
             </h2>
 
-            <!-- Subheading -->
             {% unless section.settings.subheading == blank %}
-                <div class="subheading rte text-muted {{ section.settings.heading_alignment }}">
+                <div class="subheading rte text-muted {{ section.settings.subheading_size }} {{ section.settings.heading_alignment }}">
                     {{ section.settings.subheading }}
                 </div>
             {% endunless %}
@@ -37,7 +34,7 @@
         </div>
 
         <!-- Collection list -->
-        <ul class="collection-list-list list-unstyled row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
+        <ul class="collection-list-grid list-unstyled row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
 
             {% for block in section.blocks %}
                 {% assign collection = collections[block.settings.collection] %}
@@ -114,6 +111,7 @@
             "type": "richtext",
             "id": "subheading",
             "label": "Subheading",
+            "info": "Leave empty to disable",
             "default": "<p>Write something catchy for this section.</p>"
         },
         {
@@ -152,6 +150,16 @@
                 { "value": "text-right", "label": "Right" }
             ],
             "default": "text-center"
+        },
+        {
+            "type": "select",
+            "id": "subheading_size",
+            "label": "Subheading size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
         },
         {
             "type": "header",

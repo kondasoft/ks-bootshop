@@ -28,16 +28,14 @@
             </div>
             <div class="col-md">
 
-                <!-- Heading -->
                 {% unless section.settings.heading == blank %}
                     <h2 class="heading mb-2 {{ section.settings.heading_size }}">
                         {{ section.settings.heading }}
                     </h2>
                 {% endunless %}
     
-                <!-- Subheading -->
                 {% unless section.settings.subheading == blank %}
-                    <div class="subheading rte text-muted">
+                    <div class="subheading rte text-muted {{ section.settings.subheading_size }}">
                         {{ section.settings.subheading }}
                     </div>
                 {% endunless %}
@@ -134,6 +132,7 @@
             "type": "richtext",
             "id": "subheading",
             "label": "Subheading",
+            "info": "Leave empty to disable",
             "default": "<p>Write something catchy for this section.</p>"
         },
 
@@ -150,6 +149,16 @@
                 {  "value": "h5", "label": "H5" },
                 {  "value": "h6", "label": "H6" }
             ]
+        },
+        {
+            "type": "select",
+            "id": "subheading_size",
+            "label": "Subheading size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
         },
         {
             "type": "richtext",

@@ -122,7 +122,7 @@
                     <!-- Quick view -->
                     {% if section.settings.show_quick_view %}
                         <a
-                            class="btn-quick-view btn mb-4 {{ section.settings.quick_view_btn_color }} {{ section.settings.quick_view_btn_size }}"
+                            class="btn-quick-view btn {{ section.settings.quick_view_btn_color }} {{ section.settings.quick_view_btn_size }}"
                             href="{{ product.url | within: collection }}"
                             role="button">
                             {{ 'product.quick_view' | t }}
@@ -130,12 +130,8 @@
                     {% endif %}
 
                     <!-- Social sharing -->
-                    {% if section.settings.show_social_sharing %}
-                        <div class="product-social-sharing mb-4">
-                            {% render 'social-sharing' with share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
-                        </div>
-                    {% endif %}
-                    
+                    {% render 'social-sharing' with share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+      
                 </div>
             </div>
 

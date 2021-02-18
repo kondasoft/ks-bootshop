@@ -1,0 +1,62 @@
+{% if paginate.pages > 1 %}
+    <nav
+        class="pagination-nav py-6"
+        role="navigation"
+        aria-label="{{ 'general.pagination.label'| t }}">
+        <ul class="pagination justify-content-center mb-0">
+            
+            <!-- Previous -->
+            <li class="page-item {% if paginate.previous == blank %}disabled{% endif %}">
+                <a 
+                    class="page-link" 
+                    {% if paginate.previous %}
+                        href="{{ paginate.previous.url }}"
+                    {% else %}
+                        href="#"
+                        tabindex="-1" 
+                        aria-disabled="true" 
+                    {% endif %}
+                    aria-label="{{ 'general.previous' | t }}">
+                    <span aria-hidden="true">
+                        &laquo;
+                    </span>
+                </a>
+            </li>
+            
+            <!-- Parts -->
+            {% for part in paginate.parts %}
+                <li 
+                    class="page-item {% if part.title == paginate.current_page %}active{% endif %}" 
+                    aria-current="{% if part.title == paginate.current_page %}page{% endif %}">
+                    <a 
+                        class="page-link" 
+                        href="{{ part.url }}">
+                        <span class="visually-hidden">
+                            {{ 'general.pagination.page' | t }}
+                        </span>
+                        {{ part.title }}
+                    </a>
+                </li>
+            {% endfor %}
+
+            <!-- Next  -->
+            <li class="page-item {% if paginate.next == blank %}disabled{% endif %}">
+                <a 
+                    class="page-link" 
+                    {% if paginate.next %}
+                        href="{{ paginate.next.url }}"
+                    {% else %}
+                        href="#"
+                        tabindex="-1" 
+                        aria-disabled="true" 
+                    {% endif %}
+                    aria-label="{{ 'general.next' | t }}">
+                    <span aria-hidden="true">
+                        &raquo;
+                    </span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+{% endif %}
