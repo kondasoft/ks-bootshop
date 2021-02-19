@@ -117,12 +117,8 @@
         ]
     },
     {
-        "name": "Social media",
+        "name": "Social sharing",
         "settings": [
-            {
-                "type": "header",
-                "content": "Social sharing buttons"
-            },
             {
                 "type": "checkbox",
                 "id": "share_facebook",
@@ -152,45 +148,6 @@
                 "id": "share_email",
                 "label": "Send via Email",
                 "default": true
-            },
-            {
-                "type": "header",
-                "content": "Social media links"
-            },
-            {
-                "type": "text",
-                "id": "social_facebook_link",
-                "label": "Facebook link"
-            },
-            {
-                "type": "text",
-                "id": "social_twitter_link",
-                "label": "Twitter link"
-            },
-            {
-                "type": "text",
-                "id": "social_instagram_link",
-                "label": "Instagram link"
-            },
-            {
-                "type": "text",
-                "id": "social_pinterest_link",
-                "label": "Pinterest link"
-            },
-            {
-                "type": "text",
-                "id": "social_snapchat_link",
-                "label": "Snapchat link"
-            },
-            {
-                "type": "text",
-                "id": "social_youtube_link",
-                "label": "Youtube link"
-            },
-            {
-                "type": "text",
-                "id": "social_linkedin_link",
-                "label": "Linkedin link"
             }
         ]
     }

@@ -7,8 +7,7 @@
     id="navbar" 
     class="navbar navbar-expand-{{ section.settings.breakpoint }} {{ section.settings.background_style }} {{ section.settings.shadow }} {% if section.settings.sticky %}navbar-sticky{% endif %}"
     style="{{ section.settings.bg_color | prepend: 'background-color: ' | append: ';' }}">
-    <div 
-        class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
 
         <!-- Navbar toggle -->
         <button 

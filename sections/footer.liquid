@@ -1,0 +1,199 @@
+{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+<footer 
+    id="footer" 
+    class="overflow-hidden {{ mt }} {{ mb }} {{ section.settings.bg_style }}"
+    style="{{ section.settings.bg_color | prepend: 'background-color: ' | append: ';' }}">
+
+    {% if section.settings.show_sep %}
+        <hr 
+            class="my-0"
+            style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
+    {% endif %}
+
+    <div
+        id="footer-inner" 
+        class="{{ pt }} {{ pb }}">
+    
+        <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+                
+            <!-- Copyright -->
+            <div 
+                id="footer-copyright" 
+                class="text-center">
+                <span
+                    id="footer-copyright-copy">
+                    &copy; {{ 'now' | date: "%Y" }}, {{ shop.name }}
+                </span>
+                {% if section.settings.show_powered_by %}
+                    <span 
+                        id="footer-copyright-powered-by"
+                        class="ms-2">
+                        Powered by
+                        <a 
+                            href="https://www.shopify.com/?ref=kondasoft" 
+                            target="_blank">
+                            Shopify</a>
+                    </span>
+                {% endif %}
+                {% if section.settings.show_theme_by %}
+                    <span 
+                        id="footer-copyright-theme-by"
+                        class="ms-2">
+                        Theme by
+                        <a 
+                            href="https://www.kondasoft.com" 
+                            target="_blank">
+                            KondaSoft</a>
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Payment icons -->
+            {% if section.settings.show_payment_icons %}
+                {% unless shop.enabled_payment_types == empty %}
+                    <div 
+                        id="footer-payment-icons"
+                        class="my-4 text-center">
+                        <span class="visually-hidden">
+                            {{ 'general.payment_methods' | t }}
+                        </span>
+                        <ul class="list-inline mb-1">
+                            {% for type in shop.enabled_payment_types %}
+                                <li 
+                                    class="list-inline-item m-0" 
+                                    data-bs-toggle="tooltip" 
+                                    data-bs-placement="top" 
+                                    title="{{ type | replace: "_", " " | camelcase }}">
+                                    {{ type | payment_type_svg_tag: class: 'icon' }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <span 
+                            id="footer-payment-icons-secure">
+                            {{ 'general.footer.secure_payments' | t }}
+                        </span>
+                    </div>
+                {% endunless %}
+            {% endif %}
+
+        </div>
+
+    </div>
+</footer>
+
+{% schema %}
+{
+    "name": "Footer",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "#343a40"
+        },
+        {
+            "type": "select",
+            "id": "bg_style",
+            "label": "Background style",
+            "options": [
+                { "value": "text-body", "label": "Light" },
+                { "value": "text-white", "label": "Dark" }
+            ],
+            "default": "text-white"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_powered_by",
+            "label": "Show 'powered by' link",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_theme_by",
+            "label": "Show 'theme by' link",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_payment_icons",
+            "label": "Show payment icons",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Separator"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_sep",
+            "label": "Show separator (border)",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "sep_color",
+            "label": "Separator color",
+            "default": "#dee2e6"
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 6
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        }
+    ],
+    "default": {
+        "settings":  {
+        }
+    }
+}
+{% endschema %}

@@ -9,7 +9,7 @@
                     class="btn btn-light btn-sm d-flex align-items-center" 
                     target="_blank" 
                     href="//www.facebook.com/sharer.php?u={{ shop.url | append: share_permalink }}">
-                    {% render 'bi-facebook' with size: 16 %}
+                    {% render 'social-icons' with icon: 'facebook', size: 16 %}
                     <span 
                         class="ms-2"
                         aria-hidden="true">
@@ -28,7 +28,7 @@
                     class="btn btn-light btn-sm d-flex align-items-center" 
                     target="_blank" 
                     href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink }}">
-                    {% render 'bi-twitter' with size: 16 %}
+                    {% render 'social-icons' with icon: 'twitter', size: 16 %}
                     <span 
                         class="ms-2"
                         aria-hidden="true">
@@ -47,7 +47,7 @@
                 class="btn btn-light btn-sm d-flex align-items-center" 
                 target="_blank" 
                 href="//pinterest.com/pin/create/button/?url={{ shop.url | append: share_permalink }}&amp;media={{ share_image | img_url: 'x1500' }}&amp;description={{ share_title | url_param_escape }}">
-                {% render 'bi-pinterest' with size: 16 %}
+                {% render 'social-icons' with icon: 'pinterest', size: 16 %}
                 <span
                     class="ms-2" 
                     aria-hidden="true">
@@ -65,7 +65,7 @@
                     target="_blank" 
                     href="https://api.whatsapp.com/send?text={{ share_title | url_param_escape }}%20-%20{{ shop.url | append: share_permalink }}%20"
                     data-animate="{{ settings.share_button_animate }}">
-                {% render 'bi-whatsapp' size: 15, class: 'animate__animated' %}
+                {% render 'social-icons' with icon: 'whatsapp', size: 16 %}
                 <span 
                     class="ms-2" 
                     aria-hidden="true">
@@ -84,7 +84,7 @@
                     class="btn btn-light btn-sm d-flex align-items-center" 
                     target="_blank" 
                     href="mailto:?subject={{ share_title | url_param_escape }}&body={{ shop.url | append: share_permalink }}%20">
-                {% render 'bi-envelope' with size: 16 %}
+                {% render 'social-icons' with icon: 'email', size: 16 %}
                 <span 
                     class="ms-2" 
                     aria-hidden="true">

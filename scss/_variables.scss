@@ -3,7 +3,10 @@
     https://www.kondasoft.com
 */
 
-$spacer: 1rem;
+$spacer:                        1rem;
+$enable-negative-margins:       true;
+$lead-font-weight:              400 !default;
+$accordion-icon-active-color:   var(--color-primary);
 
 $spacers: (
     0: 0,
@@ -20,6 +23,3 @@ $spacers: (
     11: $spacer * 5,
     12: $spacer * 6,
 );
-
-$enable-negative-margins:       true;
-$lead-font-weight:              400 !default;

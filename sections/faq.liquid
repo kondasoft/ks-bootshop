@@ -1,0 +1,266 @@
+{% assign pt = section.settings.padding_top | prepend: 'pt-' %}
+{% assign pb = section.settings.padding_bottom | prepend: 'pb-' %}
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+{% capture max_width %}
+    {% unless section.settings.max_width == blank %}
+        {{ section.settings.max_width | prepend: 'max-width: ' | append: 'px;' }}
+    {% endunless %}
+{% endcapture %}
+
+<section 
+    id="faq-{{ section.id }}" 
+    class="faq {% if section.settings.light_bg %}bg-light{% endif %} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div 
+        class="container"
+        style="{{ max_width }}">
+
+        {% if section.settings.heading != blank or section.settings.subheading != blank %}
+            <div class="heading-wrapper mb-3 overflow-hidden {{ section.settings.heading_alignment }}">
+
+                {% unless section.settings.heading == blank %}
+                    <h2 class="heading mb-1 {{ section.settings.heading_size }}">
+                        {{ section.settings.heading }}
+                    </h2>
+                {% endunless %}
+
+                {% unless section.settings.subheading == blank %}
+                    <div class="subheading rte text-muted {{ section.settings.subheading_size }}">
+                        {{ section.settings.subheading }}
+                    </div>
+                {% endunless %}
+
+            </div>
+        {% endif %}
+
+        <div 
+            id="accordion-{{ section.id }}" 
+            class="accordion {{ section.settings.accordion_style }}">
+            
+            {% for block in section.blocks %}
+                <div class="accordion-item">
+                    
+                    <h3
+                        id="heading-{{ block.id }}"
+                        class="accordion-header">
+                        <button 
+                            class="accordion-button {% if forloop.index > 1 %}collapsed{% endif %}" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#collapse-{{ block.id }}"
+                            aria-expanded="true" 
+                            aria-controls="collapse-{{ block.id }}">
+                            {{ block.settings.title | escape }}
+                        </button>
+                    </h3>
+
+                    <div 
+                        id="collapse-{{ block.id }}" 
+                        class="accordion-collapse collapse {% if forloop.index == 1 %}show{% endif %}" 
+                        aria-labelledby="heading-{{ block.id }}" 
+                        data-bs-parent="#accordion-{{ section.id }}">
+                        <div class="accordion-body rte">
+                            {{ block.settings.description }}
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "F.A.Q",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "F.A.Q"
+        },
+        {
+            "type": "richtext",
+            "id": "subheading",
+            "label": "Subheading",
+            "info": "Leave empty to disable",
+            "default": "<p>Write something catchy for this section.</p>"
+        },
+        {
+            "type": "checkbox",
+            "id": "light_bg",
+            "label": "Light background",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading Size",
+            "default": "h2",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_alignment",
+            "label": "Heading alignment",
+            "options": [
+                { "value": "text-left", "label": "Left" },
+                { "value": "text-center", "label": "Center" },
+                { "value": "text-right", "label": "Right" }
+            ],
+            "default": "text-center"
+        },
+        {
+            "type": "select",
+            "id": "subheading_size",
+            "label": "Subheading size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
+        },
+        {
+            "type": "text",
+            "id": "max_width",
+            "label": "Max width (px)",
+            "info": "Adjust container width (in pixels)",
+            "default": "768"
+        },
+        {
+            "type": "select",
+            "id": "accordion_style",
+            "label": "Accodion style",
+            "default": "",
+            "options": [
+                { "value": "", "label": "Default" },
+                { "value": "accordion-flush", "label": "Flush" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "F.A.Q",
+            "category": "Text",
+            "blocks": [
+                {
+                    "type": "text",
+                    "settings": {
+                        "title": "Where do you ship?",
+                        "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "title": "How long will it take to receive my order",
+                        "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "title": "What payment methods do you support?",
+                        "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "title": "How can I track my order?",
+                        "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "title": "Can I order as a gift for someone else?",
+                        "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "settings": {
+                        "title": "How can I get a refund for my order?",
+                        "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.</p>"
+                    }
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

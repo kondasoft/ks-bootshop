@@ -1,0 +1,46 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+// Footer blocks
+#footer-blocks {
+    .rte, 
+    .footer-menu,
+    .social-menu {
+        font-size: .95rem;
+    }
+    &.text-body {
+        .nav-link {
+            color: var(--color-body-text);
+            &:hover {
+                color: var(--color-body-text-lighten-10);
+            }
+        }
+    }
+    &.text-white {
+        a:not(.btn) {
+            color: white;
+            transition: all .2s ease-out;
+            &:hover {
+                color: rgba(white, .75);
+            }
+        }
+    }
+}
+
+
+// Footer
+#footer {
+    font-style: italic;
+    font-size: .90rem;
+    &.text-white {
+        a:not(.btn) {
+            color: white;
+            transition: all .2s ease-out;
+            &:hover {
+                color: rgba(white, .75);
+            }
+        }
+    }
+}

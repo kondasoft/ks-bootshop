@@ -28,6 +28,7 @@
         ]
     },
     "globals": {
+        "bootstrap": true,
         "google": true,
         "initMap": true
     }

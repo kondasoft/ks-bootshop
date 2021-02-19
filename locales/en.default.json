@@ -14,6 +14,9 @@
         "carousel": {
             "items_count": "{{ from }} from {{ total }}"
         },
+        "footer": {
+            "secure_payments": "100% secure and protected payments"
+        },
         "navbar": {
             "account": "Account",
             "cart": "Cart",

@@ -14,8 +14,11 @@
 // Import Bootstrap
 @import 'bootstrap/bootstrap';
 
-// Theme styles
+// Base styles
 @import 'base';
+
+// Theme styles
+@import 'footer';
 @import 'gallery';
 @import 'image-with-text-overlay';
 @import 'logo-list';

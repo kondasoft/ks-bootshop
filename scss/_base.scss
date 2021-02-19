@@ -204,6 +204,33 @@ a:hover {
 }
 
 
+// Dropdown
+.dropdown-item.active, 
+.dropdown-item:active {
+    background-color: var(--color-primary);
+}
+
+
+// Accordion
+.accordion {
+    .accordion-button {
+        &:focus {
+            border-color: var(--color-primary-alpha-25);
+            box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
+        }
+        &:not(.collapsed) {
+            background-color: var(--color-light);
+            color: var(--color-primary);
+        }
+    }
+    .accordion-body {
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
 // Price
 .price { 
     color: var(--color-price); 

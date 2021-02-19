@@ -4721,7 +4721,7 @@ textarea.form-control-lg {
   background-color: #e7f1ff;
 }
 .accordion-button:not(.collapsed)::after {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='var%28--color-primary%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   transform: rotate(180deg);
 }
 .accordion-button::after {
@@ -16106,8 +16106,60 @@ a:hover {
   border-color: var(--color-primary);
 }
 
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--color-primary);
+}
+
+.accordion .accordion-button:focus {
+  border-color: var(--color-primary-alpha-25);
+  box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
+}
+.accordion .accordion-button:not(.collapsed) {
+  background-color: var(--color-light);
+  color: var(--color-primary);
+}
+.accordion .accordion-body p:last-child {
+  margin-bottom: 0;
+}
+
 .price {
   color: var(--color-price);
+}
+
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+#footer-blocks .rte,
+#footer-blocks .footer-menu,
+#footer-blocks .social-menu {
+  font-size: 0.95rem;
+}
+#footer-blocks.text-body .nav-link {
+  color: var(--color-body-text);
+}
+#footer-blocks.text-body .nav-link:hover {
+  color: var(--color-body-text-lighten-10);
+}
+#footer-blocks.text-white a:not(.btn) {
+  color: white;
+  transition: all 0.2s ease-out;
+}
+#footer-blocks.text-white a:not(.btn):hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+#footer {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+#footer.text-white a:not(.btn) {
+  color: white;
+  transition: all 0.2s ease-out;
+}
+#footer.text-white a:not(.btn):hover {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* 
