@@ -20,6 +20,9 @@ Our goal is to make this project the most completed, robust and of course the mo
 ## Demo 
 https://ks-bootshop.myshopify.com/
 
+## Download 
+Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v2.x.x version which is ready for Bootstrap v5.
+
 ## Premium Shopify Themes 
 In case you are interested in our Premium Shopify Themes, please visit our website
 https://www.kondasoft.com
