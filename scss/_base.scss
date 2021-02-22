@@ -231,6 +231,12 @@ a:hover {
 }
 
 
+// Opacity
+@each $value in $opacities {
+    .opacity-#{$value} { opacity: #{$value} + '%' }
+}
+
+
 // Price
 .price { 
     color: var(--color-price); 
