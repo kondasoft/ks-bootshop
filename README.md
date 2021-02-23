@@ -15,7 +15,6 @@ Our goal is to make this project the most completed, robust and of course the mo
 * All Shopify templates (cart, product, etc) have their corresponding settings
 * Add to cart via Ajax
 * Product "Quick view" mode
-* NEW: Setting to select primary color from 16 available colors based on [Material color system](https://material.io/design/color/the-color-system.html)
 
 ## Demo 
 https://ks-bootshop.myshopify.com/
@@ -45,7 +44,7 @@ Create a new folder on your computer, `cd` to it and run the following command t
 ### 2- Create and configure theme with Theme Kit
 Run the following command to create a new theme in your Shopify store along with our theme files that you have just downloaded:
 
-`theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="KS BootShop"`
+`theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="ks-bootshop-v2"`
 
 Optional: Run this command to open your shopify store with our theme in preview mode.
 

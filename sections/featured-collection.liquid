@@ -23,7 +23,7 @@
         </div>
 
         <!-- Product list -->
-        {% render 'product-list' with products: collections[section.settings.collection].products, limit: section.settings.limit %}
+        {% render 'product-grid' with products: collections[section.settings.collection].products, limit: section.settings.limit %}
 
     </div>
 </section>
@@ -133,6 +133,25 @@
         },
         {
             "type": "checkbox",
+            "id": "show_vendor",
+            "label": "Show vendor",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_description",
+            "label": "Show description",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "description_length",
+            "label": "Description length",
+            "info": "Leave empty to show all text",
+            "default": "70"
+        },
+        {
+            "type": "checkbox",
             "id": "show_price",
             "label": "Show price",
             "default": true
@@ -147,7 +166,7 @@
             "type": "select",
             "id": "quick_view_btn_color",
             "label": "Quick view button color",
-            "default": "btn-outline-primary",
+            "default": "btn-outline-secondary",
             "options": [
                 { "group": "Normal", "value": "btn-link", "label": "Link" },
                 { "group": "Normal", "value": "btn-light", "label": "Light" },

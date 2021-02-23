@@ -1,90 +1,97 @@
-{% assign row_    = section.settings.row_ | prepend: 'row-cols-' %}
-{% assign row_sm  = section.settings.row_sm | prepend: 'row-cols-sm-' %}
-{% assign row_md  = section.settings.row_md | prepend: 'row-cols-md-' %}
-{% assign row_lg  = section.settings.row_lg | prepend: 'row-cols-lg-' %}
-{% assign row_xl  = section.settings.row_xl | prepend: 'row-cols-xl-' %}
-{% assign row_xxl = section.settings.row_xxl | prepend: 'row-cols-xxl-' %}
-
-{% assign gutter_mobile  = section.settings.gutter_mobile | prepend: 'g-' %}
-{% assign gutter_tablet  = section.settings.gutter_tablet | prepend: 'g-sm-' %}
-{% assign gutter_desktop = section.settings.gutter_desktop | prepend: 'g-xl-' %}
-
-<ul class="product-grid list-unstyled row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
+<ul class="product-list list-unstyled mt-n7">
 
     {% for product in products limit: limit %}
         <li 
-            class="product-item col pb-5 text-center"
+            class="product-item {% unless forloop.last %}border-bottom{% endunless %}"
             role="article">
+            <div class="row g-4 align-items-center py-5">
             
-            <!-- Product Image -->
-            <a 
-                class="d-block text-decoration-none" 
-                href="{{ product.url | within: collection }}">
-                
-                {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
-                <img 
-                    class="product-item-img img-fluid mb-3 {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
-                    src="{{ product.featured_image.src | img_url: img_size, crop: 'center' }}"
-                    alt="{{ product.featured_image.alt | escape }}" 
-                    width="{{ section.settings.img_width }}"
-                    height="{{ section.settings.img_height }}" 
-                    loading="lazy">
-                    
-                <!-- Product Title -->
-                <h3 class="product-item-title h6 mb-1">
-                    {{ product.title }}
-                </h3>
-
-                <!-- Product price -->
-                {% if section.settings.show_price %}
-                    <p class="product-item-price mb-1">
-                        {% if product.compare_at_price > product.price %}
-                            <s class="price-compare text-muted me-1">
-                                <span class="visually-hidden">
-                                    {{ 'product.old_price' | t }}
-                                </span>
-                                {{ product.compare_at_price | money }}
-                            </s>
-                        {% endif %}
-                        <span class="price">
-                            {% if product.price_varies %}
-                                <span class="price-from">
-                                    {{ 'product.price_from' | t }}
-                                </span>
-                            {% endif %}
-                            {{ product.price | money }}
-                        </span>
-                    </p>
-                {% endif %}
-            </a>
-
-            <!-- Quick view -->
-            {% if section.settings.show_quick_view %}
-                <a
-                    class="btn-quick-view btn my-2 {{ section.settings.quick_view_btn_color }} {{ section.settings.quick_view_btn_size }}"
-                    href="{{ product.url | within: collection }}"
-                    role="button">
-                    {{ 'product.quick_view' | t }}
-                </a>
-            {% endif %}
-
-        </li>
-    {% else %}
-
-        {% for i in (1..section.settings.limit) %}
-            <li class="product-item col px-2 py-2 text-center">
-                <div class="position-relative img-thumbnail mb-2">
-                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg product-item-img bg-light img-fluid' }}
+                <div class="col-4 col-sm-3 col-xl-2">
+                    <a 
+                        class="d-block text-decoration-none" 
+                        href="{{ product.url | within: collection }}">
+                        
+                        <!-- Product image -->
+                        {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                        <img 
+                            class="product-item-img img-fluid me-3 {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
+                            src="{{ product.featured_image.src | img_url: img_size, crop: 'center' }}"
+                            alt="{{ product.featured_image.alt | escape }}" 
+                            width="{{ section.settings.img_width }}"
+                            height="{{ section.settings.img_height }}" 
+                            loading="lazy">
+                    </a>
                 </div>
-                <h3 class="product-item-title h6 mb-1">
-                    {{ 'general.onboarding.product_title' | t }}
-                </h3>
-                <p class="product-item-price">
-                    <span class="price">{{ 4000 | money }}</span>
-                </p>
-            </li>
-        {% endfor %}
+                
+                <div class="col">
+                            
+                    <!-- Product Title -->
+                    <h3 class="product-item-title h6 mb-1">
+                        <a 
+                            class="d-block text-decoration-none" 
+                            href="{{ product.url | within: collection }}">
+                            {{ product.title }}
+                        </a>
+                    </h3>
+
+                    <!-- Product Vendor -->
+                    {% if section.settings.show_vendor %}
+                        <p class="product-item-vendor text-muted small text-uppercase mb-1">
+                            {{ product.vendor }}
+                        </p>
+                    {% endif %}
+
+                    <!-- Product Description -->
+                    {% if section.settings.show_description %}
+                        <div class="product-item-description rte mb-0 text-body small">
+                            {% if section.settings.description_length != blank %}
+                                {{ product.description | truncate: section.settings.description_length }}
+                            {% else %}
+                                {{ product.description }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                
+                    <!-- Quick view -->
+                    {% if section.settings.show_quick_view %}
+                        <a
+                            class="btn-quick-view btn my-2 {{ section.settings.quick_view_btn_color }} {{ section.settings.quick_view_btn_size }}"
+                            href="{{ product.url | within: collection }}"
+                            role="button">
+                            {{ 'product.quick_view' | t }}
+                        </a>
+                    {% endif %}
+
+                </div>
+
+                <div class="col-3 text-end">
+
+                    <!-- Product price -->
+                    {% if section.settings.show_price %}
+                        <p class="product-item-price mb-1">
+                            {% if product.compare_at_price > product.price %}
+                                <s class="price-compare text-muted me-1">
+                                    <span class="visually-hidden">
+                                        {{ 'product.old_price' | t }}
+                                    </span>
+                                    {{ product.compare_at_price | money }}
+                                </s>
+                            {% endif %}
+                            <span class="price">
+                                {% if product.price_varies %}
+                                    <span class="price-from">
+                                        {{ 'product.price_from' | t }}
+                                    </span>
+                                {% endif %}
+                                {{ product.price | money }}
+                            </span>
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </li>
 
     {% endfor %}
 

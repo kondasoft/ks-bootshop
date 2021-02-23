@@ -1,0 +1,445 @@
+{% assign pageurl = content_for_header | split:'"pageurl":"' | last | split:'"' | first %}
+
+{% if pageurl contains 'layout-grid' %}
+    {% assign layout = 'grid' %}
+{% elsif pageurl contains 'layout-list' %}
+    {% assign layout = 'list' %}
+{% else %}
+    {% assign layout = section.settings.layout %}        
+{% endif %}
+
+{% assign row_    = section.settings.row_ | prepend: 'row-cols-' %}
+{% assign row_sm  = section.settings.row_sm | prepend: 'row-cols-sm-' %}
+{% assign row_md  = section.settings.row_md | prepend: 'row-cols-md-' %}
+{% assign row_lg  = section.settings.row_lg | prepend: 'row-cols-lg-' %}
+{% assign row_xl  = section.settings.row_xl | prepend: 'row-cols-xl-' %}
+{% assign row_xxl = section.settings.row_xxl | prepend: 'row-cols-xxl-' %}
+
+{% assign gutter_mobile  = section.settings.gutter_mobile | prepend: 'g-' %}
+{% assign gutter_tablet  = section.settings.gutter_tablet | prepend: 'g-sm-' %}
+{% assign gutter_desktop = section.settings.gutter_desktop | prepend: 'g-xl-' %}
+
+{% if section.settings.show_collection_img and collection.image %}
+    {% assign collection_img_800_size = section.settings.collection_img_height | prepend: '800x' %}
+    {% assign collection_img_1600_size = section.settings.collection_img_height | prepend: '1600x' %}
+    <img 
+        class="collection-img w-100 h-auto mt-n7 mb-6"
+        src="{{ collection.image | img_url: collection_img_1600_size, crop: 'center' }}"
+        srcset="
+            {{ collection.image | img_url: collection_img_800_size, crop: 'center' }} 800w, 
+            {{ collection.image | img_url: collection_img_1600_size, crop: 'center' }} 1600w
+        "
+        alt="{{ collection.image.alt | escape }}" 
+        width="1600"
+        height="{{section.settings.collection_img_height }}"
+        style="{{section.settings.collection_img_height | prepend: 'max-height: ' | append: 'px' }}; object-fit: cover;">
+{% endif %}
+
+<div
+    id="collection-container"
+    class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+
+    <div class="heading-wrapper mb-3 overflow-hidden text-center">
+
+        <h1 class="heading mb-1 {{ section.settings.heading_display }}">
+            {{ collection.title }}
+        </h1>
+
+        {% if section.settings.show_collection_description and collection.description != blank %}
+            <div class="description rte text-muted {{ section.settings.description_size }}">
+                {{ collection.description }}
+            </div>
+        {% endif %}
+
+    </div>
+
+    {% if section.settings.enable_sorting or section.settings.enable_filtering %}
+        <div 
+            id="collection-utilities" 
+            class="d-flex flex-column flex-lg-row bg-light rounded mb-7 py-4 px-4 {% if section.settings.enable_filtering %}justify-content-between{% else %}justify-content-end{% endif %}">
+
+            <!-- Filtering -->
+            {% if section.settings.enable_filtering %}
+                <div
+                    id="collection-filtering" 
+                    class="input-group w-auto js mb-3 mb-lg-0">
+                    <label 
+                        class="input-group-text"
+                        for="collection-filtering-select">
+                        {{ 'collection.filter_by' | t }}
+                    </label>
+                    <select 
+                        id="collection-filtering-select" 
+                        class="form-select">
+                        <option 
+                            value="{{ collection.url }}">
+                            {{ 'collection.all_products' | t }}
+                        </option>
+                        {% for tag in collection.all_tags %}
+                            <option 
+                                value="{{ collection.url }}/{{ tag }}" 
+                                {% if current_tags contains tag %}selected{% endif %}>
+                                {{ tag }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            <div 
+                id="collection-utilities-right"
+                class="d-flex align-items-center">
+                
+                <!-- Sorting -->
+                {% if section.settings.enable_sorting %}
+                    <div
+                        id="collection-sorting" 
+                        class="input-group js">
+                        <label
+                            class="input-group-text"
+                            for="collection-sorting-select">
+                            {{ 'collection.sort_by' | t }}
+                        </label>
+                        <select 
+                            id="collection-sorting-select" 
+                            class="form-select">
+                            {% for option in collection.sort_options %}
+                                <option 
+                                    value="{{ option.value }}" 
+                                    {% if option.value == collection.sort_by %}selected{% endif %}>
+                                    {{ option.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+
+                {% if section.settings.show_layout_btn %}
+
+                    {% if layout == 'grid' %}
+                        <button
+                            id="collection-layout-btn"
+                            class="btn btn-outline-secondary btn-sm ms-3"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                            data-value="layout-list"
+                            title="{{ 'collection.layout_list' | t }}"
+                            aria-hidden="true">
+                            {% render 'icon-list' with size: 22 %}
+                        </button>
+                    {% else %}
+                        <button
+                            id="collection-layout-btn"
+                            class="btn btn-outline-secondary btn-sm ms-3"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom" 
+                            data-value="layout-grid"
+                            title="{{ 'collection.layout_grid' | t }}"
+                            aria-hidden="true">
+                            {% render 'icon-grid' with size: 22 %}
+                        </button>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+
+        </div>
+    {% endif %}
+
+    {{ page.url }}
+
+    {% if collection.products.size == 0 %}
+        <p class="collection-no-products-alert alert alert-warning">
+            {{ 'collection.no_products_html' | t: blog_url: blog.url }}
+        </p>
+    {% else %}
+
+        {% paginate collection.products by section.settings.paginate %}
+
+            {% if layout == 'grid' %}
+                {% render 'product-grid' with products: collection.products %}
+            {% elsif layout == 'list' %}
+                {% render 'product-list' with products: collection.products %}
+            {% endif %}
+
+            {% render 'pagination' with paginate: paginate, layout: layout %}
+
+        {% endpaginate %}
+    {% endif %}
+
+</div>
+
+{% schema %}
+{
+    "name": "Collection pages",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "options": [
+                {  "value": "list", "label": "List" },
+                {  "value": "grid", "label": "Grid" }
+            ],
+            "default": "grid"
+        },
+        {
+            "type": "range",
+            "id": "paginate",
+            "label": "Products per page",
+            "min": 1,
+            "max": 50,
+            "default": 30
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in container",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_collection_img",
+            "label": "Show collection image",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "collection_img_height",
+            "label": "Collection image height (px)",
+            "default": "320"
+        },
+        {
+            "type": "select",
+            "id": "heading_display",
+            "label": "Heading size",
+            "default": "display-4",
+            "options": [
+                {  "value": "display-1", "label": "Display 1" },
+                {  "value": "display-2", "label": "Display 2" },
+                {  "value": "display-3", "label": "Display 3" },
+                {  "value": "display-4", "label": "Display 4" },
+                {  "value": "display-5", "label": "Display 5" },
+                {  "value": "display-6", "label": "Display 6" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_collection_description",
+            "label": "Show description",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "description_size",
+            "label": "Description size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_filtering",
+            "label": "Enable filtering",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_sorting",
+            "label": "Enable sorting",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_layout_btn",
+            "label": "Show layout switcher button",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Product settings"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "480"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "480"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image border",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_vendor",
+            "label": "Show vendor",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_description",
+            "label": "Show description",
+            "default": false
+        },
+        {
+            "type": "text",
+            "id": "description_length",
+            "label": "Description length",
+            "info": "Leave empty to show all text",
+            "default": "70"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_price",
+            "label": "Show price",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_quick_view",
+            "label": "Show quick view button",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "quick_view_btn_color",
+            "label": "Quick view button color",
+            "default": "btn-outline-secondary",
+            "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "quick_view_btn_size",
+            "label": "Quick view button size",
+            "default": "btn-sm",
+            "options": [
+                { "value": "btn-sm", "label": "Small" },
+                { "value": "", "label": "Normal" },
+                { "value": "btn-lg", "label": "Large" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Grid",
+            "info": "Adjust items per row.  Applies only if the setting 'Layout' above is selected to 'grid'. [Learn more](https://getbootstrap.com/docs/5.0/layout/grid/#auto-layout-columns)"
+        },
+        {
+            "type": "range",
+            "id": "row_",
+            "label": "X-Small <576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Small ≥576px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_md",
+            "label": "Medium ≥768px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "row_lg",
+            "label": "Large ≥992px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "row_xl",
+            "label": "Extra large ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "row_xxl",
+            "label": "Extra extra large ≥1400px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 6
+        },
+        {
+            "type": "header",
+            "content": "Gutter",
+            "info": "Spacing between items.  Applies only if the setting 'Layout' above is selected to 'grid'. [Learn more](https://getbootstrap.com/docs/5.0/layout/gutters/)"
+        },
+        {
+            "type": "range",
+            "id": "gutter_mobile",
+            "label": "Mobile <576px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "gutter_tablet",
+            "label": "Tablet ≥576px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "gutter_desktop",
+            "label": "Desktop ≥1200px",
+            "min": 1,
+            "max": 12,
+            "step": 1,
+            "default": 4
+        }
+    ]
+}
+{% endschema %}

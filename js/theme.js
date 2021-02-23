@@ -12,6 +12,7 @@
 require('./base');
 
 // Theme scripts
+require('./collection');
 require('./map');
 require('./navbar');
 require('./newsletter');

@@ -54,7 +54,7 @@
                             aria-current="{% if template.name == 'search' %}page{% endif %}"
                             aria-expanded="false"
                             role="button">
-                            {% render 'bi-search' size: 20 %}
+                            {% render 'icon-search' size: 22 %}
                             <span class="visually-hidden">
                                 {{ 'general.navbar.search' | t }}
                             </span>
@@ -72,7 +72,7 @@
                             class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
                             href="{{ routes.account_url }}"
                             aria-current="{% if template.name == 'account' or template.name == 'login' %}page{% endif %}">
-                            {% render 'bi-person' size: 24 %}
+                            {% render 'icon-account' size: 22 %}
                             <span class="visually-hidden">
                                 {{ 'general.navbar.account' | t }}
                             </span>
@@ -89,9 +89,9 @@
                         aria-expanded="false"
                         role="button">
                         {% if cart.item_count == 0 %}
-                            {% render 'bi-cart' size: 22 %}
+                            {% render 'icon-cart' size: 22 %}
                         {% else %}
-                            {% render 'bi-cart-check' size: 21 %}
+                            {% render 'icon-cart' size: 22 %}
                         {% endif %}
                         <span class="visually-hidden">
                             {{ 'general.navbar.cart' | t }}
@@ -163,7 +163,7 @@
                             class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
                             href="{{ routes.account_url }}"
                             aria-current="{% if template.name == 'account' or template.name == 'login' %}page{% endif %}">
-                            {% render 'bi-person' size: 24 %}
+                            {% render 'icon-account' size: 24 %}
                             <span class="ms-2">
                                 {{ 'general.navbar.account' | t }}
                             </span>

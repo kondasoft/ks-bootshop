@@ -15907,6 +15907,13 @@ textarea.form-control-lg {
 body {
   background-color: var(--color-body-bg);
   color: var(--color-body-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main {
+  flex: 1;
 }
 
 a {
@@ -16461,6 +16468,10 @@ a:hover {
     © 2021 KondaSoft
     https://www.kondasoft.com
 */
+.rte ul, .rte ol {
+  margin-bottom: 1.25rem;
+}
+
 .errors ul {
   margin-bottom: 0;
 }

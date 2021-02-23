@@ -100,13 +100,13 @@
                 "type": "text",
                 "id": "minicart_img_width",
                 "label": "Image width (px)",
-                "default": "90"
+                "default": "75"
             },
             {
                 "type": "text",
                 "id": "minicart_img_height",
                 "label": "Image height (px)",
-                "default": "90"
+                "default": "75"
             },
             {
                 "type": "checkbox",

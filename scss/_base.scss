@@ -7,6 +7,15 @@
 body {
     background-color: var(--color-body-bg);
     color: var(--color-body-text);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+// Main {
+#main {
+    flex: 1;
 }
 
 

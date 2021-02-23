@@ -1,4 +1,9 @@
 {% if paginate.pages > 1 %}
+
+    {% unless layout == blank %}
+        {% assign layout_append = layout | prepend: '&layout=' %}
+    {% endunless %}
+
     <nav
         class="pagination-nav py-6"
         role="navigation"
@@ -10,7 +15,7 @@
                 <a 
                     class="page-link" 
                     {% if paginate.previous %}
-                        href="{{ paginate.previous.url }}"
+                        href="{{ paginate.previous.url | append: layout_append }}"
                     {% else %}
                         href="#"
                         tabindex="-1" 
@@ -29,8 +34,15 @@
                     class="page-item {% if part.title == paginate.current_page %}active{% endif %}" 
                     aria-current="{% if part.title == paginate.current_page %}page{% endif %}">
                     <a 
-                        class="page-link" 
-                        href="{{ part.url }}">
+                        class="page-link"
+                        {% if part.title == paginate.current_page %}
+                            href="#"
+                            tabindex="-1" 
+                            aria-disabled="true"
+                        {% else %}
+                            href="{{ part.url | append: layout_append }}"
+                        {% endif %}
+                        >
                         <span class="visually-hidden">
                             {{ 'general.pagination.page' | t }}
                         </span>
@@ -44,7 +56,7 @@
                 <a 
                     class="page-link" 
                     {% if paginate.next %}
-                        href="{{ paginate.next.url }}"
+                        href="{{ paginate.next.url  | append: layout_append }}"
                     {% else %}
                         href="#"
                         tabindex="-1" 
