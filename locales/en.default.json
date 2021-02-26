@@ -1,6 +1,7 @@
 {
     "general": {
         "close": "Close",
+        "from": "From",
         "previous": "Previous",
         "next": "Next",
         "404": {
@@ -107,12 +108,12 @@
         "view_cart": "View cart"
     },
     "collection": {
-        "no_products_html": "No products found for this collection. <a href=\"/collections/all\">View all products »</a>",
         "all_products": "All products",
         "filter_by": "Filter by",
-        "sort_by": "Sort by",
         "layout_grid": "Grid layout",
-        "layout_list": "List layout"
+        "layout_list": "List layout",
+        "no_products_html": "No products found for this collection. <a href=\"/collections/all\">View all products »</a>",
+        "sort_by": "Sort by"
     },
     "product": {
         "add_to_cart": "Add to cart",

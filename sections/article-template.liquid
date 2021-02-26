@@ -10,175 +10,184 @@
 {% endcapture %}
 
 <article class="article">
-    <div class="container">
+     
+    <!-- Article image -->
+    {% unless article.image == blank %}
+        {% assign img_800_size = section.settings.img_height | prepend: '800x' %}
+        {% assign img_1600_size = section.settings.img_height | prepend: '1600x' %}
+        <img 
+            class="article-img w-100 h-auto object-fit-cover mt-n7 mb-6"
+            src="{{ article.image | img_url: img_1600_size, crop: 'center' }}"
+            srcset="
+                {{ article.image | img_url: img_800_size, crop: 'center' }} 800w, 
+                {{ article.image | img_url: img_1600_size, crop: 'center' }} 1600w
+            "
+            alt="{{ article.image.alt | escape }}" 
+            width="1600"
+            height="{{ section.settings.img_height }}"
+            style="{{section.settings.img_height | prepend: 'max-height: ' | append: 'px' }};">
+    {% endunless %}
 
-        {% render 'article-image' with article: article, class: 'mx-auto mb-5' %}
+    <div 
+        class="article-inner container mx-auto"
+        style="{{ max_width }}">
 
-        <div 
-            class="article-inner mx-auto"
-            style="{{ max_width }}">
+        <!-- Header -->
+        <div class="heading-wrapper mb-0 overflow-hidden text-center">
 
-            <div class="heading-wrapper mb-0 overflow-hidden text-center">
+            <!-- Heading -->
+            <h1 class="heading {{ section.settings.heading_size }}">
+                {{ article.title }}
+            </h1>
 
-                <h1 class="heading {{ section.settings.heading_size }}">
-                    {{ article.title }}
-                </h1>
+            <!-- Article meta -->
+            {% render 'article-meta' with article as article %}
+        </div>
 
-                {% render 'article-meta' with article as article %}
-            </div>
+        <!-- Article content -->
+        <div class="article-content rte">
+            {{ article.content }}
+        </div>
 
-            <!-- Article content -->
-            <div class="article-content rte">
-                {{ article.content }}
-            </div>
+        {% render 'article-posted-in' with article as article %}
+        {% render 'social-sharing' with share_title: article.title, share_permalink: article.url, share_image: article.image %}
 
-            {% render 'article-posted-in' with article as article %}
+        <!-- Comments -->
+        {% if blog.comments_enabled? %}
+            <hr 
+                class="sep my-6"
+                style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
 
-            {% render 'social-sharing' with share_title: article.title, share_permalink: article.url, share_image: article.image %}
+            <div id="comments">
 
-            <!-- Comments -->
-            {% if blog.comments_enabled? %}
-                <hr 
-                    class="sep my-6"
-                    style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
+                <!-- No comments -->
+                {% if article.comments_count == 0 %}
+                    <h3 class="mb-3">
+                        {{ 'blogs.comments.no_comments' | t }}
+                    </h3>
+                    <p class="alert alert-info">
+                        {{ 'blogs.comments.first_to_comment' | t }}
+                    </p>
+                
+                <!-- Has comments -->
+                {% else %}
+                    <h3 class="mb-3">
+                        {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                    </h3>
+                    {% paginate article.comments by section.settings.comments_paginate %}
+                        <ul class="list-unstyled">
+                            {% for comment in article.comments %}
+                                <li 
+                                    id="comment-{{ comment.id }}" 
+                                    class="comment card mb-3"
+                                    role="article">
+                                    <p class="card-header comment-meta">
+                                        <span class="comment-meta-author">
+                                            {{ comment.author }}
+                                        </span>
+                                        <span class="comment-meta-data ms-2">
+                                            {{ comment.created_at | time_tag: format: 'date' }}
+                                        </span>
+                                    </p>
+                                    <div class="card-body rte pb-0">
+                                        {{ comment.content }}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
 
-                <div id="comments">
+                        {% render 'pagination' with paginate: paginate %}
 
-                    <!-- No comments -->
-                    {% if article.comments_count == 0 %}
-                        <h3 class="mb-3">
-                            {{ 'blogs.comments.no_comments' | t }}
-                        </h3>
-                        <p class="alert alert-info">
-                            {{ 'blogs.comments.first_to_comment' | t }}
+                    {% endpaginate %}
+                {% endif %}
+
+                <!-- New Comment -->
+                {% form 'new_comment', article %}
+                    <h3 class="mt-6 mb-3">
+                        {{ 'blogs.comments.title' | t }}
+                    </h3>
+
+                    <!-- Posted successfully alert -->
+                    {% if form.posted_successfully? %}
+                        {% assign post_message = 'blogs.comments.success' | t %}
+                        {% if blog.moderated? and comment.status == 'pending' %}
+                            {% assign post_message = 'blogs.comments.success_moderated' | t%}
+                        {% elsif comment.status == 'unapproved' or comment.status == 'spam' %}
+                            {% assign post_message = 'blogs.comments.unapproved' | t %}
+                        {% endif %}
+                        <p
+                            id="comment-posted"
+                            class="alert alert-success">
+                            {{ post_message }}
                         </p>
-                    
-                    <!-- Has comments -->
-                    {% else %}
-                        <h3 class="mb-3">
-                            {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
-                        </h3>
-                        {% paginate article.comments by section.settings.comments_paginate %}
-                            <ul class="list-unstyled">
-                                {% for comment in article.comments %}
-                                    <li 
-                                        id="comment-{{ comment.id }}" 
-                                        class="comment card mb-3"
-                                        role="article">
-                                        <p class="card-header comment-meta">
-                                            <span class="comment-meta-author">
-                                                {{ comment.author }}
-                                            </span>
-                                            <span class="comment-meta-data ms-2">
-                                                {{ comment.created_at | time_tag: format: 'date' }}
-                                            </span>
-                                        </p>
-                                        <div class="card-body rte pb-0">
-                                            {{ comment.content }}
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-
-                            {% render 'pagination' with paginate: paginate %}
-
-                        {% endpaginate %}
                     {% endif %}
 
-                    <!-- New Comment -->
-                    {% form 'new_comment', article %}
-                        <h3 class="mt-6 mb-3">
-                            {{ 'blogs.comments.title' | t }}
-                        </h3>
+                    <!-- Error alert -->
+                    {{ form.errors | default_errors }}
 
-                        {% if form.posted_successfully? %}
-                            {% assign post_message = 'blogs.comments.success' | t %}
-                            
-                            {% if blog.moderated? and comment.status == 'pending' %}
-                                {% assign post_message = 'blogs.comments.success_moderated' | t%}
-                            {% elsif comment.status == 'unapproved' or comment.status == 'spam' %}
-                                {% assign post_message = 'blogs.comments.unapproved' | t %}
-                            {% endif %}
-
-                            <p
-                                id="comment-posted"
-                                class="alert alert-success">
-                                {{ post_message }}
-                            </p>
-                        {% endif %}
-
-                        {{ form.errors | default_errors }}
-
-                        <div class="row g-4">
-                            <div class="col-sm-6">
-                                <input 
-                                    id="CommentAuthor"
-                                    class="form-control {% if form.errors contains 'author' %}is-invalid{% endif %}" 
-                                    type="text" 
-                                    name="comment[author]" 
-                                    value="{{ form.author }}" 
-                                    placeholder="{{ 'blogs.comments.name' | t }}" 
-                                    aria-label="{{ 'blogs.comments.name' | t }}" 
-                                    autocapitalize="words" 
-                                    required>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <input 
-                                    id="CommentEmail" 
-                                    class="form-control {% if form.errors contains 'email' %}is-invalide{% endif %}" 
-                                    type="email" 
-                                    name="comment[email]"
-                                    value="{{ form.email }}"
-                                    placeholder="{{ 'blogs.comments.email' | t }}" 
-                                    aria-label="{{ 'blogs.comments.email' | t }}" 
-                                    autocorrect="off" 
-                                    autocapitalize="off">
-                            </div>
-
-                            <div class="col-sm-12">
-                                <textarea
-                                    id="CommentBody"
-                                    class="form-control {% if form.errors contains 'body' %}is-invalid{% endif %}" 
-                                    name="comment[body]" 
-                                    placeholder="{{ 'blogs.comments.message' | t }}" 
-                                    aria-label="{{ 'blogs.comments.message' | t }}" 
-                                    rows="4" 
-                                    required>{{ form.body }}</textarea> {% comment %}Do not use new line here{% endcomment %}
-                            </div>
-
-                           
-
-                            {% if blog.moderated? %}
-                                <div class="col-sm-12">
-                                    <p
-                                        id="comments-moderated"
-                                        class="alert alert-warning mb-0">
-                                        {{ 'blogs.comments.moderated' | t }}
-                                    </p>
-                                    </div>
-                            {% endif %}
-
-                            <div class="col-sm-12">
-                                <input 
-                                    type="submit" 
-                                    class="btn btn-primary" 
-                                    value="{{ 'blogs.comments.post' | t }}">
-                            </div>
-
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <input 
+                                id="CommentAuthor"
+                                class="form-control {% if form.errors contains 'author' %}is-invalid{% endif %}" 
+                                type="text" 
+                                name="comment[author]" 
+                                value="{{ form.author }}" 
+                                placeholder="{{ 'blogs.comments.name' | t }}" 
+                                aria-label="{{ 'blogs.comments.name' | t }}" 
+                                autocapitalize="words" 
+                                required>
                         </div>
+                        <div class="col-sm-6">
+                            <input 
+                                id="CommentEmail" 
+                                class="form-control {% if form.errors contains 'email' %}is-invalide{% endif %}" 
+                                type="email" 
+                                name="comment[email]"
+                                value="{{ form.email }}"
+                                placeholder="{{ 'blogs.comments.email' | t }}" 
+                                aria-label="{{ 'blogs.comments.email' | t }}" 
+                                autocorrect="off" 
+                                autocapitalize="off">
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea
+                                id="CommentBody"
+                                class="form-control {% if form.errors contains 'body' %}is-invalid{% endif %}" 
+                                name="comment[body]" 
+                                placeholder="{{ 'blogs.comments.message' | t }}" 
+                                aria-label="{{ 'blogs.comments.message' | t }}" 
+                                rows="4" 
+                                required>{{ form.body }}</textarea> {% comment %}Do not use new line here{% endcomment %}
+                        </div>
+                        {% if blog.moderated? %}
+                            <div class="col-sm-12">
+                                <p
+                                    id="comments-moderated"
+                                    class="alert alert-warning mb-0">
+                                    {{ 'blogs.comments.moderated' | t }}
+                                </p>
+                                </div>
+                        {% endif %}
+                        <div class="col-sm-12">
+                            <input 
+                                type="submit" 
+                                class="btn btn-primary" 
+                                value="{{ 'blogs.comments.post' | t }}">
+                        </div>
+                    </div>
 
-                    {% endform %}
+                {% endform %}
 
-                </div>
-            {% endif %}
+            </div>
+        {% endif %}
 
-            <!-- 'Back to' button -->
-            {% if section.settings.show_back_to_btn %}
+        <!-- 'Back to' button -->
+        {% if section.settings.show_back_to_btn %}
             <hr 
                 class="sep my-7"
                 style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
-                
+
             <div class="article-back-to text-center my-5">
                 <a
                     class="article-back-to-btn btn {{ section.settings.back_to_btn_color }} {{ section.settings.back_to_btn_size }}"
@@ -187,9 +196,6 @@
                 </a>
             </div>
         {% endif %}
-
-
-        </div>
 
     </div>
 </article>
@@ -212,36 +218,11 @@
             "content": "General settings"
         },
         {
-            "type": "select",
-            "id": "heading_size",
-            "label": "Heading Size",
-            "default": "h1",
-            "options": [
-                {  "value": "h1", "label": "H1" },
-                {  "value": "h2", "label": "H2" },
-                {  "value": "h3", "label": "H3" },
-                {  "value": "h4", "label": "H4" },
-                {  "value": "h5", "label": "H5" },
-                {  "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "checkbox",
-            "id": "show_author",
-            "label": "Show author",
-            "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "show_date",
-            "label": "Show date",
-            "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "show_comments",
-            "label": "Show comments",
-            "default": true
+            "type": "text",
+            "id": "max_width",
+            "label": "Content max-width (px)",
+            "info": "Adjust post content width (in pixels). Leave empty to use the container.",
+            "default": "768"
         },
         {
             "type": "checkbox",
@@ -254,13 +235,6 @@
             "id": "show_social_sharing",
             "label": "Show social sharing",
             "default": true
-        },
-        {
-            "type": "text",
-            "id": "max_width",
-            "label": "Max width (px)",
-            "info": "Adjust post width (in pixels). Leave empty to disable",
-            "default": "768"
         },
         {
             "type": "range",
@@ -278,24 +252,38 @@
         },
         {
             "type": "header",
-            "content": "Image settings"
-        },
-        {
-            "type": "text",
-            "id": "img_width",
-            "label": "Image width (px)",
-            "default": "1320"
+            "content": "Post settings"
         },
         {
             "type": "text",
             "id": "img_height",
             "label": "Image height (px)",
-            "default": "740"
+            "default": "480"
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "display-5",
+            "options": [
+                {  "value": "display-1", "label": "Display 1" },
+                {  "value": "display-2", "label": "Display 2" },
+                {  "value": "display-3", "label": "Display 3" },
+                {  "value": "display-4", "label": "Display 4" },
+                {  "value": "display-5", "label": "Display 5" },
+                {  "value": "display-6", "label": "Display 6" }
+            ]
         },
         {
             "type": "checkbox",
-            "id": "img_thumbnail",
-            "label": "Image border",
+            "id": "show_author",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
             "default": true
         },
         {

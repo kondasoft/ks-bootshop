@@ -16,4 +16,5 @@ require('./collection');
 require('./map');
 require('./navbar');
 require('./newsletter');
+require('./product');
 require('./search');

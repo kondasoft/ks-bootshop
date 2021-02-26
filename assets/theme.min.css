@@ -15957,6 +15957,22 @@ a:hover {
   color: var(--color-dark) !important;
 }
 
+.border-primary {
+  border-color: var(--color-primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--color-secondary) !important;
+}
+
+.border-dark {
+  border-color: var(--color-dark) !important;
+}
+
+.border-light {
+  border-color: var(--color-light-darken-10) !important;
+}
+
 .btn-link {
   color: var(--color-primary);
 }
@@ -16098,6 +16114,10 @@ a:hover {
   background: var(--color-dark);
 }
 
+.img-thumbnail {
+  border-color: var(--color-light-darken-10);
+}
+
 .page-link {
   color: var(--color-primary);
 }
@@ -16172,6 +16192,22 @@ a:hover {
 
 .opacity-100 {
   opacity: 100%;
+}
+
+.object-fit-contain {
+  object-fit: contain;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.object-fit-fill {
+  object-fit: fill;
+}
+
+.object-fit-scale-down {
+  object-fit: scale-down;
 }
 
 .price {
@@ -16462,6 +16498,123 @@ a:hover {
   top: 0;
   font-size: 0.6rem;
   padding: 0.75rem;
+}
+
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+.product-carousel .ratio {
+  z-index: 9;
+}
+.product-carousel .product-carousel-thumbnails .product-carousel-thumbnails-item {
+  position: relative;
+}
+.product-carousel .product-carousel-thumbnails .product-carousel-thumbnails-item.is-video:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+.product-carousel .product-carousel-thumbnails .product-carousel-thumbnails-item.is-video:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-45%, -50%);
+  z-index: 1;
+  border-style: solid;
+  border-width: 6px 0 6px 11px;
+  border-color: transparent transparent transparent white;
+}
+.product-carousel:not(.full-screen) #close-full-screen-btn {
+  display: none !important;
+}
+.product-carousel:not(.full-screen) .carousel-indicators {
+  display: none !important;
+}
+.product-carousel:not(.full-screen) .carousel-item a {
+  cursor: zoom-in;
+}
+.product-carousel:not(.full-screen) .carousel-caption {
+  display: none !important;
+}
+.product-carousel.full-screen #close-full-screen-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 1rem;
+  z-index: 9;
+}
+.product-carousel.full-screen .carousel-item {
+  height: 100vh;
+}
+.product-carousel.full-screen .carousel-item.carousel-item-prev, .product-carousel.full-screen .carousel-item.carousel-item-next, .product-carousel.full-screen .carousel-item.active {
+  display: flex;
+  align-items: center;
+}
+.product-carousel.full-screen .carousel-item a {
+  cursor: default;
+}
+.product-carousel.full-screen .carousel-item img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+}
+.product-carousel.full-screen .product-carousel-thumbnails {
+  display: none !important;
+}
+.product-carousel.full-screen .carousel-indicators {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 0.25rem;
+  width: 100%;
+  margin: 0 !important;
+}
+.product-carousel.full-screen .carousel-indicators li {
+  background-color: white !important;
+}
+.product-carousel.full-screen .carousel-control-prev,
+.product-carousel.full-screen .carousel-control-next {
+  height: 80vh;
+  transform: translateY(10vh);
+  z-index: 9;
+}
+.product-carousel.full-screen .carousel-control-prev-icon,
+.product-carousel.full-screen .carousel-control-next-icon {
+  filter: none !important;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  background-size: 75%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.product-carousel.full-screen .carousel-caption {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute;
+  left: 50%;
+  right: auto;
+  bottom: 2.5rem;
+  transform: translateX(-50%);
+}
+.product-carousel.full-screen .carousel-caption p {
+  color: white !important;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.25rem;
+  margin: 0 1rem;
+  padding: 0.5rem 0.75rem;
+  display: inline-block;
 }
 
 /* 

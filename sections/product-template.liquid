@@ -1,0 +1,316 @@
+{% assign current_variant   = product.selected_or_first_available_variant %}
+{% assign current_media_id  = current_variant.featured_media.id %}
+
+{% if current_media_id == blank %}
+    {% assign current_media_id = product.featured_media.id %}
+{% endif %}
+
+<article
+    id="product-{{ product.id }}"
+    class="product">
+
+    <div class="product-container container">
+        <div class="row">
+            <div class="col-md-6">
+
+                <!-- Product carousel -->
+                <div 
+                    id="product-carousel" 
+                    class="product-carousel carousel mb-4 {{ section.settings.carousel_style }} {{ section.settings.carousel_transition | escape }}" 
+                    data-bs-ride="carousel"
+                    data-bs-pause="hover"
+                    data-bs-interval="{% if section.settings.carousel_interval > 0 %}{{ section.settings.carousel_interval | times: 1000 }}{% else %}false{% endif %}"
+                    aria-roledescription="carousel">
+
+                    <!-- Close button -->
+                    <button
+                        id="close-full-screen-btn"
+                        class="btn-close btn-close-white"
+                        aria-label="{{ 'general.close' | t }}"
+                        title="{{ 'general.close' | t }}">
+                    </button>
+
+                    <!-- Indicators -->
+                    {% if section.settings.carousel_full_screen and section.settings.carousel_full_screen_indicators and product.media.size > 1 %}
+                        <ol class="carousel-indicators mb-3">
+                            {% for media in product.media %}
+                                <li
+                                    data-bs-target="#product-carousel"
+                                    data-bs-slide-to="{{ forloop.index0 }}"
+                                    class="{% if media.id == current_media_id %}active{% endif %}">
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                    
+                    <div class="carousel-inner">
+
+                        {% for media in product.media %}
+                            <div 
+                                class="carousel-item {% if media.id == current_media_id %}active{% endif %}"
+                                role="group"
+                                aria-roledescription="slide"
+                                aria-label="{{ forloop.index }} {{ 'general.from' | t }} {{ product.media.size }}">
+
+
+                                {% case media.media_type %}
+                                    {% when 'image' %}
+                                        
+                                        {% if section.settings.carousel_full_screen %}
+                                            <a href="{{ media.src | img_url: '2048x' }}">
+                                        {% endif %}
+
+                                            {% if section.settings.carousel_img_square %}
+                                                {% assign img_size   = '680x680' %}
+                                                {% assign img_height = '680' %}
+                                            {% else %}
+                                                {% assign img_size   = '680x' %}
+                                                {% assign img_height = 680 | divided_by: media.aspect_ratio %}
+                                            {% endif %}
+
+                                            <img
+                                                class="d-block img-fluid rounded"
+                                                src="{{ media.preview_image | img_url: img_size, crop: 'center' }}"
+                                                data-src="{{ media.preview_image | img_url: img_size, crop: 'center' }}"
+                                                alt="{{ media.alt | escape }}"
+                                                width="680"
+                                                height="{{ img_height }}">
+
+                                        {% if section.settings.carousel_full_screen %}
+                                            </a>
+                                        {% endif %}
+
+                                    {% when 'external_video' %}
+                                        <div class="ratio {{ section.settings.carousel_video_ratio }}">
+                                            {{ media | external_video_tag }}
+                                        </div>
+
+                                    {% when 'video' %}
+                                        <div class="ratio {{ section.settings.carousel_video_ratio }}">
+                                            {{ media | video_tag: controls: true }}
+                                        </div>
+
+                                {% endcase %}
+
+                                {% if section.settings.carousel_full_screen and section.settings.carousel_full_screen_caption %}
+                                    <div class="carousel-caption">
+                                        <p class="h6 mb-0">
+                                            {{ media.alt }}
+                                        </p>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+                        
+                        <!-- Controls -->
+                        {% if section.settings.carousel_controls and product.media.size > 1 %}
+                            <a 
+                                class="carousel-control-prev" 
+                                href="#product-carousel" 
+                                role="button" 
+                                data-bs-slide="prev">
+                                <span 
+                                    class="carousel-control-prev-icon" 
+                                    aria-hidden="true">
+                                </span>
+                                <span class="visually-hidden">
+                                    {{ 'general.previous' | t }}
+                                </span>
+                            </a>
+                            <a 
+                                class="carousel-control-next" 
+                                href="#product-carousel" 
+                                role="button" 
+                                data-bs-slide="next">
+                                <span
+                                    class="carousel-control-next-icon" 
+                                    aria-hidden="true">
+                                </span>
+                                <span class="visually-hidden">
+                                    {{ 'general.next' | t }}
+                                </span>
+                            </a>
+                        {% endif %}
+
+                    </div>
+
+                    <!-- Thumbnails -->
+                    {% if section.settings.carousel_thumbnails and product.media.size > 1 %}
+                        <ol class="product-carousel-thumbnails list-unstyled mx-n1 my-2 row row-cols-{{ section.settings.carousel_thumbnails_row }}">
+                            {% for media in product.media %}
+                                <a
+                                    class="product-carousel-thumbnails-item col px-1 py-1 {% if media.media_type == 'video' or media.media_type == 'external_video' %}is-video{% endif %} {% if media.id == current_media_id %}active{% endif %}"
+                                    href="{{ media.src | img_url: '2048x' }}"
+                                    data-bs-target="#product-carousel" 
+                                    data-bs-slide-to="{{ forloop.index0 }}">
+
+                                    {% if section.settings.carousel_img_square %}
+                                        {% assign img_size   = '680x680' %}
+                                        {% assign img_height = '680' %}
+                                    {% else %}
+                                        {% assign img_size   = '160x160' %}
+                                        {% assign img_height = '160' %}
+                                    {% endif %}
+                                        <img
+                                            class="w-100 h-100 object-fit-cover {% if section.settings.carousel_img_thumbnail %}img-thumbnail{% else %}rounded{% endif %} {% if media.id == current_media_id %}border border-secondary{% endif %}"
+                                            src="{{ media.preview_image.src | img_url: img_size, crop: 'center' }}"
+                                            alt="{{ media.alt | escape }}"
+                                            width="680"
+                                            height="{{ img_height }}">
+
+                                </a>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <!-- Heading -->
+                <h1 class="heading my-1 {{ section.settings.heading_size }}">
+                    {{ product.title }}
+                </h1>
+
+            </div>
+
+        </div>
+    </div>
+
+</article>
+
+{% schema %}
+{
+    "name": "Product pages",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "display-5",
+            "options": [
+                { "group": "Display", "value": "display-1", "label": "Display 1" },
+                { "group": "Display", "value": "display-2", "label": "Display 2" },
+                { "group": "Display", "value": "display-3", "label": "Display 3" },
+                { "group": "Display", "value": "display-4", "label": "Display 4" },
+                { "group": "Display", "value": "display-5", "label": "Display 5" },
+                { "group": "Display",  "value": "display-6", "label": "Display 6" },
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Image gallery (carousel)"
+        },
+        {
+            "type": "checkbox",
+            "id": "carousel_img_square",
+            "label": "Square images",
+            "info": "Disable to prevent image cropping",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "carousel_interval",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "unit": "sec",
+            "label": "Autoplay",
+            "default": 0
+        },
+        {
+            "type": "select",
+            "id":  "carousel_transition",
+            "label": "Transition effect",
+            "default": "slide",
+            "options": [
+                { "value": "slide", "label": "Slide" },
+                { "value": "slide carousel-fade", "label": "Fade" }
+            ]
+        },
+
+        {
+            "type": "checkbox",
+            "id": "carousel_controls",
+            "default": true,
+            "label": "Show Controls",
+            "info": "Prev/Next buttons"
+        },
+        {
+            "type": "select",
+            "id":  "carousel_style",
+            "label": "Controls color",
+            "default": "",
+            "options": [
+                { "value": "", "label": "White" },
+                { "value": "carousel-dark", "label": "Dark" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "carousel_thumbnails",
+            "default": true,
+            "label": "Show Thumbnails",
+            "info": "Small images at the bottom"
+        },
+        {
+            "type": "checkbox",
+            "id": "carousel_img_thumbnail",
+            "label": "Thumbnails border",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "carousel_thumbnails_row",
+            "label": "Thumbnails per row",
+            "min": 2,
+            "max": 6,
+            "default": 5,
+            "step": 1
+        },
+        {
+            "type": "select",
+            "id": "carousel_video_ratio",
+            "label": "Video aspect ratio.",
+            "options": [
+                { "value": "ratio-1x1", "label": "1x1" },
+                { "value": "ratio-4x3", "label": "4x3" },
+                { "value": "ratio-16x9", "label": "16x9" },
+                { "value": "ratio-21x9", "label": "21x9" }
+            ],
+            "default": "ratio-16x9"
+        },
+        {
+            "type": "checkbox",
+            "id": "carousel_full_screen",
+            "label": "Enable full-screen mode",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "carousel_full_screen_caption",
+            "label": "Full-screen / Show caption",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "carousel_full_screen_indicators",
+            "label": "Full-screen / Show Indicators",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

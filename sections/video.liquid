@@ -48,7 +48,7 @@
                 {{ youtube_address }}/embed/{{ section.settings.video_url.id }}?controls={{ youtube_controls }}&amp;start={{ section.settings.youtube_start }}
 
             {% else %}
-                https://player.vimeo.com/video/210603721
+                https://player.vimeo.com/video/{{ section.settings.video_url.id }}
             {% endif %}
         {% endcapture %}
         

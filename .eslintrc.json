@@ -10,6 +10,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "curly": 1,
         "indent": [
             "error",
             4
@@ -30,6 +31,7 @@
     "globals": {
         "bootstrap": true,
         "google": true,
-        "initMap": true
+        "initMap": true,
+        "lightGallery": true
     }
 }

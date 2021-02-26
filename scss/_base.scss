@@ -12,12 +12,10 @@ body {
     min-height: 100vh;
 }
 
-
 // Main {
 #main {
     flex: 1;
 }
-
 
 // Links
 a { 
@@ -28,13 +26,11 @@ a:hover {
     color: var(--color-primary-darken-10); 
 }
 
-
 // Forms
 .form-control:focus {
     border-color: var(--color-primary-alpha-25);
     box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
 }
-
 
 // Backgrounds
 .bg-primary     { background-color: var(--color-primary) !important; }
@@ -42,12 +38,16 @@ a:hover {
 .bg-dark        { background-color: var(--color-dark) !important; }
 .bg-light       { background-color: var(--color-light) !important; }
 
-
 // Text
 .text-primary   { color: var(--color-primary) !important; }
 .text-secondary { color: var(--color-secondary) !important; }
 .text-dark      { color: var(--color-dark) !important; }
 
+// Borders
+.border-primary   { border-color: var(--color-primary) !important; }
+.border-secondary { border-color: var(--color-secondary) !important; }
+.border-dark      { border-color: var(--color-dark) !important; }
+.border-light     { border-color: var(--color-light-darken-10) !important; }
 
 // Buttons - Link
 .btn-link {
@@ -60,7 +60,6 @@ a:hover {
         box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
     }
 }
-
 
 // Buttons - Primary
 .btn-primary {
@@ -93,7 +92,6 @@ a:hover {
     box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
 }
 
-
 // Buttons - Secondary
 .btn-secondary {
     background: var(--color-secondary);
@@ -124,7 +122,6 @@ a:hover {
 .btn-outline-secondary:active:focus {
     box-shadow: 0 0 0 0.25rem var(--color-secondary-alpha-25);;
 }
-
 
 // Buttons - Dark
 .btn-dark {
@@ -157,7 +154,6 @@ a:hover {
     box-shadow: 0 0 0 0.25rem var(--color-dark-alpha-25);
 }
 
-
 // Buttons - Light
 .btn-light {
     background: var(--color-light);
@@ -176,7 +172,6 @@ a:hover {
     box-shadow: 0 0 0 0.25rem var(--color-dark-alpha-25);
 }
 
-
 // Alerts
 .alert-primary,
 .alert-primary,
@@ -194,6 +189,10 @@ a:hover {
     }
 }
 
+// Img thumbnail
+.img-thumbnail {
+    border-color: var(--color-light-darken-10);
+}
 
 // Pagination
 .page-link {
@@ -212,13 +211,11 @@ a:hover {
     border-color: var(--color-primary);
 }
 
-
 // Dropdown
 .dropdown-item.active, 
 .dropdown-item:active {
     background-color: var(--color-primary);
 }
-
 
 // Accordion
 .accordion {
@@ -239,12 +236,16 @@ a:hover {
     }
 }
 
-
 // Opacity
 @each $value in $opacities {
     .opacity-#{$value} { opacity: #{$value} + '%' }
 }
 
+// Object fit
+.object-fit-contain     { object-fit: contain; }
+.object-fit-cover       { object-fit: cover; }
+.object-fit-fill        { object-fit: fill; }
+.object-fit-scale-down  { object-fit: scale-down; }
 
 // Price
 .price { 

@@ -19,29 +19,33 @@
 {% assign gutter_tablet  = section.settings.gutter_tablet | prepend: 'g-sm-' %}
 {% assign gutter_desktop = section.settings.gutter_desktop | prepend: 'g-xl-' %}
 
-{% if section.settings.show_collection_img and collection.image %}
-    {% assign collection_img_800_size = section.settings.collection_img_height | prepend: '800x' %}
-    {% assign collection_img_1600_size = section.settings.collection_img_height | prepend: '1600x' %}
-    <img 
-        class="collection-img w-100 h-auto mt-n7 mb-6"
-        src="{{ collection.image | img_url: collection_img_1600_size, crop: 'center' }}"
-        srcset="
-            {{ collection.image | img_url: collection_img_800_size, crop: 'center' }} 800w, 
-            {{ collection.image | img_url: collection_img_1600_size, crop: 'center' }} 1600w
-        "
-        alt="{{ collection.image.alt | escape }}" 
-        width="1600"
-        height="{{section.settings.collection_img_height }}"
-        style="{{section.settings.collection_img_height | prepend: 'max-height: ' | append: 'px' }}; object-fit: cover;">
-{% endif %}
-
 <div
-    id="collection-container"
-    class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+    id="collection-{{ collection.id }}"
+    class="collection">
 
-    <div class="heading-wrapper mb-3 overflow-hidden text-center">
+    <!-- Collection image -->
+    {% if section.settings.show_collection_img and collection.image %}
+        {% assign collection_img_800_size = section.settings.collection_img_height | prepend: '800x' %}
+        {% assign collection_img_1600_size = section.settings.collection_img_height | prepend: '1600x' %}
+        <img 
+            class="collection-img w-100 h-auto object-fit-cover mt-n7 mb-6"
+            src="{{ collection.image | img_url: collection_img_1600_size, crop: 'center' }}"
+            srcset="
+                {{ collection.image | img_url: collection_img_800_size, crop: 'center' }} 800w, 
+                {{ collection.image | img_url: collection_img_1600_size, crop: 'center' }} 1600w
+            "
+            alt="{{ collection.image.alt | escape }}" 
+            width="1600"
+            height="{{section.settings.collection_img_height }}"
+            style="{{section.settings.collection_img_height | prepend: 'max-height: ' | append: 'px' }};">
+    {% endif %}
 
-        <h1 class="heading mb-1 {{ section.settings.heading_display }}">
+    <!-- Collection header -->
+    <div
+        class="heading-wrapper overflow-hidden text-center mx-auto mb-3" 
+        style="max-width: 768px">
+
+        <h1 class="heading mb-1 {{ section.settings.heading_size }}">
             {{ collection.title }}
         </h1>
 
@@ -53,119 +57,126 @@
 
     </div>
 
-    {% if section.settings.enable_sorting or section.settings.enable_filtering %}
-        <div 
-            id="collection-utilities" 
-            class="d-flex flex-column flex-lg-row bg-light rounded mb-7 py-4 px-4 {% if section.settings.enable_filtering %}justify-content-between{% else %}justify-content-end{% endif %}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
 
-            <!-- Filtering -->
-            {% if section.settings.enable_filtering %}
-                <div
-                    id="collection-filtering" 
-                    class="input-group w-auto js mb-3 mb-lg-0">
-                    <label 
-                        class="input-group-text"
-                        for="collection-filtering-select">
-                        {{ 'collection.filter_by' | t }}
-                    </label>
-                    <select 
-                        id="collection-filtering-select" 
-                        class="form-select">
-                        <option 
-                            value="{{ collection.url }}">
-                            {{ 'collection.all_products' | t }}
-                        </option>
-                        {% for tag in collection.all_tags %}
-                            <option 
-                                value="{{ collection.url }}/{{ tag }}" 
-                                {% if current_tags contains tag %}selected{% endif %}>
-                                {{ tag }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            {% endif %}
-
+        <!-- Collection Utitilies -->
+        {% if section.settings.enable_sorting or section.settings.enable_filtering %}
             <div 
-                id="collection-utilities-right"
-                class="d-flex align-items-center">
-                
-                <!-- Sorting -->
-                {% if section.settings.enable_sorting %}
+                id="collection-utilities" 
+                class="d-flex flex-column flex-lg-row bg-light rounded mb-7 py-4 px-4 {% if section.settings.enable_filtering %}justify-content-between{% else %}justify-content-end{% endif %}">
+
+                <!-- Filtering -->
+                {% if section.settings.enable_filtering %}
                     <div
-                        id="collection-sorting" 
-                        class="input-group js">
-                        <label
+                        id="collection-filtering" 
+                        class="input-group w-auto js mb-3 mb-lg-0">
+                        <label 
                             class="input-group-text"
-                            for="collection-sorting-select">
-                            {{ 'collection.sort_by' | t }}
+                            for="collection-filtering-select">
+                            {{ 'collection.filter_by' | t }}
                         </label>
                         <select 
-                            id="collection-sorting-select" 
-                            class="form-select">
-                            {% for option in collection.sort_options %}
+                            id="collection-filtering-select" 
+                            class="form-select"
+                            style="min-width: 160px;">
+                            <option 
+                                value="{{ collection.url }}">
+                                {{ 'collection.all_products' | t }}
+                            </option>
+                            {% for tag in collection.all_tags %}
                                 <option 
-                                    value="{{ option.value }}" 
-                                    {% if option.value == collection.sort_by %}selected{% endif %}>
-                                    {{ option.name }}
+                                    value="{{ collection.url }}/{{ tag }}" 
+                                    {% if current_tags contains tag %}selected{% endif %}>
+                                    {{ tag }}
                                 </option>
                             {% endfor %}
                         </select>
                     </div>
                 {% endif %}
 
-                {% if section.settings.show_layout_btn %}
-
-                    {% if layout == 'grid' %}
-                        <button
-                            id="collection-layout-btn"
-                            class="btn btn-outline-secondary btn-sm ms-3"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="bottom"
-                            data-value="layout-list"
-                            title="{{ 'collection.layout_list' | t }}"
-                            aria-hidden="true">
-                            {% render 'icon-list' with size: 22 %}
-                        </button>
-                    {% else %}
-                        <button
-                            id="collection-layout-btn"
-                            class="btn btn-outline-secondary btn-sm ms-3"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="bottom" 
-                            data-value="layout-grid"
-                            title="{{ 'collection.layout_grid' | t }}"
-                            aria-hidden="true">
-                            {% render 'icon-grid' with size: 22 %}
-                        </button>
+                <div 
+                    id="collection-utilities-right"
+                    class="d-flex align-items-center">
+                    
+                    <!-- Sorting -->
+                    {% if section.settings.enable_sorting %}
+                        <div
+                            id="collection-sorting" 
+                            class="input-group js">
+                            <label
+                                class="input-group-text"
+                                for="collection-sorting-select">
+                                {{ 'collection.sort_by' | t }}
+                            </label>
+                            <select 
+                                id="collection-sorting-select" 
+                                class="form-select">
+                                {% for option in collection.sort_options %}
+                                    <option 
+                                        value="{{ option.value }}" 
+                                        {% if option.value == collection.sort_by %}selected{% endif %}>
+                                        {{ option.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     {% endif %}
-                {% endif %}
+
+                    <!-- Layout Switcher -->
+                    {% if section.settings.show_layout_btn %}
+                        {% if layout == 'grid' %}
+                            <button
+                                id="collection-layout-btn"
+                                class="btn btn-outline-secondary btn-sm ms-3"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-value="layout-list"
+                                title="{{ 'collection.layout_list' | t }}"
+                                aria-hidden="true">
+                                {% render 'icon-list' with size: 22 %}
+                            </button>
+                        {% else %}
+                            <button
+                                id="collection-layout-btn"
+                                class="btn btn-outline-secondary btn-sm ms-3"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" 
+                                data-value="layout-grid"
+                                title="{{ 'collection.layout_grid' | t }}"
+                                aria-hidden="true">
+                                {% render 'icon-grid' with size: 22 %}
+                            </button>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
 
             </div>
+        {% endif %}
 
-        </div>
-    {% endif %}
+        <!-- No products alert -->
+        {% if collection.products.size == 0 %}
+            <p class="collection-no-products-alert alert alert-warning">
+                {{ 'collection.no_products_html' | t: blog_url: blog.url }}
+            </p>
+        {% else %}
 
-    {{ page.url }}
+            <!-- Product List/Grid -->
+            {% paginate collection.products by section.settings.paginate %}
 
-    {% if collection.products.size == 0 %}
-        <p class="collection-no-products-alert alert alert-warning">
-            {{ 'collection.no_products_html' | t: blog_url: blog.url }}
-        </p>
-    {% else %}
+                {% if layout == 'grid' %}
+                    {% render 'product-grid' with products: collection.products %}
+                {% elsif layout == 'list' %}
+                    {% render 'product-list' with products: collection.products %}
+                {% endif %}
 
-        {% paginate collection.products by section.settings.paginate %}
+                {% render 'pagination' with paginate: paginate, layout: layout %}
 
-            {% if layout == 'grid' %}
-                {% render 'product-grid' with products: collection.products %}
-            {% elsif layout == 'list' %}
-                {% render 'product-list' with products: collection.products %}
-            {% endif %}
+            {% endpaginate %}
 
-            {% render 'pagination' with paginate: paginate, layout: layout %}
+        {% endif %}
 
-        {% endpaginate %}
-    {% endif %}
+    </div>
 
 </div>
 
@@ -215,7 +226,7 @@
         },
         {
             "type": "select",
-            "id": "heading_display",
+            "id": "heading_size",
             "label": "Heading size",
             "default": "display-4",
             "options": [

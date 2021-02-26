@@ -39,12 +39,12 @@
                     {% if block.settings.image != blank %}
                         {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
                         <img
-                            class="d-block w-100 h-auto"
+                            class="d-block w-100 object-fit-cover h-auto"
                             src="{{ block.settings.image | img_url: img_size, crop: 'center' }}"
                             alt="{{ block.settings.image.alt }}"
                             width="{{ section.settings.img_width }}"
                             height="{{ section.settings.img_height }}"
-                            style="{{ section.settings.image_min_height | prepend: 'min-height: ' | append: 'px' }}; object-fit: cover">
+                            style="{{ section.settings.image_min_height | prepend: 'min-height: ' | append: 'px' }};">
                     {% else %}
                         {% capture current %}{% cycle 1, 2 %}{% endcapture %}<!-- Do not use new lines here -->
                         {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg d-block bg-secondary' }}

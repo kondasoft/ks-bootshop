@@ -1,0 +1,1048 @@
+{
+  "current": {
+    "color_primary": "#e22120",
+    "color_secondary": "#6c757d",
+    "color_price": "#28a745",
+    "minicart_img_width": "75",
+    "minicart_img_height": "75",
+    "minicart_style": "",
+    "sections": {
+      "navbar": {
+        "type": "navbar",
+        "settings": {
+          "container": true,
+          "bg_color": "#ffffff",
+          "background_style": "navbar-light",
+          "shadow": "shadow-sm",
+          "sticky": true,
+          "logo": "shopify:\/\/shop_images\/logo.png",
+          "logo_height": "30",
+          "menu": "main-menu",
+          "menu_position": "mx-auto",
+          "show_search": true,
+          "show_account": true,
+          "breakpoint": "lg"
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "announcement": "<p>Announce something important here<\/p>",
+          "show": true,
+          "homepage_only": true,
+          "bg_color": "#343a40",
+          "text_color": "text-white"
+        }
+      },
+      "16124340768622aa4c": {
+        "type": "carousel",
+        "blocks": {
+          "16124340768622aa4c-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/lifestyle-1.jpg",
+              "title": "Welcome to KS BootShop",
+              "title_size": "h3",
+              "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>"
+            }
+          },
+          "16124340768622aa4c-1": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/lifestyle-2.jpg",
+              "title": "Modern, Fast and Simple",
+              "title_size": "h3",
+              "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "16124340768622aa4c-0",
+          "16124340768622aa4c-1"
+        ],
+        "settings": {
+          "container": false,
+          "controls": true,
+          "indicators": true,
+          "style": "",
+          "transition": "slide",
+          "interval": 6,
+          "img_width": "1920",
+          "img_height": "640",
+          "image_min_height": "360",
+          "margin_top": 0,
+          "margin_bottom": 8
+        }
+      },
+      "161243980752a5ed7a": {
+        "type": "featured-collection",
+        "settings": {
+          "collection": "men",
+          "heading": "Featured collection",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "limit": 6,
+          "container": true,
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "show_vendor": false,
+          "show_description": false,
+          "description_length": "70",
+          "show_price": true,
+          "show_quick_view": true,
+          "quick_view_btn_color": "btn-outline-secondary",
+          "quick_view_btn_size": "btn-sm",
+          "row_": 2,
+          "row_sm": 2,
+          "row_md": 3,
+          "row_lg": 3,
+          "row_xl": 3,
+          "row_xxl": 6,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 4,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 6
+        }
+      },
+      "161281990869fdf1c2": {
+        "type": "collection-list",
+        "blocks": {
+          "172b7cd3-88f9-40fa-8018-0dc4ae8969b5": {
+            "type": "collection",
+            "settings": {
+              "collection": "men"
+            }
+          },
+          "df891897-7319-4ebb-aaa7-bbf14ef75e87": {
+            "type": "collection",
+            "settings": {
+              "collection": "women"
+            }
+          },
+          "a81bbf31-c1a6-4446-9cff-d6d6df900dac": {
+            "type": "collection",
+            "settings": {
+              "collection": "children"
+            }
+          },
+          "e0a44746-e8c7-4134-b713-54e130bed1eb": {
+            "type": "collection",
+            "settings": {
+              "collection": "babies"
+            }
+          }
+        },
+        "block_order": [
+          "172b7cd3-88f9-40fa-8018-0dc4ae8969b5",
+          "df891897-7319-4ebb-aaa7-bbf14ef75e87",
+          "a81bbf31-c1a6-4446-9cff-d6d6df900dac",
+          "e0a44746-e8c7-4134-b713-54e130bed1eb"
+        ],
+        "settings": {
+          "heading": "Collection list",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "container": true,
+          "light_bg": true,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "show_products_count": true,
+          "row_": 2,
+          "row_sm": 2,
+          "row_md": 2,
+          "row_lg": 4,
+          "row_xl": 4,
+          "row_xxl": 4,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 4,
+          "padding_top": 8,
+          "padding_bottom": 4,
+          "margin_top": 0,
+          "margin_bottom": 9
+        }
+      },
+      "16129467980997b2cd": {
+        "type": "image-with-text",
+        "settings": {
+          "container": true,
+          "light_bg": false,
+          "img": "shopify:\/\/shop_images\/collection-6.jpg",
+          "img_width": "720",
+          "img_height": "720",
+          "img_thumbnail": true,
+          "img_alignment": "",
+          "heading": "Image with text",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "heading_size": "h2",
+          "subheading_size": "",
+          "text": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+          "btn_label": "Learn more",
+          "btn_url": "#",
+          "btn_color": "btn-outline-primary",
+          "btn_size": "",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 9
+        }
+      },
+      "1612951102935a69c3": {
+        "type": "image-with-text-overlay",
+        "settings": {
+          "container": false,
+          "section_height": "section-height-md",
+          "img": "shopify:\/\/shop_images\/lifestyle-1.jpg",
+          "overlay_style": "overlay-dark",
+          "overlay_opacity": "overlay-opacity-25",
+          "img_alignment": "image-with-text-overlay-img-center",
+          "heading": "Image with text overlay",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "heading_size": "h1",
+          "text": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.<\/p>",
+          "lead": true,
+          "btn_label": "Learn more",
+          "btn_url": "#",
+          "btn_color": "btn-light",
+          "btn_size": "btn-lg",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 8
+        }
+      },
+      "1613034094b1e14cbd": {
+        "type": "logo-list",
+        "blocks": {
+          "e1cf75d0-157b-4a2e-a182-2e4a6d5ef5a0": {
+            "type": "logo",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/brand-logo.jpg",
+              "url": "#"
+            }
+          },
+          "9bb82def-3826-41b5-905f-dfd52ad91d33": {
+            "type": "logo",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/brand-logo.jpg",
+              "url": "#"
+            }
+          },
+          "4067c443-1eb5-414f-ae95-3b69634ee37f": {
+            "type": "logo",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/brand-logo.jpg",
+              "url": "#"
+            }
+          },
+          "31c23b7b-a08b-4888-9072-fc0e6a53d7f2": {
+            "type": "logo",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/brand-logo.jpg",
+              "url": "#"
+            }
+          },
+          "a4e3d41f-1026-4398-9854-488337cdda21": {
+            "type": "logo",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/brand-logo.jpg",
+              "url": "#"
+            }
+          },
+          "5ca3d57d-533c-4459-b0a9-52a084aa7d3b": {
+            "type": "logo",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/brand-logo.jpg",
+              "url": "#"
+            }
+          }
+        },
+        "block_order": [
+          "e1cf75d0-157b-4a2e-a182-2e4a6d5ef5a0",
+          "9bb82def-3826-41b5-905f-dfd52ad91d33",
+          "4067c443-1eb5-414f-ae95-3b69634ee37f",
+          "31c23b7b-a08b-4888-9072-fc0e6a53d7f2",
+          "a4e3d41f-1026-4398-9854-488337cdda21",
+          "5ca3d57d-533c-4459-b0a9-52a084aa7d3b"
+        ],
+        "settings": {
+          "heading": "Logo list",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "container": true,
+          "light_bg": false,
+          "heading_size": "h4",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "img_width": "320",
+          "img_height": "320",
+          "img_thumbnail": true,
+          "row_": 2,
+          "row_sm": 3,
+          "row_md": 3,
+          "row_lg": 6,
+          "row_xl": 6,
+          "row_xxl": 6,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 6,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 8
+        }
+      },
+      "1613036274b5bc23d7": {
+        "type": "gallery",
+        "blocks": {
+          "4542108e-43c9-4d88-b996-7fd9b750fad4": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-4.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "27d3af47-c122-4a20-b3a2-4664ed203eca": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-1.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "585f88aa-a094-4668-8bc1-ba23f9bbdddd": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-5.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "73417504-c1cc-48b7-a328-5382ba548e24": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-2.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "0b1382b9-fc44-4c96-8dc4-0b9400753827": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-6.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "23ee11d4-c30a-476a-b877-6acf3c1ff7d2": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-3.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "62fe9250-d1ad-47d1-bb41-0de9b87f6645": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-3.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "f83caf36-0ad8-4436-a29e-e6eccb4f1fb2": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-6.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "39240703-c282-4405-8b9f-407fc004b217": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-2.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "63618c3b-5227-48c7-8fed-7ed05114ae35": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-5.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "990c8fa7-c8ba-4262-995d-b54d5011b479": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-1.jpg",
+              "url": "#",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          },
+          "9ffe7170-36a1-4b27-bd14-babe04f11bf2": {
+            "type": "image",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-4.jpg",
+              "caption": "Add your image caption",
+              "caption_size": "h6"
+            }
+          }
+        },
+        "block_order": [
+          "4542108e-43c9-4d88-b996-7fd9b750fad4",
+          "27d3af47-c122-4a20-b3a2-4664ed203eca",
+          "585f88aa-a094-4668-8bc1-ba23f9bbdddd",
+          "73417504-c1cc-48b7-a328-5382ba548e24",
+          "0b1382b9-fc44-4c96-8dc4-0b9400753827",
+          "23ee11d4-c30a-476a-b877-6acf3c1ff7d2",
+          "62fe9250-d1ad-47d1-bb41-0de9b87f6645",
+          "f83caf36-0ad8-4436-a29e-e6eccb4f1fb2",
+          "39240703-c282-4405-8b9f-407fc004b217",
+          "63618c3b-5227-48c7-8fed-7ed05114ae35",
+          "990c8fa7-c8ba-4262-995d-b54d5011b479",
+          "9ffe7170-36a1-4b27-bd14-babe04f11bf2"
+        ],
+        "settings": {
+          "heading": "Gallery",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "container": false,
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "limit": "6",
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "overlay_style": "overlay-dark",
+          "overlay_opacity": "overlay-opacity-50",
+          "overlay_blur": true,
+          "row_": 2,
+          "row_sm": 3,
+          "row_md": 3,
+          "row_lg": 3,
+          "row_xl": 6,
+          "row_xxl": 6,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 3,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "1613036565184adb1d": {
+        "type": "separator",
+        "settings": {
+          "container": true,
+          "bg_color": "#dee2e6",
+          "margin_top": 7,
+          "margin_bottom": 8
+        }
+      },
+      "16130473820c97e316": {
+        "type": "featured-product",
+        "settings": {
+          "product": "watch-series-1",
+          "container": true,
+          "light_bg": false,
+          "badge": "Featured product",
+          "badge_color": "bg-light text-secondary",
+          "heading_size": "h2",
+          "img_width": "720",
+          "img_height": "720",
+          "img_thumbnail": true,
+          "show_vendor": false,
+          "show_price": true,
+          "show_description": true,
+          "description_truncate": "240",
+          "show_quick_view": true,
+          "quick_view_btn_color": "btn-outline-primary",
+          "quick_view_btn_size": "",
+          "show_social_sharing": true,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 8
+        }
+      },
+      "16131223138a584ff0": {
+        "type": "newsletter",
+        "settings": {
+          "heading": "Newsletter subscribe",
+          "subheading": "<p>Promotions, new products and sales. Directly to your inbox.<\/p>",
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "btn_color": "btn-outline-primary",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 8
+        }
+      },
+      "16131300457e5a9b91": {
+        "type": "testimonials",
+        "blocks": {
+          "16131300457e5a9b91-0": {
+            "type": "testimonial",
+            "settings": {
+              "text": "<p>I love KondaSoft Shopify Themes, not only they are beautiful and attractive but they are super-fast as well. I have tried different theme providers before but with KondaSoft&#x27;s themes I could finish my store very quickly (within 1 week). I can recommend KondaSoft, that&#x27;s for sure... A+++<\/p>",
+              "name": "John Doe",
+              "img": "shopify:\/\/shop_images\/avatar.jpg"
+            }
+          },
+          "16131300457e5a9b91-1": {
+            "type": "testimonial",
+            "settings": {
+              "text": "<p>I have been successfully running my store with KondaSoft&#x27;s theme, KS WatchShop for 2 months now, and I&#x27;m really impressed with the performance and speed it has. The speed-rank for my Shopify store has increased dramatically after I switched to this theme...<\/p>",
+              "name": "Jane Doe",
+              "img": "shopify:\/\/shop_images\/avatar.jpg"
+            }
+          },
+          "16131300457e5a9b91-2": {
+            "type": "testimonial",
+            "settings": {
+              "text": "<p>I thought to try KondaSoft Themes for one of my new Ecommerce adventures (a gift shop for my fiancé) and oh i was really blown away by the performance. They are just fast. Also, their themes have many sections available so that i can adjust the homepage exactly as I want to....<\/p>",
+              "name": "Jim Doe",
+              "img": "shopify:\/\/shop_images\/avatar.jpg"
+            }
+          }
+        },
+        "block_order": [
+          "16131300457e5a9b91-0",
+          "16131300457e5a9b91-1",
+          "16131300457e5a9b91-2"
+        ],
+        "settings": {
+          "heading": "Customer testimonials",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "img_width": "60",
+          "img_height": "60",
+          "img_circle": true,
+          "controls": true,
+          "indicators": true,
+          "interval": 6,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "161313402064cf991c": {
+        "type": "text-columns-with-image",
+        "blocks": {
+          "161313402064cf991c-0": {
+            "type": "content",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-6.jpg",
+              "heading": "Add a title or tagline",
+              "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.<\/p>",
+              "btn_label": "Learn more",
+              "btn_url": "#"
+            }
+          },
+          "161313402064cf991c-1": {
+            "type": "content",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-4.jpg",
+              "heading": "Add a title or tagline",
+              "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.<\/p>",
+              "btn_label": "Learn more",
+              "btn_url": "#"
+            }
+          },
+          "161313402064cf991c-2": {
+            "type": "content",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-1.jpg",
+              "heading": "Add a title or tagline",
+              "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.<\/p>",
+              "btn_label": "Learn more",
+              "btn_url": "#"
+            }
+          },
+          "161313402064cf991c-3": {
+            "type": "content",
+            "settings": {
+              "img": "shopify:\/\/shop_images\/collection-5.jpg",
+              "heading": "Add a title or tagline",
+              "text": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.<\/p>",
+              "btn_label": "Learn more",
+              "btn_url": "#"
+            }
+          }
+        },
+        "block_order": [
+          "161313402064cf991c-0",
+          "161313402064cf991c-1",
+          "161313402064cf991c-2",
+          "161313402064cf991c-3"
+        ],
+        "settings": {
+          "heading": "Text column with image",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "container": true,
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "block_text_alignment": "text-start",
+          "block_heading_size": "h5",
+          "btn_color": "btn-outline-secondary",
+          "btn_size": "btn-sm",
+          "row_": 1,
+          "row_sm": 2,
+          "row_md": 2,
+          "row_lg": 4,
+          "row_xl": 4,
+          "row_xxl": 4,
+          "gutter_mobile": 3,
+          "gutter_tablet": 4,
+          "gutter_desktop": 6,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "1613321883059203ae": {
+        "type": "map",
+        "settings": {
+          "heading": "Our physical address",
+          "subheading": "<p>Come and say Hello. We will be happy to meet your in person.<\/p>",
+          "container": false,
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "api_key": "AIzaSyDpX9IvWgz_RAIftiJa8Fqxx8LJKwotoyI",
+          "lat": "43.750840",
+          "lng": "7.441000",
+          "zoom": 15,
+          "map_height": "380",
+          "title": "Your Shop Name",
+          "content": "<p>Avenue Princesse Grace<br\/>Monaco, MC<\/p><p>Mon - Fri, 10am - 9pm<br\/>Saturday, 11am - 9pm<br\/>Sunday, 11am - 5pm<\/p>",
+          "content_alignment": "text-center",
+          "btn_label": "Get directions",
+          "btn_color": "btn-outline-secondary",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "1613465098c76677b8": {
+        "type": "richtext",
+        "settings": {
+          "heading": "Richtext",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<\/p>",
+          "light_bg": true,
+          "heading_size": "h2",
+          "subheading_size": "",
+          "text_size": "",
+          "text_alignment": "text-center",
+          "max_width": "768",
+          "padding_top": 7,
+          "padding_bottom": 6,
+          "margin_top": 0,
+          "margin_bottom": 0
+        }
+      },
+      "161346609112cd0f90": {
+        "type": "video",
+        "settings": {
+          "heading": "Video",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "light_bg": true,
+          "heading_size": "h2",
+          "subheading_size": "",
+          "heading_alignment": "text-center",
+          "video_url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+          "ratio": "ratio-16x9",
+          "max_width": "",
+          "youtube_start": "",
+          "youtube_controls": true,
+          "youtube_privacy": true,
+          "padding_top": 7,
+          "padding_bottom": 8,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "16134715004dcac0f0": {
+        "type": "html",
+        "disabled": true,
+        "settings": {
+          "html": "<p class=\"alert alert-info\">Hello world!<\/p>",
+          "heading": "HTML",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "container": true,
+          "light_bg": false,
+          "heading_size": "h2",
+          "subheading_size": "",
+          "heading_alignment": "text-center",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "blog-template": {
+        "type": "blog-template",
+        "settings": {
+          "layout": "list",
+          "container": true,
+          "subheading": "<p>Welcome to our blog. We hope to inspire you!<\/p>",
+          "heading_display": "display-5",
+          "subheading_size": "",
+          "paginate": 4,
+          "article_heading_size": "h3",
+          "show_author": true,
+          "show_date": true,
+          "img_width": "720",
+          "img_height": "405",
+          "img_thumbnail": true,
+          "show_excerpt": true,
+          "excerpt_length": "240",
+          "show_posted_in": true,
+          "show_readmore": true,
+          "show_comments": true,
+          "readmore_btn_color": "btn-outline-primary",
+          "readmore_btn_size": "",
+          "row_": 1,
+          "row_sm": 2,
+          "row_md": 2,
+          "row_lg": 3,
+          "row_xl": 3,
+          "row_xxl": 3,
+          "gutter_mobile": 3,
+          "gutter_tablet": 4,
+          "gutter_desktop": 6
+        }
+      },
+      "article-template": {
+        "type": "article-template",
+        "settings": {
+          "heading_size": "h1",
+          "show_author": true,
+          "show_date": true,
+          "show_comments": true,
+          "show_posted_in": true,
+          "show_social_sharing": true,
+          "max_width": "768",
+          "comments_paginate": 2,
+          "img_width": "1320",
+          "img_height": "740",
+          "img_thumbnail": true
+        }
+      },
+      "16136560969da8aed2": {
+        "type": "blog-posts",
+        "settings": {
+          "blog": "news",
+          "limit": 4,
+          "heading": "Blog posts",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "container": true,
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "show_view_all_btn": true,
+          "view_all_btn_color": "btn-secondary",
+          "view_all_btn_size": "",
+          "article_heading_size": "h6",
+          "show_author": true,
+          "show_date": true,
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "show_excerpt": true,
+          "excerpt_length": "240",
+          "show_posted_in": true,
+          "show_readmore": true,
+          "show_comments": true,
+          "readmore_btn_color": "btn-outline-primary",
+          "readmore_btn_size": "btn-sm",
+          "show_social_sharing": false,
+          "row_": 1,
+          "row_sm": 2,
+          "row_md": 2,
+          "row_lg": 4,
+          "row_xl": 4,
+          "row_xxl": 4,
+          "gutter_mobile": 3,
+          "gutter_tablet": 4,
+          "gutter_desktop": 6,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
+        }
+      },
+      "16136830093258d47c": {
+        "type": "separator",
+        "settings": {
+          "container": true,
+          "bg_color": "#dee2e6",
+          "margin_top": 8,
+          "margin_bottom": 7
+        }
+      },
+      "161368561105e641b5": {
+        "type": "faq",
+        "blocks": {
+          "161368561105e641b5-0": {
+            "type": "text",
+            "settings": {
+              "title": "Where do you ship?",
+              "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.<\/p>"
+            }
+          },
+          "161368561105e641b5-1": {
+            "type": "text",
+            "settings": {
+              "title": "How long will it take to receive my order",
+              "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.<\/p>"
+            }
+          },
+          "161368561105e641b5-2": {
+            "type": "text",
+            "settings": {
+              "title": "What payment methods do you support?",
+              "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.<\/p>"
+            }
+          },
+          "161368561105e641b5-3": {
+            "type": "text",
+            "settings": {
+              "title": "How can I track my order?",
+              "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567<\/p>"
+            }
+          },
+          "161368561105e641b5-4": {
+            "type": "text",
+            "settings": {
+              "title": "Can I order as a gift for someone else?",
+              "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.<\/p>"
+            }
+          },
+          "161368561105e641b5-5": {
+            "type": "text",
+            "settings": {
+              "title": "How can I get a refund for my order?",
+              "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "161368561105e641b5-0",
+          "161368561105e641b5-1",
+          "161368561105e641b5-2",
+          "161368561105e641b5-3",
+          "161368561105e641b5-4",
+          "161368561105e641b5-5"
+        ],
+        "settings": {
+          "heading": "F.A.Q",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "max_width": "768",
+          "accordion_style": "",
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 8
+        }
+      },
+      "footer-blocks": {
+        "type": "footer-blocks",
+        "blocks": {
+          "c4c94464-ebb5-4d24-a49f-192eb027cc26": {
+            "type": "richtext",
+            "settings": {
+              "heading": "About KS BootShop",
+              "description": "<p>The best Free Shopify Theme powered by Bootstrap framework, developed respecting Shopify Themes Requirements, optimized for maximum page-speed and that can be easily customized for any store.<\/p><p><a href=\"https:\/\/www.kondasoft.com\/collections\/shopify-themes\/products\/ks-bootshop\" title=\"https:\/\/www.kondasoft.com\/collections\/shopify-themes\/products\/ks-bootshop\" target=\"_blank\">Download Themes »<\/a><br\/> <\/p>",
+              "heading_size": "h5"
+            }
+          },
+          "e00e2603-5c9c-4373-9917-00d8e58fb8f5": {
+            "type": "richtext",
+            "settings": {
+              "heading": "About KondaSoft",
+              "description": "<p>Premium Shopify Themes, that are awesome to your customers, blazing-fast in loading time and built-in with the necessary features to increase your store conversion rates (CVR) and average order value (AOV).<\/p><p><a href=\"https:\/\/www.kondasoft.com\/collections\/shopify-themes\">Browse Themes »<\/a><\/p>",
+              "heading_size": "h5"
+            }
+          },
+          "84d98f57-a71d-49ea-a1a3-3fab0b59ff64": {
+            "type": "menu",
+            "settings": {
+              "menu": "footer",
+              "heading": "Quick links",
+              "heading_size": "h5",
+              "direction": ""
+            }
+          },
+          "b4097452-7361-46b5-8f88-a21eaccf5c63": {
+            "type": "social_menu",
+            "settings": {
+              "menu": "social-menu",
+              "heading": "Follow us",
+              "heading_size": "h5",
+              "direction": "flex-column",
+              "icon_size": "18",
+              "show_only_icons": false
+            }
+          }
+        },
+        "block_order": [
+          "c4c94464-ebb5-4d24-a49f-192eb027cc26",
+          "e00e2603-5c9c-4373-9917-00d8e58fb8f5",
+          "84d98f57-a71d-49ea-a1a3-3fab0b59ff64",
+          "b4097452-7361-46b5-8f88-a21eaccf5c63"
+        ],
+        "settings": {
+          "container": true,
+          "bg_color": "#343a40",
+          "bg_style": "text-white",
+          "row_": 1,
+          "row_sm": 2,
+          "row_md": 2,
+          "row_lg": 4,
+          "row_xl": 4,
+          "row_xxl": 4,
+          "gutter_mobile": 3,
+          "gutter_tablet": 4,
+          "gutter_desktop": 6,
+          "padding_top": 8,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 0
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "container": true,
+          "bg_color": "#343a40",
+          "bg_style": "text-white",
+          "show_powered_by": true,
+          "show_theme_by": true,
+          "show_payment_icons": true,
+          "show_sep": true,
+          "sep_color": "#5a6066",
+          "padding_top": 6,
+          "padding_bottom": 2,
+          "margin_top": 0,
+          "margin_bottom": 0
+        }
+      },
+      "1613737250d2b7859f": {
+        "type": "separator",
+        "settings": {
+          "container": true,
+          "bg_color": "#dee2e6",
+          "margin_top": 9,
+          "margin_bottom": 7
+        }
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "layout": "grid",
+          "paginate": 30,
+          "container": true,
+          "show_collection_img": true,
+          "collection_img_height": "320",
+          "heading_display": "display-4",
+          "show_collection_description": true,
+          "description_size": "",
+          "enable_filtering": true,
+          "enable_sorting": true,
+          "show_layout_btn": true,
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "show_vendor": false,
+          "description_length": "140",
+          "show_price": true,
+          "show_quick_view": true,
+          "quick_view_btn_color": "btn-outline-secondary",
+          "quick_view_btn_size": "btn-sm",
+          "row_": 2,
+          "row_sm": 2,
+          "row_md": 3,
+          "row_lg": 3,
+          "row_xl": 3,
+          "row_xxl": 6,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 4
+        }
+      }
+    },
+    "content_for_index": [
+      "16124340768622aa4c",
+      "161243980752a5ed7a",
+      "161281990869fdf1c2",
+      "16130473820c97e316",
+      "1612951102935a69c3",
+      "1613034094b1e14cbd",
+      "161313402064cf991c",
+      "1613036565184adb1d",
+      "1613036274b5bc23d7",
+      "16129467980997b2cd",
+      "16136830093258d47c",
+      "16131300457e5a9b91",
+      "161346609112cd0f90",
+      "161368561105e641b5",
+      "1613321883059203ae",
+      "16136560969da8aed2",
+      "1613737250d2b7859f",
+      "16131223138a584ff0",
+      "1613465098c76677b8",
+      "16134715004dcac0f0"
+    ]
+  },
+  "presets": {
+    "Default": {}
+  }
+}

@@ -1,0 +1,138 @@
+/* 
+    © 2021 KondaSoft
+    https://www.kondasoft.com
+*/
+
+// Product Gallery (carousel)
+.product-carousel {
+
+    // Used for videos
+    .ratio {
+        z-index: 9;
+    }
+
+    // Product thumbnails
+    .product-carousel-thumbnails {
+        .product-carousel-thumbnails-item {
+            position: relative;
+            &.is-video {
+                &:before {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 1;
+                    width: 30px;
+                    height: 30px;
+                    background-color: rgba(black, .75);
+                    box-shadow: 0 0 12px rgba(black, .25);
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transition: all .2s ease-out;
+                }
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-45%, -50%);
+                    z-index: 1;
+                    border-style: solid;
+                    border-width:6px 0 6px 11px;
+                    border-color: transparent transparent transparent white;
+                }
+            }
+        }
+    }
+
+    // Not full-screen
+    &:not(.full-screen) {
+        #close-full-screen-btn {
+            display: none !important;
+        }
+        .carousel-indicators {
+            display: none !important;
+        }
+        .carousel-item a {
+            cursor: zoom-in;
+        }
+        .carousel-caption {
+            display: none !important;
+        }
+    }
+
+    // Full-screen
+    &.full-screen {
+        #close-full-screen-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 1rem;
+            z-index: 9;
+        }
+        .carousel-item {
+            height: 100vh;
+            &.carousel-item-prev,
+            &.carousel-item-next,
+            &.active {
+                display: flex;
+                align-items: center;
+            }
+        }
+        .carousel-item a {
+            cursor: default;
+        }
+        .carousel-item img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+        }
+        .product-carousel-thumbnails {
+            display: none !important;
+        }
+        .carousel-indicators {
+            background-color: rgba(black, .25);
+            border-radius: $border-radius;
+            width: 100%;
+            margin: 0!important;
+            li {
+                background-color: white !important;
+            }
+        }
+        .carousel-control-prev,
+        .carousel-control-next {
+            height: 80vh;
+            transform: translateY(10vh);
+            z-index: 9;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: none !important;
+            background-color: rgba(black, .25);
+            border-radius: 50%;
+            background-size: 75%;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+        .carousel-caption {
+            width: 100%;
+            max-width: 768px;
+            margin: 0 !important;
+            padding: 0 !important;
+            position: absolute;
+            left: 50%;
+            right: auto;
+            bottom: 2.5rem;
+            transform: translateX(-50%);
+            p {
+                color: white! important;
+                background: rgba(black, .5);
+                border-radius: $border-radius;
+                margin: 0 1rem;
+                padding: .5rem .75rem;
+                display: inline-block
+            }
+        }
+    }
+}
