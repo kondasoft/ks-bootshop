@@ -150,5 +150,101 @@
                 "default": true
             }
         ]
+    },
+    {
+        "name": "Toast",
+        "settings": [
+            {
+                "type": "paragraph",
+                "content": "Toast is used to display various important global messages usually via ajax. (E.g: When adding products to cart) [Learn more](https://getbootstrap.com/docs/4.5/components/toasts/)"
+            },
+            {
+                "type": "header",
+                "content": "General settings"
+            },
+            {
+                "type": "select",
+                "id": "toast_position",
+                "label": "Position",
+                "default": "bottom-right",
+                "options": [
+                    {
+                        "value": "bottom-left",
+                        "label": "Bottom left"
+                    },
+                    {
+                        "value": "bottom-center",
+                        "label": "Bottom center"
+                    },
+                    {
+                        "value": "bottom-right",
+                        "label": "Bottom right"
+                    }
+                ]
+            },
+            {
+                "type": "range",
+                "id": "toast_delay",
+                "min": 10,
+                "max": 60,
+                "step": 1,
+                "unit": "sec",
+                "label": "Autohide",
+                "default": 10
+            },
+            {
+                "type": "text",
+                "id": "toast_img_width",
+                "label": "Image width (px)",
+                "default": "60"
+            },
+            {
+                "type": "text",
+                "id": "toast_img_height",
+                "label": "Image height (px)",
+                "default": "60"
+            },
+            {
+                "type": "checkbox",
+                "id": "toast_img_thumbnail",
+                "label": "Image border",
+                "default": true
+            },
+            {
+                "type": "select",
+                "id": "toast_btn_color",
+                "label": "Button color",
+                "default": "btn-primary",
+                "options": [
+                    { "group": "Normal", "value": "btn-link", "label": "Link" },
+                    { "group": "Normal", "value": "btn-light", "label": "Light" },
+                    { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                    { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                    { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                    { "group": "Normal", "value": "btn-success", "label": "Success" },
+                    { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                    { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                    { "group": "Normal", "value": "btn-info", "label": "Info" },
+                    { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                    { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                    { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                    { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                    { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                    { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                    { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "toast_btn_size",
+                "label": "Button size",
+                "default": "btn-sm",
+                "options": [
+                    { "value": "btn-sm", "label": "Small" },
+                    { "value": "", "label": "Normal" },
+                    { "value": "btn-lg", "label": "Large" }
+                ]
+            }
+        ]
     }
 ]

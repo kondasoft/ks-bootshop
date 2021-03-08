@@ -1,0 +1,106 @@
+{% capture max_width %}
+    {% unless section.settings.max_width == blank %}
+        {{ section.settings.max_width | prepend: 'max-width: ' | append: 'px;' }}
+    {% endunless %}
+{% endcapture %}
+
+<article class="">
+
+    <div 
+        class="container mx-auto"
+        style="{{ max_width }}">
+
+        <!-- Image -->
+        {% unless section.settings.img == blank %}
+            {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+            <img 
+                class="img-fluid mb-5 {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}" 
+                src="{{ section.settings.img | img_url: img_size, crop: 'center' }}" 
+                alt="{{ section.settings.img.alt }}"
+                width="{{ section.settings.img_width }}" 
+                height="{{ section.settings.img_height }}">
+        {% endunless %}
+
+        <!-- Header -->
+        <header class="heading-wrapper mb-2 overflow-hidden text-center">
+
+            <!-- Heading -->
+            <h1 class="heading {{ section.settings.heading_size }}">
+                {{ page.title }}
+            </h1>
+
+        </header>
+
+        <!-- Description -->
+        <div class="description rte">
+            {{ page.content }}
+        </div>
+
+    </div>
+</article>
+
+{% schema %}
+{
+    "name": "About us - page",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "text",
+            "id": "max_width",
+            "label": "Content max-width (px)",
+            "info": "Adjust post content width (in pixels). Leave empty to use the container.",
+            "default": "768"
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "display-5",
+            "options": [
+                { "group": "Display", "value": "display-1", "label": "Display 1" },
+                { "group": "Display", "value": "display-2", "label": "Display 2" },
+                { "group": "Display", "value": "display-3", "label": "Display 3" },
+                { "group": "Display", "value": "display-4", "label": "Display 4" },
+                { "group": "Display", "value": "display-5", "label": "Display 5" },
+                { "group": "Display",  "value": "display-6", "label": "Display 6" },
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Main image"
+        },
+        {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "1200"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "675"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image border",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

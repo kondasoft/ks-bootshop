@@ -2,18 +2,29 @@
     "general": {
         "close": "Close",
         "from": "From",
+        "loading": "Loading",
         "previous": "Previous",
         "next": "Next",
         "404": {
-            "subtext_html": "The page you were looking for does not exist",
-            "title": "Not found"
+            "title": "404 - Not Found",
+            "subtext_html": "The page you were looking for does not exist!",
+            "go_homepage": "Go to homepage"
         },
         "accessibility": {
+            "payment_methods": "Payment methods",
             "skip_to_content": "Skip to content",
             "toogle_nav": "Toggle navigation"
         },
         "carousel": {
             "items_count": "{{ from }} from {{ total }}"
+        },
+        "contact": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone (optional)",
+            "message": "Message",
+            "send": "Send",
+            "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
         },
         "footer": {
             "secure_payments": "100% secure and protected payments"
@@ -95,12 +106,15 @@
         "no_posts_html": "No published blog posts yet. View <a href=\"{{ blog_url }}\">all posts</a> or go to the <a href=\"/\">homepage</a>"
     },
     "cart": {
+        "applied_discounts": "Applied discounts",
         "browse_shop": "Browse all products",
         "checkout": "Checkout",
-        "empty": "Your cart is currently empty.",
+        "empty_html": "Your cart is currently empty. <a href=\"\/collections\/all\">Continue shopping »<\/a>",
         "discount": "Discount",
+        "heading": "Your cart",
         "note": "Special instructions for your order",
         "quantity": "Quantity",
+        "remove": "Remove",
         "subtotal": "Subtotal",
         "summary": "Summary",
         "taxes_shipping_at_checkout_html": "Taxes &amp; <a href=\"policies/shipping-policy\">Shipping</a> calculated at checkout",
@@ -117,12 +131,15 @@
     },
     "product": {
         "add_to_cart": "Add to cart",
+        "added_to_cart": "Added to cart",
         "old_price": "Old price",
         "price_from": "From",
         "quantity": "Quantity",
         "quick_view": "Quick view",
+        "select_variant": "Select variant",
         "sku": "SKU",
         "sold_out": "Sold Out",
+        "tagged": "Tagged",
         "type": "Type",
         "unavailable": "Unavailable",
         "view_cart": "View cart"

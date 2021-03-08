@@ -7,7 +7,12 @@
 
 <article
     id="product-{{ product.id }}"
-    class="product">
+    class="product mb-7"
+    data-product-id="{{ product.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title }}"
+    data-featured-image-src="{{ product.featured_image | img_url: 'master' }}"
+    data-variants-json="{{ product.variants | json | escape  }}">
 
     <div class="product-container container">
         <div class="row">
@@ -16,7 +21,7 @@
                 <!-- Product carousel -->
                 <div 
                     id="product-carousel" 
-                    class="product-carousel carousel mb-4 {{ section.settings.carousel_style }} {{ section.settings.carousel_transition | escape }}" 
+                    class="product-carousel carousel sticky-top mb-4 {{ section.settings.carousel_style }} {{ section.settings.carousel_transition | escape }}" 
                     data-bs-ride="carousel"
                     data-bs-pause="hover"
                     data-bs-interval="{% if section.settings.carousel_interval > 0 %}{{ section.settings.carousel_interval | times: 1000 }}{% else %}false{% endif %}"
@@ -48,10 +53,10 @@
                         {% for media in product.media %}
                             <div 
                                 class="carousel-item {% if media.id == current_media_id %}active{% endif %}"
+                                data-media-id="{{ media.id }}"
                                 role="group"
                                 aria-roledescription="slide"
                                 aria-label="{{ forloop.index }} {{ 'general.from' | t }} {{ product.media.size }}">
-
 
                                 {% case media.media_type %}
                                     {% when 'image' %}
@@ -175,6 +180,252 @@
                     {{ product.title }}
                 </h1>
 
+                <!-- Vendor -->
+                {% if section.settings.show_vendor and product.vendor != blank %}
+                    <p class="product-vendor text-muted mb-3">
+                        {{ product.vendor }}
+                    </p>
+                {% endif %}
+
+                <!-- Type -->
+                {% if section.settings.show_type and product.type != blank %}
+                    <p class="product-type text-muted mb-3">
+                        {{ 'product.type' | t }}: {{ product.type }}
+                    </p>
+                {% endif %}
+
+                <!-- SKU -->
+                {% if section.settings.show_sku and current_variant.sku != blank %}
+                    <p class="product-sku text-muted mb-3">
+                        {{ 'product.sku' | t }}: {{ current_variant.sku }}
+                    </p>
+                {% endif %}
+
+                <!-- Price -->
+                <p class="product-price lead">
+                    <s class="price-compare text-muted me-1 {% if current_variant.compare_at_price > current_variant.price %}d-inline-block{% else %}d-none{% endif %}">
+                        <span class="visually-hidden">
+                            {{ 'product.old_price' | t }}
+                        </span>
+                        <span class="price-compare-text">
+                            {{ current_variant.compare_at_price | money }}
+                        </span>
+                    </s>
+                    <span class="price">
+                        {{ current_variant.price | money }}
+                    </span>
+                </p>
+
+                <!-- Add to cart form -->
+                {% form 'product', product,  class: 'bg-light py-5 px-5 mb-6' %}
+                    
+                    {% if product.has_only_default_variant %}
+                        <input type="hidden" name="id" value="{{ current_variant.id }}">
+                    {% else %}
+
+                        <!-- Variant select (no-js) -->
+                        <div class="variant-select-wrapper no-js form-group">
+                            <select
+                                name="id" 
+                                class="form-select"
+                                aria-label="{{ 'product.select_variant' | t }}">
+                                {% for variant in product.variants %}
+                                    <option 
+                                        value="{{ variant.id }}"
+                                        data-options="{{ variant.options | join: '-' }}"
+                                        {% if variant == current_variant %}selected{% endif %}>
+                                        {{ variant.title }} - {{ variant.price | money }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Options select (js) -->
+                        <div class="option-select-wrapper js pb-2">
+                            {% for option in product.options_with_values %}
+                                <div class="input-group mb-3">
+                                    <label 
+                                        class="input-group-text" 
+                                        for="option-select-{{ option.name | handleize }}">
+                                        {{ option.name }}
+                                    </label>
+                                    <select
+                                        id="option-select-{{ option.name | handleize }}"
+                                        class="option-select form-select">
+                                        {% for value in option.values %}
+                                            <option
+                                                value="{{ value | escape }}"
+                                                {% if option.selected_value == value %}selected{% endif %}>
+                                                {{ value | escape }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    {% endif %}
+
+                    <div class="add-to-cart-btn-wrapper d-flex">
+
+                        <!-- Quantity field -->
+                        {% if section.settings.show_qty %}
+                            <input
+                                id="qty"
+                                type="number"
+                                class="form-control me-2"
+                                size="20" 
+                                name="quantity" 
+                                value="1" 
+                                min="1"
+                                data-bs-toggle="tooltip" 
+                                data-bs-placement="bottom" 
+                                aria-label="{{ 'product.quantity' | t }}"
+                                title="{{ 'product.quantity' | t }}"
+                                style="max-width: 100px;">
+                        {% endif %}
+
+                        <!-- Add to cart button -->
+                        {% if section.settings.show_add_to_cart_button %}
+                            <button
+                                class="add-to-cart-btn btn btn-primary btn-block d-flex align-items-center justify-content-center flex-grow-1"
+                                type="submit"
+                                {% unless current_variant.available %}disabled{% endunless %}>
+                                    
+                                    <span class="add-to-cart-btn-icon-cart d-inline-flex">
+                                        {% render 'icon-cart' size: 21, class: 'me-2' %}
+                                    </span>
+
+                                    <span class="add-to-cart-btn-icon-loading d-inline-flex d-none">
+                                        <span
+                                            class="spinner-border spinner-border-sm me-2" 
+                                            role="status" 
+                                            aria-hidden="true">
+                                        </span>
+                                    </span>
+
+                                    <span class="add-to-cart-btn-text">
+                                        {% if current_variant.available %}
+                                            {{ 'product.add_to_cart' | t }}
+                                        {% else %}
+                                            {{ 'product.sold_out' | t }}
+                                        {% endif %}
+                                    </span>
+                            </button>
+                        {% endif %}
+
+                    </div>
+
+                    {% if section.settings.show_buy_it_now_button %}
+                        <div class="payment-button mt-4">
+                            {{ form | payment_button }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Taxes/Shipping notice -->
+                    {% if section.settings.show_taxes_shipping_notice %}
+                        <p 
+                            class="taxes-shipping-notice text-muted fst-italic text-center small mt-3 mb-n1">
+                            {{ 'cart.taxes_shipping_at_checkout_html' | t }}
+                        </p>
+                    {% endif %}
+
+                {% endform %}
+
+                <!-- Payment icons -->
+                {% if section.settings.show_payment_icons and shop.enabled_payment_types != empty %}
+                    <div class="payment-icons text-center mb-6">
+                        <span class="visually-hidden">
+                            {{ 'general.accessibility.payment_methods' | t }}
+                        </span>
+                        <ul class="list-inline text-center mb-2">
+                            {% for type in shop.enabled_payment_types %}
+                                <li 
+                                    class="list-inline-item mr-1" 
+                                    data-bs-toggle="tooltip" 
+                                    data-bs-placement="top" 
+                                    title="{{ type | replace: "_", " " | camelcase }}">
+                                    {{ type | payment_type_svg_tag: class: 'icon' }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <p class="mb-0 text-muted font-italic small">
+                            {{ 'general.footer.secure_payments' | t }}
+                        </p>
+                    </div>
+                {% endif %}
+
+                <!-- Product accordion -->
+                <div 
+                    id="product-accordion" 
+                    class="product-accordion accordion mb-5 {{ section.settings.accordion_style }}">
+
+                    {% for block in section.blocks %}
+                        <div class="accordion-item">
+                            <h3 
+                                id="product-accordion-heading-{{ block.id }}"
+                                class="accordion-header mb-0">
+                                <button 
+                                    class="accordion-button {% if forloop.index > 1 %}collapsed{% endif %}" 
+                                    type="button"
+                                    data-bs-toggle="collapse" 
+                                    data-bs-target="#product-accordion-collapse-{{ block.id }}" 
+                                    aria-expanded="true" 
+                                    aria-controls="product-accordion-collapse-{{ block.id }}">
+                                    {{ block.settings.title | escape }}
+                                </button>
+                            </h3>
+                    
+                            <div 
+                                id="product-accordion-collapse-{{ block.id }}" 
+                                class="accordion-collapse collapse {% if forloop.index == 1 %}show{% endif %}" 
+                                data-bs-parent="#product-accordion"
+                                aria-labelledby="product-accordion-heading-{{ block.id }}">
+                                <div class="accordion-body">
+                                    {% if block.type == 'description' %}
+                                        <div class="rte">
+                                            {{ product.description | replace: '<img ', '<img class="img-fluid" ' }}
+                                        </div>
+                                    {% endif %}
+                                    {% if block.type == 'richtext' %}
+                                        <div class="rte">
+                                            {{ block.settings.description }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+        
+                </div>
+
+                <!-- Social sharing -->
+                {% if section.settings.show_social_sharing %}
+                    <div class="product-social-sharing mb-6">
+                        {% render 'social-sharing' with share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+                    </div>
+                {% endif %}
+
+                <!-- Tags -->
+                {% if section.settings.show_tags and product.tags.size > 0 %}
+                    <div
+                        class="product-tags d-flex align-items-center justify-content-end border-top pt-3 mb-4" 
+                        style="line-height: normal;">
+                        <p class="mb-0 me-2 small text-muted">
+                            {{ 'product.tagged' | t }}:
+                        </p>
+                        <ul class="list-unstyled list-inline m-0">
+                            {% for tag in product.tags %}
+                                {% unless tag contains '__' %}
+                                    <li class="list-inline-item mr-1">
+                                        {{ tag | link_to_tag: tag | replace: 'title=', 'class="btn btn-light btn-sm" title=' }}
+                                    </li>
+                                {% endunless %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
             </div>
 
         </div>
@@ -184,7 +435,7 @@
 
 {% schema %}
 {
-    "name": "Product pages",
+    "name": "Product page",
     "settings": [
         {
             "type": "header",
@@ -211,15 +462,78 @@
             ]
         },
         {
-            "type": "header",
-            "content": "Image gallery (carousel)"
+            "type": "checkbox",
+            "id": "show_vendor",
+            "label": "Show vendor",
+            "default": false
         },
         {
             "type": "checkbox",
-            "id": "carousel_img_square",
-            "label": "Square images",
-            "info": "Disable to prevent image cropping",
+            "id": "show_type",
+            "label": "Show product type",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_sku",
+            "label": "Show sku",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_qty",
+            "label": "Show quantity",
             "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_add_to_cart_button",
+            "label": "Show 'Add to cart' button",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_buy_it_now_button",
+            "label": "Show 'Buy it now' button",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "show_taxes_shipping_notice",
+            "label": "Show Taxes/Shipping notice",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_payment_icons",
+            "label": "Show payment icons",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_sharing",
+            "label": "Show social sharing",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_tags",
+            "label": "Show tags",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "accordion_style",
+            "label": "Accodion style",
+            "default": "",
+            "options": [
+                { "value": "", "label": "Default" },
+                { "value": "accordion-flush", "label": "Flush" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Image gallery (carousel)"
         },
         {
             "type": "range",
@@ -282,6 +596,13 @@
             "step": 1
         },
         {
+            "type": "checkbox",
+            "id": "carousel_img_square",
+            "label": "Square images",
+            "info": "Disable to prevent image cropping",
+            "default": true
+        },
+        {
             "type": "select",
             "id": "carousel_video_ratio",
             "label": "Video aspect ratio.",
@@ -311,6 +632,55 @@
             "label": "Full-screen / Show Indicators",
             "default": true
         }
-    ]
+    ],
+    "blocks": [
+        {
+            "type": "description",
+            "name": "Product description",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Details"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "name": "Richtext",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Rich text"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
+        }
+    ],
+    "default": {
+        "blocks": [
+            {
+                "type": "description",
+                "settings": {
+                    "title": "Details"
+                }
+            },
+            {
+                "type": "richtext",
+                "settings": {
+                    "title": "Rich text",
+                    "description": "<p>Feel free to create additional blocks like this for <strong>Shipping, Payments, etc</strong> through the Shopify Theme editor. Also, you may easily adjust their order by dragging and dropping.</p>"
+                }
+            }
+        ]
+    }
 }
 {% endschema %}

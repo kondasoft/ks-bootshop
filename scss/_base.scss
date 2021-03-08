@@ -3,6 +3,14 @@
     https://www.kondasoft.com
 */
 
+// Javascript enabled/disabled
+.no-js .js { display: none }
+.js .no-js { display: none }
+
+// Cookies enabled/disabled
+.no-cookies .cookies { display: none }
+.cookies .no-cookies { display: none }
+
 // Body
 body {
     background-color: var(--color-body-bg);
@@ -27,7 +35,8 @@ a:hover {
 }
 
 // Forms
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
     border-color: var(--color-primary-alpha-25);
     box-shadow: 0 0 0 0.25rem var(--color-primary-alpha-25);
 }
@@ -62,12 +71,14 @@ a:hover {
 }
 
 // Buttons - Primary
-.btn-primary {
+.btn-primary,
+.btn-primary:disabled {
     background: var(--color-primary);
     border-color: var(--color-primary);
 }
 
-.btn-outline-primary {
+.btn-outline-primary,
+.btn-outline-primary:disabled  {
     color: var(--color-primary);
     border-color: var(--color-primary);
 }
@@ -93,12 +104,14 @@ a:hover {
 }
 
 // Buttons - Secondary
-.btn-secondary {
+.btn-secondary,
+.btn-secondary:disabled {
     background: var(--color-secondary);
     border-color: var(--color-secondary);
 }
 
-.btn-outline-secondary {
+.btn-outline-secondary,
+.btn-outline-secondary:disabled {
     color: var(--color-secondary);
     border-color: var(--color-secondary);
 }
@@ -124,12 +137,14 @@ a:hover {
 }
 
 // Buttons - Dark
-.btn-dark {
+.btn-dark,
+.btn-dark:disabled {
     background: var(--color-dark);
     border-color: var(--color-dark);
 }
 
-.btn-outline-dark {
+.btn-outline-dark,
+.btn-outline-dark:disabled {
     color: var(--color-dark);
     border-color: var(--color-dark);
 }
@@ -155,7 +170,8 @@ a:hover {
 }
 
 // Buttons - Light
-.btn-light {
+.btn-light,
+.btn-light:disabled {
     background: var(--color-light);
     border-color: var(--color-light);
 }
@@ -232,6 +248,34 @@ a:hover {
     .accordion-body {
         p:last-child {
             margin-bottom: 0;
+        }
+    }
+}
+
+// Toast
+// Toast
+.toast-wrapper {
+    display: flex;
+    &.bottom-left {
+        margin-left: 15px;
+    }
+    &.bottom-center {
+        justify-content: center;
+    }
+    &.bottom-right {
+        justify-content: flex-end;
+        margin-right: 15px;
+    }
+    .toast {
+        z-index: 99999999999999999;
+        position: fixed;
+        min-width: 280px;
+        bottom: 15px;
+        margin-bottom: 0!important;
+        background-color: rgba(white, .95);
+        @include media-breakpoint-down(sm) {
+            width: calc(100% - 30px);
+            max-width: none;
         }
     }
 }

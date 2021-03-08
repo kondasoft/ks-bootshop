@@ -8,6 +8,11 @@
     ul, ol {
         margin-bottom: 1.25rem;
     }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
 }
 
 
@@ -31,5 +36,27 @@ input[id*=address_default_address] {
     ul {
         @extend .list-unstyled;
         margin-bottom: 0;
+    }
+}
+
+// Payment button (Buy it now)
+.shopify-payment-button {
+    .shopify-payment-button__button {
+        @extend .btn;
+        @extend .btn-secondary;
+        &:hover:not([disabled]) {
+            background: var(--color-secondary-darken-10);
+        }
+        &:active:focus {
+            box-shadow: 0 0 0 0.25rem var(--color-secondary-alpha-25);
+        }
+    }
+    .shopify-payment-button__more-options {
+        margin-top: .5rem;
+        font-size: 90%;
+        color: $text-muted;
+    }
+    .shopify-payment-button__button--hidden {
+        display: none !important;
     }
 }

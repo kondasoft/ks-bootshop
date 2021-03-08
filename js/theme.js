@@ -12,9 +12,14 @@
 require('./base');
 
 // Theme scripts
+require('./cart');
 require('./collection');
 require('./map');
 require('./navbar');
 require('./newsletter');
-require('./product');
+require('./product-add-to-cart');
+require('./product-carousel');
+require('./product-options');
+require('./product-recommended');
 require('./search');
+require('./shopify');

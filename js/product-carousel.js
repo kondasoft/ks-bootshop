@@ -3,13 +3,13 @@
     https://www.kondasoft.com
 */
 
-// Define elements
-const carousel = document.getElementById('product-carousel');
+// Get carousel
+const carouselEl = document.getElementById('product-carousel');
 
 // Handle product gallery active class (carousel)
-if (carousel) {    
-    carousel.addEventListener('slide.bs.carousel', event => {
-        Array.from(carousel.getElementsByClassName('product-carousel-thumbnails-item')).forEach(function(el, index) {
+if (carouselEl) {    
+    carouselEl.addEventListener('slide.bs.carousel', event => {
+        Array.from(carouselEl.getElementsByClassName('product-carousel-thumbnails-item')).forEach(function(el, index) {
             if (index == event.to) {
                 el.classList.add('active');
                 el.getElementsByTagName('img')[0]
@@ -24,12 +24,12 @@ if (carousel) {
 }
      
 // Handle product gallery full-screen click
-if (carousel) {
-    carousel.querySelectorAll('.carousel-item a').forEach(item => {
+if (carouselEl) {
+    carouselEl.querySelectorAll('.carousel-item a').forEach(item => {
         item.addEventListener('click', event => {
             event.preventDefault();
             if (document.fullscreenEnabled) {
-                carousel.requestFullscreen();
+                carouselEl.requestFullscreen();
             }
         });
     });
@@ -47,10 +47,10 @@ if (closeFullScreenBtn) {
 // Adjust product gallery based on 'fullscreenchange' event
 document.addEventListener('fullscreenchange', () => {
     if (document.fullscreenElement) {
-        carousel.classList
+        carouselEl.classList
             .add('full-screen');
 
-        carousel.querySelectorAll('.carousel-item')
+        carouselEl.querySelectorAll('.carousel-item')
             .forEach(item => {
                 const img = item.getElementsByTagName('img')[0];
                 const newImgSrc = item.getElementsByTagName('a')[0].href;
@@ -58,9 +58,9 @@ document.addEventListener('fullscreenchange', () => {
             });
 
     } else {
-        carousel.classList.remove('full-screen');
+        carouselEl.classList.remove('full-screen');
 
-        carousel.querySelectorAll('.carousel-item')
+        carouselEl.querySelectorAll('.carousel-item')
             .forEach(item => {
                 const img = item.getElementsByTagName('img')[0];
                 img.src = img.dataset.src;
@@ -73,9 +73,9 @@ document.addEventListener('fullscreenchange', () => {
 
 
 // Stop videos on slide change
-if (carousel) {    
-    carousel.addEventListener('slid.bs.carousel', event => {
-        Array.from(carousel.getElementsByClassName('carousel-item'))
+if (carouselEl) {    
+    carouselEl.addEventListener('slid.bs.carousel', event => {
+        Array.from(carouselEl.getElementsByClassName('carousel-item'))
             .forEach(function(el, index) {
 
                 if (index == event.from) {
@@ -93,4 +93,17 @@ if (carousel) {
 
             });
     });
+}
+
+// Adjust sticky-top class for carousel
+if (carouselEl && carouselEl.classList.contains('sticky-top')) {
+    const navbarEl      = document.querySelector('#navbar.navbar-sticky');
+    let navbarHeight    = 0;
+
+    if (navbarEl) {
+        navbarHeight = navbarEl.clientHeight;
+    }
+
+    carouselEl.style.top = navbarHeight + 20 + 'px';
+    carouselEl.style.zIndex = 1019;
 }

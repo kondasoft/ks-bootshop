@@ -11,7 +11,7 @@
     {% if section.settings.show_sep %}
         <hr 
             class="my-0"
-            style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
+            style="{{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
     {% endif %}
 
     <div
@@ -59,7 +59,7 @@
                         id="footer-payment-icons"
                         class="my-4 text-center">
                         <span class="visually-hidden">
-                            {{ 'general.payment_methods' | t }}
+                            {{ 'general.accessibility.payment_methods' | t }}
                         </span>
                         <ul class="list-inline mb-1">
                             {% for type in shop.enabled_payment_types %}

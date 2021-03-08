@@ -1,0 +1,43 @@
+
+
+{% comment %}
+    Toast
+    We use toast (snackbar) as way to display various ajax messages like
+    when you add an item to cart. Toasts are fully accessible.
+{% endcomment %}
+
+<div
+    id="toast-wrapper"
+    class="toast-wrapper {{ settings.toast_position }}">
+    <div 
+        id="toast" 
+        class="toast hide"
+        data-bs-delay="{{ settings.toast_delay | times: 1000 }}"
+        data-img-width="{{ settings.toast_img_width }}"
+        data-img-height="{{ settings.toast_img_height }}"
+        data-img-thumbnail="{{ settings.toast_img_thumbnail }}"
+        data-btn-color="{{ settings.toast_btn_color }}"
+        data-btn-size="{{ settings.toast_btn_size }}"
+        aria-live="assertive" 
+        aria-atomic="true">
+
+        <div class="toast-header">
+            <strong class="me-auto d-flex align-items-center">
+                <!-- Auto injected via JS -->
+            </strong>
+            <button 
+                type="button" 
+                class="btn-close ml-2 mb-1"
+                data-bs-dismiss="toast"
+                aria-label="{{ 'general.close' | t }}">
+            </button>
+        </div>
+
+        <div class="toast-body">
+            <!-- Auto injected via JS -->
+        </div>
+        <div class="toast-footer border-top mx-3 py-3">
+            <!-- Auto injected via JS -->
+        </div>
+    </div>
+</div>

@@ -44,10 +44,10 @@
                 class="navbar-nav align-items-center">
                 {% if section.settings.show_search %}
                     <li
-                        id="search-dropdown"
+                        id="search-nav-item"
                         class="nav-item dropdown">
                         <a 
-                            id="minisearch-button"
+                            id="search-nav-link"
                             class="nav-link d-flex {% if template.name == 'search' %}active{% endif %}" 
                             href="#"
                             data-bs-toggle="dropdown"
@@ -61,13 +61,15 @@
                         </a>
                         <div
                             class="dropdown-menu dropdown-menu-end p-3 {{ dropdown_style }}"
-                            aria-labelledby="minisearch-button">
+                            aria-labelledby="search-nav-link">
                             {% render 'mini-search' %}
                         </div>
                     </li>
                 {% endif %}
                 {% if section.settings.show_account and shop.customer_accounts_enabled %}
-                    <li class="nav-item d-none d-{{ section.settings.breakpoint }}-block">
+                    <li 
+                        id="account-nav-item"
+                        class="nav-item d-none d-{{ section.settings.breakpoint }}-block">
                         <a 
                             class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
                             href="{{ routes.account_url }}"
@@ -79,27 +81,32 @@
                         </a>
                     </li>
                 {% endif %}
-                <li class="nav-item dropdown">
+                <li 
+                    id="cart-nav-item"
+                    class="nav-item dropdown">
                     <a
-                        id="minicart-button"
-                        class="nav-link d-flex {% if template.name == 'cart' %}active{% endif %}" 
+                        id="cart-nav-link"
+                        class="nav-link d-flex align-items-center {% if template.name == 'cart' %}active{% endif %}" 
                         href="#"
                         data-bs-toggle="dropdown"
                         aria-current="{% if template.name == 'cart' %}page{% endif %}"
                         aria-expanded="false"
                         role="button">
-                        {% if cart.item_count == 0 %}
-                            {% render 'icon-cart' size: 22 %}
-                        {% else %}
-                            {% render 'icon-cart' size: 22 %}
-                        {% endif %}
+                        {% render 'icon-cart' size: 22 %}
                         <span class="visually-hidden">
                             {{ 'general.navbar.cart' | t }}
                         </span>
+                        {% if cart.item_count > 0 %}
+                            <span 
+                                class="badge d-inline-block ms-1 px-1"
+                                style="{{ section.settings.cart_badge_color | prepend: 'background-color: ' | append: ';' }}">
+                                {{ cart.item_count }}
+                            </span>
+                        {% endif %}
                     </a>
                     <div
                         class="dropdown-menu dropdown-menu-end p-3 {{ dropdown_style }}"
-                        aria-labelledby="minicart-button">
+                        aria-labelledby="cart-nav-link">
                         {% render 'mini-cart' %}
                     </div>
                 </li>
@@ -278,6 +285,13 @@
             "id": "show_account",
             "label": "Show Account",
             "default": true
+        },
+        {
+            "type": "color",
+            "id": "cart_badge_color",
+            "label": "Cart badge color",
+            "info": "Visible only when there are items in cart",
+            "default": "#0d6efd"
         },
         {
             "type": "header",

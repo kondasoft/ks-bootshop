@@ -29,9 +29,10 @@
         ]
     },
     "globals": {
+        "Shopify": true,
         "bootstrap": true,
         "google": true,
         "initMap": true,
-        "lightGallery": true
+        "toast": true
     }
 }

@@ -1,0 +1,316 @@
+<article>
+    <!-- Heading -->
+    <header class="heading-wrapper mb-4 overflow-hidden text-center">
+        <h1 class="heading mb-1 {{ section.settings.heading_size }}">
+            {{ 'cart.heading' | t }}
+        </h1>
+        {% unless section.settings.subheading == blank %}
+            <div class="subheading rte text-muted {{ section.settings.subheading_size }}">
+                {{ section.settings.subheading }}
+            </div>
+        {% endunless %}
+    </header>
+    <div class="container">
+        <!-- Empty cart -->
+        {% if cart.item_count == 0 %}
+            <p 
+                id="cart-empty" 
+                class="alert alert-warning mb-9">
+                {{ 'cart.empty_html' | t }}
+            </p>
+        <!-- Has items -->
+        {% else %}
+            <form 
+                id="cart-form"
+                action="/cart" 
+                method="post">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <ul class="cart-product-list list-unstyled overflow-hidden mb-2">
+                            {% for line_item in cart.items %}
+                                <li 
+                                    class="cart-product-item row align-items-center mb-5 gx-4"
+                                    data-line-item-id="{{ forloop.index }}">
+                                    <div class="col-4">
+                                        <a href="{{ line_item.url }}">
+                                            {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                                            <img 
+                                                class="cart-product-item-img img-fluid {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
+                                                src="{{ line_item.image | img_url: img_size, crop: 'center' }}"
+                                                alt="{{ line_item.image.alt | escape }}" 
+                                                width="{{ section.settings.img_width }}"
+                                                height="{{ section.settings.img_height }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-8 d-flex d-lg-block justify-content-between align-items-center">
+                                        <div class="flex-left-area">
+                                            <!-- Item title -->
+                                            <h3 class="product-item-title h6 mb-1">
+                                                <a href="{{ line_item.url }}">
+                                                    {{ line_item.quantity }} x {{ line_item.product.title }}
+                                                </a>
+                                            </h3>
+                                            <!-- Variant title -->
+                                            {% unless line_item.product.has_only_default_variant %}
+                                                <p class="product-item-variant text-muted mb-2 small">
+                                                    {{ line_item.variant.title }}
+                                                </p>
+                                            {% endunless %}
+                                            <!-- Product price -->
+                                            <p class="product-item-price mb-3">
+                                                {% if line_item.variant.compare_at_price > line_item.price %}
+                                                    <s class="price-compare text-muted me-1">
+                                                        <span class="visually-hidden">
+                                                            {{ 'product.old_price' | t }}
+                                                        </span>
+                                                        {{ line_item.variant.compare_at_price | money }}
+                                                    </s>
+                                                {% endif %}
+                                                <span class="price">
+                                                    {{ line_item.variant.price | money }}
+                                                </span>
+                                            </p>
+                                            <!-- Product quantity -->
+                                            {% if section.settings.show_qty %}
+                                                <div class="mb-lg-2" style="max-width: 75px;">
+                                                    <input
+                                                        type="number" 
+                                                        name="updates[]" 
+                                                        id="updates_{{ line_item.key }}"
+                                                        class="product-item-qty form-control form-control-sm"
+                                                        value="{{ line_item.quantity }}" 
+                                                        min="1"
+                                                        data-line="{{ forloop.index }}"
+                                                        aria-label="{{ 'cart.quantity' | t }}">
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="flex-right-area">
+                                            <!-- Remove button -->
+                                            <button
+                                                class="product-item-remove btn btn-light text-danger btn-sm mt-1"
+                                                title="{{ 'cart.remove' | t }}"
+                                                data-line="{{ forloop.index }}">
+                                                {% render 'icon-trash' with size: 18 %}
+                                                <span class="visually-hidden">
+                                                    {{ 'cart.remove' | t }}
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% unless forloop.last %}
+                                    <hr>
+                                {% endunless %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        
+                        <!-- Cart Summary -->
+                        <div id="cart-summary" class="sticky-top">
+                            <footer class="bg-light border mb-4 p-4 rounded">
+
+                                <!-- Cart Applied Discounts -->
+                                {% if cart.discount_applications.size > 0 %}
+                                    <div class="alert alert-info text-center mb-4">
+                                        <h5 class="mb-1">
+                                            {{ 'cart.applied_discounts' | t }}:
+                                        </h5>
+                                        <ul class="mb-n1 list-unstyled">
+                                            {% for discount_application in cart.discount_applications %}
+                                                <li class="my-1">
+                                                    {{ discount_application.title }}: <br>
+                                                    <b>-{{ discount_application.total_allocated_amount | money }}</b>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+                                <h2 class="h4 mb-3">
+                                    {{ 'cart.summary' | t }}
+                                </h2>
+                            
+                                <!-- Note -->
+                                {% if section.settings.show_note %}
+                                    <textarea
+                                        id="cart-note"
+                                        rows="{{ section.settings.note_rows }}" 
+                                        class="form-control mb-5" 
+                                        name="note" 
+                                        placeholder="{{ 'cart.note' | t }}" 
+                                        aria-label="{{ 'cart.note' | t }}">{{ cart.note }}</textarea> {%- comment -%} Live this line as this to prevent empty spaces {%- endcomment -%}
+                                {% endif %}
+
+                                <!-- Subtotal -->
+                                <p 
+                                    id="cart-subtotal" 
+                                    class="d-flex justify-content-between mb-3 lead">
+                                    <span>
+                                        {{ 'cart.subtotal' | t }}
+                                    </span>
+                                    <span 
+                                        id="cart-subtotal" 
+                                        class="d-block">
+                                        {% if cart.original_total_price > cart.total_price %}
+                                            <s class="text-muted d-inline-block me-1">
+                                                {{ cart.original_total_price | money }}
+                                            </s>
+                                        {% endif %}
+                                        <strong>
+                                            {{ cart.total_price | money }}
+                                        </strong>
+                                    </span>
+                                </p>
+                                
+                                <hr>
+                                
+                                <!-- Taxes & shipping at checkout -->
+                                <p id="taxes-shipping-at-checkout" class="text-muted text-center font-italic">
+                                    {{ 'cart.taxes_shipping_at_checkout_html' | t }}
+                                </p>
+
+                                <noscript>
+                                    <!-- Update button (hidden on JS) -->
+                                    <input id="update-btn" class="btn btn-link btn-block mt-2" type="submit" name="update" value="{{ 'cart.update' | t }}">
+                                </noscript>
+
+                                <!-- Checkout button -->
+                                <input 
+                                    id="checkout-btn" 
+                                    type="submit" 
+                                    name="checkout"
+                                    class="btn btn-primary btn-lg w-100" 
+                                    value="{{ 'cart.checkout' | t }}">
+                            </footer>
+
+                            <!-- Payment icons -->
+                            {% if section.settings.show_payment_icons and shop.enabled_payment_types != empty %}
+                                <div class="payment-icons text-center">
+                                    <span class="visually-hidden">
+                                        {{ 'general.accessibility.payment_methods' | t }}
+                                    </span>
+                                    <ul class="list-inline text-center mb-2">
+                                        {% for type in shop.enabled_payment_types %}
+                                            <li 
+                                                class="list-inline-item mr-1" 
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top" 
+                                                title="{{ type | replace: "_", " " | camelcase }}">
+                                                {{ type | payment_type_svg_tag: class: 'icon' }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p class="mb-0 text-muted font-italic small">
+                                        {{ 'general.footer.secure_payments' | t }}
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>    
+            </form>
+
+        {% endif %}
+    </div>
+
+</article>
+
+{% schema %}
+{
+    "name": "Cart page",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "select",
+            "id": "heading_size",
+            "label": "Heading size",
+            "default": "display-5",
+            "options": [
+                { "group": "Display", "value": "display-1", "label": "Display 1" },
+                { "group": "Display", "value": "display-2", "label": "Display 2" },
+                { "group": "Display", "value": "display-3", "label": "Display 3" },
+                { "group": "Display", "value": "display-4", "label": "Display 4" },
+                { "group": "Display", "value": "display-5", "label": "Display 5" },
+                { "group": "Display",  "value": "display-6", "label": "Display 6" },
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "subheading",
+            "label": "Subheading",
+            "info": "Leave empty to disable",
+            "default": "<p>Free Shipping / 30 Days Guarantee</p>"
+        },
+        {
+            "type": "select",
+            "id": "subheading_size",
+            "label": "Subheading size",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "lead", "label": "Large" }
+            ],
+            "default": ""
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "360"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "360"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image border",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_qty",
+            "label": "Show quantity",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Summary"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_note",
+            "label": "Show note field",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "note_rows",
+            "min": 2,
+            "max": 12,
+            "step": 1,
+            "label": "Note rows (height)",
+            "default": 3
+        },
+        {
+            "type": "checkbox",
+            "id": "show_payment_icons",
+            "label": "Show payment icons",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

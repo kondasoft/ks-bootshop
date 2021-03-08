@@ -56,7 +56,7 @@
         {% if blog.comments_enabled? %}
             <hr 
                 class="sep my-6"
-                style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
+                style="{{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
 
             <div id="comments">
 
@@ -186,7 +186,7 @@
         {% if section.settings.show_back_to_btn %}
             <hr 
                 class="sep my-7"
-                style="opacity: 1; {{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
+                style="{{ section.settings.sep_color | prepend: 'background-color: ' | append: ';' }};">
 
             <div class="article-back-to text-center my-5">
                 <a
@@ -211,7 +211,7 @@
 
 {% schema %}
 {
-    "name": "Blog posts pages",
+    "name": "Article page",
     "settings": [
         {
             "type": "header",
