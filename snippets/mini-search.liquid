@@ -7,6 +7,7 @@
         class="form-control" 
         type="search"
         name="q"
+        value="{{ search.terms | escape }}"
         placeholder="{{ 'general.search.label' | t }}..." 
         aria-label="{{ 'general.search.label' | t }}">
     <button

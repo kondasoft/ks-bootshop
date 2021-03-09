@@ -72,8 +72,7 @@
                     <ul class="blog-list list-unstyled">
                         {% for article in blog.articles %}
                             <li 
-                                class="blog-list-item article row align-items-center py-5"
-                                role="article">
+                                class="blog-list-item article row align-items-center py-5">
                                 <div class="col-lg">
                                     {% render 'article-image' with article: article, class: 'mb-3 mb-lg-0'  %}
                                 </div>
@@ -94,8 +93,7 @@
                     <ul class="blog-grid list-unstyled mt-0 row {{ row_ }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {{ gutter_mobile }} {{ gutter_tablet }} {{ gutter_desktop }}">
                         {% for article in blog.articles %}
                             <li 
-                                class="blog-grid-item article col pb-5"
-                                role="article">
+                                class="blog-grid-item article col pb-5">
                                 {% render 'article-image' with article as article, class: 'mb-3' %}
                                 {% render 'article-title' with article as article, heading: 'h2' %}
                                 {% render 'article-meta' with article as article %}

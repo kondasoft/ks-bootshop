@@ -52,8 +52,8 @@
                             class="logo-list-img img-fluid {% if section.settings.img_thumbnail %}img-thumbnail{% else %}rounded{% endif %}"
                             src="{{ block.settings.img | img_url: img_size, crop: 'center' }}"
                             alt="{{ block.settings.img.alt | escape }}" 
-                            width="{{ block.settings.img_width }}"
-                            height="{{ block.settings.img_height }}" 
+                            width="{{ section.settings.img_width }}"
+                            height="{{ section.settings.img_height }}" 
                             loading="lazy">
 
                     {% unless block.settings.url == blank %}

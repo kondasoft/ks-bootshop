@@ -3,10 +3,9 @@
     class="no-js no-touch" 
     lang="{{ shop.locale }}">
     <head>
-        <!-- Page title -->
+
         {% render 'seo-title' %}
 
-        <!-- Metas -->
         <meta charset="utf-8">
         <meta 
             http-equiv="X-UA-Compatible" 
@@ -20,15 +19,20 @@
             name="viewport" 
             content="width=device-width, initial-scale=1">
 
-        <!-- Canonical url -->
         <link 
             rel="canonical" 
             href="{{ canonical_url }}">
         
-        <!-- Header hook for plugins -->
+        {% if settings.favicon != blank %}
+            <link 
+                rel="shortcut icon" 
+                href="{{ settings.favicon | img_url: '32x32' }}" 
+                type="image/png">
+        {% endif %}
+        
         {{ content_for_header }} 
 
-        <!-- Load Styles -->
+        <!-- Styles -->
         <link 
             href="{{ 'variables.css' | asset_url }}" 
             rel="stylesheet">
@@ -39,7 +43,7 @@
             href="{{ 'custom.css' | asset_url }}" 
             rel="stylesheet">
 
-         <!-- Load Scripts -->
+         <!-- Scripts -->
         <script 
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" 
@@ -76,7 +80,6 @@
     </head>
     <body class="template-{{ request.page_type }}">
 
-        <!-- Skip to content link -->
         <a
             id="skip-to-content-link"
             class="visually-hidden-focusable" 
@@ -87,7 +90,6 @@
         {% section 'announcement-bar' %}
         {% section 'navbar' %}
 
-        <!-- Main -->
         <main 
             id="main"
             class="{% if request.page_type != 'index' %}py-7{% endif %}"

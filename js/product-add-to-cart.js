@@ -85,7 +85,7 @@ if (formEl) {
                             <img 
                                 class="me-2 ${toastEl.dataset.imgThumbnail ? 'img-thumbnail' : 'rounded'}" 
                                 src="${Shopify.resizeImage(selectedVariant.featured_image?.src || featuredImageSrc, `${toastEl.dataset.imgWidth}x${toastEl.dataset.imgHeight}_crop_center`)}" 
-                                alt="${selectedVariant.featured_image?.alt}" 
+                                alt="${selectedVariant.featured_image?.alt || ''}" 
                                 width="${toastEl.dataset.imgWidth}" 
                                 height="${toastEl.dataset.imgHeight}" 
                                 style="object-fit: cover">

@@ -25,7 +25,8 @@
                     data-bs-ride="carousel"
                     data-bs-pause="hover"
                     data-bs-interval="{% if section.settings.carousel_interval > 0 %}{{ section.settings.carousel_interval | times: 1000 }}{% else %}false{% endif %}"
-                    aria-roledescription="carousel">
+                    aria-roledescription="carousel"
+                    aria-label="{{ 'general.accessibility.gallery' | t }}">
 
                     <!-- Close button -->
                     <button
@@ -79,7 +80,8 @@
                                                 data-src="{{ media.preview_image | img_url: img_size, crop: 'center' }}"
                                                 alt="{{ media.alt | escape }}"
                                                 width="680"
-                                                height="{{ img_height }}">
+                                                height="{{ img_height }}"
+                                                loading="lazy">
 
                                         {% if section.settings.carousel_full_screen %}
                                             </a>
@@ -142,7 +144,9 @@
 
                     <!-- Thumbnails -->
                     {% if section.settings.carousel_thumbnails and product.media.size > 1 %}
-                        <ol class="product-carousel-thumbnails list-unstyled mx-n1 my-2 row row-cols-{{ section.settings.carousel_thumbnails_row }}">
+                        <ol 
+                            class="product-carousel-thumbnails list-unstyled mx-n1 my-2 row row-cols-{{ section.settings.carousel_thumbnails_row }}"
+                            aria-hidden="true">
                             {% for media in product.media %}
                                 <a
                                     class="product-carousel-thumbnails-item col px-1 py-1 {% if media.media_type == 'video' or media.media_type == 'external_video' %}is-video{% endif %} {% if media.id == current_media_id %}active{% endif %}"
@@ -162,8 +166,8 @@
                                             src="{{ media.preview_image.src | img_url: img_size, crop: 'center' }}"
                                             alt="{{ media.alt | escape }}"
                                             width="680"
-                                            height="{{ img_height }}">
-
+                                            height="{{ img_height }}"
+                                            loading="lazy">
                                 </a>
                             {% endfor %}
                         </ol>

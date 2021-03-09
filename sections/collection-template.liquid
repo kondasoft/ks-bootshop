@@ -8,17 +8,6 @@
     {% assign layout = section.settings.layout %}        
 {% endif %}
 
-{% assign row_    = section.settings.row_ | prepend: 'row-cols-' %}
-{% assign row_sm  = section.settings.row_sm | prepend: 'row-cols-sm-' %}
-{% assign row_md  = section.settings.row_md | prepend: 'row-cols-md-' %}
-{% assign row_lg  = section.settings.row_lg | prepend: 'row-cols-lg-' %}
-{% assign row_xl  = section.settings.row_xl | prepend: 'row-cols-xl-' %}
-{% assign row_xxl = section.settings.row_xxl | prepend: 'row-cols-xxl-' %}
-
-{% assign gutter_mobile  = section.settings.gutter_mobile | prepend: 'g-' %}
-{% assign gutter_tablet  = section.settings.gutter_tablet | prepend: 'g-sm-' %}
-{% assign gutter_desktop = section.settings.gutter_desktop | prepend: 'g-xl-' %}
-
 <div
     id="collection-{{ collection.id }}"
     class="collection">
@@ -161,13 +150,13 @@
             </p>
         {% else %}
 
-            <!-- Product List/Grid -->
+            <!-- Items List/Grid -->
             {% paginate collection.products by section.settings.paginate %}
 
                 {% if layout == 'grid' %}
-                    {% render 'product-grid' with products: collection.products %}
+                    {% render 'items-grid' with items: collection.products %}
                 {% elsif layout == 'list' %}
-                    {% render 'product-list' with products: collection.products %}
+                    {% render 'items-list' with items: collection.products %}
                 {% endif %}
 
                 {% render 'pagination' with paginate: paginate, layout: layout %}
@@ -228,14 +217,20 @@
             "type": "select",
             "id": "heading_size",
             "label": "Heading size",
-            "default": "display-4",
+            "default": "display-5",
             "options": [
-                {  "value": "display-1", "label": "Display 1" },
-                {  "value": "display-2", "label": "Display 2" },
-                {  "value": "display-3", "label": "Display 3" },
-                {  "value": "display-4", "label": "Display 4" },
-                {  "value": "display-5", "label": "Display 5" },
-                {  "value": "display-6", "label": "Display 6" }
+                { "group": "Display", "value": "display-1", "label": "Display 1" },
+                { "group": "Display", "value": "display-2", "label": "Display 2" },
+                { "group": "Display", "value": "display-3", "label": "Display 3" },
+                { "group": "Display", "value": "display-4", "label": "Display 4" },
+                { "group": "Display", "value": "display-5", "label": "Display 5" },
+                { "group": "Display",  "value": "display-6", "label": "Display 6" },
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
             ]
         },
         {
@@ -321,44 +316,15 @@
         },
         {
             "type": "checkbox",
-            "id": "show_quick_view",
-            "label": "Show quick view button",
+            "id": "show_badge_sold_out",
+            "label": "Show 'Sold out' badge",
             "default": true
         },
         {
-            "type": "select",
-            "id": "quick_view_btn_color",
-            "label": "Quick view button color",
-            "default": "btn-outline-secondary",
-            "options": [
-                { "group": "Normal", "value": "btn-link", "label": "Link" },
-                { "group": "Normal", "value": "btn-light", "label": "Light" },
-                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
-                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
-                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                { "group": "Normal", "value": "btn-success", "label": "Success" },
-                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
-                { "group": "Normal", "value": "btn-info", "label": "Info" },
-                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
-                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
-                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
-                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
-                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
-                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "quick_view_btn_size",
-            "label": "Quick view button size",
-            "default": "btn-sm",
-            "options": [
-                { "value": "btn-sm", "label": "Small" },
-                { "value": "", "label": "Normal" },
-                { "value": "btn-lg", "label": "Large" }
-            ]
+            "type": "checkbox",
+            "id": "show_badge_sale",
+            "label": "Show 'Sale' badge",
+            "default": true
         },
         {
             "type": "header",

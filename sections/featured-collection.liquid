@@ -22,8 +22,20 @@
 
         </div>
 
-        <!-- Product list -->
-        {% render 'product-grid' with products: collections[section.settings.collection].products, limit: section.settings.limit %}
+        <!-- Items -->
+        {% render 'items-grid' with items: collections[section.settings.collection].products, limit: section.settings.limit %}
+
+
+        <!-- 'View all' button -->
+        {% if section.settings.show_view_all_btn %}
+            <div class="featured-collection-view-all text-center pt-0 pb-4">
+                <a
+                    class="featured-collection-view-all-btn btn {{ section.settings.view_all_btn_color }} {{ section.settings.view_all_btn_size }}"
+                    href="/collections">
+                    {{ 'collection.view_all' | t }}
+                </a>
+            </div>
+        {% endif %}
 
     </div>
 </section>
@@ -110,6 +122,47 @@
             "default": ""
         },
         {
+            "type": "checkbox",
+            "id": "show_view_all_btn",
+            "label": "Show 'View all' button",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "view_all_btn_color",
+            "label": "View all button color",
+            "default": "btn-secondary",
+            "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "view_all_btn_size",
+            "label": "View all button size",
+            "default": "",
+            "options": [
+                { "value": "btn-sm", "label": "Small" },
+                { "value": "", "label": "Normal" },
+                { "value": "btn-lg", "label": "Large" }
+            ]
+        },
+        {
             "type": "header",
             "content": "Product settings"
         },
@@ -158,44 +211,15 @@
         },
         {
             "type": "checkbox",
-            "id": "show_quick_view",
-            "label": "Show quick view button",
+            "id": "show_badge_sold_out",
+            "label": "Show 'Sold out' badge",
             "default": true
         },
         {
-            "type": "select",
-            "id": "quick_view_btn_color",
-            "label": "Quick view button color",
-            "default": "btn-outline-secondary",
-            "options": [
-                { "group": "Normal", "value": "btn-link", "label": "Link" },
-                { "group": "Normal", "value": "btn-light", "label": "Light" },
-                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
-                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
-                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                { "group": "Normal", "value": "btn-success", "label": "Success" },
-                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
-                { "group": "Normal", "value": "btn-info", "label": "Info" },
-                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
-                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
-                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
-                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
-                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
-                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "quick_view_btn_size",
-            "label": "Quick view button size",
-            "default": "btn-sm",
-            "options": [
-                { "value": "btn-sm", "label": "Small" },
-                { "value": "", "label": "Normal" },
-                { "value": "btn-lg", "label": "Large" }
-            ]
+            "type": "checkbox",
+            "id": "show_badge_sale",
+            "label": "Show 'Sale' badge",
+            "default": true
         },
         {
             "type": "header",

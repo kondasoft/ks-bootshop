@@ -12,7 +12,7 @@
     {% if cart.item_count == 0 %}
         <p 
             class="text-center {{ text_muted }}">
-            {{ 'cart.empty' | t }}
+            {{ 'cart.empty_minicart' | t }}
         </p>
         <a 
             class="btn d-block btn-sm {% if settings.minicart_style == "" %}btn-outline-primary{% else %}btn-light{% endif %}" 

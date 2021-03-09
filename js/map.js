@@ -5,38 +5,45 @@
 const el = document.querySelector('.google-map');
 
 if (el) {
-    var script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${el.dataset.apiKey}&callback=initMap`;
-    script.async = true;
+    window.addEventListener('DOMContentLoaded', () => {
 
-    window.initMap = function() {      
-        const elArray = document.querySelectorAll('.google-map');
+        setTimeout(() => {
 
-        elArray.forEach(el => {
-            const latLng = { 
-                lat: Number(el.dataset.lat), 
-                lng: Number(el.dataset.lng) 
+            var script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${el.dataset.apiKey}&callback=initMap`;
+            script.defer = true;
+            script.async = true;
+
+            window.initMap = function() {      
+                const elArray = document.querySelectorAll('.google-map');
+
+                elArray.forEach(el => {
+                    const latLng = { 
+                        lat: Number(el.dataset.lat), 
+                        lng: Number(el.dataset.lng) 
+                    };
+
+                    const map = new google.maps.Map(el, {
+                        center: latLng,
+                        zoom: Number(el.dataset.zoom),
+                    });
+
+                    const marker = new google.maps.Marker({
+                        position: latLng,
+                        map
+                    });
+
+                    marker.addListener('click', () => {
+                        el.closest('.google-map-wrapper')
+                            .querySelector('.google-map-content')
+                            .classList.remove('hide');
+                    });
+                });
             };
 
-            const map = new google.maps.Map(el, {
-                center: latLng,
-                zoom: Number(el.dataset.zoom),
-            });
-
-            const marker = new google.maps.Marker({
-                position: latLng,
-                map
-            });
-
-            marker.addListener('click', () => {
-                el.closest('.google-map-wrapper')
-                    .querySelector('.google-map-content')
-                    .classList.remove('hide');
-            });
-        });
-    };
-
-    document.head.appendChild(script);
+            document.head.appendChild(script);
+        }, 500);
+    });
 }
 
 // Handle close button

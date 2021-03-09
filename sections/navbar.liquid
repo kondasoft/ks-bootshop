@@ -33,6 +33,7 @@
                 <img 
                     src="{{ section.settings.logo | img_url: logo_size }}" 
                     alt="{{ shop.name | escape }}"
+                    width="{{ section.settings.logo_height | times: section.settings.logo.aspect_ratio | round }}"
                     height="{{ section.settings.logo_height | escape }}">
             {% endif %}
         </a>
@@ -183,6 +184,36 @@
             
     </div>
 </nav>
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if section.settings.logo %}
+        {% assign img_size = section.settings.logo_height | prepend: 'x'  %}
+        "logo": {{ section.settings.logo | img_url: img_size | prepend: "https:" | json }},
+    {% endif %}
+    "url": {{ shop.url | append: page.url | json }}
+}
+</script>
+    
+{% if request.page_type == 'index' %}
+    {% assign potential_action_target = shop.url | append: routes.search_url | append: "?q={search_term_string}" %}
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": {{ shop.name | json }},
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": {{ potential_action_target | json }},
+                "query-input": "required name=search_term_string"
+            },
+            "url": {{ shop.url | append: page.url | json }}
+        }
+    </script>
+{% endif %}
 
 {% schema %}
 {

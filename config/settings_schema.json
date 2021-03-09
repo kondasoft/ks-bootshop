@@ -63,6 +63,40 @@
                 "id": "color_price",
                 "label": "Price",
                 "default": "#28a745"
+            },
+            {
+                "type": "color",
+                "id": "color_badge_sold_out",
+                "label": "Badge - Sold out",
+                "default": "#6c757d"
+            },
+            {
+                "type": "color",
+                "id": "color_badge_sale",
+                "label": "Badge - Sale",
+                "default": "#0dcaf0"
+            }
+        ]
+    },
+    {
+        "name": "Typography",
+        "settings": [
+            {
+                "type": "font_picker",
+                "id": "font_headings",
+                "default": "sans-serif",
+                "label": "Headings font family"
+            }
+        ]
+    },
+    {
+        "name": "Favicon",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "favicon",
+                "label": "Favicon image",
+                "info": "Will be scaled down to 32x32"
             }
         ]
     },

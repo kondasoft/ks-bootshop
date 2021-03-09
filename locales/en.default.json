@@ -13,7 +13,8 @@
         "accessibility": {
             "payment_methods": "Payment methods",
             "skip_to_content": "Skip to content",
-            "toogle_nav": "Toggle navigation"
+            "toogle_nav": "Toggle navigation",
+            "gallery": "Image gallery"
         },
         "carousel": {
             "items_count": "{{ from }} from {{ total }}"
@@ -51,7 +52,13 @@
         },
         "search": {
             "label": "Search",
-            "submit": "Go"
+            "submit": "Go",
+            "heading": "Search our site",
+            "results_with_count": {
+                "one": "{{ count }} result for “{{ terms }}”",
+                "other": "{{ count }} results for “{{ terms }}”"
+            },
+            "no_results": "Try checking your spelling or using different words."
         },
         "social": {
             "share_label": "Share on social media",
@@ -110,6 +117,7 @@
         "browse_shop": "Browse all products",
         "checkout": "Checkout",
         "empty_html": "Your cart is currently empty. <a href=\"\/collections\/all\">Continue shopping »<\/a>",
+        "empty_minicart": "Your cart is currently empty.",
         "discount": "Discount",
         "heading": "Your cart",
         "note": "Special instructions for your order",
@@ -127,21 +135,24 @@
         "layout_grid": "Grid layout",
         "layout_list": "List layout",
         "no_products_html": "No products found for this collection. <a href=\"/collections/all\">View all products »</a>",
-        "sort_by": "Sort by"
+        "sort_by": "Sort by",
+        "view_all": "View all"
     },
     "product": {
         "add_to_cart": "Add to cart",
         "added_to_cart": "Added to cart",
+        "discount": "Discount",
         "old_price": "Old price",
         "price_from": "From",
         "quantity": "Quantity",
-        "quick_view": "Quick view",
+        "sale": "Sale",
         "select_variant": "Select variant",
         "sku": "SKU",
         "sold_out": "Sold Out",
         "tagged": "Tagged",
         "type": "Type",
         "unavailable": "Unavailable",
-        "view_cart": "View cart"
+        "view_cart": "View cart",
+        "view_product": "View product"
     }
 }

@@ -60,3 +60,17 @@ input[id*=address_default_address] {
         display: none !important;
     }
 }
+
+// Product Price
+.price { 
+    color: var(--color-price); 
+}
+
+// Product Badges
+.badge-sold-out {
+    background-color: var(--color-badge-sold-out);
+}
+
+.badge-sale {
+    background-color: var(--color-badge-sale);
+}

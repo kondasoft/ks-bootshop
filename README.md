@@ -2,19 +2,41 @@
 This branch (master) is for our new version of KS BootShop theme, which is powered by Bootstrap v5. If you are looking for our the Bootstrap v4 version please check our [v1 branch](https://github.com/kondasoft/ks-bootshop/tree/v1-bs4)
 
 # BootShop - Shopify Theme
-Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
+Shopify Starter Theme powered by Bootstrap framework (v5 and v4), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
 
-Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for Bootstrap framework.
+Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for the Bootstrap framework.
 
 ## Highlighted features:
-* Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
+* Powered by [Bootstrap framework](https://getbootstrap.com/) (v5 or v4)
 * Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
 * All elements are fully accessible with [aria attributes](https://www.w3.org/WAI/standards-guidelines/aria/)
+* No Javascript framework dependencies (e.g jQuery)
 * Support for [native image lazy-loading](https://web.dev/native-lazy-loading/)
-* PageSeed score 93/100 [check results](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fks-bootshop.myshopify.com%2F) 
+* PageSeed score 96/100 [check results](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fks-bootshop.myshopify.com%2F&tab=desktop) 
+* All Shopify required homepage sections (~20)
 * All Shopify templates (cart, product, etc) have their corresponding settings
-* Add to cart via Ajax
-* Product "Quick view" mode
+* Product layout option grid or list
+* Ajax add to cart
+* Reccomended products section [Learn more](https://shopify.dev/tutorials/develop-theme-recommended-products)
+
+## Homepage sections
+* Carousel (Slideshow)
+* Collection list
+* F.A.Q
+* Featured collection
+* Featured product
+* Gallery
+* HTML
+* Image with text overlay
+* Image with text
+* Logo list
+* Map
+* Newsletter
+* Richtext
+* Separator
+* Testimonials
+* Text columns with image
+* Video
 
 ## Demo 
 https://ks-bootshop.myshopify.com/

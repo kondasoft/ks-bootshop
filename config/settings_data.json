@@ -1,10 +1,12 @@
 {
   "current": {
-    "color_primary": "#e22120",
+    "color_primary": "#0d6efd",
     "color_secondary": "#6c757d",
     "color_price": "#28a745",
+    "color_badge_sale": "#dc3545",
     "minicart_img_width": "75",
     "minicart_img_height": "75",
+    "font_headings": "sans-serif",
     "minicart_style": "",
     "sections": {
       "navbar": {
@@ -21,6 +23,7 @@
           "menu_position": "mx-auto",
           "show_search": true,
           "show_account": true,
+          "cart_badge_color": "#0d6efd",
           "breakpoint": "lg"
         }
       },
@@ -86,6 +89,9 @@
           "heading_size": "h2",
           "heading_alignment": "text-center",
           "subheading_size": "",
+          "show_view_all_btn": false,
+          "view_all_btn_color": "btn-secondary",
+          "view_all_btn_size": "",
           "img_width": "480",
           "img_height": "480",
           "img_thumbnail": true,
@@ -93,9 +99,8 @@
           "show_description": false,
           "description_length": "70",
           "show_price": true,
-          "show_quick_view": true,
-          "quick_view_btn_color": "btn-outline-secondary",
-          "quick_view_btn_size": "btn-sm",
+          "show_badge_sold_out": true,
+          "show_badge_sale": true,
           "row_": 2,
           "row_sm": 2,
           "row_md": 3,
@@ -153,6 +158,9 @@
           "heading_size": "h2",
           "heading_alignment": "text-center",
           "subheading_size": "",
+          "show_view_all_btn": false,
+          "view_all_btn_color": "btn-secondary",
+          "view_all_btn_size": "",
           "img_width": "480",
           "img_height": "480",
           "img_thumbnail": true,
@@ -468,7 +476,7 @@
       "16130473820c97e316": {
         "type": "featured-product",
         "settings": {
-          "product": "watch-series-1",
+          "product": "bag-series-1",
           "container": true,
           "light_bg": false,
           "badge": "Featured product",
@@ -481,9 +489,9 @@
           "show_price": true,
           "show_description": true,
           "description_truncate": "240",
-          "show_quick_view": true,
-          "quick_view_btn_color": "btn-outline-primary",
-          "quick_view_btn_size": "",
+          "show_view_product_btn": true,
+          "view_product_btn_color": "btn-outline-primary",
+          "view_product_btn_size": "",
           "show_social_sharing": true,
           "padding_top": 0,
           "padding_bottom": 0,
@@ -728,7 +736,6 @@
           "layout": "list",
           "container": true,
           "subheading": "<p>Welcome to our blog. We hope to inspire you!<\/p>",
-          "heading_display": "display-5",
           "subheading_size": "",
           "paginate": 4,
           "article_heading_size": "h3",
@@ -758,17 +765,18 @@
       "article-template": {
         "type": "article-template",
         "settings": {
-          "heading_size": "h1",
-          "show_author": true,
-          "show_date": true,
-          "show_comments": true,
+          "max_width": "768",
           "show_posted_in": true,
           "show_social_sharing": true,
-          "max_width": "768",
-          "comments_paginate": 2,
-          "img_width": "1320",
-          "img_height": "740",
-          "img_thumbnail": true
+          "comments_paginate": 20,
+          "sep_color": "#dee2e6",
+          "img_height": "480",
+          "heading_size": "display-5",
+          "show_author": true,
+          "show_date": true,
+          "show_back_to_btn": true,
+          "back_to_btn_color": "btn-outline-secondary",
+          "back_to_btn_size": ""
         }
       },
       "16136560969da8aed2": {
@@ -916,7 +924,7 @@
             "type": "menu",
             "settings": {
               "menu": "footer",
-              "heading": "Quick links",
+              "heading": "Footer menu",
               "heading_size": "h5",
               "direction": ""
             }
@@ -992,7 +1000,7 @@
           "container": true,
           "show_collection_img": true,
           "collection_img_height": "320",
-          "heading_display": "display-4",
+          "heading_size": "display-5",
           "show_collection_description": true,
           "description_size": "",
           "enable_filtering": true,
@@ -1002,11 +1010,9 @@
           "img_height": "480",
           "img_thumbnail": true,
           "show_vendor": false,
+          "show_description": false,
           "description_length": "140",
           "show_price": true,
-          "show_quick_view": true,
-          "quick_view_btn_color": "btn-outline-secondary",
-          "quick_view_btn_size": "btn-sm",
           "row_": 2,
           "row_sm": 2,
           "row_md": 3,
@@ -1016,6 +1022,140 @@
           "gutter_mobile": 3,
           "gutter_tablet": 3,
           "gutter_desktop": 4
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "blocks": {
+          "c41691ac-33a6-4af2-bb81-259ccfdd8e32": {
+            "type": "description",
+            "settings": {
+              "title": "Details"
+            }
+          },
+          "a002179c-cc4b-44a0-b368-e843a497174b": {
+            "type": "richtext",
+            "settings": {
+              "title": "Rich text",
+              "description": "<p>Feel free to create additional blocks like this for <strong>Shipping, Payments, etc<\/strong> through the Shopify Theme editor. Also, you may easily adjust their order by dragging and dropping.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "c41691ac-33a6-4af2-bb81-259ccfdd8e32",
+          "a002179c-cc4b-44a0-b368-e843a497174b"
+        ],
+        "settings": {
+          "heading_size": "display-5",
+          "show_vendor": false,
+          "show_type": false,
+          "show_sku": false,
+          "show_qty": true,
+          "show_add_to_cart_button": true,
+          "show_buy_it_now_button": true,
+          "show_taxes_shipping_notice": true,
+          "show_payment_icons": true,
+          "show_social_sharing": true,
+          "show_tags": true,
+          "accordion_style": "",
+          "carousel_interval": 0,
+          "carousel_transition": "slide",
+          "carousel_controls": true,
+          "carousel_style": "carousel-dark",
+          "carousel_thumbnails": true,
+          "carousel_img_thumbnail": true,
+          "carousel_thumbnails_row": 5,
+          "carousel_img_square": true,
+          "carousel_video_ratio": "ratio-16x9",
+          "carousel_full_screen": true,
+          "carousel_full_screen_caption": true,
+          "carousel_full_screen_indicators": true
+        }
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "heading_size": "display-5",
+          "subheading": "<p>Free Shipping \/ 30 Days Guarantee<\/p>",
+          "subheading_size": "",
+          "img_width": "360",
+          "img_height": "360",
+          "img_thumbnail": false,
+          "show_qty": true,
+          "show_note": true,
+          "note_rows": 3,
+          "show_payment_icons": true
+        }
+      },
+      "page-about-template": {
+        "type": "page-about-template",
+        "settings": {
+          "max_width": "768",
+          "heading_size": "display-5",
+          "img": "shopify:\/\/shop_images\/lifestyle-1.jpg",
+          "img_width": "1200",
+          "img_height": "675",
+          "img_thumbnail": true
+        }
+      },
+      "search-template": {
+        "type": "search-template",
+        "settings": {
+          "layout": "grid",
+          "show_layout_btn": true,
+          "paginate": 30,
+          "container": true,
+          "heading_size": "display-5",
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "show_vendor": false,
+          "show_description": false,
+          "description_length": "140",
+          "show_price": true,
+          "row_": 2,
+          "row_sm": 2,
+          "row_md": 3,
+          "row_lg": 3,
+          "row_xl": 3,
+          "row_xxl": 6,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 4
+        }
+      },
+      "product-recommended": {
+        "type": "product-recommended",
+        "settings": {
+          "enable_section": true,
+          "heading": "Recommended products",
+          "subheading": "<p>Write something catchy for this section.<\/p>",
+          "limit": 6,
+          "container": true,
+          "light_bg": false,
+          "heading_size": "h2",
+          "heading_alignment": "text-center",
+          "subheading_size": "",
+          "img_width": "480",
+          "img_height": "480",
+          "img_thumbnail": true,
+          "show_vendor": false,
+          "show_description": false,
+          "description_length": "70",
+          "show_price": true,
+          "row_": 2,
+          "row_sm": 2,
+          "row_md": 3,
+          "row_lg": 3,
+          "row_xl": 3,
+          "row_xxl": 6,
+          "gutter_mobile": 3,
+          "gutter_tablet": 3,
+          "gutter_desktop": 4,
+          "padding_top": 0,
+          "padding_bottom": 0,
+          "margin_top": 0,
+          "margin_bottom": 7
         }
       }
     },

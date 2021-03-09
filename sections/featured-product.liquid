@@ -119,13 +119,12 @@
                         </div>
                     {% endif %}
                 
-                    <!-- Quick view -->
-                    {% if section.settings.show_quick_view %}
+                    <!-- 'View product' button -->
+                    {% if section.settings.show_view_product_btn %}
                         <a
-                            class="btn-quick-view btn {{ section.settings.quick_view_btn_color }} {{ section.settings.quick_view_btn_size }}"
-                            href="{{ product.url | within: collection }}"
-                            role="button">
-                            {{ 'product.quick_view' | t }}
+                            class="view-product-btn btn {{ section.settings.view_product_btn_color }} {{ section.settings.view_product_btn_size }}"
+                            href="{{ product.url }}">
+                            {{ 'product.view_product' | t }}
                         </a>
                     {% endif %}
 
@@ -250,14 +249,14 @@
         },
         {
             "type": "checkbox",
-            "id": "show_quick_view",
-            "label": "Show quick view button",
+            "id": "show_view_product_btn",
+            "label": "Show 'View product' button",
             "default": true
         },
         {
             "type": "select",
-            "id": "quick_view_btn_color",
-            "label": "Quick view button color",
+            "id": "view_product_btn_color",
+            "label": "'View product' button color",
             "default": "btn-outline-primary",
             "options": [
                 { "group": "Normal", "value": "btn-link", "label": "Link" },
@@ -280,8 +279,8 @@
         },
         {
             "type": "select",
-            "id": "quick_view_btn_size",
-            "label": "Quick view button size",
+            "id": "view_product_btn_size",
+            "label": "'View product' button size",
             "default": "",
             "options": [
                 { "value": "btn-sm", "label": "Small" },

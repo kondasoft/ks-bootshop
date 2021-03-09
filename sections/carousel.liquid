@@ -37,13 +37,16 @@
                 <div
                     class="carousel-item {% if forloop.first == true %}active{% endif %}">
                     {% if block.settings.image != blank %}
-                        {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                        {% assign img_size      = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+                        {% assign img_size_800  = 800 | divided_by: block.settings.image.aspect_ratio | round | prepend: '800x' %}
                         <img
                             class="d-block w-100 object-fit-cover h-auto"
                             src="{{ block.settings.image | img_url: img_size, crop: 'center' }}"
+                            srcset="{{ block.settings.image | img_url: img_size_800, crop: 'center' }} 800w, {{ block.settings.image | img_url: img_size, crop: 'center' }} 1600w"
                             alt="{{ block.settings.image.alt }}"
                             width="{{ section.settings.img_width }}"
                             height="{{ section.settings.img_height }}"
+                            loading="lazy"
                             style="{{ section.settings.image_min_height | prepend: 'min-height: ' | append: 'px' }};">
                     {% else %}
                         {% capture current %}{% cycle 1, 2 %}{% endcapture %}<!-- Do not use new lines here -->
