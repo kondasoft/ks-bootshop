@@ -45,7 +45,7 @@ https://ks-bootshop.myshopify.com/
 Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v2.x.x version which is ready for Bootstrap v5.
 
 ## Premium Shopify Themes 
-In case you are interested in our Premium Shopify Themes, please visit our website
+In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV) like Wishlist, Cart Goal, Frequently Bought Together Bundles, Recently Viewed Products, Sticky Add To Cart, Sticky Newsletter pop-up, and much more advanced features, please visit our website
 https://www.kondasoft.com
 
 ## Getting started
