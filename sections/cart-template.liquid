@@ -42,61 +42,54 @@
                                                 height="{{ section.settings.img_height }}">
                                         </a>
                                     </div>
-                                    <div class="col-8 d-flex d-lg-block justify-content-between align-items-center">
-                                        <div class="flex-left-area">
-                                            <!-- Item title -->
-                                            <h3 class="product-item-title h6 mb-1">
-                                                <a href="{{ line_item.url }}">
-                                                    {{ line_item.quantity }} x {{ line_item.product.title }}
-                                                </a>
-                                            </h3>
-                                            <!-- Variant title -->
-                                            {% unless line_item.product.has_only_default_variant %}
-                                                <p class="product-item-variant text-muted mb-2 small">
-                                                    {{ line_item.variant.title }}
-                                                </p>
-                                            {% endunless %}
-                                            <!-- Product price -->
-                                            <p class="product-item-price mb-3">
-                                                {% if line_item.variant.compare_at_price > line_item.price %}
-                                                    <s class="price-compare text-muted me-1">
-                                                        <span class="visually-hidden">
-                                                            {{ 'product.old_price' | t }}
-                                                        </span>
-                                                        {{ line_item.variant.compare_at_price | money }}
-                                                    </s>
-                                                {% endif %}
-                                                <span class="price">
-                                                    {{ line_item.variant.price | money }}
-                                                </span>
+                                    <div class="col-8">
+                                        <!-- Item title -->
+                                        <h3 class="product-item-title h6 mb-1">
+                                            <a href="{{ line_item.url }}">
+                                                {{ line_item.quantity }} x {{ line_item.product.title }}
+                                            </a>
+                                        </h3>
+                                        <!-- Variant title -->
+                                        {% unless line_item.product.has_only_default_variant %}
+                                            <p class="product-item-variant text-muted mb-2 small">
+                                                {{ line_item.variant.title }}
                                             </p>
-                                            <!-- Product quantity -->
-                                            {% if section.settings.show_qty %}
-                                                <div class="mb-lg-2" style="max-width: 75px;">
-                                                    <input
-                                                        type="number" 
-                                                        name="updates[]" 
-                                                        id="updates_{{ line_item.key }}"
-                                                        class="product-item-qty form-control form-control-sm"
-                                                        value="{{ line_item.quantity }}" 
-                                                        min="1"
-                                                        data-line="{{ forloop.index }}"
-                                                        aria-label="{{ 'cart.quantity' | t }}">
-                                                </div>
+                                        {% endunless %}
+                                        <!-- Product price -->
+                                        <p class="product-item-price mb-3">
+                                            {% if line_item.variant.compare_at_price > line_item.price %}
+                                                <s class="price-compare text-muted me-1">
+                                                    <span class="visually-hidden">
+                                                        {{ 'product.old_price' | t }}
+                                                    </span>
+                                                    {{ line_item.variant.compare_at_price | money }}
+                                                </s>
                                             {% endif %}
-                                        </div>
-                                        <div class="flex-right-area">
-                                            <!-- Remove button -->
-                                            <button
-                                                class="product-item-remove btn btn-light text-danger btn-sm mt-1"
-                                                title="{{ 'cart.remove' | t }}"
-                                                data-line="{{ forloop.index }}">
-                                                {% render 'icon-trash' with size: 18 %}
-                                                <span class="visually-hidden">
-                                                    {{ 'cart.remove' | t }}
-                                                </span>
-                                            </button>
-                                        </div>
+                                            <span class="price">
+                                                {{ line_item.variant.price | money }}
+                                            </span>
+                                        </p>
+                                        <!-- Product quantity -->
+                                        {% if section.settings.show_qty %}
+                                            <div class="mb-2" style="max-width: 75px;">
+                                                <input
+                                                    type="number" 
+                                                    name="updates[]" 
+                                                    id="updates_{{ line_item.key }}"
+                                                    class="product-item-qty form-control form-control-sm"
+                                                    value="{{ line_item.quantity }}" 
+                                                    min="1"
+                                                    data-line="{{ forloop.index }}"
+                                                    aria-label="{{ 'cart.quantity' | t }}">
+                                            </div>
+                                        {% endif %}
+                                         <!-- Remove button -->
+                                         <button
+                                            class="product-item-remove btn btn-link text-muted btn-sm mt-n2 ms-n1 mb-n1"
+                                            title="{{ 'cart.remove' | t }}"
+                                            data-line="{{ forloop.index }}">
+                                            {{ 'cart.remove' | t }}
+                                        </button>
                                     </div>
                                 </li>
                                 {% unless forloop.last %}

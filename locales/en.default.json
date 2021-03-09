@@ -50,6 +50,14 @@
             "label": "Pagination",
             "page": "Page"
         },
+        "password_page": {
+            "opening_soon": "Opening soon",
+            "spread_the_word": "Spread the word",
+            "form": {
+              "password_placeholder": "Enter using password",
+              "submit": "Enter"
+            }
+        },
         "search": {
             "label": "Search",
             "submit": "Go",
@@ -136,7 +144,8 @@
         "layout_list": "List layout",
         "no_products_html": "No products found for this collection. <a href=\"/collections/all\">View all products »</a>",
         "sort_by": "Sort by",
-        "view_all": "View all"
+        "view_all": "View all",
+        "empty_collections_html": "No collections found. <a href=\"/collections/all\">View all products »</a>"
     },
     "product": {
         "add_to_cart": "Add to cart",
