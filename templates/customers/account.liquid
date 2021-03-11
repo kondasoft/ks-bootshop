@@ -1,1 +1,146 @@
-<!-- /templates/customers/account.liquid -->
+<div
+    id="account"
+    class="container">
+
+    <!-- Header -->
+    <div 
+        class="heading-wrapper overflow-hidden text-center mx-auto mb-5"
+        style="max-width: 768px">
+
+        <!-- Heading -->
+        <h1 class="heading mb-3">
+            {{ 'customer.account.heading' | t }}
+        </h1>
+
+        <p>
+            <a 
+                class="btn btn-outline-secondary btn-sm" 
+                href="{{ routes.account_logout_url }}">
+                {{ 'customer.account.logout' | t }}
+            </a>
+        </p>
+
+    </div>
+    
+    <div class="row">
+
+        <!-- Orders -->
+        <div class="col-lg-8">
+
+            <h2 class="heading mb-3">
+                {{ 'customer.orders.heading' | t }}
+            </h2>
+
+            {% if customer.orders.size == 0 %}
+                <p class="alert alert-warning">
+                    {{ 'customer.orders.none' | t }}
+                </p>
+
+            {% else %}
+                {% paginate customer.orders by 10 %}
+
+                    <div class="table-responsive mb-2">
+                        <table 
+                            id="table-orders-list" 
+                            class="table table-bordered align-middle mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>
+                                        {{ 'customer.orders.order_number' | t }}
+                                    </th>
+                                    <th>
+                                        {{ 'customer.orders.date' | t }}
+                                    </th>
+                                    <th>
+                                        {{ 'customer.orders.payment_status' | t }}
+                                    </th>
+                                    <th>
+                                        {{ 'customer.orders.fulfillment_status' | t }}
+                                    </th>
+                                    <th>
+                                        {{ 'customer.orders.total' | t }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in customer.orders %}
+
+                                    {% case order.financial_status %}
+                                        {% when 'pending' %}
+                                            {% assign financial_status_badge = 'bg-secondary' %}
+                                        {% when 'authorized' %}
+                                            {% assign financial_status_badge = 'bg-info' %}
+                                        {% when 'paid' %}
+                                            {% assign financial_status_badge = 'bg-success' %}
+                                        {% when 'partially_paid' %}
+                                            {% assign financial_status_badge = 'bg-info' %}
+                                        {% when 'refunded' %}
+                                            {% assign financial_status_badge = 'bg-danger' %}
+                                        {% when 'partially_refunded' %}
+                                            {% assign financial_status_badge = 'bg-danger' %}
+                                        {% when 'voided' %}
+                                            {% assign financial_status_badge = 'bg-danger' %}
+                                        {% else %}
+                                            {% assign financial_status_badge = 'bg-secondary' %}
+                                    {% endcase %}
+
+                                    <tr class="">
+                                        <td>
+                                            {{ order.name | link_to: order.customer_url | replace: '<a', '<a class="btn btn-outline-primary btn-sm"' }}
+                                        </td>
+                                        <td class="text-nowrap">
+                                            {{ order.created_at | date: format: 'abbreviated_date' }}
+                                        </td>
+                                        <td>
+                                            <span class="badge {{ financial_status_badge }}">
+                                                {{ order.financial_status_label }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {{ order.fulfillment_status_label }}
+                                        </td>
+                                        <td>
+                                            {{ order.total_price | money }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% render 'pagination' with paginate: paginate %}
+                    
+                {% endpaginate %}
+
+            {% endif %}
+
+        </div>
+
+        <!-- Account details -->
+        <div class="col-lg-4">
+            
+            <div 
+                id="account-details"
+                class="card">
+                <div class="card-body">
+                    <h3 class="h4 card-title">
+                        {{ 'customer.account.details' | t }}
+                    </h3>
+                    <address>
+                        {{ customer.default_address | format_address }}
+                    </address>
+                    <a 
+                        href="{{ routes.account_addresses_url }}" 
+                        class="btn btn-primary btn-sm">
+                        {{ 'customer.account.view_addresses' | t }}
+                        ({{ customer.addresses_count }})
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+  
+</div>
+  
