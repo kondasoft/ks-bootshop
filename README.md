@@ -6,6 +6,11 @@ Shopify Starter Theme powered by Bootstrap framework (v5 and v4), developed resp
 
 Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for the Bootstrap framework.
 
+## Video introduction
+Click on the screenshot below to play the video on Youtube.
+
+[<img src="https://img.youtube.com/vi/_G9IRSFAI_A/maxresdefault.jpg" width="50%">](https://youtu.be/_G9IRSFAI_A)
+
 ## Highlighted features:
 * Powered by [Bootstrap framework](https://getbootstrap.com/) (v5 or v4)
 * Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
