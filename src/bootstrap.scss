@@ -1,0 +1,25 @@
+// Bootstrap required files 
+@import '../node_modules/bootstrap/scss/functions';
+
+// Override Bootstrap variables
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: $spacer * .25,
+    2: $spacer * .5,
+    3: $spacer * .75,
+    4: $spacer * 1,
+    5: $spacer * 1.25,
+    6: $spacer * 1.5,
+    7: $spacer * 1.75,
+    8: $spacer * 2,
+    9: $spacer * 2.5,
+    10: $spacer * 3,
+    11: $spacer * 4,
+    12: $spacer * 5,
+);
+
+$enable-negative-margins: true;
+
+// Import all Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap';

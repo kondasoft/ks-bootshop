@@ -1,0 +1,115 @@
+<section 
+    id="{{ section.id | prepend: 'featured-products-' }}"
+    class="featured-products mb-8">
+    <div class="container">
+        <h2 class="text-center mb-3">
+            {{ section.settings.title }}
+        </h2>
+        <ul class="
+            product-list 
+            list-unstyled 
+            row 
+            {{ section.settings.row_xs | prepend: 'row-cols-' }} 
+            {{ section.settings.row_sm | prepend: 'row-cols-sm-' }} 
+            {{ section.settings.row_xl | prepend: 'row-cols-xl-' }} 
+            mx-n2
+        ">
+            {% for product in collections[section.settings.collection].products limit: section.settings.limit %}
+                {% render 'product-list-item' with product as product %}
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Featured Products",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Limit products",
+            "min": 2,
+            "max": 40,
+            "default": 8
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Featured Products"
+        },
+        {
+            "type": "header",
+            "content": "Product"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "480"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "480"
+        }, 
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image thumbnail",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Items per row"
+        },
+        {
+            "type": "range",
+            "id": "row_xs",
+            "label": "Items per row / mobile",
+            "info": "Screen width: <576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Items per row / tablet",
+            "info": "Screen width: ≥576px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "row_xl",
+            "label": "Items per row / desktop",
+            "info": "Screen width: ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Products",
+            "category": "Product"
+        }
+    ]
+}
+{% endschema %}

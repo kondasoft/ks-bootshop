@@ -1,0 +1,19 @@
+/*
+    © 2021 Firetheme.com
+*/
+
+/* 
+    Product Media Gallery 
+*/
+#product-gallery .glider-dots button { 
+    border: none;
+    background: none;
+}
+
+#product-gallery .glider-dots button img {
+    transition: all .2s ease-out;
+}
+
+#product-gallery .glider-dots button.active img {
+    border-color: var(--bs-primary);
+}

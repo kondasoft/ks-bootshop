@@ -1,3 +1,0 @@
-/* 
-    Put here your own custom Javascript styles
-*/

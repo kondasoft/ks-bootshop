@@ -1,275 +1,148 @@
-{% assign pageurl = content_for_header | split:'"pageurl":"' | last | split:'"' | first %}
+<div class="container py-6">
 
-{% if pageurl contains 'layout-grid' %}
-    {% assign layout = 'grid' %}
-{% elsif pageurl contains 'layout-list' %}
-    {% assign layout = 'list' %}
-{% else %}
-    {% assign layout = section.settings.layout %}        
-{% endif %}
-
-<div
-    id="collection-{{ collection.id }}"
-    class="collection">
-
-    <!-- Collection image -->
-    {% if section.settings.show_collection_img and collection.image %}
-        {% assign collection_img_800_size = section.settings.collection_img_height | prepend: '800x' %}
-        {% assign collection_img_1600_size = section.settings.collection_img_height | prepend: '1600x' %}
-        <img 
-            class="collection-img w-100 h-auto object-fit-cover mt-n7 mb-6"
-            src="{{ collection.image | img_url: collection_img_1600_size, crop: 'center' }}"
-            srcset="
-                {{ collection.image | img_url: collection_img_800_size, crop: 'center' }} 800w, 
-                {{ collection.image | img_url: collection_img_1600_size, crop: 'center' }} 1600w
-            "
-            alt="{{ collection.image.alt | escape }}" 
-            width="1600"
-            height="{{section.settings.collection_img_height }}"
-            style="{{section.settings.collection_img_height | prepend: 'max-height: ' | append: 'px' }};">
-    {% endif %}
-
-    <!-- Collection header -->
-    <div
-        class="heading-wrapper container overflow-hidden text-center mx-auto mb-3" 
-        style="max-width: 768px">
-
-        <h1 class="heading mb-1 {{ section.settings.heading_size }}">
+    <!-- Header -->
+    <div class="header col-lg-8 mx-auto mb-6 text-center">
+        <h1 class="display-4">
             {{ collection.title }}
         </h1>
-
-        {% if section.settings.show_collection_description and collection.description != blank %}
-            <div class="description rte text-muted {{ section.settings.description_size }}">
+        {% unless collection.description == blank %}
+            <div class="lead mt-n1">
                 {{ collection.description }}
             </div>
-        {% endif %}
-
+        {% endunless %}
     </div>
 
-    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
-
-        <!-- Collection Utitilies -->
-        {% if section.settings.enable_sorting or section.settings.enable_filtering %}
+    {% if collection.products.size == 0 %}
+        <!-- Collection is empty -->
+        <p class="alert alert-warning">
+            {{ 'collection.empty' | t}}
+        </p>
+    {% else %}
+        {% paginate collection.products by section.settings.limit %}
+            <!-- Collection bar -->
             <div 
-                id="collection-utilities" 
-                class="d-flex flex-column flex-lg-row bg-light rounded mb-7 py-4 px-4 {% if section.settings.enable_filtering %}justify-content-between{% else %}justify-content-end{% endif %}">
+                id="collection-bar" 
+                class=" bg-light d-flex flex-column flex-lg-row-reverse justify-content-between align-items-lg-center px-3 py-3 mb-5 rounded">
+                <div class="d-flex flex-column flex-lg-row">
 
-                <!-- Filtering -->
-                {% if section.settings.enable_filtering %}
-                    <div
-                        id="collection-filtering" 
-                        class="input-group w-auto js mb-3 mb-lg-0">
-                        <label 
-                            class="input-group-text"
-                            for="collection-filtering-select">
-                            {{ 'collection.filter_by' | t }}
-                        </label>
-                        <select 
-                            id="collection-filtering-select" 
-                            class="form-select"
-                            style="min-width: 160px;">
-                            <option 
-                                value="{{ collection.url }}">
-                                {{ 'collection.all_products' | t }}
-                            </option>
-                            {% for tag in collection.all_tags %}
-                                <option 
-                                    value="{{ collection.url }}/{{ tag }}" 
-                                    {% if current_tags contains tag %}selected{% endif %}>
-                                    {{ tag }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                {% endif %}
-
-                <div 
-                    id="collection-utilities-right"
-                    class="d-flex align-items-center">
-                    
-                    <!-- Sorting -->
-                    {% if section.settings.enable_sorting %}
-                        <div
-                            id="collection-sorting" 
-                            class="input-group js">
-                            <label
-                                class="input-group-text"
-                                for="collection-sorting-select">
-                                {{ 'collection.sort_by' | t }}
+                    {% if section.settings.show_filter and collection.all_tags.size > 0 %}
+                        <!-- Filter by -->
+                        <div 
+                            id="collection-filter-by" 
+                            class="input-group mb-2 mb-lg-0 me-0 me-lg-3">
+                            <label 
+                                class="input-group-text" 
+                                for="filter-by">
+                                {{ 'collection.filter_by' | t }}
                             </label>
                             <select 
-                                id="collection-sorting-select" 
-                                class="form-select">
-                                {% for option in collection.sort_options %}
+                                class="form-select" 
+                                id="filter-by">
+                                <option 
+                                    value="{{ collection.url }}">
+                                    {{ 'collection.all_products' | t }}
+                                </option>
+                                {% for tag in collection.all_tags %}
                                     <option 
-                                        value="{{ option.value }}" 
-                                        {% if option.value == collection.sort_by %}selected{% endif %}>
-                                        {{ option.name }}
+                                        value="{{ collection.url }}/{{ tag | handleize }}" 
+                                        {% if current_tags contains tag %}selected{% endif %}>
+                                        {{ tag }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
                     {% endif %}
-
-                    <!-- Layout Switcher -->
-                    {% if section.settings.show_layout_btn %}
-                        {% if layout == 'grid' %}
-                            <button
-                                id="collection-layout-btn"
-                                class="btn btn-outline-secondary btn-sm ms-3"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="bottom"
-                                data-value="layout-list"
-                                title="{{ 'collection.layout_list' | t }}"
-                                aria-hidden="true">
-                                {% render 'icon-list' with size: 22 %}
-                            </button>
-                        {% else %}
-                            <button
-                                id="collection-layout-btn"
-                                class="btn btn-outline-secondary btn-sm ms-3"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" 
-                                data-value="layout-grid"
-                                title="{{ 'collection.layout_grid' | t }}"
-                                aria-hidden="true">
-                                {% render 'icon-grid' with size: 22 %}
-                            </button>
-                        {% endif %}
-                    {% endif %}
-
+                    <!-- Sort by -->
+                    <div
+                        id="collection-sort-by"
+                        class="input-group mb-0">
+                        <label 
+                            class="input-group-text" 
+                            for="sort-by">
+                            {{ 'collection.sort_by' | t }}
+                        </label>
+                        <select 
+                            class="form-select" 
+                            id="sort-by">
+                            {% for option in collection.sort_options %}
+                                <option 
+                                    value="{{ option.value }}" 
+                                    {% if option.value == collection.sort_by %}
+                                        selected
+                                    {% endif %}>
+                                    {{ option.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-
-            </div>
-        {% endif %}
-
-        <!-- No products alert -->
-        {% if collection.products.size == 0 %}
-            <p class="collection-no-products-alert alert alert-warning">
-                {{ 'collection.no_products_html' | t: blog_url: blog.url }}
-            </p>
-        {% else %}
-
-            <!-- Items List/Grid -->
-            {% paginate collection.products by section.settings.paginate %}
-
-                {% if layout == 'grid' %}
-                    {% render 'items-grid' with items: collection.products %}
-                {% elsif layout == 'list' %}
-                    {% render 'items-list' with items: collection.products %}
+                <!-- Collection counter -->
+                {% if section.settings.show_counter %}
+                    <span id="collection-counter" class="d-block mt-3 mt-lg-0">
+                        {{ 'collection.count' | t: count: paginate.items }}
+                    </span>
                 {% endif %}
+            </div>
+            
+            <!-- Product list -->
+            <ul class="product-list list-unstyled row row-cols-2 row-cols-lg-4 g-4">
+                {% for product in collection.products %}
+                    {% render 'product-list-item' with product as product %}
+                {% endfor %}
+            </ul>
 
-                {% render 'pagination' with paginate: paginate, layout: layout %}
+            <!-- Pagination -->
+            <div class="footer text-center">
+                {% if paginate.previous.is_link %}
+                    <a class="paginate-btn btn btn-outline-secondary my-1" href="{{ paginate.previous.url }}">
+                        {{ paginate.previous.title }}
+                    </a>
+                {% endif %}
+                {% if paginate.next.is_link %}
+                    <a class="paginate-btn btn btn-outline-secondary my-1" href="{{ paginate.next.url }}">
+                        {{ paginate.next.title }}
+                    </a>
+                {% endif %}
+                <small class="paginate-count d-block text-muted my-2">
+                    {{ 'general.pagination_page_of' | t: count: paginate.current_page, total: paginate.pages }}
+                </small>
+            </div>
 
-            {% endpaginate %}
-
-        {% endif %}
-
-    </div>
-
+        {% endpaginate %}
+    {% endif %}
 </div>
 
 {% schema %}
 {
-    "name": "Collection page",
+    "name": "Collection pages",
     "settings": [
         {
             "type": "header",
-            "content": "General settings"
-        },
-        {
-            "type": "select",
-            "id": "layout",
-            "label": "Layout",
-            "options": [
-                {  "value": "list", "label": "List" },
-                {  "value": "grid", "label": "Grid" }
-            ],
-            "default": "grid"
+            "content": "General"
         },
         {
             "type": "range",
-            "id": "paginate",
+            "id": "limit",
             "label": "Products per page",
-            "min": 1,
+            "min": 10,
             "max": 50,
-            "default": 30
+            "default": 40
         },
         {
             "type": "checkbox",
-            "id": "container",
-            "label": "Wrap in container",
+            "id": "show_counter",
+            "label": "Show counter",
             "default": true
         },
         {
             "type": "checkbox",
-            "id": "show_collection_img",
-            "label": "Show collection image",
-            "default": true
-        },
-        {
-            "type": "text",
-            "id": "collection_img_height",
-            "label": "Collection image height (px)",
-            "default": "320"
-        },
-        {
-            "type": "select",
-            "id": "heading_size",
-            "label": "Heading size",
-            "default": "display-5",
-            "options": [
-                { "group": "Display", "value": "display-1", "label": "Display 1" },
-                { "group": "Display", "value": "display-2", "label": "Display 2" },
-                { "group": "Display", "value": "display-3", "label": "Display 3" },
-                { "group": "Display", "value": "display-4", "label": "Display 4" },
-                { "group": "Display", "value": "display-5", "label": "Display 5" },
-                { "group": "Display",  "value": "display-6", "label": "Display 6" },
-                { "group": "Heading", "value": "h1", "label": "H1" },
-                { "group": "Heading", "value": "h2", "label": "H2" },
-                { "group": "Heading", "value": "h3", "label": "H3" },
-                { "group": "Heading", "value": "h4", "label": "H4" },
-                { "group": "Heading", "value": "h5", "label": "H5" },
-                { "group": "Heading", "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "checkbox",
-            "id": "show_collection_description",
-            "label": "Show description",
-            "default": true
-        },
-        {
-            "type": "select",
-            "id": "description_size",
-            "label": "Description size",
-            "options": [
-                { "value": "", "label": "Normal" },
-                { "value": "lead", "label": "Large" }
-            ],
-            "default": ""
-        },
-        {
-            "type": "checkbox",
-            "id": "enable_filtering",
-            "label": "Enable filtering",
-            "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "enable_sorting",
-            "label": "Enable sorting",
-            "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "show_layout_btn",
-            "label": "Show layout switcher button",
+            "id": "show_filter",
+            "label": "Show filter",
             "default": true
         },
         {
             "type": "header",
-            "content": "Product settings"
+            "content": "Product"
         },
         {
             "type": "text",
@@ -286,136 +159,8 @@
         {
             "type": "checkbox",
             "id": "img_thumbnail",
-            "label": "Image border",
+            "label": "Image thumbnail",
             "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "show_vendor",
-            "label": "Show vendor",
-            "default": false
-        },
-        {
-            "type": "checkbox",
-            "id": "show_description",
-            "label": "Show description",
-            "default": false
-        },
-        {
-            "type": "text",
-            "id": "description_length",
-            "label": "Description length",
-            "info": "Leave empty to show all text",
-            "default": "70"
-        },
-        {
-            "type": "checkbox",
-            "id": "show_price",
-            "label": "Show price",
-            "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "show_badge_sold_out",
-            "label": "Show 'Sold out' badge",
-            "default": true
-        },
-        {
-            "type": "checkbox",
-            "id": "show_badge_sale",
-            "label": "Show 'Sale' badge",
-            "default": true
-        },
-        {
-            "type": "header",
-            "content": "Grid",
-            "info": "Adjust items per row.  Applies only if the setting 'Layout' above is selected to 'grid'. [Learn more](https://getbootstrap.com/docs/5.0/layout/grid/#auto-layout-columns)"
-        },
-        {
-            "type": "range",
-            "id": "row_",
-            "label": "X-Small <576px",
-            "min": 1,
-            "max": 3,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "row_sm",
-            "label": "Small ≥576px",
-            "min": 1,
-            "max": 4,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "row_md",
-            "label": "Medium ≥768px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "row_lg",
-            "label": "Large ≥992px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "row_xl",
-            "label": "Extra large ≥1200px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "row_xxl",
-            "label": "Extra extra large ≥1400px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 6
-        },
-        {
-            "type": "header",
-            "content": "Gutter",
-            "info": "Spacing between items.  Applies only if the setting 'Layout' above is selected to 'grid'. [Learn more](https://getbootstrap.com/docs/5.0/layout/gutters/)"
-        },
-        {
-            "type": "range",
-            "id": "gutter_mobile",
-            "label": "Mobile <576px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "gutter_tablet",
-            "label": "Tablet ≥576px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "gutter_desktop",
-            "label": "Desktop ≥1200px",
-            "min": 1,
-            "max": 12,
-            "step": 1,
-            "default": 4
         }
     ]
 }

@@ -1,217 +1,28 @@
-<div
-    id="login"
-    class="mx-auto w-100" 
-    style="max-width: 360px;">
-    
-    <!-- Login form -->
-    {% form 'customer_login', id: 'customer-login' %}
-        
-        <h1 class="mb-4 text-center">
-            {{ 'customer.login.heading' | t }}
-        </h1>
+<!-- /templates/customers/login.liquid -->
 
-        <!-- Recover success message -->
-        <p
-            id="customer-recover-success-clone"
-            class="alert alert-success" 
-            role="alert"
-            style="display: none;">
-            {{ 'customer.recover.success' | t }}
-        </p>
-        
-        {{ form.errors | default_errors }}
-        
-        <div class="form-group mb-3">
-            <input
-                type="email"
-                name="customer[email]"
-                class="form-control"
-                spellcheck="false"
-                autocomplete="off"
-                autocapitalize="off"
-                required
-                autofocus
-                placeholder="{{ 'customer.login.email' | t }}"
-                aria-label="{{ 'customer.login.email' | t }}">
-        </div>
+<h2>Login</h2>
+{% form 'customer_login' %}
 
-        {% if form.password_needed %}
-            <div class="form-group mb-3">
-                <input
-                type="password"
-                name="customer[password]"
-                class="form-control"
-                spellcheck="false"
-                autocomplete="off"
-                autocapitalize="off"
-                required
-                placeholder="{{ 'customer.login.password' | t }}"
-                aria-label="{{ 'customer.login.password' | t }}">
-            </div>
-        {% endif %}
+{{ form.errors | default_errors }}
 
-        <div class="form-group mb-3">
-            <input 
-                type="submit" 
-                class="btn btn-primary w-100" 
-                value="{{ 'customer.login.sign_in' | t }}">
-        </div>
+<label for="customer_email">Email Address</label>
+<input type="email" name="customer[email]" />
 
-        <ul class="nav justify-content-center">
-            {% if form.password_needed %}
-                <li class="nav-item">
-                    <a 
-                        class="nav-link py-1" 
-                        href="#recover" 
-                        role="button">
-                        {{ 'customer.login.forgot_password' | t }}
-                    </a>
-                </li>
-            {% endif %}
-            <li class="nav-item">
-                <a 
-                    class="nav-link py-1" 
-                    href="{{ routes.account_register_url }}">
-                    {{ 'customer.login.create_account' | t }}
-                </a>
-            </li>
-        </ul>
+<label for="customer_password">Password</label>
+<input type="password" name="customer[password]" />
 
-    {% endform %}
+<input type="submit" value="Sign In" />
 
-    <!-- Recover form -->
-    {% form 'recover_customer_password', id: 'customer-recover', style: 'display: none' %}
+{% endform %}
 
-        <h1 class="text-center">
-            {{ 'customer.recover.heading' | t }}
-        </h1>
+<h2>Forgot Password</h2>
+{% form 'recover_customer_password' %}
 
-        <p 
-            class="text-muted text-center mb-5">
-            {{ 'customer.recover.subheading' | t }}
-        </p>
+{{ form.errors | default_errors }}
 
-        {% if form.posted_successfully? %}
-            <!-- Message will be displayed inside the login form above -->
-            <div id="customer-recover-success"></div>
-        {% endif %}
+<label for="customer_email">Email Address</label>
+<input type="email" name="email" />
 
-        {{ form.errors | default_errors }}
+<input type="submit" value="Submit" />
 
-        <div class="form-group mb-3">
-            <input
-                type="email"
-                name="email"
-                id="RecoverEmail"
-                class="form-control"
-                spellcheck="false"
-                autofocus
-                autocomplete="off"
-                autocapitalize="off"
-                required
-                placeholder="{{ 'customer.recover.email' | t }}"
-                aria-label="{{ 'customer.recover.email' | t }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <input 
-                class="btn btn-primary w-100"
-                type="submit" 
-                value="{{ 'customer.recover.submit' | t }}">
-        </div>
-
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a 
-                    class="nav-link" 
-                    href="#login" 
-                    role="button">
-                    {{ 'customer.recover.cancel' | t }}
-                </a>
-            </li>
-        </ul>
-
-    {% endform %}
-
-    <!-- Guest continue -->
-    {% if shop.checkout.guest_login %}
-        <hr class="mt-7 mb-4">
-        <div 
-            id="customer-login-guest"
-            class="text-center">
-            <h2 class="h4 mb-3">
-                {{ 'customer.login.guest_title' | t }}
-            </h2>
-            {% form 'guest_login' %}
-                <input 
-                    class="btn btn-outline-primary w-100"
-                    type="submit" 
-                    value="{{ 'customer.login.guest_continue' | t }}">
-            {% endform %}
-        </div>
-    {% endif %}
-  
-</div>
-  
-
-<script>
-/* 
-    © 2021 KondaSoft
-    https://www.kondasoft.com
-*/
-
-// Define elements
-const loginFormEl           = document.querySelector('#customer-login');
-const loginFormHeadingEl    = document.querySelector('#customer-login h1');
-const loginFormErrorEl      = document.querySelector('#customer-login .errors');
-
-const recoverFormEl         = document.querySelector('#customer-recover');
-const recoverFormHeadingEl  = document.querySelector('#customer-recover h1');
-const recoverFormErrorEl    = document.querySelector('#customer-recover .errors');
-const recoverFormSuccessEl  = document.querySelector('#customer-recover-success');
-
-// Handle Recover form
-if (loginFormEl) {
-    if (window.location.href.indexOf('#recover') != -1) {
-        loginFormEl.style.display = 'none';
-        recoverFormEl.style.display = 'block';
-        loginFormHeadingEl.setAttribute('tabindex', '-1');
-        loginFormHeadingEl.focus();
-    }
-
-    window.addEventListener('hashchange', () => {
-        if (window.location.href.indexOf('#recover') != -1) {
-            loginFormEl.style.display = 'none';
-            recoverFormEl.style.display = 'block';
-            recoverFormHeadingEl.setAttribute('tabindex', '-1');
-            recoverFormHeadingEl.focus();
-        } else {
-            loginFormEl.style.display = 'block';
-            loginFormHeadingEl.setAttribute('tabindex', '-1');
-            loginFormHeadingEl.focus();
-            recoverFormEl.style.display = 'none';
-        }
-    });
-}
-
-// Focus on error message after error login form submit
-if (loginFormErrorEl) {
-    loginFormErrorEl.setAttribute('tabindex', '-1');
-    loginFormErrorEl.focus();
-}
-
-// Focus on error message after error recover form submit
-if (recoverFormErrorEl) {
-    recoverFormErrorEl.setAttribute('tabindex', '-1');
-    recoverFormErrorEl.focus();
-}
-
-// Hanlde success message on recover form
-if (recoverFormSuccessEl) {
-    const cloneEl  = document.querySelector('#customer-recover-success-clone');
-
-    cloneEl.style.display = 'block';
-    cloneEl.setAttribute('tabindex', '-1');
-    cloneEl.focus();
-}
-</script>
+{% endform %}

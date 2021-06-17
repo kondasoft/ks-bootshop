@@ -1,0 +1,35 @@
+{% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+
+<li class="product-list-item text-center p-2">
+    <a href="{{ product.url | within: collection }}">
+        <img
+            class="
+                product-img
+                img-fluid
+                w-100
+                mb-2
+                {% if section.settings.img_thumbnail %}
+                    img-thumbnail
+                {% else %}
+                    rounded
+                {% endif %}
+            "
+            src="{{ product.featured_image.src | img_url: img_size, crop: 'center' }}" 
+            alt="{{ product.featured_image.alt | escape }}"
+            width="{{ section.settings.img_width }}"
+            height="{{ section.settings.img_height }}">
+    </a>
+    <h3 class="product-title h6 mb-1">
+        <a href="{{ product.url | within: collection }}">
+            {{ product.title }}
+        </a>
+    </h3>
+    <p class="product-price mb-3">
+        {{ product.price | money }}
+    </p>
+    {% unless product.available %}
+        <span class="product-badge-sold-out badge bg-secondary">
+            {{ 'product.sold_out' | t }}
+        </span>        
+    {% endunless %}
+</li>

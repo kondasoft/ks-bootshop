@@ -1,97 +1,21 @@
-<div
-    id="register"
-    class="mx-auto w-100" 
-    style="max-width: 360px;">
-  
-    {% form 'create_customer', id: 'customer-register' %}
-  
-        <h1 class="mb-4 text-center">
-            {{ 'customer.register.heading' | t }}
-        </h1>
-  
-        {{ form.errors | default_errors }}
-  
-        <div class="form-group mb-3">
-            <input
-                class="form-control"
-                type="text"
-                name="customer[first_name]"
-                autofocus
-                {% if form.first_name %}
-                    value="{{ form.first_name }}"
-                {% endif %}
-                placeholder="{{ 'customer.register.first_name' | t }}"
-                aria-label="{{ 'customer.register.first_name' | t }}"
-                required>
-        </div>
-  
-        <div class="form-group mb-3">
-            <input
-                class="form-control"
-                type="text"
-                name="customer[last_name]"
-                {% if form.last_name %}
-                    value="{{ form.last_name }}"
-                {% endif %}
-                placeholder="{{ 'customer.register.last_name' | t }}"
-                aria-label="{{ 'customer.register.last_name' | t }}"
-                required>
-        </div>
-  
-        <div class="form-group mb-3">
-            <input
-                class="form-control {% if form.errors contains 'email' %}is-invalid{% endif %}"
-                type="email"
-                name="customer[email]"
-                value="{% if form.email %}{{ form.email }}{% endif %}"
-                spellcheck="false"
-                autocomplete="off"
-                autocapitalize="off"
-                placeholder="{{ 'customer.register.email' | t }}"
-                aria-label="{{ 'customer.register.email' | t }}">
-        </div>
-  
-        <div class="form-group mb-3">
-            <input
-                class="form-control {% if form.errors contains 'password' %}is-invalid{% endif %}"
-                type="password"
-                name="customer[password]"
-                required
-                placeholder="{{ 'customer.register.password' | t }}"
-                aria-label="{{ 'customer.register.password' | t }}">
-        </div>
-  
-        <div class="form-group mb-2">
-            <input 
-                type="submit" 
-                class="btn btn-primary w-100" 
-                value="{{ 'customer.register.submit' | t }}">
-        </div>
+<!-- /templates/customers/register.liquid -->
 
-        <div class="form-group mb-2">
-            <a 
-                class="btn btn-link w-100" 
-                href="{{ routes.account_login_url }}">
-                « {{ 'customer.register.return' | t }}
-            </a>
-        </div>
+{% form 'create_customer' %}
 
-    {% endform %}
-  
-</div>
-  
-<script>
-    /* 
-        © 2021 KondaSoft
-        https://www.kondasoft.com
-    */
+{{ form.errors | default_errors }}
 
-    // Define elements
-    const registerFormErrorEl = document.querySelector('#customer-register .errors');
+<label for="first_name">First Name</label>
+<input type="text" value="" name="customer[first_name]" size="30" />
 
-    // Focus on error message after error form submit
-    if (registerFormErrorEl) {
-        registerFormErrorEl.setAttribute('tabindex', '-1');
-        registerFormErrorEl.focus();
-    }
-</script>
+<label for="last_name">Last Name</label>
+<input type="text" value="" name="customer[last_name]" size="30" />
+
+<label for="email">Email Address</label>
+<input type="email" value="" name="customer[email]" size="30" />
+
+<label for="password">Password</label>
+<input type="password" value="" name="customer[password]" size="30" />
+
+<input type="submit" value="Create" />
+
+{% endform %}

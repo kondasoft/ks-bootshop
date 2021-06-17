@@ -1,38 +1,11 @@
-/* 
-    © 2021 KondaSoft
-    https://www.kondasoft.com
+/*
+    © 2021 Firetheme.com
 */
 
-{{ settings.font_headings | font_face: font_display: 'swap'  }}
-
 :root {
-    --color-primary:                    {{ settings.color_primary }};
-    --color-primary-lighten-10:         {{ settings.color_primary | color_lighten: 10 }};
-    --color-primary-darken-10:          {{ settings.color_primary | color_darken: 10 }};
-    --color-primary-alpha-25:           {{ settings.color_primary | color_modify: 'alpha', 0.25 }};
+    --bs-primary: {{ settings.color_primary }};
+    --bs-secondary: {{ settings.color_secondary }};
 
-    --color-secondary:                  {{ settings.color_secondary }};
-    --color-secondary-lighten-10:       {{ settings.color_secondary | color_lighten: 10 }};
-    --color-secondary-darken-10:        {{ settings.color_secondary | color_darken: 10 }};
-    --color-secondary-alpha-25:         {{ settings.color_secondary | color_modify: 'alpha', 0.25 }};
-
-    --color-dark:                       {{ settings.color_dark }};
-    --color-dark-lighten-10:            {{ settings.color_dark | color_lighten: 10 }};
-    --color-dark-darken-10:             {{ settings.color_dark | color_darken: 10 }};
-    --color-dark-alpha-25:              {{ settings.color_dark | color_modify: 'alpha', 0.25 }};
-
-    --color-light:                      {{ settings.color_light }};
-    --color-light-lighten-10:           {{ settings.color_light | color_lighten: 10 }};
-    --color-light-darken-10:            {{ settings.color_light | color_darken: 10 }};
-
-    --color-body-bg:                    {{ settings.color_body_bg }};
-    --color-body-text:                  {{ settings.color_body_text }};
-    --color-body-text-lighten-10:       {{ settings.color_body_text | color_lighten: 10 }};
-    --color-body-text-darken-10:        {{ settings.color_body_text | color_darken: 10 }};
-
-    --color-price:                      {{ settings.color_price }};
-    --color-badge-sold-out:             {{ settings.color_badge_sold_out }};
-    --color-badge-sale:                 {{ settings.color_badge_sale }};
-
-    --font-headings: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
+    --bs-primary-darker: {{ settings.color_primary | color_darken: 10 }};
+    --bs-secondary-darker: {{ settings.color_secondary | color_darken: 10 }};
 }

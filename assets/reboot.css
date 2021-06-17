@@ -1,0 +1,213 @@
+/*
+    © 2021 Firetheme.com
+*/
+
+
+/* 
+    Backgrounds 
+*/
+.bg-primary { 
+    background-color: var(--bs-primary) !important; 
+}
+
+.bg-secondary { 
+    background-color: var(--bs-secondary) !important; 
+}
+
+
+/* 
+    Text 
+*/
+.text-primary { 
+    color: var(--bs-primary) !important; 
+}
+
+.text-secondary { 
+    color: var(--bs-secondary) !important; 
+}
+
+
+/* 
+    Borders 
+*/
+.border-primary { 
+    border-color: var(--bs-primary) !important; 
+}
+.border-secondary { 
+    border-color: var(--bs-secondary) !important; 
+}
+
+
+/* 
+    Links 
+*/
+a { 
+    color: var(--bs-primary); 
+} 
+
+a:hover { 
+    color: var(--bs-primary-darker); 
+}
+
+
+/* 
+    Forms
+*/
+.form-control:focus {
+    border-color: var(--color-primary-alpha-25);
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+.form-select:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+.form-check-input:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+
+/* 
+    Buttons / Link
+*/
+.btn-link {
+    color: var(--bs-primary);
+}
+
+.btn-link:hover,
+.btn-link:focus {
+    color: var(--bs-primary-darker);
+}
+
+.btn-link:focus,
+.btn-link:active:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+
+/* 
+    Buttons / Primary
+*/
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--bs-primary-darker);
+    border-color: var(--bs-primary-darker);
+}
+.btn-primary:focus,
+.btn-primary:active:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+
+/* 
+    Buttons / Secondary
+*/
+.btn-secondary,
+.btn-secondary.disabled,
+.btn-secondary:disabled {
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background-color: var(--bs-secondary-darker);
+    border-color: var(--bs-secondary-darker);
+}
+
+.btn-secondary:focus,
+.btn-secondary:active:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+
+/* 
+    Buttons / Primary outline
+*/
+.btn-outline-primary,
+.btn-outline-primary.disabled,
+.btn-outline-primary:disabled {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn-outline-primary:focus,
+.btn-outline-primary:active:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+    color: white;
+}
+
+
+/* 
+    Buttons / Secondary outline
+*/
+.btn-outline-secondary,
+.btn-outline-primary.disabled,
+.btn-outline-secondary:disabled {
+    color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active {
+    background-color: var(--bs-secondary);
+    border-color: var(--bs-secondary);
+}
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+    color: white;
+}
+
+
+/* 
+    Dropdowns 
+*/
+.dropdown-item.active, 
+.dropdown-item:active { 
+    background-color: var(--bs-primary); 
+}
+
+/* 
+    Toast 
+*/
+.toast {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    background-color: rgba(255, 255, 255, .95);
+    width: calc(100% - 2rem);
+}
+
+.toast .btn-close {
+    font-size: .75rem;
+}
+
+@media (min-width: 576px) {
+    .toast {
+        width: 360px;
+    }
+}
