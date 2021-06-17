@@ -191,6 +191,7 @@ a:hover {
     background-color: var(--bs-primary); 
 }
 
+
 /* 
     Toast 
 */
@@ -210,4 +211,18 @@ a:hover {
     .toast {
         width: 360px;
     }
+}
+
+
+/* 
+    Accordion 
+*/
+.accordion-button:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+    border-color: transparent;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--bs-primary);
+    background-color: var(--bs-light);
 }

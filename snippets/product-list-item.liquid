@@ -25,7 +25,22 @@
         </a>
     </h3>
     <p class="product-price mb-3">
-        {{ product.price | money }}
+        {% if product.compare_at_price > product.price %}
+            <s class="product-price-compare text-muted me-1">
+                <span class="visually-hidden">
+                    {{ 'product.old_price' | t }}
+                </span>
+                {{ product.compare_at_price | money }}
+            </s>
+        {% endif %}
+        <span class="product-price-final">
+            {% if product.price_varies %}
+                <span class="price-from">
+                    {{ 'product.price_from' | t }}
+                </span>
+            {% endif %}
+            {{ product.price | money }}
+        </span>
     </p>
     {% unless product.available %}
         <span class="product-badge-sold-out badge bg-secondary">

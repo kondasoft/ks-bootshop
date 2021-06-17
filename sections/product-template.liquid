@@ -8,7 +8,7 @@
             <!-- Product carousel -->
             <div 
                 id="product-carousel" 
-                class="carousel slide" 
+                class="carousel slide mb-5" 
                 data-bs-ride="carousel"
                 data-bs-interval="false">
                 <div class="carousel-indicators mb-2">
@@ -35,6 +35,14 @@
                                         width="{{ section.settings.img_width }}"
                                         height="{{ section.settings.img_height }}"
                                         class="product-carousel-img img-fluid w-100 rounded">
+                                {% when 'external_video' %}
+                                    <div class="ratio ratio-16x9">
+                                        {{ media | external_video_tag }}
+                                    </div>
+                                {% when 'video' %}
+                                    <div class="ratio ratio-16x9">
+                                        {{ media | video_tag: controls: true }}
+                                    </div>
                             {% endcase %}
                         </div>
                     {% endfor %}
@@ -61,12 +69,35 @@
         <div class="col-lg-6">
 
             <!-- Product title -->
-            <h1 class="display-5 mt-2 mb-3">
+            <h1 class="display-5 mt-lg-1 mb-2">
                 {{ product.title }}
             </h1>
 
+            <!-- Product price -->
+            <p 
+                id="product-price" 
+                class="product-price lead fw-normal mb-4">
+                <s class="
+                    product-price-compare 
+                    text-muted 
+                    me-1 
+                    {% unless current_variant.compare_at_price > current_variant.price %}
+                        d-none
+                    {% endunless %}">
+                    <span class="visually-hidden">
+                        {{ 'product.old_price' | t }}
+                    </span>
+                    <span>
+                        {{ current_variant.compare_at_price | money }}
+                    </span>
+                </s>
+                <span class="product-price-final">
+                    {{ current_variant.price | money }}
+                </span>
+            </p>
+
             <!-- Product form -->
-            <div id="product-form" class="bg-light px-4 py-4 rounded">
+            <div id="product-form" class="bg-light px-5 py-5 mb-5 rounded">
 
                 <!-- Product options -->
                 {% unless product.has_only_default_variant %}
@@ -120,8 +151,44 @@
                 </button>
 
             </div>
-                
-            <div>{{ product.description }}</div>              
+
+            <!-- Product accordion -->
+            <div id="product-accordion" class="accordion mb-5">
+                {% for block in section.blocks %}
+                    <div class="accordion-item">
+                        <h3 id="product-accordion-heading-{{ block.id }}" class="accordion-header mb-0">
+                            <button 
+                                class="accordion-button {% if forloop.index > 1 %}collapsed{% endif %}" 
+                                type="button"
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#product-accordion-collapse-{{ block.id }}" 
+                                aria-expanded="true" 
+                                aria-controls="product-accordion-collapse-{{ block.id }}">
+                                {{ block.settings.title | escape }}
+                            </button>
+                        </h3>
+                        <div 
+                            id="product-accordion-collapse-{{ block.id }}" 
+                            class="accordion-collapse collapse {% if forloop.index == 1 %}show{% endif %}" 
+                            data-bs-parent="#product-accordion"
+                            aria-labelledby="product-accordion-heading-{{ block.id }}">
+                            <div class="accordion-body">
+                                {% if block.type == 'description' %}
+                                    <div class="rte">
+                                        {{ product.description }}
+                                    </div>
+                                {% endif %}
+                                {% if block.type == 'richtext' %}
+                                    <div class="rte">
+                                        {{ block.settings.description }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+                  
         </div>
     </div>
 </div>
@@ -145,6 +212,38 @@
             "id": "img_height",
             "label": "Image height (px)",
             "default": "960"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "description",
+            "name": "Product description",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Details"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "name": "Richtext",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Rich text"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
         }
     ]
 }

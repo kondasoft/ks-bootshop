@@ -23,6 +23,7 @@
     },
     "product": {
         "sold_out": "Sold out",
+        "price_from": "From",
         "unavailable": "Unavailable",
         "add_to_cart": "Add to cart",
         "quantity": "Quantity",

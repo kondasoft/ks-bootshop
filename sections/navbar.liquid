@@ -23,7 +23,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                {% for link in linklists.main-menu.links %}
+                {% for link in linklists[section.settings.menu].links %}
                     {% if link.links == blank %}
                         <li class="nav-item">
                             <a 
@@ -121,6 +121,12 @@
             "type": "image_picker",
             "id": "logo",
             "label": "Logo"   
+        },
+        {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Menu",
+            "default": "main-menu"
         }
     ]
 }

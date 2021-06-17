@@ -1,0 +1,10 @@
+/*
+    © 2021 Firetheme.com
+*/
+
+/* 
+    Product price 
+*/
+.product-price-compare:not(.d-none) + .product-price-final {
+    color: var(--bs-green);
+}

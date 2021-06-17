@@ -15,13 +15,24 @@ document.querySelectorAll('.product-option select')
             const addToCartBtn = document.querySelector('#add-to-cart-btn')
             addToCartBtn.setAttribute('data-variant-id', selectedVariant?.id || '')
             if (selectedVariant) {
-                // console.log(selectedVariant)
+                console.log(selectedVariant)
                 if (selectedVariant.available) {
                     addToCartBtn.disabled = false
                     addToCartBtn.textContent = addToCartBtn.dataset.textAddToCart
                 } else {
                     addToCartBtn.disabled = true
                     addToCartBtn.textContent = addToCartBtn.dataset.textSoldOut
+                }
+                document.querySelector('.product-price .product-price-final')
+                    .textContent = window.formatMoney(selectedVariant.price)
+                if (selectedVariant.compare_at_price) {
+                    document.querySelector('.product-price .product-price-compare')
+                        .textContent = window.formatMoney(selectedVariant.compare_at_price)
+                    document.querySelector('.product-price .product-price-compare')
+                        .classList.remove('d-none')
+                } else {
+                    document.querySelector('.product-price .product-price-compare')
+                        .classList.add('d-none')
                 }
                 bootstrap.Carousel.getInstance(document.querySelector('#product-carousel'))
                     .to(selectedVariant?.featured_media?.position - 1 || 0)
