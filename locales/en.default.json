@@ -3,12 +3,15 @@
         "previous": "Previous",
         "next": "Next",
         "pagination_page_of": "Page {{ count }} of {{ total }}",
+        "offcanvas_menu": "Menu",
         "404": {
             "title": "Not found",
             "description": "The page you were looking for does not exist"
         },
         "accessibility": {
-            "skip_content": "Skip to content"
+            "skip_content": "Skip to content",
+            "open_menu": "Open menu",
+            "expand": "Expand"
         }
     },
     "collection": {

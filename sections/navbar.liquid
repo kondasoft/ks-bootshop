@@ -1,6 +1,16 @@
 <nav class="navbar navbar-expand-lg shadow-sm {{ section.settings.color }}">
     <div class="container">
-        <a class="navbar-brand py-0" href="{{ routes.root_url }}">
+        <button 
+            class="navbar-toggler me-3" 
+            type="button" 
+            data-bs-toggle="offcanvas" 
+            data-bs-target="#navbar-offcanvas" 
+            aria-controls="navbar-offcanvas" 
+            aria-expanded="false" 
+            aria-label="{{ 'general.accessibility.open_menu' | t }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand flex-grow-1 flex-lg-grow-0 py-0" href="{{ routes.root_url }}">
             {% if section.settings.logo == blank %}
                 {{ shop.name }}
             {% else %}
@@ -11,62 +21,11 @@
                     height="40">
             {% endif %}
         </a>
-        <button 
-            class="navbar-toggler" 
-            type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbar-collapse" 
-            aria-controls="navbar-collapse" 
-            aria-expanded="false" 
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                {% for link in linklists[section.settings.menu].links %}
-                    {% if link.links == blank %}
-                        <li class="nav-item">
-                            <a 
-                                class="nav-link {% if link.active %}active{% endif %}" 
-                                aria-current="{% if link.active %}page{% endif %}" 
-                                href="{{ link.url }}">
-                                {{ link.title }}
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item dropdown">
-                            <a 
-                                class="nav-link dropdown-toggle {% if link.child_active %}active{% endif %}" 
-                                href="#" 
-                                id="navbar-item-{{ forloop.index }}" 
-                                role="button" 
-                                data-bs-toggle="dropdown" 
-                                aria-expanded="false">
-                                {{ link.title }}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbar-item-{{ forloop.index }}">
-                                {% for child_link in link.links %}
-                                    <li>
-                                        {% if child_link.title == '-' %}
-                                            <hr class="dropdown-divider">
-                                        {% else %}
-                                            <a 
-                                                class="dropdown-item  {% if child_link.active %}active{% endif %}" 
-                                                href="{{ child_link.url }}"
-                                                aria-current="{% if child_link.active %}page{% endif %}">
-                                                {{ child_link.title }}
-                                            </a>
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+        {% render 'navbar-collapse' %}
+        <div id="navbar-icons-nav" class="navbar-expand">
             <ul class="navbar-nav">
                 {% if shop.customer_accounts_enabled %}
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-lg-block">
                         <a 
                             class="nav-link {% if template.name == 'login' or template.name == 'account' %}active{% endif %}" 
                             aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}" 
@@ -99,6 +58,8 @@
     </div>
 </nav>
 
+{% render 'navbar-offcanvas' %}
+
 {% schema %}
 {
     "name": "Navbar",
@@ -124,8 +85,14 @@
         },
         {
             "type": "link_list",
-            "id": "menu",
-            "label": "Menu",
+            "id": "desktop_menu",
+            "label": "Desktop menu",
+            "default": "main-menu"
+        },
+        {
+            "type": "link_list",
+            "id": "mobile_menu",
+            "label": "Mobile menu",
             "default": "main-menu"
         }
     ]

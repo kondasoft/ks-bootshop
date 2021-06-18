@@ -1,12 +1,12 @@
 <section 
-    id="{{ section.id | prepend: 'featured-products-' }}"
-    class="featured-products mb-8">
+    id="{{ section.id | prepend: 'featured-collections-' }}"
+    class="featured-collections mb-8">
     <div class="container">
         <h2 class="text-center mb-2">
             {{ section.settings.title }}
         </h2>
         <ul class="
-            product-list 
+            collection-list 
             list-unstyled 
             row 
             {{ section.settings.row_xs | prepend: 'row-cols-' }} 
@@ -14,8 +14,9 @@
             {{ section.settings.row_xl | prepend: 'row-cols-xl-' }} 
             mx-n2
         ">
-            {% for product in collections[section.settings.collection].products limit: section.settings.limit %}
-                {% render 'product-list-item' with product as product %}
+            {% for block in section.blocks %}
+                {% assign collection = collections[block.settings.collection] %}
+                {% render 'collection-list-item' with collection as collection %}
             {% endfor %}
         </ul>
     </div>
@@ -23,34 +24,21 @@
 
 {% schema %}
 {
-    "name": "Featured Products",
+    "name": "Featured Collections",
     "settings": [
         {
             "type": "header",
             "content": "General"
         },
         {
-            "type": "collection",
-            "id": "collection",
-            "label": "Collection"
-        },
-        {
-            "type": "range",
-            "id": "limit",
-            "label": "Limit products",
-            "min": 2,
-            "max": 40,
-            "default": 8
-        },
-        {
             "type": "text",
             "id": "title",
             "label": "Title",
-            "default": "Featured Products"
+            "default": "Featured Collections"
         },
         {
             "type": "header",
-            "content": "Product"
+            "content": "Collection"
         },
         {
             "type": "text",
@@ -92,7 +80,7 @@
             "min": 1,
             "max": 4,
             "step": 1,
-            "default": 3
+            "default": 2
         },
         {
             "type": "range",
@@ -102,13 +90,26 @@
             "min": 1,
             "max": 6,
             "step": 1,
-            "default": 4
+            "default": 3
+        }
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "label": "Collection",
+                    "id": "collection",
+                    "type": "collection"
+                }
+            ]
         }
     ],
     "presets": [
         {
-            "name": "Featured Products",
-            "category": "Product"
+            "name": "Featured Collections",
+            "category": "Collection"
         }
     ]
 }

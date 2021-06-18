@@ -184,6 +184,14 @@ a:hover {
 
 
 /* 
+    Close 
+*/
+.btn-close {}
+.btn-close:focus {
+    box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
+}
+
+/* 
     Dropdowns 
 */
 .dropdown-item.active, 
@@ -215,6 +223,18 @@ a:hover {
 
 
 /* 
+    Collapse 
+*/
+.btn-collapse svg {
+    transition: all .2s ease-out;
+}
+
+.btn-collapse:not(.collapsed) svg {
+    transform: rotate(180deg);
+}
+
+
+/* 
     Accordion 
 */
 .accordion-button:focus {
@@ -226,3 +246,11 @@ a:hover {
     color: var(--bs-primary);
     background-color: var(--bs-light);
 }
+
+
+/* 
+    Offcanvas 
+*/
+.offcanvas {
+}
+

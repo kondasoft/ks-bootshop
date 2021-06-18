@@ -1,0 +1,77 @@
+<div 
+    id="navbar-offcanvas"
+    class="offcanvas offcanvas-start" 
+    tabindex="-1"  
+    aria-labelledby="navbar-offcanvas-label">
+    <div class="offcanvas-header border-bottom">
+        <h5 
+            id="navbar-offcanvas"
+            class="offcanvas-title"">
+            {{ 'general.offcanvas_menu' | t }}
+        </h5>
+        <button 
+            type="button" 
+            class="btn-close text-reset" 
+            data-bs-dismiss="offcanvas" 
+            aria-label="Close">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <ul id="navbar-offcanvas-nav" class="nav flex-column mx-n4">
+            {% for link in linklists[section.settings.mobile_menu].links %}
+                <li class="nav-item">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a
+                            class="nav-link {% if link.active or link.child_active %}active text-primary{% else %}text-body{% endif %} "
+                            aria-current="{% if link.active %}page{% endif %}"
+                            href="{{ link.url }}">
+                            {{ link.title }}
+                        </a>
+                        {% if link.links != blank %}
+                            <button 
+                                class="btn btn-light btn-collapse me-4 px-1 py-1 {% unless link.active or link.child_active %}collapsed{% endunless %}" 
+                                type="button" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#navbar-offcanvas-collapse-{{ forloop.index }}" 
+                                aria-controls="navbar-offcanvas-collapse-{{ forloop.index }}"
+                                aria-expanded="false" 
+                                aria-label="{{ 'general.accessibility.expand' | t }}">
+                                <span>
+                                    {% render 'icon-chevron-down', size: 20, class: 'd-block' %}
+                                </span>
+                            </button>
+                        {% endif %}
+                    </div>
+                    {% if link.links != blank %}
+                        <div 
+                            id="navbar-offcanvas-collapse-{{ forloop.index }}" 
+                            class="collapse {% if link.active or link.child_active %}show{% endif %}">
+                            <ul class="nav flex-column bg-light rounded mx-4 mt-1 mb-4 py-2">
+                                {% for child_link in link.links %}
+                                    <li class="nav-item">
+                                        <a
+                                            class="dropdown-item py-2 {% if child_link.active %}active{% endif %}" 
+                                            aria-current="{% if child_link.active %}page{% endif %}"
+                                            href="{{ child_link.url }}">
+                                            {{ child_link.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="offcanvas-footer border-top">
+        {% if shop.customer_accounts_enabled %}
+            <a 
+                class="d-flex align-content-center nav-link py-4 text-body"
+                href="{{ routes.account_url }}">
+                {% render 'icon-account', size: 22, class: 'me-3' %}
+                {{ 'account.label' | t }}
+            </a>
+        {% endif %}
+    </div>
+</div>
