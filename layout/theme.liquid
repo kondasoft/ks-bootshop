@@ -14,31 +14,7 @@
     {{ content_for_header }}
 
     <!-- Styles/Scripts -->
-    {{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
-    {{ 'variables.css' | asset_url | stylesheet_tag }}
-    {{ 'reboot.css' | asset_url | stylesheet_tag }}
-    {{ 'shopify.css' | asset_url | stylesheet_tag }}
-    {{ 'sections.css' | asset_url | stylesheet_tag }}
-
-    <script>
-        window.money_format = "{{ shop.money_format }}"
-    </script>
-
-    <script src="{{ 'bootstrap.bundle.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'helper.js' | asset_url }}" defer></script>
-    <script src="{{ 'init.js' | asset_url }}" defer></script>
-
-    {% if request.page_type == 'collection' %}
-        {{ 'collection.css' | asset_url | stylesheet_tag }}
-        <script src="{{ 'collection.js' | asset_url }}" defer></script>
-    {% endif %}
-
-    {% if request.page_type == 'product' %}
-        {{ 'product.css' | asset_url | stylesheet_tag }}
-        <script src="{{ 'product.js' | asset_url }}" defer></script>
-    {% endif %}
-
-    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {% render 'styles-scripts' %}
 </head>
 
 <body class="{{ request.page_type | prepend: 'template-' }}">
@@ -58,7 +34,8 @@
     </main>
 
     <!-- Bottom sections -->
-
+    {% section 'footer' %}
+    
     <!-- Bottom includes -->
     {% render 'toast' %}
     

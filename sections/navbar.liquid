@@ -25,7 +25,7 @@
         <div id="navbar-icons-nav" class="navbar-expand">
             <ul class="navbar-nav">
                 {% if shop.customer_accounts_enabled %}
-                    <li class="nav-item d-none d-lg-block">
+                    <li id="nav-item-account" class="nav-item d-none d-lg-block">
                         <a 
                             class="nav-link {% if template.name == 'login' or template.name == 'account' %}active{% endif %}" 
                             aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}" 
@@ -35,7 +35,7 @@
                         </a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
+                <li id="nav-item-search" class="nav-item">
                     <a 
                         class="nav-link {% if template.name == 'search' %}active{% endif %}" 
                         aria-current="{% if template.name == 'search' %}page{% endif %}" 
@@ -44,13 +44,15 @@
                         {% render 'icon-search', size: 22 %}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a 
-                        class="nav-link {% if template.name == 'cart' %}active{% endif %}" 
+                <li id="nav-item-cart" class="nav-item">
+                    <a class="nav-link {% if template.name == 'cart' %}active{% endif %}" 
                         aria-current="{% if template.name == 'cart' %}page{% endif %}" 
                         href="{{ routes.cart_url }}"
                         aria-label="{{ 'cart.label' | t }}">
                         {% render 'icon-cart', size: 22 %}
+                        <span class="badge cart-item-count {% if cart.item_count == 0 %}d-none{% endif %}">
+                            {{ cart.item_count | t }}
+                        </span>
                     </a>
                 </li>
             </ul>

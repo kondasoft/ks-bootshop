@@ -1,0 +1,173 @@
+{% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+
+{% if section.settings.img_thumbnail %}
+    {% assign img_thumbnail = 'img-thumbnail' %}
+{% else %}
+    {% assign img_thumbnail = 'rounded' %}
+{% endif %}
+
+<div class="container py-6">
+
+    <!-- Header -->
+    <div class="header col-lg-8 mx-auto mb-6 text-center">
+        <h1 class="display-4">
+            {{ 'cart.title' | t }}
+            (<span class="cart-item-count">{{ cart.item_count }}</span>)
+        </h1>
+    </div>
+
+    {% if cart.item_count == 0 %}
+     <!-- Cart is empty -->
+        <div id="cart-empty" class="text-center">
+            <p class="lead text-center mt-n2 mb-7">
+                {{ 'cart.empty' | t}}
+            </p>
+            <a href="{{ routes.root_url }}" class="btn btn-primary">
+                {{ 'cart.continue_shopping' | t }}
+            </a>
+        </div>
+    {% else %}
+        <form 
+            action="{{ routes.cart_url }}"
+            class="" 
+            method="post"
+            novalidate>
+            <div class="row">
+                <div class="col-lg-8">
+                    <ul class="cart-product-list list-unstyled mb-5">
+                        {% for line_item in cart.items %}
+                            <li class="cart-product-list-item row align-items-lg-center mx-n2 mb-4">
+                                <div class="col-4 px-2">
+                                    <img 
+                                        class="product-img img-fluid me-4 {{ img_thumbnail }}"
+                                        src="{{ line_item.image | img_url: img_size, crop: 'center' }}"
+                                        alt="{{ line_item.image.alt | escape }}" 
+                                        width="{{ section.settings.img_width }}"
+                                        height="{{ section.settings.img_height }}">
+                                </div>
+                                <div class="col-8 px-2">
+                                    <h3 class="product-title h6 mb-2">
+                                        <a class="" href="{{ line_item.url }}">
+                                            {{ line_item.product.title }}
+                                        </a>
+                                    </h3>
+                                    {% unless line_item.product.has_only_default_variant %}
+                                        <p class="variant-title text-muted mt-n1 mb-2 small">
+                                            {{ line_item.variant.title }}
+                                        </p>
+                                    {% endunless %}
+                                    <p id="product-price" class="product-price mb-4">
+                                        <span class="product-price-final">
+                                            {{ line_item.final_line_price | money }}
+                                        </span>
+                                    </p>
+                                    {% if section.settings.show_qty %}
+                                        <div class="input-group input-group-sm mb-4" style="max-width: 110px;">
+                                            <label for="updates_{{ line_item.key }}" class="input-group-text">
+                                                {{ 'cart.qty' | t }}
+                                            </label>
+                                            <input
+                                                id="updates_{{ line_item.key }}"
+                                                class="cart-qty form-control form-control-sm"
+                                                type="number" 
+                                                name="updates[]" 
+                                                value="{{ line_item.quantity }}"
+                                                data-line-item-key="{{ line_item.key }}"
+                                                data-index="{{ forloop.index0 }}"
+                                                min="1">
+                                        </div>
+                                    {% endif %}
+                                    <a
+                                        href="/cart/change?line={{ forloop.index }}&amp;quantity=0"
+                                        class="btn-cart-remove btn btn-link text-muted btn-sm ms-n2 mt-n2 mb-0">
+                                        {{ 'cart.remove' | t }}
+                                    </a>
+                                </div>
+                            </li>
+                            {% unless forloop.last %}
+                                <hr class="d-lg-none mt-4 mb-5">
+                            {% endunless %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Cart Summary -->
+                    <div 
+                        id="cart-summary" 
+                        class="sticky-top bg-light border mb-4 p-4 rounded">
+                        <h2 class="h4 border-bottom pb-2 mb-4">
+                            {{ 'cart.summary' | t }}
+                        </h2>
+                        {% if section.settings.show_note %}
+                          <textarea
+                              id="cart-note"
+                              rows="4" 
+                              class="form-control mb-5" 
+                              name="note" 
+                              placeholder="{{ 'cart.note' | t }}" 
+                              aria-label="{{ 'cart.note' | t }}">{{ cart.note }}</textarea> {%- comment -%} Live this line as this to prevent empty spaces {%- endcomment -%}
+                        {% endif %}
+                        <p 
+                            id="cart-subtotal" 
+                            class="d-flex justify-content-between mb-4 lead fw-normal">
+                            <span>{{ 'cart.subtotal' | t }}</span>
+                            <strong id="cart-subtotal-value">
+                                {{ cart.total_price | money }}
+                            </strong>
+                        </p>
+                        <input 
+                            id="btn-checkout" 
+                            type="submit" 
+                            name="checkout" 
+                            class="btn btn-primary btn-lg w-100 mb-3" 
+                            value="{{ 'cart.checkout' | t }}">
+                        <p 
+                            id="taxes-shipping-at-checkout" 
+                            class="text-muted text-center small fst-italic mb-0">
+                            {{ 'cart.taxes_shipping_at_checkout_html' | t }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+
+</div>
+
+{% schema %}
+{
+    "name": "Cart page",
+    "settings": [
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "480"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "480"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image thumbnail",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_qty",
+            "label": "Show quantity",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_note",
+            "label": "Show note field",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

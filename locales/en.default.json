@@ -35,7 +35,18 @@
         "view_cart": "View cart"
     },
     "cart": {
-        "label": "Cart"
+        "label": "Cart",
+        "title": "Cart",
+        "summary": "Summary",
+        "remove": "Remove",
+        "quantity": "Quantity",
+        "qty": "Qty",
+        "note": "Special instructions for your order",
+        "empty": "Your shopping cart is empty",
+        "continue_shopping": "Continue Shopping",
+        "subtotal": "Subtotal",
+        "checkout": "Checkout",
+        "taxes_shipping_at_checkout_html": "Taxes &amp; <a href=\"policies\/shipping-policy\">Shipping<\/a> calculated at checkout"
     },
     "search": {
         "label": "Search"

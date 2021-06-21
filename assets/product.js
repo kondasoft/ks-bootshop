@@ -107,8 +107,12 @@ document.querySelector('#add-to-cart-btn')
                         ${btn.dataset.textViewCart}
                     </a>
                 `
-                // Toast.getInstance(toast)?.dispose()
+                bootstrap.Toast.getInstance(toast)?.dispose()
                 new bootstrap.Toast(toast).show()
+                // Update badge inside navbar cart icon
+                const navItemCartBadge = document.querySelector('#nav-item-cart .badge')
+                navItemCartBadge.classList.remove('d-none')
+                navItemCartBadge.textContent = Number(navItemCartBadge.textContent) + Number(btn.dataset.quantity)
             })
     })
 

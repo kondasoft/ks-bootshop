@@ -13,6 +13,17 @@
 /* 
     Navbar 
 */
+#nav-item-cart .badge {
+    padding: 0.2rem .3rem;
+    background-color: white;
+    color: var(--bs-dark);
+}
+
+.bg-white #nav-item-cart .badge,
+.bg-light #nav-item-cart .badge {
+    background-color: var(--bs-primary);
+    color: white;
+}
 
 
 /* 

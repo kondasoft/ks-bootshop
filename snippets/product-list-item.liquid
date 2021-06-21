@@ -1,19 +1,15 @@
 {% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
 
+{% if section.settings.img_thumbnail %}
+    {% assign img_thumbnail = 'img-thumbnail' %}
+{% else %}
+    {% assign img_thumbnail = 'rounded' %}
+{% endif %}
+
 <li class="product-list-item text-center p-2">
     <a href="{{ product.url | within: collection }}">
-        <img
-            class="
-                product-img
-                img-fluid
-                w-100
-                mb-2
-                {% if section.settings.img_thumbnail %}
-                    img-thumbnail
-                {% else %}
-                    rounded
-                {% endif %}
-            "
+        <img 
+            class="product-img img-fluid w-100 mb-2 {{ img_thumbnail }}"
             src="{{ product.featured_image.src | img_url: img_size, crop: 'center' }}" 
             alt="{{ product.featured_image.alt | escape }}"
             width="{{ section.settings.img_width }}"
