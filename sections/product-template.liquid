@@ -188,6 +188,13 @@
                     </div>
                 {% endfor %}
             </div>
+
+            <!-- Social Sharing -->
+            {% if section.settings.show_social_sharing %}
+                <div class="product-social-sharing text-center mt-n1 mb-6">
+                    {% render 'social-sharing' with share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+                </div>
+            {% endif %}
                   
         </div>
     </div>
@@ -197,6 +204,16 @@
 {
     "name": "Product pages",
     "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_sharing",
+            "label": "Show social sharing",
+            "default": true
+        },
         {
             "type": "header",
             "content": "Carousel"

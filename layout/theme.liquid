@@ -18,7 +18,6 @@
 </head>
 
 <body class="{{ request.page_type | prepend: 'template-' }}">
-
     <!-- Skip link -->
     <a class="visually-hidden-focusable" href="#main">
         {{ 'general.accessibility.skip_content' | t }}
@@ -29,7 +28,7 @@
     {% section 'navbar' %}
 
     <!-- Main -->
-    <main role="main">
+    <main id="main" role="main">
         {{ content_for_layout }}
     </main>
 

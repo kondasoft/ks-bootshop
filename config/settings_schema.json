@@ -23,5 +23,88 @@
                 "default": "#6c757d"
             }
         ]
+    },
+    {
+        "name": "Social media",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Social sharing buttons"
+            },
+            {
+                "type": "checkbox",
+                "id": "share_facebook",
+                "label": "Share on Facebook",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_twitter",
+                "label": "Tweet on Twitter",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_pinterest",
+                "label": "Pin on Pinterest",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_whatsapp",
+                "label": "Share on Whatsapp",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "share_email",
+                "label": "Send via Email",
+                "default": true
+            },
+            {
+                "type": "header",
+                "content": "Social media links"
+            },
+            {
+                "type": "text",
+                "id": "social_facebook",
+                "label": "Facebook link"
+            },
+            {
+                "type": "text",
+                "id": "social_twitter",
+                "label": "Twitter link"
+            },
+            {
+                "type": "text",
+                "id": "social_instagram",
+                "label": "Instagram link"
+            },
+            {
+                "type": "text",
+                "id": "social_pinterest",
+                "label": "Pinterest link"
+            },
+            {
+                "type": "text",
+                "id": "social_tiktok",
+                "label": "TikTok link"
+            },
+            {
+                "type": "text",
+                "id": "social_snapchat",
+                "label": "Snapchat link"
+            },
+            {
+                "type": "text",
+                "id": "social_youtube",
+                "label": "Youtube link"
+            },
+            {
+                "type": "text",
+                "id": "social_linkedin",
+                "label": "Linkedin link"
+            }
+        ]
     }
 ]

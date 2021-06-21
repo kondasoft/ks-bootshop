@@ -12,6 +12,26 @@
             "skip_content": "Skip to content",
             "open_menu": "Open menu",
             "expand": "Expand"
+        },
+        "newsletter": {
+            "label": "Email address",
+            "confirmation": "Thanks for subscribing, we will hear from us soon.",
+            "button": "Subscribe"
+        },
+        "social": {
+            "share_label": "Share on social media",
+            "share_on_facebook": "Share",
+            "share_on_twitter": "Tweet",
+            "share_on_pinterest": "Pin it",
+            "share_on_whatsapp": "Share",
+            "share_on_email": "Email",
+            "alt_text": {
+                "share_on_facebook": "Share on Facebook",
+                "share_on_twitter": "Tweet on Twitter",
+                "share_on_pinterest": "Pin on Pinterest",
+                "share_on_whatsapp": "Share on Whatsapp",
+                "share_on_email": "Send via Email"
+            }
         }
     },
     "collection": {

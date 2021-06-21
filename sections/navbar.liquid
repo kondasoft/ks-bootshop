@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg shadow-sm {{ section.settings.color }}">
-    <div class="container">
+<nav id="navbar" class="navbar navbar-expand-lg shadow-sm {{ section.settings.color }}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
         <button 
             class="navbar-toggler me-3" 
             type="button" 
@@ -79,6 +79,12 @@
                 { "value": "bg-secondary navbar-dark", "label": "Secondary" }
             ],
             "default": "bg-white navbar-light"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
         },
         {
             "type": "image_picker",

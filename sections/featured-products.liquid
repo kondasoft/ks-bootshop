@@ -1,7 +1,7 @@
 <section 
     id="{{ section.id | prepend: 'featured-products-' }}"
     class="featured-products mb-8">
-    <div class="container">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
         <h2 class="text-center mb-2">
             {{ section.settings.title }}
         </h2>
@@ -33,6 +33,12 @@
             "type": "collection",
             "id": "collection",
             "label": "Collection"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
         },
         {
             "type": "range",

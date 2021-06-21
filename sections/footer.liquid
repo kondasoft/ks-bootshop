@@ -1,3 +1,265 @@
-<footer class="bg-dark" style="height: 400px">
+<footer id="footer" class="py-6 {{ section.settings.color }}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+        {% if section.blocks.size > 0 %}
+            <div 
+                id="footer-blocks" 
+                class="row {{ section.settings.row_xs | prepend: 'row-cols-' }} {{ section.settings.row_sm | prepend: 'row-cols-sm-' }}  {{ section.settings.row_xl | prepend: 'row-cols-xl-' }} ">
+                {% for block in section.blocks %}
+                    <div class="footer-block col py-4">
+                        {% unless block.settings.title == blank %}
+                            <h4 class="title h5 mb-3">
+                                {{ block.settings.title }}
+                            </h4>
+                        {% endunless %}
+                        {% case block.type %}
+                            {% when 'richtext' %}
+                                <div class="rte small">
+                                    {{ block.settings.description }}
+                                </div>
+                            {% when 'menu' %}
+                                <ul class="nav">
+                                    {% for link in linklists[block.settings.menu].links %}
+                                        <li class="nav-item">
+                                            <a 
+                                                class="nav-link {% if link.active %}active{% endif %}" 
+                                                aria-current="{% if link.active %}active{% endif %}" 
+                                                href="{{ link.url }}">
+                                                {{ link.title }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% when 'newsletter' %}
+                                {% form 'customer', id: 'footer-newsletter' %}
+                                    <input type="hidden" name="contact[tags]" value="newsletter">
+                                    {{ form.errors | default_errors }}
+                                    {% if form.posted_successfully? %}
+                                        <p class="newsletter-alert alert alert-success py-2">
+                                            {{ 'general.newsletter.confirmation' | t }}
+                                        </p>
+                                    {% endif %}
+                                    {% unless block.settings.description == blank %}
+                                        <div class="rte small mb-4">
+                                            {{ block.settings.description }}
+                                        </div>
+                                    {% endunless %}
+                                    <div class="input-group justify-content-center flex-nowrap">
+                                        <input 
+                                            type="email" 
+                                            name="contact[email]" 
+                                            size="30"
+                                            class="form-control" 
+                                            value="{% if customer.email != blank %}{{ customer.email }}{% endif %}" 
+                                            placeholder="{{ 'general.newsletter.label' | t }}" 
+                                            aria-label="{{ 'general.newsletter.label' | t }}"
+                                            required>
+                                            <button 
+                                                type="submit" 
+                                                name="commit" 
+                                                class="btn btn-secondary">
+                                            {{ 'general.newsletter.button' | t }}
+                                        </button>
+                                    </div>
+                                {% endform %}
+                        {% endcase %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <hr class="my-5">
+        <div id="copyright" class="text-center small">
+            <p id="copyright-copy" class="mb-1">
+                &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}
+            </p>
+            <p id="copyright-notice" class="mb-0">
+                <span class="">
+                    Powered by
+                    <a href="https://www.shopify.com" target="_blank">Shopify</a>
+                </span>
+                <span class="mx-2 opacity-50">|</span>
+                <!-- 
+                    ATTENTION: YOU ARE CAN REMOVE THE FOLLOWING COPYRIGHT
+                    ONLY IF YOU PURCHASE A COMMERCIAL LICENSE. 
+                    
+                    *** ONLY $19 PER STORE *** 
+                    
+                    PLEASE CONTACT US WITH YOUR REQUEST.
+                    HTTPS://WWW.FIRETHEME.COM
 
+                    ALSO, ALONG WITH THIS LICENSE, YOU WILL GET PRIORITIZED
+                    AND IN-DEPTH SUPPORT FROM OUR DEVELOPMENT TEAM.
+                -->
+                <span class="">
+                    Theme by
+                    <a href="https://www.firetheme.com?ref={{ shop.permanent_domain | handleize }}" target="_blank">FireTheme</a>
+                </span>
+            </p>
+            {% if section.settings.show_social_icons %}
+                {% assign social_accounts = 'Facebook, Twitter, Instagram, Pinterest, Snapchat, YouTube, Linkedin, Tiktok' | split: ', ' %}
+                <div id="footer-social-icons" class="social-icons d-inline-block mt-4 mb-n2">
+                    <ul class="list-unstyled d-flex align-items-center">
+                        {% for social in social_accounts %}
+                            {% assign social_handle = social | handleize %}
+                            {% capture social_link %}social_{{ social_handle }}{% endcapture %}
+                            {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+                            {% unless settings[social_link] == blank %}
+                                <li>
+                                    <a 
+                                        class="p-2" 
+                                        href="{{ settings[social_link] }}" 
+                                        data-bs-toggle="tooltip" 
+                                        data-bs-placement="top" 
+                                        title="{{ social }}" 
+                                        aria-label="{{ social }}">
+                                        {% case social_handle %}
+                                            {% when 'facebook' %}
+                                                {% render 'icon-social-facebook' with size: 20 %}
+                                            {% when 'twitter' %}
+                                                {% render 'icon-social-twitter' with size: 20 %}
+                                            {% when 'instagram' %}
+                                                {% render 'icon-social-instagram' with size: 20 %}
+                                            {% when 'pinterest' %}
+                                                {% render 'icon-social-pinterest' with size: 20 %}
+                                            {% when 'snapchat' %}
+                                                {% render 'icon-social-snapchat' with size: 20 %}
+                                            {% when 'youtube' %}
+                                                {% render 'icon-social-youtube' with size: 20 %}
+                                            {% when 'linkedin' %}
+                                                {% render 'icon-social-linkedin' with size: 20 %}
+                                            {% when 'tiktok' %}
+                                                {% render 'icon-social-tiktok' with size: 20 %}
+                                        {% endcase %}
+                                    </a>
+                                </li>
+                            {% endunless %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </footer>
+
+
+{% schema %}
+{
+    "name": "Footer",
+    "settings": [
+        {
+            "type": "select",
+            "id": "color",
+            "label": "Color",
+            "options": [
+                { "value": "bg-white text-body", "label": "White" },
+                { "value": "bg-light text-body", "label": "Light" },
+                { "value": "bg-dark text-white", "label": "Dark" },
+                { "value": "bg-primary text-white", "label": "Primary" },
+                { "value": "bg-secondary text-white", "label": "Secondary" }
+            ],
+            "default": "bg-dark text-white"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_icons",
+            "label": "Show social icons",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Blocks per row"
+        },
+        {
+            "type": "range",
+            "id": "row_xs",
+            "label": "Blocks per row / mobile",
+            "info": "Screen width: <576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Blocks per row / tablet",
+            "info": "Screen width: ≥576px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "row_xl",
+            "label": "Blocks per row / desktop",
+            "info": "Screen width: ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        }
+    ],
+    "blocks": [
+        {
+            "type": "richtext",
+            "name": "Richtext",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "info": "Leave empty to disable"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
+        },
+        {
+            "type": "menu",
+            "name": "Menu",
+            "settings": [
+                {
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": "Menu"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "info": "Leave empty to disable"
+                }
+            ]
+        },
+        {
+            "type": "newsletter",
+            "name": "Newsletter",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "info": "Leave empty to disable"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "<p>Subscribe for the latest important news & offers.</p>",
+                    "info": "Leave empty to disable"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

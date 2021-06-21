@@ -200,6 +200,19 @@ a:hover {
 }
 
 
+/*
+    Navs
+*/
+.nav-link {
+    color: var(--bs-primary);
+}
+
+.nav-link:focus,
+.nav-link:hover {
+    color: var(--bs-primary-darker);
+}
+
+
 /* 
     Toast 
 */

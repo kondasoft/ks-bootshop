@@ -5,9 +5,7 @@
 /* 
     Announcement 
 */
-#shopify-section-announcement p {
-    margin-bottom: 0;
-}
+#announcement {}
 
 
 /* 
@@ -27,6 +25,16 @@
 
 
 /* 
+    Footer 
+*/
+#footer.bg-primary a,
+#footer.bg-secondary a,
+#footer.bg-dark a {
+    color: white;
+}
+
+
+/* 
     Carousel 
 */
 .carousel .carousel-item img {
@@ -35,3 +43,15 @@
     min-height: 340px;
     object-fit: cover;
 }
+
+
+/* 
+    Featured products 
+*/
+.featured-products {}
+
+
+/* 
+    Featured collections 
+*/
+.featured-collections {}

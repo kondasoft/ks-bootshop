@@ -2,7 +2,7 @@
 {{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
 {{ 'variables.css' | asset_url | stylesheet_tag }}
 {{ 'reboot.css' | asset_url | stylesheet_tag }}
-{{ 'shopify.css' | asset_url | stylesheet_tag }}
+{{ 'base.css' | asset_url | stylesheet_tag }}
 {{ 'sections.css' | asset_url | stylesheet_tag }}
 
 <!-- Scripts -->
@@ -12,7 +12,7 @@
 
 <script src="{{ 'bootstrap.bundle.min.js' | asset_url }}" defer></script>
 <script src="{{ 'helper.js' | asset_url }}" defer></script>
-<script src="{{ 'init.js' | asset_url }}" defer></script>
+<script src="{{ 'base.js' | asset_url }}" defer></script>
 
 {% if request.page_type == 'collection' %}
     {{ 'collection.css' | asset_url | stylesheet_tag }}

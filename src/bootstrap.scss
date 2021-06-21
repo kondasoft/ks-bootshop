@@ -1,7 +1,12 @@
-// Bootstrap required files 
+/*
+    Bootstrap required files
+*/  
 @import '../node_modules/bootstrap/scss/functions';
 
-// Override Bootstrap variables
+
+/*
+    Override Bootstrap variables
+*/
 $spacer: 1rem;
 $spacers: (
     0: 0,
@@ -18,11 +23,26 @@ $spacers: (
     11: $spacer * 4,
     12: $spacer * 5,
 );
-
 $enable-negative-margins: true;
 $accordion-icon-active-color: #212529;
 $offcanvas-horizontal-width: 300px;
 $hr-opacity: .1;
 
-// Import all Bootstrap
+
+/*
+    Import all Bootstrap
+*/
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+
+/*
+    Other Bootstrap/SCSS styles
+*/
+
+// Opacities
+$opacities: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
+@each $opacity in $opacities {
+    .opacity-#{$opacity} {
+        opacity: $opacity / 100;
+    }
+}
