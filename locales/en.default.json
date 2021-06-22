@@ -34,6 +34,42 @@
             }
         }
     },
+    "blog": {
+        "filter_by": "Filter by",
+        "empty": "No published blog posts yet.",
+        "all_articles": "All articles",
+        "count": {
+            "one": "{{ count }} article",
+            "other": "{{ count }} articles"
+        },
+        "article": {
+            "view_all": "View all",
+            "view_all_blogs": "View all blogs",
+            "all_topics": "All topics",
+            "by_author": "by {{ author }}",
+            "posted_in": "Posted in",
+            "readmore": "Read more",
+            "back_to_blog": "Back to {{ title }}",
+            "tags": "Tags"
+        },
+        "comments": {
+            "title": "Leave a comment",
+            "name": "Name",
+            "email": "Email",
+            "message": "Message",
+            "post": "Post comment",
+            "no_comments": "No comments yet!",
+            "first_to_comment": "Be the first to comment",
+            "moderated": "Please note, comments must be approved before they are published",
+            "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+            "success": "Your comment was posted successfully! Thank you!",
+            "unapproved": "The email address provided is not approved for posting comments.",
+            "comments_with_count": {
+                "one": "{{ count }} comment",
+                "other": "{{ count }} comments"
+            }
+        }
+    },
     "collection": {
         "empty": "No products found!",
         "filter_by": "Filter by",

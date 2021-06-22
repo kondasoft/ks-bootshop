@@ -1,6 +1,9 @@
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
 <section 
     id="{{ section.id | prepend: 'featured-collections-' }}"
-    class="featured-collections mb-8">
+    class="featured-collections {{ mt }} {{ mb }}">
     <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
         <h2 class="text-center mb-2">
             {{ section.settings.title }}
@@ -97,6 +100,29 @@
             "max": 6,
             "step": 1,
             "default": 3
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 8
         }
     ],
     "blocks": [

@@ -1,0 +1,152 @@
+<div id="blog-page" class="pt-6 pb-8">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+        <div class="header col-lg-8 mx-auto mb-6 text-center">
+            <h1 class="display-4">
+                {{ blog.title }}
+            </h1>
+        </div>
+        {% if blog.articles.size == 0 %}
+            <p class="alert alert-warning">
+                {{ 'blog.empty' | t}}
+            </p>
+        {% else %}
+            {% paginate blog.articles by section.settings.limit %}
+                <div id="blog-bar" class="bg-light d-flex flex-column flex-lg-row-reverse justify-content-between align-items-lg-center px-3 py-3 mb-6 rounded">
+                    {% if section.settings.show_filter and blog.all_tags.size > 0 %}
+                        <div 
+                            id="blog-filter-by" 
+                            class="input-group mb-3 mb-lg-0 w-auto">
+                            <label 
+                                class="input-group-text" 
+                                for="filter-by">
+                                {{ 'blog.filter_by' | t }}
+                            </label>
+                            <select 
+                                class="form-select" 
+                                id="blog-filter-by">
+                                <option 
+                                    value="{{ blog.url }}">
+                                    {{ 'blog.all_articles' | t }}
+                                </option>
+                                {% for tag in blog.all_tags %}
+                                    <option 
+                                        value="{{ blog.url }}/tagged/{{ tag | handleize }}" 
+                                        {% if current_tags contains tag %}selected{% endif %}>
+                                        {{ tag }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                    {% if section.settings.show_counter %}
+                        <span id="bllog-counter" class="d-block flex-shrink-0 text-center text-lg-start">
+                            {{ 'blog.count' | t: count: paginate.items }}
+                        </span>
+                    {% endif %}
+                </div>
+                <ul class="article-list list-unstyled pb-1">
+                    {% for article in blog.articles %}
+                        {% render 'article-list-item' with article: article %}
+                    {% endfor %}
+                </ul>
+                {% render 'simple-pagination' with paginate: paginate %}
+            {% endpaginate %}
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Blog page",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Posts per page",
+            "min": 10,
+            "max": 50,
+            "default": 20
+        },
+        {
+            "type": "checkbox",
+            "id": "show_counter",
+            "label": "Show counter",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_filter",
+            "label": "Show filter",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Article"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "800"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "540"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image thumbnail",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_excerpt",
+            "label": "Show excerpt",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_posted_in",
+            "label": "Show posted in (tags)",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_readmore",
+            "label": "Show readmore button",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_comments",
+            "label": "Show comments button",
+            "default": true
+        }
+    ]
+}
+{% endschema %}

@@ -23,6 +23,14 @@ $spacers: (
     11: $spacer * 4,
     12: $spacer * 5,
 );
+$display-font-sizes: (
+    1: 4rem,
+    2: 3.5rem,
+    3: 3.25rem,
+    4: 3rem,
+    5: 2.75rem,
+    6: 2.5rem
+);
 $enable-negative-margins: true;
 $accordion-icon-active-color: #212529;
 $offcanvas-horizontal-width: 300px;

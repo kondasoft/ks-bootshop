@@ -1,6 +1,9 @@
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
 <div 
     id="carousel-{{ section.id }}" 
-    class="carousel mb-8 {{ section.settings.animation }}" 
+    class="carousel {{ section.settings.animation }} {{ mt }} {{ mb }}" 
     data-bs-ride="{% if section.settings.autoplay %}carousel{% else %}false{% endif %}">
     <div class="carousel-indicators">
         {% for block in section.blocks %}
@@ -79,6 +82,29 @@
             "id": "autoplay",
             "label": "Autoplay",
             "default": true
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 8
         }
     ],
     "blocks": [

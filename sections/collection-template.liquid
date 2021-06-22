@@ -1,115 +1,103 @@
-<div class="container py-6">
+<div id="collection-page" class="py-6"">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
 
-    <!-- Header -->
-    <div class="header col-lg-8 mx-auto mb-6 text-center">
-        <h1 class="display-4">
-            {{ collection.title }}
-        </h1>
-        {% unless collection.description == blank %}
-            <div class="lead mt-n1">
-                {{ collection.description }}
-            </div>
-        {% endunless %}
-    </div>
+        <!-- Header -->
+        <div class="header col-lg-8 mx-auto mb-6 text-center">
+            <h1 class="display-4">
+                {{ collection.title }}
+            </h1>
+            {% unless collection.description == blank %}
+                <div class="lead mt-n1">
+                    {{ collection.description }}
+                </div>
+            {% endunless %}
+        </div>
 
-    {% if collection.products.size == 0 %}
-        <!-- Collection is empty -->
-        <p class="alert alert-warning">
-            {{ 'collection.empty' | t}}
-        </p>
-    {% else %}
-        {% paginate collection.products by section.settings.limit %}
-            <!-- Collection bar -->
-            <div 
-                id="collection-bar" 
-                class=" bg-light d-flex flex-column flex-lg-row-reverse justify-content-between align-items-lg-center px-3 py-3 mb-5 rounded">
-                <div class="d-flex flex-column flex-lg-row">
+        {% if collection.products.size == 0 %}
+            <!-- Collection is empty -->
+            <p class="alert alert-warning">
+                {{ 'collection.empty' | t}}
+            </p>
+        {% else %}
+            {% paginate collection.products by section.settings.limit %}
+                <!-- Collection bar -->
+                <div 
+                    id="collection-bar" 
+                    class=" bg-light d-flex flex-column flex-lg-row-reverse justify-content-between align-items-lg-center px-3 py-3 mb-5 rounded">
+                    <div class="d-flex flex-column flex-lg-row">
 
-                    {% if section.settings.show_filter and collection.all_tags.size > 0 %}
-                        <!-- Filter by -->
-                        <div 
-                            id="collection-filter-by" 
-                            class="input-group mb-2 mb-lg-0 me-0 me-lg-3">
+                        {% if section.settings.show_filter and collection.all_tags.size > 0 %}
+                            <!-- Filter by -->
+                            <div 
+                                id="collection-filter-by" 
+                                class="input-group mb-2 mb-lg-0 me-0 me-lg-3">
+                                <label 
+                                    class="input-group-text" 
+                                    for="filter-by">
+                                    {{ 'collection.filter_by' | t }}
+                                </label>
+                                <select 
+                                    class="form-select" 
+                                    id="filter-by">
+                                    <option 
+                                        value="{{ collection.url }}">
+                                        {{ 'collection.all_products' | t }}
+                                    </option>
+                                    {% for tag in collection.all_tags %}
+                                        <option 
+                                            value="{{ collection.url }}/{{ tag | handleize }}" 
+                                            {% if current_tags contains tag %}selected{% endif %}>
+                                            {{ tag }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        <!-- Sort by -->
+                        <div
+                            id="collection-sort-by"
+                            class="input-group mb-0">
                             <label 
                                 class="input-group-text" 
-                                for="filter-by">
-                                {{ 'collection.filter_by' | t }}
+                                for="sort-by">
+                                {{ 'collection.sort_by' | t }}
                             </label>
                             <select 
                                 class="form-select" 
-                                id="filter-by">
-                                <option 
-                                    value="{{ collection.url }}">
-                                    {{ 'collection.all_products' | t }}
-                                </option>
-                                {% for tag in collection.all_tags %}
+                                id="sort-by">
+                                {% for option in collection.sort_options %}
                                     <option 
-                                        value="{{ collection.url }}/{{ tag | handleize }}" 
-                                        {% if current_tags contains tag %}selected{% endif %}>
-                                        {{ tag }}
+                                        value="{{ option.value }}" 
+                                        {% if option.value == collection.sort_by %}
+                                            selected
+                                        {% endif %}>
+                                        {{ option.name }}
                                     </option>
                                 {% endfor %}
                             </select>
                         </div>
-                    {% endif %}
-                    <!-- Sort by -->
-                    <div
-                        id="collection-sort-by"
-                        class="input-group mb-0">
-                        <label 
-                            class="input-group-text" 
-                            for="sort-by">
-                            {{ 'collection.sort_by' | t }}
-                        </label>
-                        <select 
-                            class="form-select" 
-                            id="sort-by">
-                            {% for option in collection.sort_options %}
-                                <option 
-                                    value="{{ option.value }}" 
-                                    {% if option.value == collection.sort_by %}
-                                        selected
-                                    {% endif %}>
-                                    {{ option.name }}
-                                </option>
-                            {% endfor %}
-                        </select>
                     </div>
+                    <!-- Collection counter -->
+                    {% if section.settings.show_counter %}
+                        <span id="collection-counter" class="d-block mt-3 mt-lg-0">
+                            {{ 'collection.count' | t: count: paginate.items }}
+                        </span>
+                    {% endif %}
                 </div>
-                <!-- Collection counter -->
-                {% if section.settings.show_counter %}
-                    <span id="collection-counter" class="d-block mt-3 mt-lg-0">
-                        {{ 'collection.count' | t: count: paginate.items }}
-                    </span>
-                {% endif %}
-            </div>
-            
-            <!-- Product list -->
-            <ul class="product-list list-unstyled row row-cols-2 row-cols-lg-4 g-4">
-                {% for product in collection.products %}
-                    {% render 'product-list-item' with product as product %}
-                {% endfor %}
-            </ul>
+                
+                <!-- Product list -->
+                <ul class="product-list list-unstyled row row-cols-2 row-cols-lg-4 g-4">
+                    {% for product in collection.products %}
+                        {% render 'product-list-item' with product as product %}
+                    {% endfor %}
+                </ul>
 
-            <!-- Pagination -->
-            <div class="footer text-center">
-                {% if paginate.previous.is_link %}
-                    <a class="paginate-btn btn btn-outline-secondary my-1" href="{{ paginate.previous.url }}">
-                        {{ paginate.previous.title }}
-                    </a>
-                {% endif %}
-                {% if paginate.next.is_link %}
-                    <a class="paginate-btn btn btn-outline-secondary my-1" href="{{ paginate.next.url }}">
-                        {{ paginate.next.title }}
-                    </a>
-                {% endif %}
-                <small class="paginate-count d-block text-muted my-2">
-                    {{ 'general.pagination_page_of' | t: count: paginate.current_page, total: paginate.pages }}
-                </small>
-            </div>
+                <!-- Pagination -->
+                {% render 'simple-pagination' with paginate: paginate %}
 
-        {% endpaginate %}
-    {% endif %}
+            {% endpaginate %}
+        {% endif %}
+    </div>
 </div>
 
 {% schema %}
@@ -119,6 +107,12 @@
         {
             "type": "header",
             "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
         },
         {
             "type": "range",

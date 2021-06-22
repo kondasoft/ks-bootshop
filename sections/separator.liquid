@@ -1,0 +1,65 @@
+{% if section.settings.transparent %}
+    {% assign transparent = 'bg-transparent' %}
+{% endif %}
+
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+<div id="separator-{{ section.id }}" class="separator">
+    <div class="{% if section.settings.container %} container {% else %} container-fluid {% endif %}">
+        <hr class="{{ transparent }} {{ mt }} {{ mb }}">
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Separator",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General settings"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in container",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "transparent",
+            "label": "Transparent",
+            "default": false
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 7
+        }
+    ],
+    "presets": [
+        {
+            "name": "Separator",
+            "category": "Layout"
+        }
+    ]
+}
+{% endschema %}

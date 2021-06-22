@@ -54,7 +54,7 @@ a:hover {
     Forms
 */
 .form-control:focus {
-    border-color: var(--color-primary-alpha-25);
+    border-color: rgba(0, 0, 0, .2);
     box-shadow: 0 0 0 .25rem rgba(0, 0, 0, .15);
 }
 

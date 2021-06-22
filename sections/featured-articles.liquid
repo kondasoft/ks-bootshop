@@ -1,0 +1,165 @@
+{% assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height %}
+
+{% if section.settings.img_thumbnail %}
+    {% assign img_thumbnail = 'img-thumbnail' %}
+{% else %}
+    {% assign img_thumbnail = 'rounded' %}
+{% endif %}
+
+{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
+{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+
+<section 
+    id="{{ section.id | prepend: 'featured-articles-' }}"
+    class="featured-articles {{ mt }} {{ mb }}">
+    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
+        <h2 class="text-center mb-6">
+            {{ section.settings.title }}
+        </h2>
+        <ul class=" article-list list-unstyled row row-cols-md-2">
+            {% for block in section.blocks %}
+                <div class="">
+                    {% render 'article-list-item' with article: block.settings.article %}
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Featured Articles",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "container",
+            "label": "Wrap in a container",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Featured Articles"
+        },
+        {
+            "type": "header",
+            "content": "Article"
+        },
+        {
+            "type": "text",
+            "id": "img_width",
+            "label": "Image width (px)",
+            "default": "480"
+        },
+        {
+            "type": "text",
+            "id": "img_height",
+            "label": "Image height (px)",
+            "default": "320"
+        },
+        {
+            "type": "checkbox",
+            "id": "img_thumbnail",
+            "label": "Image thumbnail",
+            "default": true
+        },
+        {
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h5",
+            "options": [
+                {  "value": "h1", "label": "H1" },
+                {  "value": "h2", "label": "H2" },
+                {  "value": "h3", "label": "H3" },
+                {  "value": "h4", "label": "H4" },
+                {  "value": "h5", "label": "H5" },
+                {  "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "show_author",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_date",
+            "label": "Show date",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_excerpt",
+            "label": "Show excerpt",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_posted_in",
+            "label": "Show posted in (tags)",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_readmore",
+            "label": "Show readmore button",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_comments",
+            "label": "Show comments button",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Spacing",
+            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+        },
+        {
+            "type": "range",
+            "id": "margin_top",
+            "label": "Margin top",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 12,
+            "step": 1,
+            "default": 6
+        }
+    ],
+    "blocks": [
+        {
+            "type": "article",
+            "name": "Article",
+            "settings": [
+                {
+                    "type": "article",
+                    "id": "article",
+                    "label": "Article"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Articles",
+            "category": "Blog"
+        }
+    ]
+}
+{% endschema %}
