@@ -78,3 +78,17 @@ ul.social-sharing li a[href*="mailto:?subject"]:focus {
     border-color: #6c757d;
     color: white !important;
 }
+
+
+/*
+    Search offcanvas
+*/
+#search-offcanvas {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    #search-offcanvas {
+        width: 400px;
+    }
+}

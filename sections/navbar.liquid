@@ -38,8 +38,13 @@
                 <li id="nav-item-search" class="nav-item">
                     <a 
                         class="nav-link {% if template.name == 'search' %}active{% endif %}" 
-                        aria-current="{% if template.name == 'search' %}page{% endif %}" 
+                        aria-current="{% if template.name == 'search' %}page{% endif %}"
                         href="{{ routes.search_url }}"
+                        data-bs-toggle="offcanvas" 
+                        data-bs-target="#search-offcanvas" 
+                        aria-controls="search-offcanvas" 
+                        aria-expanded="false"
+                        role="button"
                         aria-label="{{ 'search.label' | t }}">
                         {% render 'icon-search', size: 22 %}
                     </a>
@@ -61,6 +66,7 @@
 </nav>
 
 {% render 'navbar-offcanvas' %}
+{% render 'search-offcanvas' %}
 
 {% schema %}
 {

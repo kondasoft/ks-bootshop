@@ -83,6 +83,7 @@
     "product": {
         "sold_out": "Sold out",
         "price_from": "From",
+        "old_price": "Old price",
         "unavailable": "Unavailable",
         "add_to_cart": "Add to cart",
         "quantity": "Quantity",
@@ -105,7 +106,10 @@
         "taxes_shipping_at_checkout_html": "Taxes &amp; <a href=\"policies\/shipping-policy\">Shipping<\/a> calculated at checkout"
     },
     "search": {
-        "label": "Search"
+        "label": "Search",
+        "title": "Search our store",
+        "predictive": "Start typing to see results...",
+        "search_for": "Search for \"{{ term }}\""
     },
     "account": {
         "label": "Account"

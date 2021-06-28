@@ -2,6 +2,19 @@
     © 2021 Firetheme.com
 */
 
+// Debounce helper function to delay our input change above
+// https://stackoverflow.com/a/42554614/5917894
+window.debounce = (callback, delay) => {
+    let timeout
+    return function () {
+        const args = arguments
+        clearTimeout(timeout)
+        timeout = setTimeout(function () {
+            callback.apply(this, args)
+        }.bind(this), delay)
+    }
+}
+
 // Shopify resize image
 // https://gist.github.com/DanWebb/cce6ab34dd521fcac6ba
 window.resizeImage = (src, size, crop = '') => src.replace(/_(pico|icon|thumb|small|compact|medium|large|grande|original|1024x1024|2048x2048|master)+\./g, '.')
