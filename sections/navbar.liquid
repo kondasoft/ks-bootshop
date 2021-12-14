@@ -134,7 +134,7 @@
                         <a 
                             id="{{ forloop.index | prepend: 'nav-link-' }}" 
                             class="nav-link {% if link.active %}active{% endif %} {% if has_dropdown %}dropdown-toggle{% endif %}" 
-                            href="{{ link.url }}"
+                            href="{% if has_dropdown %}#{% else %}{{ link.url }}{% endif %}"
                             {% if link.active %}aria-current="page"{% endif %} 
                             {% if has_dropdown %}
                                 role="button" 
