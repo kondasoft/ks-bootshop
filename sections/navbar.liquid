@@ -52,7 +52,7 @@
                             class="nav-link d-flex {% if template.name == 'search' %}active{% endif %}" 
                             href="#"
                             data-bs-toggle="dropdown"
-                            aria-current="{% if template.name == 'search' %}page{% endif %}"
+                            {% if template.name == 'search' %}aria-current="page"{% endif %}
                             aria-expanded="false"
                             role="button">
                             {% render 'icon-search' size: 22 %}
@@ -74,7 +74,7 @@
                         <a 
                             class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
                             href="{{ routes.account_url }}"
-                            aria-current="{% if template.name == 'account' or template.name == 'login' %}page{% endif %}">
+                            {% if template.name == 'account' or template.name == 'login' %}aria-current="page"{% endif %}>
                             {% render 'icon-account' size: 22 %}
                             <span class="visually-hidden">
                                 {{ 'general.navbar.account' | t }}
@@ -90,7 +90,7 @@
                         class="nav-link d-flex align-items-center {% if template.name == 'cart' %}active{% endif %}" 
                         href="#"
                         data-bs-toggle="dropdown"
-                        aria-current="{% if template.name == 'cart' %}page{% endif %}"
+                        {% if template.name == 'cart' %}aria-current="page"{% endif %}
                         aria-expanded="false"
                         role="button">
                         {% render 'icon-cart' size: 22 %}
@@ -134,8 +134,8 @@
                         <a 
                             id="{{ forloop.index | prepend: 'nav-link-' }}" 
                             class="nav-link {% if link.active %}active{% endif %} {% if has_dropdown %}dropdown-toggle{% endif %}" 
-                            href="{{ link.url }}"
-                            aria-current="{% if link.active %}page{% endif %}" 
+                            href="{% if has_dropdown %}#{% else %}{{ link.url }}{% endif %}"
+                            {% if link.active %}aria-current="page"{% endif %} 
                             {% if has_dropdown %}
                                 role="button" 
                                 data-bs-toggle="dropdown" 
@@ -155,7 +155,7 @@
                                             <a 
                                                 class="dropdown-item {% if child_link.active %}active{% endif %}" 
                                                 href="{{ child_link.url }}"
-                                                aria-current="{% if child_link.active %}page{% endif %}">
+                                                {% if child_link.active %}aria-current="page"{% endif %}>
                                                 {{ child_link.title }}
                                             </a>
                                         </li>
@@ -170,7 +170,7 @@
                         <a 
                             class="nav-link d-flex {% if template.name == 'account' or template.name == 'login' %}active{% endif %}" 
                             href="{{ routes.account_url }}"
-                            aria-current="{% if template.name == 'account' or template.name == 'login' %}page{% endif %}">
+                            {% if template.name == 'account' or template.name == 'login' %}aria-current="page"{% endif %}>
                             {% render 'icon-account' size: 24 %}
                             <span class="ms-2">
                                 {{ 'general.navbar.account' | t }}
