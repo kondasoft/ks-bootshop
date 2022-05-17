@@ -1,8 +1,5 @@
-# IMPORTANT NOTICE
-This branch (master) is for our new version of KS BootShop theme, which is powered by Bootstrap v5. If you are looking for our the Bootstrap v4 version please check our [v1 branch](https://github.com/kondasoft/ks-bootshop/tree/v1-bs4)
-
-# BootShop - Shopify Theme
-Shopify Starter Theme powered by Bootstrap framework (v5 and v4), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
+# KS BootShop - Shopify Theme
+Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
 
 Our goal is to make this project the most completed, robust and of course the most awesome Shopify theme for the Bootstrap framework.
 
@@ -12,7 +9,7 @@ Click on the screenshot below to play the video on Youtube.
 [<img src="https://img.youtube.com/vi/_G9IRSFAI_A/maxresdefault.jpg" width="50%">](https://youtu.be/_G9IRSFAI_A)
 
 ## Highlighted features:
-* Powered by [Bootstrap framework](https://getbootstrap.com/) (v5 or v4)
+* Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
 * Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
 * All elements are fully accessible with [aria attributes](https://www.w3.org/WAI/standards-guidelines/aria/)
 * No Javascript framework dependencies (e.g jQuery)
@@ -25,32 +22,27 @@ Click on the screenshot below to play the video on Youtube.
 * Reccomended products section [Learn more](https://shopify.dev/tutorials/develop-theme-recommended-products)
 
 ## Homepage sections
-* Carousel (Slideshow)
-* Collection list
+* Carousel
+* Featured Products
+* Featured Collections
+* Cards with image
+* Video
+* Contact Form
 * F.A.Q
-* Featured collection
-* Featured product
-* Gallery
 * HTML
-* Image with text overlay
 * Image with text
-* Logo list
-* Map
 * Newsletter
 * Richtext
 * Separator
-* Testimonials
-* Text columns with image
-* Video
 
 ## Demo 
 https://ks-bootshop.myshopify.com/
 
 ## Download 
-Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v2.x.x version which is ready for Bootstrap v5.
+Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.
 
 ## Premium Shopify Themes 
-In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV) like **Wishlist, Cart Goal, Frequently Bought Together Bundles, Recently Viewed Products, Sticky Add To Cart, Sticky Newsletter pop-up, and much more advanced features**, please visit our website
+In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
 https://www.kondasoft.com
 
 ## Getting started
@@ -71,55 +63,33 @@ Create a new folder on your computer, `cd` to it and run the following command t
 ### 2- Create and configure theme with Theme Kit
 Run the following command to create a new theme in your Shopify store along with our theme files that you have just downloaded:
 
-`theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="ks-bootshop-v2"`
+`theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="ks-bootshop-v3"`
 
 Optional: Run this command to open your shopify store with our theme in preview mode.
 
 `theme open`
 
 ## Customization
-It is advised to not directly modify theme files as you will lose changes when you upgrade our theme. The recommended way to handle this is by creating a copy of our theme and then modify it. Please follow this [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/managing-themes/duplicating-themes) to learn more.
+It is advised to not directly modify theme files as you will lose changes when you upgrade our theme. The recommended way to handle this is by creating a copy of our theme and then modify it. Please follow this [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/managing-themes/duplicating-themes) to learn more. 
 
-In case you want to customize styles and scripts please continue reading below. 
+Also, we have provided 2 blank files (`custom.css` and `custom.js`) which are inside the `assets` folder. It is recommended that you use these 2 files to add your styles and scripts since they will not be changed during the upgrade.
 
 ### Modifying styles (SCSS)
-To customize theme styles in the proper way as recommended by Bootstrap as well, is by working with [Sass](https://sass-lang.com/). 
+We have provided only a few additonal styling for this Shopify theme, and all of those are done via plain CSS in the `assets` folder. Our goal for this theme is to provide a solid foundation, completely backed by the Bootstrap framework, so that you can easily get it going with the framework you already know and love. 
 
-First, create a new file called `_custom.scss` inside the `scr/scss` folder and start adding your Sass variables and styles. To learn more about what you do in your _custom.scss file, please refer to the official Bootstrap [documentation for Theming](https://getbootstrap.com/docs/4.5/getting-started/theming/)
+All bootstrap related styles and variables are in `src/bootstrap.scss` file. Assuming that you already know how to work with [Bootstrap variables](https://getbootstrap.com/docs/5.1/customize/overview/), feel free to modify this file, especially the color variables in the top of the file.
 
-E.g:
-```scss
-// src/scss/_custom.scss
+After that install all the needed npm packages which are already defined in the `packages.json` file
+`npm install`
 
-// My variables
-$primary: green;
-
-// My styles
-body { 
-  background-color: red; // Good luck with this :)
-}
-```
-
-Make sure you have Sass, Postcss and Autoprefixer installed globally by running the following command
-
-`npm i -g sass postcss-cli autoprefixer`
-
-Now, you can run this command to compile your Sass files into the the theme assets folder
-
-`npm run styles`
+Now, you can compile Bootstrap styles that you have just modified using with the following command
+`npm run bs-css` or `npm run watch` to continuesly watch for changes
 
 To deploy your changes on your Shopify store run the following Theme Kit command:
-
 `theme deploy` or: `theme watch`
-
-### Modifying scripts (JS)
-This part will be documented soon.
-
-## Upgrading
-This part will be documented soon.
 
 ## Support
 Please submit a [new issue](https://github.com/kondasoft/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [website](https://www.kondasoft.com/) for further help.
 
 ## Copyright and license
-Copyright 2020 [kondasoft.com](https://www.kondasoft.com). Code released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).
+Copyright 2022 [kondasoft.com](https://www.kondasoft.com). Code released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).
