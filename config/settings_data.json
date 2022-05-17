@@ -1,6 +1,104 @@
 {
-  "current": "Default",
-  "presets": {
-    "Default": { }
+  "current": {
+    "font_headings": "roboto_n4",
+    "social_facebook": "#",
+    "social_twitter": "#",
+    "social_instagram": "#",
+    "social_pinterest": "#",
+    "social_tiktok": "#",
+    "social_snapchat": "#",
+    "social_youtube": "#",
+    "social_linkedin": "#",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "announcement": "<p>Announce Something Important Here. <a href=\"#\" title=\"#\">Learn more<\/a><\/p>",
+          "bg_color": "bg-dark text-white",
+          "pt": 3,
+          "pb": 3
+        }
+      },
+      "navbar": {
+        "type": "navbar",
+        "settings": {
+          "bg_color": "bg-white navbar-light",
+          "logo": "shopify:\/\/shop_images\/logo.png",
+          "menu_mobile": "main-menu",
+          "menu_desktop": "main-menu",
+          "pt": 3,
+          "pb": 3
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "738cdbe4-d453-45ea-8940-aed81d08bf3b": {
+            "type": "menu",
+            "settings": {
+              "menu": "shop",
+              "title": "Shop",
+              "title_size": "h6"
+            }
+          },
+          "ac3b4c00-f362-4697-b848-3957315b3c61": {
+            "type": "menu",
+            "settings": {
+              "menu": "company",
+              "title": "Company",
+              "title_size": "h6"
+            }
+          },
+          "347c0c0a-1863-4236-a7ce-8cc6a91e5950": {
+            "type": "menu",
+            "settings": {
+              "menu": "footer",
+              "title": "Legal",
+              "title_size": "h6"
+            }
+          },
+          "3cda8bcc-909e-48bd-a7b7-2823ca9ea34b": {
+            "type": "richtext",
+            "settings": {
+              "title": "Richtext Block",
+              "title_size": "h6",
+              "description": "<p>This is a sample richtext block that you can use in the footer. It can have  a button as well.<\/p>",
+              "btn_text": "Learn more",
+              "btn_url": "#",
+              "btn_color": "btn-primary",
+              "btn_size": "btn-sm"
+            }
+          }
+        },
+        "block_order": [
+          "738cdbe4-d453-45ea-8940-aed81d08bf3b",
+          "ac3b4c00-f362-4697-b848-3957315b3c61",
+          "347c0c0a-1863-4236-a7ce-8cc6a91e5950",
+          "3cda8bcc-909e-48bd-a7b7-2823ca9ea34b"
+        ],
+        "settings": {
+          "bg_color": "bg-dark text-white",
+          "show_payment_icons": true,
+          "show_social_icons": true,
+          "row_sm": 2,
+          "row_lg": 4,
+          "pt": 11,
+          "pb": 6
+        }
+      },
+      "offcanvas-menu": {
+        "type": "offcanvas-menu",
+        "settings": {}
+      },
+      "template-cart": {
+        "type": "template-cart",
+        "settings": {
+          "show_note": true,
+          "mt": 10,
+          "mb": 10
+        }
+      }
+    },
+    "content_for_index": []
   }
 }

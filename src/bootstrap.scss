@@ -1,57 +1,101 @@
 /*
-    Bootstrap required files
-*/  
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
+*/
+
+@use "sass:math";
+
 @import '../node_modules/bootstrap/scss/functions';
 
-
 /*
-    Override Bootstrap variables
+    Variables
 */
-$spacer: 1rem;
+$primary:       #0d6efd;
+$secondary:     #6c757d;
+$light:         #f8f9fa;
+$dark:          #212529;
+
+$spacer:        1rem;
 $spacers: (
     0: 0,
-    1: $spacer * .25,
-    2: $spacer * .5,
-    3: $spacer * .75,
-    4: $spacer * 1,
-    5: $spacer * 1.25,
-    6: $spacer * 1.5,
-    7: $spacer * 1.75,
-    8: $spacer * 2,
-    9: $spacer * 2.5,
-    10: $spacer * 3,
-    11: $spacer * 4,
-    12: $spacer * 5,
+    1: $spacer * 0.125,
+    2: $spacer * 0.25,
+    3: $spacer * 0.5,
+    4: $spacer * 0.75,
+    5: $spacer * 1,
+    6: $spacer * 1.25,
+    7: $spacer * 1.5,
+    8: $spacer * 1.75,
+    9: $spacer * 2,
+    10: $spacer * 2.5,
+    11: $spacer * 3,
+    12: $spacer * 4,
+    13: $spacer * 5,
+    14: $spacer * 6,
+    15: $spacer * 7,
+    16: $spacer * 8,
+    17: $spacer * 9,
+    18: $spacer * 10,
+    19: $spacer * 12,
+    20: $spacer * 14,
 );
-$display-font-sizes: (
-    1: 4rem,
-    2: 3.5rem,
-    3: 3.25rem,
-    4: 3rem,
-    5: 2.75rem,
-    6: 2.5rem
+
+$h1-font-size: 3rem;
+$h2-font-size: 2.5rem;
+$h3-font-size: 2rem;
+$h4-font-size: 1.5rem;
+$h5-font-size: 1.25rem;
+$h6-font-size: 1rem;
+
+$font-sizes: (
+    1: 2.5rem,
+    2: 2rem,
+    3: 1.5rem,
+    4: 1.25rem,
+    5: 1.125rem,
+    6: 1rem
 );
+
+$link-decoration: none;
+$headings-font-family: var(--bs-headings-font-family);
+$headings-font-weight: var(--bs-headings-font-weight);
 $enable-negative-margins: true;
-$accordion-icon-active-color: #212529;
-$offcanvas-horizontal-width: 300px;
-$hr-opacity: .1;
-$offcanvas-border-width: 0;
+$grid-row-columns: 12;
+$small-font-size: .825em;
+$spinner-border-width: .2em;
+$spinner-border-width-sm: .15em;
 
-
-/*
-    Import all Bootstrap
-*/
-@import '../node_modules/bootstrap/scss/bootstrap';
-
+@import '../node_modules/bootstrap/scss/variables';
+@import '../node_modules/bootstrap/scss/utilities';
 
 /*
-    Other Bootstrap/SCSS styles
+    Utilities
 */
+$utilities: map-merge(
+    $utilities, (
+        "w": map-merge(
+            map-get($utilities, "width"), 
+            ( responsive: true ),
+        ),
+    )
+);
 
-// Opacities
-$opacities: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
-@each $opacity in $opacities {
-    .opacity-#{$opacity} {
-        opacity: $opacity / 100;
+// Height 
+$utilities: map-merge(
+    $utilities, (
+        "h": map-merge(
+            map-get($utilities, "height"), 
+            ( responsive: true ),
+        ),
+    )
+);
+
+// Opacity
+$opacityValues: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
+@each $value in $opacityValues {
+    .opacity-#{$value} {
+        opacity: math.div($value, 100);
     }
 }
+
+@import '../node_modules/bootstrap/scss/bootstrap';

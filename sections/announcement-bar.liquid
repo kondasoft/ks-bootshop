@@ -1,0 +1,70 @@
+{% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
+%}
+
+{% unless section.settings.announcement == blank %}
+    <section id="announcement-bar" class="{{ section.settings.bg_color }} {{ pt }} {{ pb }}">
+        <div class="container">
+            <div class="rte text-center lh-sm small">
+                {{ section.settings.announcement }}
+            </div>
+        </div>
+    </section>
+{% endunless %}
+
+{% schema %}
+{
+    "name": "Announcement Bar",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "announcement",
+            "label": "Announcement"
+        },
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "bg-dark text-white",
+            "options": [
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
+                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
+                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
+                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" },
+                { "group": "Alert", "value": "bg-success text-white", "label": "Success" },
+                { "group": "Alert", "value": "bg-warning text-dark", "label": "Warning" },
+                { "group": "Alert", "value": "bg-danger text-white", "label": "Danger" },
+                { "group": "Alert", "value": "bg-info text-white", "label": "Info" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,153 @@
+{% liquid 
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+
+    assign img_width  = 1400
+    assign img_height = 700
+%}
+
+<article class="article {{ mt }} {{ mb }}">
+    <div class="container">
+        <img
+            class="article-img img-fluid mb-6"
+            src="{{ article.image.src | image_url: width: img_width, height: img_height, crop: 'center' }}"
+            alt="{{ article.image.alt | escape }}"
+            width="{{ img_width }}"
+            height="{{ img_height }}"
+            loading="lazy">
+        <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px">
+            <h1 class="article-title title mb-4 {{ section.settings.title_size }}">
+                {{ article.title }}
+            </h1>
+            <p class="article-meta text-muted mb-5">
+                {{ article.author }} @ {{ article.created_at | time_tag: '%b %d, %Y' }}
+            </p>
+            <div class="article-content rte mb-6">
+                {{ article.content }}
+            </div>
+            {% if section.settings.show_tags and article.tags.size > 0 %}
+                <div class="article-tags small text-muted my-1">
+                    {{ 'blogs.posted_in' | t }}: 
+                    {% for tag in article.tags %}
+                        <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
+                            {{ tag }}</a>{% unless forloop.last %}, {% endunless %} {% comment %}Do not use in new line{% endcomment %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if section.settings.show_share_btn %}
+                <hr>
+                <div class="text-end">
+                    {% render 'share-button', title: article.title, url: article.url %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</article>
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "articleBody": {{ article.content | strip_html | json }},
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": {{ request.origin | append: page.url | json }}
+        },
+        "headline": {{ article.title | json }},
+        {% if article.excerpt != blank %}
+            "description": {{ article.excerpt | strip_html | json }},
+        {% endif %}
+        {% if article.image %}
+            "image": [
+                {{ article | image_url: width: article.image.width | prepend: "https:" | json }}
+            ],
+        {% endif %}
+        "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+        "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+        "author": {
+            "@type": "Person",
+            "name": {{ article.author | json }}
+        },
+        "publisher": {
+        "@type": "Organization",
+        {% if settings.share_image %}
+            "logo": {
+                "@type": "ImageObject",
+                "height": {{ settings.share_image.height | json }},
+                "url": {{ settings.share_image | image_url: width: settings.share_image.width | prepend: "https:" | json }},
+                "width": {{ settings.share_image.width | json }}
+            },
+        {% endif %}
+            "name": {{ shop.name | json }}
+        }
+    }
+    </script>
+
+{% schema %}
+{
+    "name": "Article template",
+    "settings": [
+        {
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h1",
+            "options": [
+                { "value": "h1", "label": "H1" },
+                { "value": "h2", "label": "H2" },
+                { "value": "h3", "label": "H3" },
+                { "value": "h4", "label": "H4" },
+                { "value": "h5", "label": "H5" },
+                { "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "max_width",
+            "label": "Content max-width (px)",
+            "default": "720"
+        },
+
+        {
+            "type": "checkbox",
+            "id": "show_tags",
+            "label": "Show tags",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_share_btn",
+            "label": "Show \"Share\" button",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 10
+        }
+    ],
+    "presets": [
+        {
+            "name": "Article template",
+            "category": "Article page"
+        }
+    ]
+}
+{% endschema %}

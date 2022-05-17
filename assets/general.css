@@ -1,0 +1,108 @@
+/*
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
+*/
+
+
+/*
+    Recaptcha page
+*/
+.shopify-challenge__container {
+    padding: 2rem;
+}
+
+
+/*
+    Policy pages
+*/
+.shopify-policy__container {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+
+/*
+    Shopify's system errors
+*/
+.errors ul {
+    margin-bottom: 0;
+}
+
+
+/*
+    Rich Text Editor (rte)
+*/
+.rte img {
+    max-width: 100%;
+    height: auto;
+}
+.rte p:last-child {
+    margin-bottom: 0;
+}
+
+
+/*
+    Separators (hr)
+*/
+hr, .hr {
+    opacity: .1;
+}
+
+
+/* 
+    Offcanvas 
+*/
+.offcanvas {
+    border: none;
+    box-shadow: 0 1.5rem 1.5rem rgba(0, 0, 0, .25);
+}
+
+.offcanvas-header {
+}
+
+.offcanvas.loading .offcanvas-body {
+    opacity: .2;
+    transition: all .2 ease-out;
+}
+
+
+/*
+    Responsive Tables
+*/
+@media (max-width: 991px) {
+    .table-responsive { 
+        border: 0; 
+    }
+    .table-responsive thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+    .table-responsive tr {
+        display: block;
+        padding-bottom: .75rem;
+        margin: .75rem 0;
+        border-bottom: 1px solid var(--bs-dark);
+    }
+    .table-responsive td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: .9rem;
+        padding: .5rem 0;
+        border-color: rgba(0, 0, 0, .1);
+    }
+    .table-responsive td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        padding-right: 1rem;
+    }
+    table td:last-child {
+        border-bottom: 0;
+    }
+}

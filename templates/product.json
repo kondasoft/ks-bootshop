@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "template-product": {
+      "type": "template-product",
+      "blocks": {
+        "bb82fc4d-4761-4e9e-ae10-30ee0166323a": {
+          "type": "description",
+          "settings": {
+            "title": "Details"
+          }
+        },
+        "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5": {
+          "type": "richtext",
+          "settings": {
+            "title": "Rich text",
+            "description": "<p>Feel free to create additional blocks like this for <strong>Shipping, Payments, etc <\/strong>through the Shopify Theme editor. Also, you may easily adjust their order by dragging and dropping.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "bb82fc4d-4761-4e9e-ae10-30ee0166323a",
+        "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5"
+      ],
+      "settings": {
+        "title_size": "h2",
+        "show_social_sharing": true,
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "16524271948cd6a03a": {
+      "type": "featured-products",
+      "settings": {
+        "recommended_mode": true,
+        "collection": "",
+        "limit": 8,
+        "bg_color": "bg-white",
+        "text_align": "text-center",
+        "title": "Featured Products",
+        "title_size": "h2",
+        "btn_text": "",
+        "btn_color": "btn-primary",
+        "row_sm": 2,
+        "row_lg": 4,
+        "pt": 0,
+        "pb": 0,
+        "mt": 0,
+        "mb": 10
+      }
+    }
+  },
+  "order": [
+    "template-product",
+    "16524271948cd6a03a"
+  ]
+}

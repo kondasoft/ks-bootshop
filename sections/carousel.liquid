@@ -1,72 +1,135 @@
-{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
-{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+{% liquid
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+%}
 
-<div 
+{% javascript %}
+// Go to corresponding slide on Shopify's editor
+document.addEventListener('shopify:block:select', (e) => {
+    const carouselEl = e.target.closest('.carousel')
+
+    if (carouselEl) {
+        const selectedSlide = e.target.dataset.index
+        bootstrap.Carousel.getOrCreateInstance(carouselEl, { interval: false }).to(selectedSlide)
+    }
+})
+{% endjavascript %}
+
+<section 
     id="carousel-{{ section.id }}" 
-    class="carousel {{ section.settings.animation }} {{ mt }} {{ mb }}" 
+    class="carousel bg-dark {{ section.settings.animation }} {{ mt }} {{ mb }}"
     data-bs-ride="{% if section.settings.autoplay %}carousel{% else %}false{% endif %}">
-    <div class="carousel-indicators">
-        {% for block in section.blocks %}
-            <button 
-                type="button" 
-                data-bs-target="#carousel-{{ section.id }}" 
-                data-bs-slide-to="{{ forloop.index0 }}" 
-                class="{% if forloop.first == true %}active{% endif %}" 
-                aria-current="{% if forloop.first == true %}true{% endif %}" 
-                aria-label="{{ block.settings.title }}">
-            </button>
-        {% endfor %}
-    </div>
+    {% if section.settings.indicators and section.blocks.size > 1 %}
+        <div class="carousel-indicators">
+            {% for block in section.blocks %}
+                <button 
+                    type="button" 
+                    data-bs-target="#carousel-{{ section.id }}" 
+                    data-bs-slide-to="{{ forloop.index0 }}" 
+                    class="{% if forloop.first == true %}active{% endif %}" 
+                    aria-current="{% if forloop.first == true %}true{% endif %}" 
+                    aria-hidden="true">
+                </button>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="carousel-inner">
         {% for block in section.blocks %}
-            <div class="carousel-item {% if forloop.first == true %}active{% endif %}">
-                {% if block.settings.image == blank %}
+            <div class="carousel-item {% if forloop.first == true %}active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                {% if block.settings.img_mobile == blank and block.settings.img_desktop == blank %}
                     {% capture current %}{% cycle 1, 2 %}{% endcapture %}
                     {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'bg-secondary' }}
                 {% else %}
-                    {% assign image_size_800  = '800' | append: 'x' | append: block.settings.image_height %}
-                    {% assign image_size_1600 = '1700' | append: 'x' | append: block.settings.image_height %}
                     <img 
-                        src="{{ block.settings.image | img_url: image_size_1700, crop: 'center' }}" 
-                        srcset="
-                            {{ block.settings.image | img_url: image_size_800, crop: 'center' }} 800w, 
-                            {{ block.settings.image | img_url: image_size_1600, crop: 'center' }} 1600w
-                        " 
-                        alt=" {{ block.settings.image.alt }}"
+                        class="w-100 h-auto d-lg-none"
+                        src="{{ block.settings.img_mobile | image_url: width: '800', crop: 'center' }}" 
+                        alt=" {{ block.settings.img_mobile.alt }}"
+                        width="800"
+                        height="{{ 800 | divided_by: block.settings.img_mobile.aspect_ratio | round }}"
+                        loading="lazy"
+                        style="opacity: {{ block.settings.img_opacity }}; object-fit: cover;">
+                    <img 
+                        class="w-100 h-auto d-none d-lg-block"
+                        src="{{ block.settings.img_desktop | image_url: width: '1600', crop: 'center' }}" 
+                        alt=" {{ block.settings.img_desktop.alt }}"
                         width="1600"
-                        height="{{ block.settings.image_height }}"
-                        loading="lazy">
+                        height="{{ 1600 | divided_by: block.settings.img_desktop.aspect_ratio | round }}"
+                        loading="lazy"
+                        style="opacity: {{ block.settings.img_opacity }}; object-fit: cover;">
                 {% endif %}
-                {% unless block.settings.caption == blank %}
+                {% unless block.settings.title == blank %}
                     <div class="carousel-caption">
-                        <h4>{{ block.settings.caption }}</h4>
+                        <h3 class="{{ block.settings.title_size }}">
+                            {{ block.settings.title }}
+                        </h3>
+                        {% unless block.settings.description == blank %}
+                            <div class="rte mb-6 {{ block.settings.description_size }}">
+                                {{ block.settings.description }}
+                            </div>
+                        {% endunless %}
+                        {% unless block.settings.btn_text == blank %}
+                            <a class="btn mb-6 {{ block.settings.btn_color }} {{ block.settings.btn_size }}"  href="{{ block.settings.btn_url }}">
+                                {{ block.settings.btn_text }}
+                            </a>
+                        {% endunless %}
                     </div>
                 {% endunless %}
             </div>
         {% endfor %}
     </div>
-    <button 
-        class="carousel-control-prev" 
-        type="button" 
-        data-bs-target="#carousel-{{ section.id }}" 
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button 
-        class="carousel-control-next" 
-        type="button" 
-        data-bs-target="#carousel-{{ section.id }}" 
-        data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-</div>
+    {% if section.settings.controls and section.blocks.size > 1 %}
+        <button 
+            class="carousel-control-prev" 
+            type="button" 
+            data-bs-target="#carousel-{{ section.id }}" 
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">
+                {{ 'general.accessibility.previous' | t }}
+            </span>
+        </button>
+        <button 
+            class="carousel-control-next" 
+            type="button" 
+            data-bs-target="#carousel-{{ section.id }}" 
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">
+                {{ 'general.accessibility.next' | t }}
+            </span>
+        </button>
+    {% endif %}
+</section>
 
 {% schema %}
 {
     "name": "Carousel",
     "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "controls",
+            "label": "Show controls",
+            "info": "Prev/Next buttons",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "indicators",
+            "label": "Show indicators",
+            "info": "Small dots at the end",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "autoplay",
+            "label": "Enabled autoplay",
+            "info": "Every 5 seconds",
+            "default": false
+        },        
         {
             "type": "select",
             "id": "animation",
@@ -78,33 +141,26 @@
             "default": "slide"
         },
         {
-            "type": "checkbox",
-            "id": "autoplay",
-            "label": "Autoplay",
-            "default": true
-        },
-        {
             "type": "header",
-            "content": "Spacing",
-            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+            "content": "Spacing"
         },
         {
             "type": "range",
-            "id": "margin_top",
+            "id": "mt",
             "label": "Margin top",
             "min": 0,
-            "max": 12,
+            "max": 20,
             "step": 1,
             "default": 0
         },
         {
             "type": "range",
-            "id": "margin_bottom",
+            "id": "mb",
             "label": "Margin bottom",
             "min": 0,
-            "max": 12,
+            "max": 20,
             "step": 1,
-            "default": 8
+            "default": 0
         }
     ],
     "blocks": [
@@ -113,21 +169,109 @@
             "name": "Slide",
             "settings": [
                 {
+                    "type": "header",
+                    "content": "Image"
+                },
+                {
                     "type": "image_picker",
-                    "id": "image",
-                    "label": "Image"
+                    "id": "img_mobile",
+                    "label": "Image - mobile"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img_desktop",
+                    "label": "Image - desktop"
+                },
+                {
+                    "type": "range",
+                    "id": "img_opacity",
+                    "label": "Opacity",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "default": 0.7,
+                    "info": "Decrease for more legible captions"
+                },
+                {
+                    "type": "header",
+                    "content": "Caption"
                 },
                 {
                     "type": "text",
-                    "id": "image_height",
-                    "label": "Image height (px)",
-                    "default": "640"
+                    "id": "title",
+                    "label": "Title",
+                    "info": "Leave empty to disable captions"
                 },
                 {
-                    "type": "text",
-                    "id": "caption",
-                    "label": "Caption",
+                    "type": "select",
+                    "id": "title_size",
+                    "label": "Title size",
+                    "default": "h2",
+                    "options": [
+                        { "group": "Heading", "value": "h1", "label": "H1" },
+                        { "group": "Heading", "value": "h2", "label": "H2" },
+                        { "group": "Heading", "value": "h3", "label": "H3" },
+                        { "group": "Heading", "value": "h4", "label": "H4" },
+                        { "group": "Heading", "value": "h5", "label": "H5" },
+                        { "group": "Heading", "value": "h6", "label": "H6" }
+                    ]
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
                     "info": "Leave empty to disable"
+                },
+                {
+                    "type": "select",
+                    "id": "description_size",
+                    "label": "Description size",
+                    "default": "fs-5",
+                    "options": [
+                        { "value": "fs-1", "label": "fs-1" },
+                        { "value": "fs-2", "label": "fs-2" },
+                        { "value": "fs-3", "label": "fs-3" },
+                        { "value": "fs-4", "label": "fs-4" },
+                        { "value": "fs-5", "label": "fs-5" },
+                        { "value": "fs-6", "label": "fs-6" }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Button text",
+                    "info": "Leave empty to disable"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button URL"
+                },
+                {
+                    "type": "select",
+                    "id": "btn_color",
+                    "label": "Button color",
+                    "default": "btn-primary",
+                    "options": [
+                        { "group": "Normal", "value": "btn-light", "label": "Light" },
+                        { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                        { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                        { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                        { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "btn_size",
+                    "label": "Button size",
+                    "default": "",
+                    "options": [
+                        { "value": "btn-sm", "label": "Small" },
+                        { "value": "", "label": "Normal" },
+                        { "value": "btn-lg", "label": "Large" }
+                    ]
                 }
             ]
         }
@@ -135,18 +279,18 @@
     "presets": [
         {
             "name": "Carousel",
-            "category": "Slider",
+            "category": "Sliders",
             "blocks": [
                 {
                     "type": "slide",
                     "settings": {
-                        "caption": "Caption for the 1st slide"
+                        "title": "Caption for the 1st slide"
                     }
                 },
                 {
                     "type": "slide",
                     "settings": {
-                        "caption": "Caption for the 2nd slide"
+                        "title": "Caption for the 2nd slide"
                     }
                 }
             ]

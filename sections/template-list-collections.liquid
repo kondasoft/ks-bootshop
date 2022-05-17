@@ -1,0 +1,118 @@
+{% liquid 
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+    
+    assign row_xs = section.settings.row_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.row_sm | prepend: 'row-cols-sm-'
+    assign row_lg = section.settings.row_lg | prepend: 'row-cols-lg-'
+%}
+
+<section id="template-list-collections-{{ section.id }}"class="template-list-collections {{ section.settings.text_align }} {{ mt }} {{ mb }}">
+    <div class="container">
+        <h1 class="mb-4">
+            {{ section.settings.title }}
+        </h1>
+        {% paginate collections by section.settings.limit %}
+            <ul class="collection-list list-unstyled row mx-n3 mb-0 {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+                {% for collection in collections %}
+                    {% render 'collection-item', collection: collection %}
+                {% endfor %}
+            </ul>
+            {% render 'pagination' with paginate: paginate %}
+        {% endpaginate %}
+
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Collections list",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Collections"
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Limit",
+            "info": "Collections per page",
+            "min": 2,
+            "max": 50,
+            "default": 24
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "default": "text-center",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Items per row"
+        },
+        {
+            "type": "range",
+            "id": "row_xs",
+            "label": "Mobile",
+            "info": "up to 575px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Tablet",
+            "info": "576px - 991px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_lg",
+            "label": "Desktop",
+            "info": "992px and up",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 10
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 10
+        }
+    ]
+}
+{% endschema %}

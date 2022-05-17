@@ -1,132 +1,102 @@
 /*
-    © 2021 Firetheme.com
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
 */
 
-//
-// Product options
-//
-document.querySelectorAll('.product-option select')
-    .forEach((option) => {
-        option.addEventListener('change', () => {
-            const selectedOptions = Array.from(document.querySelectorAll('.product-option select'))
-                .map((option) => option.value)
-            const selectedVariant = window.product.variants.find((variant) =>
-                JSON.stringify(variant.options) === JSON.stringify(selectedOptions))
-            const addToCartBtn = document.querySelector('#add-to-cart-btn')
-            addToCartBtn.setAttribute('data-variant-id', selectedVariant?.id || '')
-            if (selectedVariant) {
-                console.log(selectedVariant)
-                if (selectedVariant.available) {
-                    addToCartBtn.disabled = false
-                    addToCartBtn.textContent = addToCartBtn.dataset.textAddToCart
-                } else {
-                    addToCartBtn.disabled = true
-                    addToCartBtn.textContent = addToCartBtn.dataset.textSoldOut
-                }
-                document.querySelector('.product-price .product-price-final')
-                    .textContent = window.formatMoney(selectedVariant.price)
-                if (selectedVariant.compare_at_price) {
-                    document.querySelector('.product-price .product-price-compare')
-                        .textContent = window.formatMoney(selectedVariant.compare_at_price)
-                    document.querySelector('.product-price .product-price-compare')
-                        .classList.remove('d-none')
-                } else {
-                    document.querySelector('.product-price .product-price-compare')
-                        .classList.add('d-none')
-                }
-                bootstrap.Carousel.getInstance(document.querySelector('#product-carousel'))
-                    .to(selectedVariant?.featured_media?.position - 1 || 0)
-                window.history.replaceState({}, '', `${window.product.url}?variant=${selectedVariant.id}`)
-            } else {
-                addToCartBtn.disabled = true
-                addToCartBtn.textContent = addToCartBtn.dataset.textUnavailable
-                window.history.replaceState({}, '', window.product.url)
-            }
-        })
+// Ajax 'Add To Cart' (ATC) forms
+window.onSubmitAtcForm = async (form, event) => {
+    event.preventDefault()
+
+    const btn = form.querySelector('button[name="add"]')
+    btn.innerHTML = `
+        <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    `
+
+    await fetch('/cart/add.js', { method: 'POST', body: new FormData(form) })
+
+    btn.innerHTML = window.themeStrings.addToCart
+
+    if (document.querySelector('#offcanvas-cart')) {
+        bootstrap.Offcanvas.getOrCreateInstance('#offcanvas-cart').show()
+    }
+
+    window.refreshCartContents()
+}
+
+// Product Options - listen for onchange events
+window.onChangeProductOption = async (input) => {
+    const productWrapper = input.closest('.product')
+    const addToCartBtn = productWrapper.querySelector('[name="add"]')
+
+    const response = await fetch(`/products/${input.dataset.productHandle}.js`)
+    const productData = await response.json()
+
+    const productOptions = []
+
+    productWrapper.querySelectorAll('.product-option').forEach(el => {
+        productOptions.push(el.value)
     })
 
-//
-// Add to cart
-//
-document.querySelector('#add-to-cart-btn')
-    ?.addEventListener('click', (e) => {
-        const btn = e.target
-        const savedBtnInnerHTML = btn.innerHTML
-        btn.innerHTML = `
-            <div class="spinner-border spinner-border-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        `
-        // Add variant to cart
-        fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id: btn.dataset.variantId,
-                quantity: btn.dataset.quantity
-            })
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-                btn.innerHTML = savedBtnInnerHTML
-                btn.blur()
-                // Display toast
-                const toast = document.querySelector('#toast')
-                toast.querySelector('.toast-title').innerHTML = `
-                    ${btn.dataset.textAddedToCart}
-                `
-                toast.querySelector('.toast-body').innerHTML = `
-                    <div class="d-flex align-items-center mb-3">
-                        <a href="${data.url}">
-                            <img 
-                                class="product-img me-3 ${toast.dataset.imgThumbnail ? 'img-thumbnail' : 'rounded'}" 
-                                src="${window.resizeImage(data.image, `${toast.dataset.imgWidth}x${toast.dataset.imgHeight}`, 'center')}" 
-                                alt="" 
-                                width="${toast.dataset.imgWidth}" 
-                                height="${toast.dataset.imgHeight}" 
-                                style="object-fit: cover">
-                        </a>
-                        <div>
-                            <h4 class="product-title h6 mb-1">
-                                ${data.product_title}
-                            </h4>
-                            <p class="product-variant-title mb-1 text-muted ${data.variant_title ? '' : 'd-none'}">
-                                ${data.variant_title}
-                            </p>
-                            <p class="product-price mb-0">
-                                ${btn.dataset.quantity} x <span class="">
-                                    ${window.formatMoney(data.price)}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <a 
-                        href="${btn.dataset.cartRouteUrl}" 
-                        class="btn btn-primary btn-sm w-100">
-                        ${btn.dataset.textViewCart}
-                    </a>
-                `
-                bootstrap.Toast.getInstance(toast)?.dispose()
-                new bootstrap.Toast(toast).show()
-                // Update badge inside navbar cart icon
-                const navItemCartBadge = document.querySelector('#nav-item-cart .badge')
-                navItemCartBadge.classList.remove('d-none')
-                navItemCartBadge.textContent = Number(navItemCartBadge.textContent) + Number(btn.dataset.quantity)
-            })
-    })
+    const selectedVariant = productData.variants.find(variant =>
+        variant.title.includes(productOptions.toString().replace(',', ' / '))
+    )
 
-//
-// Related Products
-// https://www.shopify.com/partners/blog/related-products
-//
-const recommendedProducts = document.querySelector('.product-recommendations')
-if (recommendedProducts) {
-    const { baseUrl, productId, limit } = recommendedProducts.dataset
-    const url = `${baseUrl}?section_id=product-recommendations&product_id=${productId}&limit=${limit}`
-    fetch(url)
-        .then((response) => response.text())
-        .then((data) => {
-            recommendedProducts.parentElement.innerHTML = data
-        })
+    console.log(selectedVariant)
+
+    if (selectedVariant) {
+        productWrapper.querySelector('[name="id"]').value = selectedVariant.id
+
+        if (selectedVariant.available) {
+            addToCartBtn.disabled = false
+            addToCartBtn.innerHTML = window.themeStrings.addToCart
+        } else {
+            addToCartBtn.disabled = true
+            addToCartBtn.innerHTML = window.themeStrings.soldOut
+        }
+
+        if (selectedVariant.compare_at_price) {
+            productWrapper.querySelector('.product-price-compare').style.display = 'inline-block'
+            productWrapper.querySelector('.product-price-compare s').textContent = window.formatMoney(selectedVariant.compare_at_price)
+            productWrapper.querySelector('.product-price-final').classList.add('text-success')
+            productWrapper.querySelector('.product-price-final').textContent = window.formatMoney(selectedVariant.price)
+        } else {
+            productWrapper.querySelector('.product-price-compare').style.display = 'none'
+            productWrapper.querySelector('.product-price-compare s').textContent = ''
+            productWrapper.querySelector('.product-price-final').classList.remove('text-success')
+            productWrapper.querySelector('.product-price-final').textContent = window.formatMoney(selectedVariant.price)
+        }
+
+        bootstrap.Carousel.getOrCreateInstance('#product-carousel')
+            ?.to(selectedVariant.featured_media.position - 1)
+
+        const url = new URL(window.location)
+        url.searchParams.set('variant', selectedVariant.id)
+        window.history.replaceState({}, '', url)
+    } else {
+        addToCartBtn.disabled = true
+        addToCartBtn.innerHTML = window.themeStrings.unavailable
+    }
+}
+
+// 'Buy it now' buttons
+window.onClickBuyBtn = (btn) => {
+    btn.innerHTML = `
+        <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    `
+    const form = btn.closest('form')
+    const variantId = form.querySelector('[name="id"]').value
+    const qty = Number(form.querySelector('input[name="quantity"]').value || 1)
+    window.location.href = `/cart/${variantId}:${qty}`
+}
+
+// Product Carousel - Sticky position on scroll (only desktop)
+const productCarousel = document.querySelector('#product-carousel.sticky-top')
+if (productCarousel) {
+    const navbarHeight = document.querySelector('#shopify-section-navbar.sticky-top').clientHeight || 0
+    productCarousel.style.top = `${navbarHeight + 20}px`
+    productCarousel.style.zIndex = '1'
 }

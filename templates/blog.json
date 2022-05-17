@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "template-blog": {
+      "type": "template-blog",
+      "settings": {
+        "title_size": "h1",
+        "limit": 40,
+        "show_filter_by": true,
+        "article_title_size": "h5",
+        "show_article_meta": true,
+        "show_article_excerpt": true,
+        "row_xs": 1,
+        "row_sm": 2,
+        "row_lg": 3,
+        "mt": 10,
+        "mb": 10
+      }
+    }
+  },
+  "order": [
+    "template-blog"
+  ]
+}

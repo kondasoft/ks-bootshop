@@ -1,0 +1,38 @@
+{% liquid
+    assign img_width  = 600
+    assign img_height = 600
+    assign img_thumbnail = 'img-thumbnail'
+%}
+
+<li class="product-item p-3 mb-4">
+    <a class="position-relative d-block" href="{{ product.url | within: collection }}">
+        {% unless product.available %}
+            <span class="badge-sold-out badge bg-secondary position-absolute top-0 end-0 me-3 mt-3">
+                {{ 'product.sold_out' | t }}
+            </span>        
+        {% endunless %}
+        <img 
+            class="product-item-img img-fluid mb-3 {{ img_thumbnail }}"
+            src="{{ product.featured_image.src | image_url: width: img_width, height: img_height, crop: 'center' }}" 
+            alt="{{ product.featured_image.alt | escape }}"
+            width="{{ img_width }}"
+            height="{{ img_height }}"
+            loading="lazy">
+        <h3 class="product-item-title h6 mb-2">
+            {{ product.title }}
+        </h3>
+    </a>
+    <div class="product-item-price mb-0">
+        <span 
+            class="product-item-price-compare text-muted me-1" 
+            style="{% unless product.compare_at_price > product.price %}display: none{% endunless %}">
+            <span class="visually-hidden">
+                {{ 'product.regular_price' | t }}
+            </span>
+            <s>{{ product.compare_at_price | money }}</s>
+        </span>
+        <span class="product-item-price-final {% if product.compare_at_price > product.price %}text-success{% endif %}">
+            {{ product.price | money }}
+        </span>
+    </div>
+</li>

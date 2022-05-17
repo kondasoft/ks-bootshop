@@ -1,0 +1,17 @@
+{% if paginate.pages > 1 %}
+    <div class="pt-6 pb-2 text-center">
+        {% if paginate.previous.is_link %}
+            <a class="paginate-btn btn btn-outline-primary my-1" href="{{ paginate.previous.url }}">
+                {{ paginate.previous.title }}
+            </a>
+        {% endif %}
+        {% if paginate.next.is_link %}
+            <a class="paginate-btn btn btn-outline-primary my-1" href="{{ paginate.next.url }}">
+                {{ paginate.next.title }}
+            </a>
+        {% endif %}
+        <small class="paginate-count d-block text-muted mt-3">
+            {{ 'general.general.pagination_page_of' | t: count: paginate.current_page, total: paginate.pages }}
+        </small>
+    </div>
+{% endif %}

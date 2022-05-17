@@ -1,42 +1,83 @@
 <!doctype html>
-<html>
+<html lang="{{ request.locale.iso_code }}">
 <head>
-    <title>{{ page_title }}</title>
-    <link rel="canonical" href="{{ canonical_url }}">
-
-    <!-- Metas -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="{{ page_description | escape }}">
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"> 
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
 
-    <!-- Required by Shopify -->
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+
+    {%- unless settings.favicon == blank -%}
+        <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: '32', height: '32' }}">
+    {%- endunless -%}
+
+    <title>
+        {{ page_title }}
+        {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+        {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+        {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+        <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
     {{ content_for_header }}
+    
+    <style>
+        {{ settings.font_headings | font_face: font_display: 'swap' }}
+        :root {
+            --bs-headings-font-family: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
+            --bs-headings-font-weight: {{ settings.font_headings.weight }}
+        }
+    </style>
 
-    <!-- Styles/Scripts -->
-    {% render 'styles-scripts' %}
+    <link href="{{ 'bootstrap.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'general.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'sections.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'custom.css' | asset_url }}" rel="stylesheet">
+
+    <script>
+        window.money_format = "{{ shop.money_format }}"
+        window.themeStrings = {
+            addToCart: `{{ 'product.add_to_cart' | t }}`,
+            soldOut: `{{ 'product.sold_out' | t }}`,
+            unavailable: `{{ 'product.unavailable' | t }}`,
+        }
+    </script>
+
+    <script src="{{ 'bootstrap.bundle.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'general.js' | asset_url }}" defer></script>
+    <script src="{{ 'collection.js' | asset_url }}" defer></script>
+    <script src="{{ 'product.js' | asset_url }}" defer></script>
+    <script src="{{ 'cart.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
 </head>
 
-<body class="{{ request.page_type | prepend: 'template-' }}">
-    <!-- Skip link -->
+<body class="{{ request.page_type | prepend: 'page-type-' }}">
     <a class="visually-hidden-focusable" href="#main">
         {{ 'general.accessibility.skip_content' | t }}
     </a>
+    
+    {% liquid 
+        section 'announcement-bar' 
+        section 'navbar' 
+    %}
 
-    <!-- Top sections -->
-    {% section 'announcement' %}
-    {% section 'navbar' %}
-
-    <!-- Main -->
     <main id="main" role="main">
         {{ content_for_layout }}
     </main>
 
-    <!-- Bottom sections -->
-    {% section 'footer' %}
-    
-    <!-- Bottom includes -->
-    {% render 'toast' %}
-    
+    {% liquid
+        section 'footer'
+        render 'offcanvas-cart'
+        render 'offcanvas-search'
+    %}
+    <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
 </body>
 </html>
+    

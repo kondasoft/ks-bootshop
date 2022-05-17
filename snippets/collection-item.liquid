@@ -1,0 +1,22 @@
+{% liquid
+    assign img_width  = 600
+    assign img_height = 600
+    assign img_thumbnail = 'img-thumbnail'
+
+    assign image = collection.image | default: collection.products.first.featured_image
+%}
+
+<li class="collection-item p-3 mb-4">
+    <a class="" href="{{ collection.url }}">
+        <img 
+            class="collection-item-img img-fluid mb-3 {{ img_thumbnail }}"
+            src="{{ image | image_url: width: img_width, height: img_height, crop: 'center' }}" 
+            alt="{{ image.alt | escape }}"
+            width="{{ img_width }}"
+            height="{{ img_height }}"
+            loading="lazy">
+        <h3 class="collection-item-title h6 mb-0">
+            {{ collection.title }}
+        </h3>
+    </a>
+</li>

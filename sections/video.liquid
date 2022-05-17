@@ -1,0 +1,112 @@
+{% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+
+    if section.settings.external_video.type == 'youtube'
+        assign video_src = 'https://www.youtube.com/embed/' | append: section.settings.external_video.id
+    else
+        assign video_src = 'https://player.vimeo.com/video/' | append: section.settings.external_video.id
+    endif
+%}
+
+<section id="video-{{ section.id }}" class="video {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container" style="max-width: {{ section.settings.max_width }}px">
+        <div class="ratio ratio-16x9">
+            <iframe
+                src="{{ video_src }}"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                frameborder="0"
+                allowfullscreen
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Video",
+    "settings": [
+        {
+            "type": "video_url",
+            "id": "external_video",
+            "label": "Video link",
+            "accept": [
+                "youtube", "vimeo"
+            ]
+        },
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "bg-white text-dark",
+            "options": [
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
+                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
+                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
+                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "max_width",
+            "label": "Max width (px)",
+            "info": "Adjust container width (in pixels)",
+            "default": "992"
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        }
+    ],
+    "presets": [
+        {
+            "name": "Video",
+            "category": "Media"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "template-article": {
+      "type": "template-article",
+      "settings": {
+        "title_size": "h1",
+        "max_width": "720",
+        "show_social_sharing": true,
+        "show_tags": true,
+        "mt": 4,
+        "mb": 10
+      }
+    }
+  },
+  "order": [
+    "template-article"
+  ]
+}

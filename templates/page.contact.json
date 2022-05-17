@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "contact-form": {
+      "type": "contact-form",
+      "settings": {
+        "bg_color": "bg-light text-body",
+        "max_width": "992",
+        "title": "Contact us",
+        "title_size": "h1",
+        "description": "<p>Please complete the following form to send us an email<\/p>",
+        "description_size": "fs-6",
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 0
+      }
+    }
+  },
+  "order": [
+    "contact-form"
+  ]
+}

@@ -1,26 +1,80 @@
-<!-- /templates/customers/account.liquid -->
 
-{% if customer.default_address %}
-  <h2>Address</h2>
-  <p>{{ customer.default_address.address1 }}</p>
-  {% if customer.default_address.address2 != "" %}
-    <p>{{ customer.default_address.address2 }}</p>
-  {% endif %}
-  <p>{{ customer.default_address.city}}, {% if address.province_code %}{{ customer.default_address.province_code }}, {% endif %}{{ customer.default_address.country }}</p>
-  <p>{{ customer.default_address.zip }}</p>
-  <p>{{ customer.default_address.phone }}</p>
-{% endif %}
-
-<div id="customer_orders">
-  <h2>Orders</h2>
-  {% paginate customer.orders by 10 %}
-  {% if customer.orders.size != 0 %}
-    {% for order in customer.orders %}
-      <!-- order details here -->
-    {% endfor %}
-  {% else %}
-    <p>You haven't placed any orders yet.</p>
-  {% endif %}
-  {{ paginate | default_pagination }}
-  {% endpaginate %}
+<div class="container my-9">
+    <div class="text-center mb-6">
+        <h1 class="mb-1">
+            {{ 'customer.account.title' | t }}
+        </h1>
+        <a 
+            class="btn btn-outline-secondary btn-sm" 
+            href="{{ routes.account_logout_url }}">
+            {{ 'customer.account.logout' | t }}
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <h2 class="h3 mb-3">
+                {{ 'customer.account.order_history' | t }}
+            </h2>
+            {% paginate customer.orders by 20 %}
+                {% if customer.orders.size == 0 %}
+                    <p class="alert alert-warning">
+                        {{ 'customer.orders.none' | t }}
+                    </p>
+                {% else %}
+                    <div class="mb-2">
+                        <table class="order-history table table-responsive align-middle">
+                            <thead>
+                                <tr role="row">
+                                    <th class="text-nowrap text-center" scope="col">{{ 'customer.orders.order_number' | t }}</th>
+                                    <th class="text-nowrap" scope="col">{{ 'customer.orders.date' | t }}</th>
+                                    <th class="text-nowrap" scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+                                    <th class="text-nowrap" scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                                    <th class="text-nowrap text-end" scope="col">{{ 'customer.orders.total' | t }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in customer.orders %}
+                                    <tr role="row">
+                                        <td class="text-nowrap text-lg-center" data-label="{{ 'customer.orders.order_number' | t }}">
+                                            <a class="btn btn-outline-primary py-1" href="{{ order.customer_url }}">
+                                            {{ order.name }}
+                                            </a>
+                                        </td>
+                                        <td class="text-nowrap" data-label="{{ 'customer.orders.date' | t }}">
+                                            {{ order.created_at | time_tag: format: 'date' }}
+                                        </td>
+                                        <td class="text-nowrap" data-label="{{ 'customer.orders.payment_status' | t }}">
+                                            {{ order.financial_status_label }}
+                                        </td>
+                                        <td class="text-nowrap" data-label="{{ 'customer.orders.fulfillment_status' | t }}">
+                                            {{ order.fulfillment_status_label }}
+                                        </td>
+                                        <td class="text-nowrap text-end" data-label="{{ 'customer.orders.total' | t }}">
+                                            {{ order.total_price | money_with_currency }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% render 'pagination' with paginate: paginate %}
+                {% endif %}
+            {% endpaginate %}
+        </div>
+        <div class="col-lg-4">
+            <div class="card bg-light mb-5">
+                <div class="card-body">
+                    <h2 class="h4 mb-3">
+                        {{ 'customer.account.account_details' | t }}
+                    </h2>
+                    {{ customer.default_address | format_address }}
+                    <a 
+                        class="btn btn-outline-primary btn-sm" 
+                        href="{{ routes.account_addresses_url }}">
+                        {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

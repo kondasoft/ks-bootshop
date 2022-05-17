@@ -1,0 +1,294 @@
+{% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+
+    assign row_xs =  section.settings.row_xs | prepend: 'row-cols-'
+    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
+    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
+%}
+
+<section id="cards-with-image-{{ section.id }}" class="cards-with-image {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container">
+        <div class="row mx-n3 {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+            {% for block in section.blocks %}
+                <div class="col p-3">
+                    <div class="card h-100">
+                        {% unless block.settings.img == blank %}
+                            <img
+                                class="img-fluid card-img-top"
+                                src="{{ block.settings.img.src | image_url: width: block.settings.img_width, height: block.settings.img_height, crop: block.settings.img_crop }}"
+                                alt="{{ block.settings.img.alt | escape }}"
+                                width="{{ block.settings.img_width }}"
+                                height="{{ block.settings.img_height }}"
+                                loading="lazy">
+                        {% endunless %}
+                        <div class="card-body">
+                            {% unless block.settings.title == blank %}
+                                <h3 class="title mb-4 {{ block.settings.title_size }}">
+                                    {{ block.settings.title }}
+                                </h3>
+                            {% endunless %}
+                            {% unless block.settings.description == blank %}
+                                <div class="description rte mt-n2 mb-0 {{ block.settings.description_size }}">
+                                    {{ block.settings.description }}
+                                </div>
+                            {% endunless %}
+                            {% unless block.settings.btn_text == blank %}
+                                <a class="btn mt-6 {{ block.settings.btn_color }} {{ block.settings.btn_size }}" href="{{ block.settings.btn_url }}">
+                                    {{ block.settings.btn_text }}
+                                </a>
+                            {% endunless %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Cards with image",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "bg-white text-dark",
+            "options": [
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
+                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
+                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
+                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Items per Row",
+            "info": "Based on screen resolution."
+        },
+        {
+            "type": "range",
+            "id": "row_xs",
+            "label": "Mobile",
+            "info": "up to 575px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Tablet",
+            "info": "576px - 991px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_lg",
+            "label": "Desktop",
+            "info": "992px and up",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        }
+    ],
+    "blocks": [
+        {
+            "type": "item",
+            "name": "Item",
+            "settings": [
+                {
+                    "type": "header",
+                    "content": "Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "img_width",
+                    "label": "Image width (px)",
+                    "default": "600"
+                },
+                {
+                    "type": "text",
+                    "id": "img_height",
+                    "label": "Image height (px)",
+                    "default": "300"
+                },
+                {
+                    "type": "select",
+                    "id": "img_crop",
+                    "label": "Image crop",
+                    "default": "center",
+                    "options": [
+                        { "value": "top", "label": "Top" },
+                        { "value": "center", "label": "Center" },
+                        { "value": "bottom", "label": "Bottom" },
+                        { "value": "left", "label": "Left" },
+                        { "value": "right", "label": "Right" }
+                    ]
+                },
+                {
+                    "type": "header",
+                    "content": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Columns with image",
+                    "info": "Disable title to show only image"
+                },
+                {
+                    "type": "select",
+                    "id": "title_size",
+                    "label": "Title size",
+                    "default": "h4",
+                    "options": [
+                        { "group": "Heading", "value": "h1", "label": "H1" },
+                        { "group": "Heading", "value": "h2", "label": "H2" },
+                        { "group": "Heading", "value": "h3", "label": "H3" },
+                        { "group": "Heading", "value": "h4", "label": "H4" },
+                        { "group": "Heading", "value": "h5", "label": "H5" },
+                        { "group": "Heading", "value": "h6", "label": "H6" }
+                    ]
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+                },
+                {
+                    "type": "select",
+                    "id": "description_size",
+                    "label": "Description size",
+                    "default": "fs-6",
+                    "options": [
+                        { "value": "fs-1", "label": "fs-1" },
+                        { "value": "fs-2", "label": "fs-2" },
+                        { "value": "fs-3", "label": "fs-3" },
+                        { "value": "fs-4", "label": "fs-4" },
+                        { "value": "fs-5", "label": "fs-5" },
+                        { "value": "fs-6", "label": "fs-6" }
+                    ]
+                },
+                {
+                    "type": "header",
+                    "content": "Button"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Button text",
+                    "default": "Learn more",
+                    "info": "Leave empty to disable"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button URL"
+                },
+                {
+                    "type": "select",
+                    "id": "btn_color",
+                    "label": "Button color",
+                    "default": "btn-outline-primary",
+                    "options": [
+                        { "group": "Normal", "value": "btn-link", "label": "Link" },
+                        { "group": "Normal", "value": "btn-light", "label": "Light" },
+                        { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                        { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                        { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                        { "group": "Normal", "value": "btn-success", "label": "Success" },
+                        { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                        { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                        { "group": "Normal", "value": "btn-info", "label": "Info" },
+                        { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
+                        { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                        { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                        { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                        { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                        { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "btn_size",
+                    "label": "Button size",
+                    "default": "",
+                    "options": [
+                        { "value": "btn-sm", "label": "Small" },
+                        { "value": "", "label": "Normal" },
+                        { "value": "btn-lg", "label": "Large" }
+                    ]
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Cards with image",
+            "category": "General"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,373 @@
+{
+  "sections": {
+    "carousel": {
+      "type": "carousel",
+      "blocks": {
+        "7c7200c0-9e25-4d6f-8e80-68098f92561e": {
+          "type": "slide",
+          "settings": {
+            "img_mobile": "shopify:\/\/shop_images\/lifestyle-1-mobile.jpg",
+            "img_desktop": "shopify:\/\/shop_images\/lifestyle-1.jpg",
+            "img_opacity": 0.7,
+            "title": "Welcome to KS BootShop Theme",
+            "title_size": "h2",
+            "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
+            "description_size": "fs-5",
+            "btn_text": "Download FREE",
+            "btn_url": "#",
+            "btn_color": "btn-primary",
+            "btn_size": ""
+          }
+        },
+        "45eefe8d-75a6-4c0d-83c1-bf904392cb96": {
+          "type": "slide",
+          "settings": {
+            "img_mobile": "shopify:\/\/shop_images\/lifestyle-2-mobile.jpg",
+            "img_desktop": "shopify:\/\/shop_images\/lifestyle-2.jpg",
+            "img_opacity": 0.7,
+            "title": "Simple to Use, Easy to Customize",
+            "title_size": "h2",
+            "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
+            "description_size": "fs-5",
+            "btn_text": "Download FREE",
+            "btn_url": "#",
+            "btn_color": "btn-primary",
+            "btn_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "7c7200c0-9e25-4d6f-8e80-68098f92561e",
+        "45eefe8d-75a6-4c0d-83c1-bf904392cb96"
+      ],
+      "settings": {
+        "controls": true,
+        "indicators": true,
+        "autoplay": true,
+        "animation": "slide",
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "165151877352b831f8": {
+      "type": "featured-products",
+      "settings": {
+        "recommended_mode": false,
+        "collection": "men",
+        "limit": 8,
+        "bg_color": "bg-white text-dark",
+        "text_align": "text-center",
+        "title": "Featured Products",
+        "title_size": "h2",
+        "btn_text": "View all products",
+        "btn_color": "btn-primary",
+        "row_sm": 2,
+        "row_lg": 4,
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "1651733459a1bea1c2": {
+      "type": "featured-collections",
+      "blocks": {
+        "8c529e86-7b51-4d75-baa3-1d4681b8c75c": {
+          "type": "collection",
+          "settings": {
+            "collection": "men"
+          }
+        },
+        "77c3798e-6857-46a0-92bc-df3c48109366": {
+          "type": "collection",
+          "settings": {
+            "collection": "women"
+          }
+        },
+        "ec048dd5-f669-4b0e-811b-cd904f95bde5": {
+          "type": "collection",
+          "settings": {
+            "collection": "children"
+          }
+        },
+        "ec7164c1-d2b0-4fd9-b81f-18204c938d9a": {
+          "type": "collection",
+          "settings": {
+            "collection": "babies"
+          }
+        },
+        "9e860958-3e5a-44e1-ace8-49e74c8ea9ef": {
+          "type": "collection",
+          "settings": {
+            "collection": "latest"
+          }
+        },
+        "e86d0893-60ca-4bbf-aa40-c1ea7de37bec": {
+          "type": "collection",
+          "settings": {
+            "collection": "sale"
+          }
+        }
+      },
+      "block_order": [
+        "8c529e86-7b51-4d75-baa3-1d4681b8c75c",
+        "77c3798e-6857-46a0-92bc-df3c48109366",
+        "ec048dd5-f669-4b0e-811b-cd904f95bde5",
+        "ec7164c1-d2b0-4fd9-b81f-18204c938d9a",
+        "9e860958-3e5a-44e1-ace8-49e74c8ea9ef",
+        "e86d0893-60ca-4bbf-aa40-c1ea7de37bec"
+      ],
+      "settings": {
+        "bg_color": "bg-light text-dark",
+        "text_align": "text-center",
+        "title": "Featured Collections",
+        "title_size": "h2",
+        "btn_text": "View all collections",
+        "btn_color": "btn-primary",
+        "row_xs": 2,
+        "row_sm": 2,
+        "row_lg": 3,
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 11
+      }
+    },
+    "16517348541d37c171": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "opacity": 0.1,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "16526904738ba745b1": {
+      "type": "columns-with-image",
+      "blocks": {
+        "b737d82b-0599-4d66-b2db-3b7a9c7c82b6": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/collection-1.jpg",
+            "img_width": "600",
+            "img_height": "400",
+            "img_crop": "center",
+            "title": "Columns with image",
+            "title_size": "h4",
+            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": ""
+          }
+        },
+        "05d46dec-75df-444f-a57a-40e8d79e9a11": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/collection-3.jpg",
+            "img_width": "600",
+            "img_height": "400",
+            "img_crop": "center",
+            "title": "Columns with image",
+            "title_size": "h4",
+            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": ""
+          }
+        },
+        "0c0ea25f-f442-4277-97f4-e69de164aa6d": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/collection-2.jpg",
+            "img_width": "600",
+            "img_height": "400",
+            "img_crop": "center",
+            "title": "Columns with image",
+            "title_size": "h4",
+            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": ""
+          }
+        },
+        "abc35a75-9abd-4c5c-a071-ac2b88246990": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/collection-6.jpg",
+            "img_width": "600",
+            "img_height": "400",
+            "img_crop": "center",
+            "title": "Columns with image",
+            "title_size": "h4",
+            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "b737d82b-0599-4d66-b2db-3b7a9c7c82b6",
+        "05d46dec-75df-444f-a57a-40e8d79e9a11",
+        "0c0ea25f-f442-4277-97f4-e69de164aa6d",
+        "abc35a75-9abd-4c5c-a071-ac2b88246990"
+      ],
+      "settings": {
+        "bg_color": "bg-white text-dark",
+        "row_xs": 2,
+        "row_sm": 2,
+        "row_lg": 4,
+        "pt": 0,
+        "pb": 0,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "165175524396f2667c": {
+      "type": "faq",
+      "blocks": {
+        "1651755243f618171d-0": {
+          "type": "text",
+          "settings": {
+            "title": "Where do you ship?",
+            "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.<\/p>"
+          }
+        },
+        "1651755243f618171d-1": {
+          "type": "text",
+          "settings": {
+            "title": "How long will it take to receive my order",
+            "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.<\/p>"
+          }
+        },
+        "1651755243f618171d-2": {
+          "type": "text",
+          "settings": {
+            "title": "What payment methods do you support?",
+            "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.<\/p>"
+          }
+        },
+        "1651755243f618171d-3": {
+          "type": "text",
+          "settings": {
+            "title": "How can I track my order?",
+            "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567<\/p>"
+          }
+        },
+        "1651755243f618171d-4": {
+          "type": "text",
+          "settings": {
+            "title": "Can I order as a gift for someone else?",
+            "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.<\/p>"
+          }
+        },
+        "1651755243f618171d-5": {
+          "type": "text",
+          "settings": {
+            "title": "How can I get a refund for my order?",
+            "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "1651755243f618171d-0",
+        "1651755243f618171d-1",
+        "1651755243f618171d-2",
+        "1651755243f618171d-3",
+        "1651755243f618171d-4",
+        "1651755243f618171d-5"
+      ],
+      "settings": {
+        "bg_color": "bg-white text-body",
+        "max_width": "768",
+        "text_align": "text-center",
+        "title": "F.A.Q",
+        "title_size": "h2",
+        "description": "<p>Write something useful to describe this section.<\/p>",
+        "description_size": "fs-6",
+        "pt": 11,
+        "pb": 11,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "1651754599ab801902": {
+      "type": "image-with-text",
+      "settings": {
+        "bg_color": "bg-light text-body",
+        "image": "shopify:\/\/shop_images\/no-image.jpg",
+        "img_width": "900",
+        "img_height": "600",
+        "img_crop": "center",
+        "img_border": "img-thumbnail",
+        "img_align": "flex-row",
+        "title": "Image with text",
+        "title_size": "h3",
+        "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+        "description_size": "fs-6",
+        "btn_text": "Learn more",
+        "btn_url": "#",
+        "btn_color": "btn-outline-primary",
+        "btn_size": "",
+        "pt": 11,
+        "pb": 11,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "165175637554e00750": {
+      "type": "html",
+      "settings": {
+        "html": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d5458.176837636101!2d7.264440042281333!3d43.69609386612476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12cddaa162b4a50b%3A0x77566707bed909ce!2sFontaine%20du%20Soleil!5e0!3m2!1sen!2s!4v1651756644654!5m2!1sen!2s\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"><\/iframe>",
+        "bg_color": "bg-white text-body",
+        "container": "",
+        "text_align": "text-center",
+        "title": "HTML section",
+        "title_size": "h2",
+        "description": "<p>Display any HTML codes in this section like embed maps, videos, etc.<\/p>",
+        "description_size": "fs-6",
+        "pt": 11,
+        "pb": 0,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "165168956137e2ed29": {
+      "type": "newsletter",
+      "settings": {
+        "bg_color": "bg-light text-dark",
+        "max_width": "620",
+        "title": "Newsletter Subscribe",
+        "title_size": "h2",
+        "description": "<p>Subscribe to get updates about our latest offers and other important stuff.<\/p>",
+        "description_size": "fs-6",
+        "input_group_size": "",
+        "btn_color": "btn-outline-secondary",
+        "pt": 11,
+        "pb": 11,
+        "mt": 0,
+        "mb": 0
+      }
+    }
+  },
+  "order": [
+    "carousel",
+    "165151877352b831f8",
+    "1651733459a1bea1c2",
+    "16517348541d37c171",
+    "16526904738ba745b1",
+    "165175524396f2667c",
+    "1651754599ab801902",
+    "165175637554e00750",
+    "165168956137e2ed29"
+  ]
+}

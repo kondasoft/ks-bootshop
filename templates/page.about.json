@@ -1,0 +1,71 @@
+{
+  "sections": {
+    "1636275108720b76b1": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "opacity": 0.1,
+        "mt": 9,
+        "mb": 9
+      }
+    },
+    "165268949817e427ae": {
+      "type": "carousel",
+      "blocks": {
+        "1652689498756fb688-0": {
+          "type": "slide",
+          "settings": {
+            "img_mobile": "shopify:\/\/shop_images\/lifestyle-2-mobile.jpg",
+            "img_desktop": "shopify:\/\/shop_images\/lifestyle-2.jpg",
+            "img_opacity": 0.7,
+            "title": "",
+            "title_size": "h2",
+            "description": "",
+            "description_size": "fs-5",
+            "btn_text": "",
+            "btn_url": "",
+            "btn_color": "btn-primary",
+            "btn_size": ""
+          }
+        }
+      },
+      "block_order": [
+        "1652689498756fb688-0"
+      ],
+      "settings": {
+        "controls": true,
+        "indicators": true,
+        "autoplay": false,
+        "animation": "slide",
+        "mt": 0,
+        "mb": 10
+      }
+    },
+    "1652689700430c7f0b": {
+      "type": "richtext",
+      "settings": {
+        "bg_color": "bg-white text-dark",
+        "max_width": "768",
+        "text_align": "text-start",
+        "title": "About us",
+        "title_size": "h2",
+        "description": "<p>Welcome to [company name], your number one source for all things [product]. We're dedicated to giving you the very best of [product], with a focus on [store characteristic 1], [store characteristic 2], [store characteristic 3].<\/p><p>Founded in [year] by [founder name], [company name] has come a long way from its beginnings in [starting location]. When [founder name] first started out, [his\/her\/their] passion for [brand message - e.g. \"eco-friendly cleaning products\"] drove them to [action: quit day job, do tons of research, etc.] so that [company name] can offer you [competitive differentiator - e.g. \"the world's most advanced toothbrush\"]. We now serve customers all over [place - town, country, the world], and are thrilled that we're able to turn our passion into [my\/our] own website.<\/p><p>[I\/we] hope you enjoy [my\/our] products as much as [I\/we] enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact [me\/us].<\/p><p>Sincerely,<br\/>[founder name]<\/p>",
+        "description_size": "fs-6",
+        "btn_text": "",
+        "btn_url": "",
+        "btn_color": "btn-outline-primary",
+        "btn_size": "",
+        "pt": 0,
+        "pb": 0,
+        "mt": 0,
+        "mb": 10
+      }
+    }
+  },
+  "order": [
+    "1636275108720b76b1",
+    "165268949817e427ae",
+    "1652689700430c7f0b"
+  ]
+}

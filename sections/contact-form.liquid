@@ -1,0 +1,201 @@
+{% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+%}
+
+<section id="contact-form-{{ section.id }}" class="contact-form {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container"style="max-width: {{ section.settings.max_width }}px">
+        <div class="col-lg-8 mx-auto text-center">
+            {% unless section.settings.title == blank %}
+                <h2 class="title mb-4 {{ section.settings.title_size }}">
+                    {{ section.settings.title }}
+                </h2>
+            {% endunless %}
+            {% unless section.settings.description == blank %}
+                <div class="description rte mt-n2 mb-6 opacity-70 {{ section.settings.description_size }}">
+                    {{ section.settings.description }}
+                </div>
+            {% endunless %}
+        </div>
+        {% form 'contact', class: 'contact-form my-4' %}
+            {% if form.posted_successfully? %}
+                <p class="form-success alert alert-success mb-4" role="alert">
+                    {{ 'general.contact.success' | t }}
+                </p>
+            {% endif %}
+            {{ form.errors | default_errors }}
+            <div class="row g-3 mb-3">
+                <div class="form-group col-md-4">
+                    <input 
+                        class="form-control" 
+                        type="text" 
+                        name="contact[name]" 
+                        id="ContactFormName" 
+                        value="{{ customer.name }}"  
+                        placeholder="{{ 'general.contact.name' | t }}" 
+                        aria-label="{{ 'general.contact.name' | t }}" 
+                        required>
+                </div>
+                <div class="form-group col-md-4">
+                    <input 
+                        class="form-control" 
+                        type="email" 
+                        name="contact[email]" 
+                        id="ContactFormEmail" 
+                        value="{{ customer.email }}" 
+                        placeholder="{{ 'general.contact.email' | t }}" 
+                        aria-label="{{ 'general.contact.email' | t }}" 
+                        spellcheck="false" 
+                        autocomplete="off" 
+                        autocapitalize="off" 
+                        required>
+                </div>
+                <div class="form-group col-md-4">
+                    <input 
+                        class="form-control" 
+                        type="tel" 
+                        name="contact[phone]" 
+                        id="ContactFormPhone" 
+                        value="{{ customer.phone }}" 
+                        placeholder="{{ 'general.contact.phone' | t }}" 
+                        aria-label="{{ 'general.contact.phone' | t }}" 
+                        pattern="[0-9\-]*">
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <textarea 
+                    class="form-control" 
+                    rows="8" 
+                    name="contact[body]" 
+                    id="ContactFormMessage" 
+                    placeholder="{{ 'general.contact.message' | t }}" 
+                    aria-label="{{ 'general.contact.message' | t }}" 
+                    required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+            </div>
+            <input 
+                type="submit" 
+                class="btn btn-primary" 
+                value="{{ 'general.contact.send' | t }}">
+        {% endform %}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Contact form",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "bg-white text-dark",
+            "options": [
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
+                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
+                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
+                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "max_width",
+            "label": "Page max-width (px)",
+            "info": "Prevent section for going to large.",
+            "default": "992"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Contact us"
+        },
+        {
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h2",
+            "options": [
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description",
+            "default": "<p>Write something catchy for this section</p>"
+        },
+        {
+            "type": "select",
+            "id": "description_size",
+            "label": "Description size",
+            "default": "fs-6",
+            "options": [
+                { "value": "fs-1", "label": "fs-1" },
+                { "value": "fs-2", "label": "fs-2" },
+                { "value": "fs-3", "label": "fs-3" },
+                { "value": "fs-4", "label": "fs-4" },
+                { "value": "fs-5", "label": "fs-5" },
+                { "value": "fs-6", "label": "fs-6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        }
+    ],
+    "presets": [
+        {
+            "name": "Contact form",
+            "category": "Contact"
+        }
+    ]
+}
+{% endschema %}

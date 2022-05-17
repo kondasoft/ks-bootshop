@@ -1,0 +1,141 @@
+{% liquid
+    assign img_width  = 360
+    assign img_height = 360
+    assign img_thumbnail = 'img-thumbnail'
+%}
+
+<div id="offcanvas-cart" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="offcanvas-cart-label">
+    <div class="offcanvas-header bg-light">
+        <h2 id="offcanvas-cart-label" class="h5 offcanvas-title">
+            {{ 'cart.title' | t }}
+        </h2>
+        <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        {% if cart.item_count == 0 %}
+            <div id="offcanvas-cart-empty" class="d-flex justify-content-center flex-column align-items-center h-100 text-muted">
+                {{ 'cart.empty_html' | t }} 
+            </div>
+        {% else %}
+            <ul class="product-list list-unstyled mt-n2 mb-5">
+                {% for line_item in cart.items %}
+                    <li class="product-item py-3">
+                        <div class="row align-items-center mx-n3">
+                            <div class="col-4 px-3">
+                                <a href="{{ line_item.url }}" class="">
+                                    <img 
+                                        class="product-item-img img-fluid {{ img_thumbnail }}"
+                                        src="{{ line_item.image.src | image_url: width: img_width, height: img_height, crop: 'center' }}"
+                                        alt="{{ line_item.image.alt | escape }}" 
+                                        width="{{ img_width }}"
+                                        height="{{ img_height }}" 
+                                        loading="lazy">
+                                </a>
+                            </div>
+                            <div class="col-8 px-3">
+                                <h3 class="product-item-title h6 mb-2">
+                                    <a href="{{ line_item.url }}" class="">
+                                        {{ line_item.product.title }}
+                                    </a>
+                                </h3>
+                                {% unless line_item.product.has_only_default_variant %}
+                                    <small class="d-block text-muted mt-n1 mb-2">
+                                        {{ line_item.variant.title }}
+                                    </small>
+                                {% endunless %}
+                                {% unless line_item.selling_plan_allocation == empty %}
+                                    <small class="d-block text-muted mt-n1 mb-2">
+                                        {{ line_item.selling_plan_allocation.selling_plan.name }}
+                                    </small>
+                                {% endunless %}
+                                {% unless line_item.properties == empty %}
+                                    <ul class="list-unstyled mt-n1 mb-2 text-muted small">
+                                        {% for property in line_item.properties %}
+                                            <li>
+                                                {% if property.last contains 'https' %}
+                                                    {{ property.first }}: <a href="{{ property.last }}" target="_blank">View file</a>
+                                                {% else %}
+                                                    {{ property.first }}: {{ property.last }}
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endunless %}
+                                <p class="product-item-price mb-3">
+                                    {{ line_item.final_price | money }}
+                                </p> 
+                                <div class="product-item-qty input-group input-group-sm" style="max-width: 110px">
+                                    <span class="input-group-text" aria-hidden="true">
+                                        {{ 'cart.qty' | t }}
+                                    </span>
+                                    <input 
+                                        id="updates_{{ line_item.key }}"
+                                        class="form-control" 
+                                        type="number" 
+                                        name="updates[]"
+                                        min="0"
+                                        value="{{ line_item.quantity }}"
+                                        data-line-item-key="{{ line_item.key }}"
+                                        aria-label="{{ 'cart.quantity' | t }}"
+                                        onchange="onChangeCartQty(this)">
+                                </div>       
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if settings.offcanvas_cart_show_note %}
+                <hr>
+                <div class="cart-note-wrapper">
+                    <textarea
+                        id="offcanvas-cart-note"
+                        class="form-control mb-3" 
+                        rows="4"
+                        name="note"
+                        style="height: 100px"
+                        placeholder="{{ 'cart.note_label' | t }}"
+                        aria-label="{{ 'cart.note_label' | t }}"
+                        onfocus="showNoteButton(this)">{{ cart.note }}</textarea> {%- comment -%} Live this line as this to prevent empty spaces {%- endcomment -%}
+                    <button 
+                        type="button"
+                        class="btn-apply-note btn btn-secondary btn-sm w-100"
+                        data-text="{{ 'cart.note_button' | t }}"
+                        onclick="saveCartNote(this)"
+                        style="display: none;">
+                        {{ 'cart.note_button' | t }}
+                    </button>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="offcanvas-footer border-top p-5">
+        {% if cart.item_count == 0 %}
+            <button class="btn btn-outline-primary w-100" type="button" data-bs-dismiss="offcanvas"">
+                {{ 'cart.continue_shopping' | t }}
+            </button>
+        {% else %}
+            <p id="offcanvas-cart-subtotal" class="lead text-center mb-3">
+                <span class="text-muted">
+                    {{ 'cart.subtotal' | t }}: 
+                </span>
+                <b>
+                    {{ cart.total_price | money }}
+                </b>
+            </p>
+            <p class="small text-muted text-center mt-n3 mb-4">
+                {{ 'cart.taxes_shipping_at_checkout_html' | t }}
+            </p>
+            <form class="" method="post" action="{{ routes.cart_url }}">
+                <button class="btn-checkout btn btn-primary w-100" name="checkout" type="submit" onclick="onCheckoutBtnClick(this)">
+                    {{ 'cart.checkout' | t }}
+                </button>
+            </form>
+            {% if settings.offcanvas_cart_show_view_cart %}
+                <a class="btn btn-link btn-sm w-100 mt-1 mb-n2" href="{{ routes.cart_url }}">
+                    {{ 'cart.view_cart' | t }}
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

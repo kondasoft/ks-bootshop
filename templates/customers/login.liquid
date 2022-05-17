@@ -1,28 +1,106 @@
-<!-- /templates/customers/login.liquid -->
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('#modal-recover').addEventListener('shown.bs.modal', () => {
+        document.querySelector('#modal-recover input[name="email"]').focus()
+    })
+    if (window.location.href.indexOf('#recover') != -1) {
+        const modal = new bootstrap.Modal(document.getElementById('modal-recover'))
+        modal.show()
+    }
+    if (document.querySelector('#modal-recover-success')) {
+        const modal = new bootstrap.Modal(document.getElementById('modal-recover'))
+        modal.show()
+    }
+})
+</script>
+    
+<div class="container my-10" style="max-width: 720px">
+    <div class="bg-light rounded px-6 py-6 mb-6">
+        <h1 class="text-center mb-6">
+            {{ 'customer.login.title' | t }}
+        </h1>
+        {% form 'customer_login' %}
+            {{ form.errors | default_errors }}
+            <input 
+                class="form-control mb-3" 
+                name="customer[email]"
+                type="email"
+                placeholder="{{ 'customer.login.email' | t }}"
+                aria-label="{{ 'customer.login.email' | t }}"
+                autofocus
+                required>
+            <input 
+                class="form-control mb-1" 
+                name="customer[password]"
+                type="password"
+                placeholder="{{ 'customer.login.password' | t }}"
+                aria-label="{{ 'customer.login.password' | t }}"
+                required>
+            <button 
+                class="btn btn-link btn-sm px-0 mb-2" 
+                type="button" 
+                data-bs-toggle="modal" 
+                data-bs-target="#modal-recover">
+                {{ 'customer.login.forgot_password' | t }}
+            </button>
+            <button type="submit" class="btn btn-primary w-100 mt-3 mb-1">
+                {{ 'customer.login.submit' | t }}
+            </button>
+        {% endform %}
+    </div>
+    <div class="text-center">
+        <h4 class="title text-center mb-4">
+            {{ 'customer.login.new' | t }}
+        </h4>
+        <a class="btn btn-outline-primary mb-2" href="{{ routes.account_register_url }}">
+            {{ 'customer.login.create_account' | t }}
+        </a>
+    </div>
+</div>
 
-<h2>Login</h2>
-{% form 'customer_login' %}
-
-{{ form.errors | default_errors }}
-
-<label for="customer_email">Email Address</label>
-<input type="email" name="customer[email]" />
-
-<label for="customer_password">Password</label>
-<input type="password" name="customer[password]" />
-
-<input type="submit" value="Sign In" />
-
-{% endform %}
-
-<h2>Forgot Password</h2>
-{% form 'recover_customer_password' %}
-
-{{ form.errors | default_errors }}
-
-<label for="customer_email">Email Address</label>
-<input type="email" name="email" />
-
-<input type="submit" value="Submit" />
-
-{% endform %}
+<div  
+    id="modal-recover"
+    class="modal fade" 
+    tabindex="-1" 
+    aria-labelledby="modal-recover-label" 
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="modal-recover-label" class="modal-title">
+                    {{ 'customer.recover_password.title' | t }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% form 'recover_customer_password' %}
+                    {% if form.posted_successfully? %}
+                        <p 
+                            id="modal-recover-success" 
+                            class="alert alert-success" 
+                            role="alert">
+                            {{ 'customer.recover_password.success' | t }}
+                        </p>
+                    {% endif %}
+                    {{ form.errors | default_errors }}
+                    <p class="text-center">
+                        {{ 'customer.recover_password.subtext' | t }}
+                    </p>
+                    <input 
+                        class="form-control mb-3" 
+                        name="email"
+                        type="email"
+                        placeholder="{{ 'customer.login.email' | t }}"
+                        aria-label="{{ 'customer.login.email' | t }}"
+                        autofocus
+                        required>
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary w-100">
+                        {{ 'customer.recover_password.submit' | t }}
+                    </button>
+                {% endform %}
+            </div>
+        </div>
+    </div>
+</div>

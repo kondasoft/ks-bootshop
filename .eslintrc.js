@@ -7,17 +7,11 @@ module.exports = {
         'standard'
     ],
     parserOptions: {
-        ecmaVersion: 12
+        ecmaVersion: 'latest',
+        sourceType: 'module'
     },
     rules: {
-        indent: [
-            'error',
-            4
-        ],
-        quotes: [
-            'error',
-            'single'
-        ]
+        indent: ['error', 4]
     },
     globals: {
         bootstrap: 'readonly'

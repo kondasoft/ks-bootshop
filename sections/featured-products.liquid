@@ -1,26 +1,42 @@
-{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
-{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+{% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+
+    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
+    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
+%}
 
 <section 
-    id="{{ section.id | prepend: 'featured-products-' }}"
-    class="featured-products {{ mt }} {{ mb }}">
-    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
-        <h2 class="text-center mb-2">
+    id="featured-products-{{ section.id }}" 
+    class="featured-products {% if section.settings.recommended_mode %}recommended-products{% endif %} {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}"
+    data-base-url="{{ routes.product_recommendations_url }}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ product.id }}" 
+    data-limit="{{ section.settings.limit }}">
+    <div class="container position-relative overflow-hidden">
+        <h2 class="title mb-4 {{ section.settings.title_size }}">
             {{ section.settings.title }}
         </h2>
-        <ul class="
-            product-list 
-            list-unstyled 
-            row 
-            {{ section.settings.row_xs | prepend: 'row-cols-' }} 
-            {{ section.settings.row_sm | prepend: 'row-cols-sm-' }} 
-            {{ section.settings.row_xl | prepend: 'row-cols-xl-' }} 
-            mx-n2
-        ">
-            {% for product in collections[section.settings.collection].products limit: section.settings.limit %}
-                {% render 'product-list-item' with product as product %}
-            {% endfor %}
+        <ul class="product-list list-unstyled row mx-n3 mb-0 {{ row_sm }} {{ row_lg }}">
+            {% liquid
+                if section.settings.recommended_mode
+                    for product in recommendations.products
+                        render 'product-item', product: product
+                    endfor
+                else
+                    for product in collections[section.settings.collection].products limit: section.settings.limit
+                        render 'product-item', product: product
+                    endfor
+                endif
+            %}
         </ul>
+        {% unless section.settings.recommended_mode and section.settings.btn_text == blank %}
+            <a class="btn mt-6 mb-0 {{ section.settings.btn_color }}" href="{{ collections[section.settings.collection].url }}">
+                {{ section.settings.btn_text }}
+            </a>
+        {% endunless %}
     </div>
 </section>
 
@@ -29,8 +45,11 @@
     "name": "Featured Products",
     "settings": [
         {
-            "type": "header",
-            "content": "General"
+            "type": "checkbox",
+            "id": "recommended_mode",
+            "label": "Recommended mode",
+            "info": "Only works in the product page. It uses Shopify's product recommendations API. Do not select a collection below. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations)",
+            "default": false
         },
         {
             "type": "collection",
@@ -38,18 +57,36 @@
             "label": "Collection"
         },
         {
-            "type": "checkbox",
-            "id": "container",
-            "label": "Wrap in a container",
-            "default": true
-        },
-        {
             "type": "range",
             "id": "limit",
             "label": "Limit products",
             "min": 2,
-            "max": 40,
+            "max": 20,
             "default": 8
+        },
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "bg-white",
+            "options": [
+                { "group": "Light", "value": "bg-white", "label": "White" },
+                { "group": "Light", "value": "bg-light", "label": "Light" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "default": "text-center",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" }
+            ]
         },
         {
             "type": "text",
@@ -58,89 +95,111 @@
             "default": "Featured Products"
         },
         {
-            "type": "header",
-            "content": "Product"
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h2",
+            "options": [
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
         },
         {
             "type": "text",
-            "id": "img_width",
-            "label": "Image width (px)",
-            "default": "480"
+            "id": "btn_text",
+            "label": "Button text",
+            "default": "View all products",
+            "info": "Leave empty to disable"
         },
         {
-            "type": "text",
-            "id": "img_height",
-            "label": "Image height (px)",
-            "default": "480"
-        }, 
-        {
-            "type": "checkbox",
-            "id": "img_thumbnail",
-            "label": "Image thumbnail",
-            "default": true
+            "type": "select",
+            "id": "btn_color",
+            "label": "Button color",
+            "default": "btn-primary",
+            "options": [
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" }
+            ]
         },
         {
             "type": "header",
-            "content": "Items per row"
+            "content": "Items per Row",
+            "info": "Based on screen resolution."
         },
         {
             "type": "range",
-            "id": "row_xs",
-            "label": "Items per row / mobile",
-            "info": "Screen width: <576px",
-            "min": 1,
-            "max": 3,
+            "id": "row_sm",
+            "label": "Tablet",
+            "info": "576px - 991px",
+            "min": 2,
+            "max": 4,
             "step": 1,
             "default": 2
         },
         {
             "type": "range",
-            "id": "row_sm",
-            "label": "Items per row / tablet",
-            "info": "Screen width: ≥576px",
-            "min": 1,
-            "max": 4,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "row_xl",
-            "label": "Items per row / desktop",
-            "info": "Screen width: ≥1200px",
-            "min": 1,
+            "id": "row_lg",
+            "label": "Desktop",
+            "info": "992px and up",
+            "min": 2,
             "max": 6,
             "step": 1,
             "default": 4
         },
         {
             "type": "header",
-            "content": "Spacing",
-            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+            "content": "Spacing"
         },
         {
             "type": "range",
-            "id": "margin_top",
-            "label": "Margin top",
+            "id": "pt",
+            "label": "Padding top",
             "min": 0,
-            "max": 12,
+            "max": 20,
             "step": 1,
             "default": 0
         },
         {
             "type": "range",
-            "id": "margin_bottom",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mb",
             "label": "Margin bottom",
             "min": 0,
-            "max": 12,
+            "max": 20,
             "step": 1,
-            "default": 8
+            "default": 0
         }
     ],
     "presets": [
         {
             "name": "Featured Products",
-            "category": "Product"
+            "category": "Products"
         }
     ]
 }

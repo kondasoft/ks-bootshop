@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "template-collection": {
+      "type": "template-collection",
+      "settings": {
+        "show_collection_img": true,
+        "show_collection_description": true,
+        "limit": 40,
+        "text_align": "text-center",
+        "row_xs": 2,
+        "row_sm": 2,
+        "row_lg": 4,
+        "mt": 10,
+        "mb": 10
+      }
+    }
+  },
+  "order": [
+    "template-collection"
+  ]
+}

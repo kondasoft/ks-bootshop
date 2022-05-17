@@ -1,17 +1,33 @@
-<!-- /templates/customers/activate_account.liquid -->
-{% form 'activate_customer_password' %}
-{{ form.errors | default_errors }}
-<div class="password">
-  <label for="password">Password</label>
-  <input type="password" name="customer[password]" />
+<div class="container my-10" style="max-width: 720px">
+  <div class="bg-light rounded px-6 py-6">
+      <h1 class="text-center mb-2">
+          {{ 'customer.activate_account.title' | t }}
+      </h1>
+      <p class="text-center mb-6">
+        {{ 'customer.activate_account.subtext' | t }}
+      </p>
+      {% form 'activate_customer_password' %}
+          {{ form.errors | default_errors }}
+          <input 
+            class="form-control mb-3" 
+            name="customer[password]"
+            type="password"
+            placeholder="{{ 'customer.activate_account.password' | t }}"
+            aria-label="{{ 'customer.activate_account.password' | t }}"
+            required>
+          <input 
+              class="form-control mb-3" 
+              name="customer[password_confirmation]"
+              type="password"
+              placeholder="{{ 'customer.activate_account.password_confirm' | t }}"
+              aria-label="{{ 'customer.activate_account.password_confirm' | t }}"
+              required>
+          <button type="submit" class="btn btn-primary w-100 mb-1">
+              {{ 'customer.activate_account.submit' | t }}
+          </button>
+          <button type="submit" class="btn btn-link w-100 mb-n1" name="decline">
+            {{ 'customer.activate_account.cancel' | t }}
+          </button>
+      {% endform %}
+  </div>
 </div>
-<div class="password_confirm">
-  <label for="password_confirmation">Password Confirmation</label>
-  <input type="password" name="customer[password_confirmation]" />
-</div>
-<div class="action_bottom">
-  <input type="submit" value="Activate Account" />
-  <span>or</span>
-  <input type="submit" name="decline" value="Decline Invitation" />
-</div>
-{% endform %}

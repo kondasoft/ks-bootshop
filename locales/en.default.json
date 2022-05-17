@@ -1,117 +1,243 @@
 {
     "general": {
-        "previous": "Previous",
-        "next": "Next",
-        "pagination_page_of": "Page {{ count }} of {{ total }}",
-        "offcanvas_menu": "Menu",
-        "404": {
-            "title": "Not found",
-            "description": "The page you were looking for does not exist"
+        "general": {
+            "menu": "Menu",
+            "share": "Share",
+            "copy": "Copy",
+            "copied": "Copied!",
+            "all_rights_reserved": "All rights reserved.",
+            "secure_payments": "100% secure and protected payments",
+            "pagination_page_of": "Page {{ count }} of {{ total }}"
         },
         "accessibility": {
             "skip_content": "Skip to content",
-            "open_menu": "Open menu",
-            "expand": "Expand"
+            "toggle_nav": "Toggle Navigation",
+            "previous": "Previous",
+            "next": "Next",
+            "close": "Close",
+            "search": "Search",
+            "account": "Account",
+            "cart": "Cart",
+            "payment_methods": "Payment methods",
+            "social_media_links": "Social media links"
         },
         "newsletter": {
-            "label": "Email address",
-            "confirmation": "Thanks for subscribing, we will hear from us soon.",
-            "button": "Subscribe"
+            "input_label": "Enter your email...",
+            "confirmation_text": "Thanks for subscribing...",
+            "submit_button": "Subscribe"
         },
-        "social": {
-            "share_label": "Share on social media",
-            "share_on_facebook": "Share",
-            "share_on_twitter": "Tweet",
-            "share_on_pinterest": "Pin it",
-            "share_on_whatsapp": "Share",
-            "share_on_email": "Email",
-            "alt_text": {
-                "share_on_facebook": "Share on Facebook",
-                "share_on_twitter": "Tweet on Twitter",
-                "share_on_pinterest": "Pin on Pinterest",
-                "share_on_whatsapp": "Share on Whatsapp",
-                "share_on_email": "Send via Email"
-            }
-        }
-    },
-    "blog": {
-        "filter_by": "Filter by",
-        "empty": "No published blog posts yet.",
-        "all_articles": "All articles",
-        "count": {
-            "one": "{{ count }} article",
-            "other": "{{ count }} articles"
+        "404_page": {
+            "title": "404 - Page not found",
+            "subtext": "The page you were looking for does not exist",
+            "button": "Go back to homepage"
         },
-        "article": {
-            "view_all": "View all",
-            "view_all_blogs": "View all blogs",
-            "all_topics": "All topics",
-            "by_author": "by {{ author }}",
-            "posted_in": "Posted in",
-            "readmore": "Read more",
-            "back_to_blog": "Back to {{ title }}",
-            "tags": "Tags"
+        "search": {
+            "title": "Search",
+            "input_label": "Start typing to see results...",
+            "view_all_results": "View all results →",
+            "button": "Search",
+            "title_collections": "Collections",
+            "title_products": "Products",
+            "title_pages": "Pages",
+            "title_articles": "Articles",
+            "search_for": "Search for \"{{ terms }}\""
         },
-        "comments": {
-            "title": "Leave a comment",
+        "contact": {
             "name": "Name",
             "email": "Email",
+            "phone": "Phone (optional)",
             "message": "Message",
-            "post": "Post comment",
-            "no_comments": "No comments yet!",
-            "first_to_comment": "Be the first to comment",
-            "moderated": "Please note, comments must be approved before they are published",
-            "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
-            "success": "Your comment was posted successfully! Thank you!",
-            "unapproved": "The email address provided is not approved for posting comments.",
-            "comments_with_count": {
-                "one": "{{ count }} comment",
-                "other": "{{ count }} comments"
-            }
+            "send": "Send",
+            "success": "Thanks for contacting us. We'll get back to you as soon as possible."
         }
     },
     "collection": {
-        "empty": "No products found!",
-        "filter_by": "Filter by",
-        "all_products": "All products",
+        "empty_html": "No products found! <a href=\"\/collections\/all\">View all »<\/a>",
         "sort_by": "Sort by",
-        "count": {
-            "one": "{{ count }} products",
+        "load_more": "Load more",
+        "btn_filter_products": "Filter products",
+        "paginate_count": "Showing {{ count }} of {{ total }} products",
+        "count_products": {
+            "one": "{{ count }} product",
             "other": "{{ count }} products"
+        },
+        "filters": {
+            "title": "Filters",
+            "reset": "Reset",
+            "from": "From",
+            "to": "To",
+            "clear_filter": "Clear filter",
+            "clear_all": "Clear all",
+            "view_results": "View {{ count }} results"
         }
     },
     "product": {
-        "sold_out": "Sold out",
-        "price_from": "From",
-        "old_price": "Old price",
-        "unavailable": "Unavailable",
         "add_to_cart": "Add to cart",
+        "regular_price": "Regular price",
+        "sale_price": "Sale price",
+        "unit_price": "Unit price",
+        "sold_out": "Sold out",
         "quantity": "Quantity",
-        "recommended_products": "Related Products",
-        "added_to_cart": "Added to cart",
-        "view_cart": "View cart"
+        "unavailable": "Unavailable",
+        "product_options": "Product options",
+        "buy_it_now": "Buy it now"
     },
     "cart": {
-        "label": "Cart",
         "title": "Cart",
+        "empty_html": "<p>Your cart is currently empty<\/p>",
         "summary": "Summary",
+        "continue_shopping": "Continue shopping",
+        "view_cart": "View Cart",
+        "checkout": "Checkout",
         "remove": "Remove",
         "quantity": "Quantity",
-        "qty": "Qty",
-        "note": "Special instructions for your order",
-        "empty": "Your shopping cart is empty",
-        "continue_shopping": "Continue Shopping",
+        "qty": "QTY",
+        "note_label": "Add a note your order",
+        "note_button": "Save note",
         "subtotal": "Subtotal",
-        "checkout": "Checkout",
-        "taxes_shipping_at_checkout_html": "Taxes &amp; <a href=\"policies\/shipping-policy\">Shipping<\/a> calculated at checkout"
+        "taxes_shipping_at_checkout_html": "Taxes &amp; <a href=\"\/policies\/shipping-policy\">Shipping<\/a> calculated at checkout"
     },
-    "search": {
-        "label": "Search",
-        "title": "Search our store",
-        "predictive": "Start typing to see results...",
-        "search_for": "Search for \"{{ term }}\""
+    "customer": {
+        "account": {
+            "title": "My Account",
+            "logout": "Log out",
+            "order_history": "Order History",
+            "account_details": "Account Details",
+            "view_addresses": "View Addresses",
+            "return": "Return to account details",
+            "drawer_manage_account_html": "Go to <a href=\"\/account\">My Account<\/a>",
+            "drawer_register_login_html": "Please <a href=\"\/account\/register\">Register<\/a> or <a href=\"\/account\/login\">Login<\/a>"
+        },
+        "login": {
+            "title": "Login",
+            "email": "Email",
+            "password": "Password",
+            "submit": "Sign In",
+            "forgot_password": "Forgot your password?",
+            "new": "Are you new here?",
+            "create_account": "Create free account",
+            "guest_title": "Continue as a guest",
+            "guest_continue": "Continue"
+        },
+        "recover_password": {
+            "title": "Reset your password",
+            "email": "Email",
+            "submit": "Submit",
+            "cancel": "Cancel",
+            "subtext": "We will send you an email to reset your password.",
+            "success": "We've sent you an email with a link to update your password."
+        },
+        "reset_password": {
+            "title": "Reset password",
+            "subtext": "Enter a new password for {{ email }}",
+            "password": "Password",
+            "password_confirm": "Confirm Password",
+            "submit": "Reset Password"
+        },
+        "activate_account": {
+            "title": "Activate Account",
+            "subtext": "Create your password to activate your account.",
+            "password": "Password",
+            "password_confirm": "Confirm Password",
+            "submit": "Activate Account",
+            "cancel": "Decline Invitation"
+        },
+        "register": {
+            "title": "Create Account",
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "email": "Email",
+            "password": "Password",
+            "submit": "Create",
+            "have_account": "Already have an account?",
+            "login": "Please login"
+        },
+        "orders": {
+            "title": "Order History",
+            "order_number": "Order",
+            "date": "Date",
+            "payment_status": "Payment Status",
+            "fulfillment_status": "Fulfillment Status",
+            "total": "Total",
+            "none": "You haven't placed any orders yet."
+        },
+        "order": {
+            "title": "Order {{ name }}",
+            "date_html": "Placed on {{ date }}",
+            "cancelled_html": "Order Cancelled on {{ date }}",
+            "cancelled_reason": "Reason: {{ reason }}",
+            "billing_address": "Billing Address",
+            "cancelled": "Order Cancelled on {{ date }}",
+            "date": "Placed on {{ date }}",
+            "payment_status": "Payment Status",
+            "shipping_address": "Shipping Address",
+            "fulfillment_status": "Fulfillment Status",
+            "discount": "Discount",
+            "shipping": "Shipping",
+            "tax": "Tax",
+            "product": "Product",
+            "sku": "SKU",
+            "price": "Price",
+            "quantity": "Quantity",
+            "total": "Total",
+            "fulfilled_at_html": "Fulfilled {{ date }}",
+            "track_shipment": "Track shipment",
+            "tracking_url": "Tracking link",
+            "tracking_company": "Carrier",
+            "tracking_number": "Tracking number",
+            "subtotal": "Subtotal",
+            "note": "Customer note"
+        },
+        "addresses": {
+            "title": "Addresses",
+            "tab_addresses": "Addresses",
+            "tab_add_new": "Add new",
+            "default": "Default Address",
+            "add_new": "Add a New Address",
+            "edit_address": "Edit address",
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "company": "Company",
+            "address1": "Address 1",
+            "address2": "Address 2",
+            "city": "City",
+            "country": "Country",
+            "province": "Province",
+            "zip": "Postal\/Zip Code",
+            "phone": "Phone",
+            "set_default": "Set as default address",
+            "add": "Add Address",
+            "update": "Update Address",
+            "cancel": "Cancel",
+            "edit": "Edit",
+            "delete": "Delete",
+            "delete_confirm": "Are you sure you wish to delete this address?",
+            "select_country": "Select Country",
+            "no_addresses": "No addresses yet. Add your first address from the 'Add new' tab."
+        }
     },
-    "account": {
-        "label": "Account"
+    "blogs": {
+        "filter_by": "Filter by",
+        "all_topics": "All topics",
+        "posted_in": "Posted in",
+        "article": {
+            "blog": "Blog",
+            "read_more_title": "Read more: {{ title }}",
+            "read_more": "Read more",
+            "comments": {
+                "one": "{{ count }} comment",
+                "other": "{{ count }} comments"
+            },
+            "moderated": "Please note, comments need to be approved before they are published.",
+            "comment_form_title": "Leave a comment",
+            "name": "Name",
+            "email": "Email",
+            "message": "Comment",
+            "post": "Post comment",
+            "back_to_blog": "Back to blog",
+            "share": "Share this article",
+            "success": "Your comment was posted successfully! Thank you!",
+            "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated."
+        }
     }
 }

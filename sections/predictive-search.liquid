@@ -1,0 +1,45 @@
+{% liquid
+    assign img_width  = 360
+    assign img_height = 360
+    assign img_thumbnail = 'img-thumbnail'
+%}
+
+{%- if predictive_search.performed -%}
+    <div id="predictive-search-results" class="my-6">
+        {% if predictive_search.resources.products.size > 0 -%}
+            <h3 id="predictive-search-products" class="h5 pb-3 mb-3 border-bottom">
+                {{ 'general.search.title_products' | t }}
+            </h3>
+        {%- endif -%}
+        <ul id="predictive-search-results-list" class="product-list list-unstyled mb-4" role="listbox" aria-labelledby="predictive-search-products">
+            {%- for product in predictive_search.resources.products -%}
+                <li class="product-item py-3" role="option">
+                    <a href="{{ product.url }}" class="" tabindex="-1">
+                        <div class="row align-items-center mx-n3">
+                            <div class="col-4 px-3">
+                                <img 
+                                    class="product-item-img img-fluid me-3 {{ img_thumbnail }}"
+                                    src="{{ product.featured_image | image_url: width: img_width, height: img_height }}"
+                                    alt="{{ product.featured_image.alt }}"
+                                    width="{{ img_width }}"
+                                    height="{{ img_height }}"
+                                    loading="lazy">
+                            </div>
+                            <div class="col-8 px-3">
+                                <h4 class="product-item-title h6 mb-2">
+                                    {{ product.title }}
+                                </h4>
+                                <p class="product-item-price mb-0 text-dark">
+                                    {{ product.price | money }}
+                                </p> 
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            {%- endfor -%}
+        </ul>
+        <button class="btn btn-outline-primary w-100" tabindex="-1">
+            {{ 'general.search.search_for' | t: terms: predictive_search.terms }}
+        </button>
+    </div>
+{%- endif -%}

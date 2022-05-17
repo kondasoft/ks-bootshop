@@ -1,0 +1,380 @@
+{% liquid 
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+
+    assign row_xs = section.settings.row_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.row_sm | prepend: 'row-cols-sm-'
+    assign row_lg = section.settings.row_lg | prepend: 'row-cols-lg-'
+
+    for filter in collection.filters
+        if filter.active_values.size > 0
+            assign has_active_filters = true
+        endif
+    endfor
+%}
+
+{% if shop.permanent_domain contains 'ks-' and current_tags %}
+<script>
+    window.location.href = '{{ collection.url }}'
+</script>
+{% endif %}
+
+{% paginate collection.products by section.settings.limit %}
+    <div id="collection-{{ collection.id }}" class="collection {{ mt }} {{ mb }}">
+        <div class="container">
+            
+            <div class="collection-header row align-items-lg-center flex-lg-row-reverse text-center text-lg-start mb-8">
+                {% if section.settings.show_collection_img and collection.image != blank %}
+                    <div class="col-lg-6 mb-5 mb-lg-0 mt-n7 mt-lg-0">
+                        <img
+                            class="img-fluid"
+                            src="{{ collection.image | image_url: width: 900, height: 450, crop: 'center' }}" 
+                            alt="{{ collection.image.alt }}"
+                            width="900" 
+                            height="450"
+                            loading="lazy">
+                    </div>
+                {% endif %}
+                <div class="{% if section.settings.show_collection_img and collection.image != blank %}col-lg-6{% else %}col-lg-8 mx-auto{% endif %}">
+                    <h1 class="collection-title mb-3">
+                        {{ collection.title }}
+                    </h1>
+                    {% if section.settings.show_collection_description and collection.description != blank %}
+                        <div class="description rte text-muted mb-0">
+                            {{ collection.description }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="collection-utilities d-flex flex-column flex-lg-row justify-content-between bg-light py-4 px-4 align-items-center mb-6">
+                <div class="d-flex flex-column flex-lg-row align-items-lg-center w-100">
+                    <button
+                        class="btn btn-outline-dark d-flex align-items-center justify-content-center justify-content-lg-start flex-shrink-0 w-100 w-lg-auto mb-4 mb-lg-0 me-lg-4"
+                        data-bs-toggle="offcanvas" 
+                        data-bs-target="#offcanvas-filters" 
+                        aria-controls="offcanvas-filters"
+                        type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="me-3" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line>
+                            <line x1="20" y1="12" x2="20" y2="3"></line>
+                            <line x1="1" y1="14" x2="7" y2="14"></line>
+                            <line x1="9" y1="8" x2="15" y2="8"></line>
+                            <line x1="17" y1="16" x2="23" y2="16"></line>
+                        </svg>
+                        {{ 'collection.btn_filter_products' | t }}
+                        <small class="opacity-60 d-inline-block ms-3 lh-sm">
+                            ({{ paginate.items }})
+                        </small>
+                    </button>
+                    {% if has_active_filters %}
+                        <div class="collection-active-filters d-flex flex-wrap mx-n1 mb-4 mb-lg-0">
+                            {% for filter in collection.filters %}
+                                {% for value in filter.active_values %}
+                                    <button class="btn-remove-active-filter btn btn-sm btn-secondary d-inline-flex align-items-center m-1 lh-sm" data-url="{{ value.url_to_remove }}" type="button" onclick="removeActiveCollectionFilter(this, event)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="me-1 mb-n1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                        {{ value.label | escape }}
+                                        <span class="visually-hidden">
+                                            {{ 'collection.filters.clear_filter' | t }}
+                                        </span>
+                                    </button>
+                                {% endfor %}
+                                {% if filter.type == "price_range" %}
+                                    {% if filter.min_value.value != nil or filter.max_value.value != nil %}
+                                        <button class="btn-remove-active-filter btn btn-sm btn-secondary d-inline-flex align-items-center m-1 lh-sm" data-url="{{ value.url_to_remove }}" type="button" onclick="removeActiveCollectionFilter(this, event)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="me-1 mb-n1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                            </svg>
+                                            {% if filter.min_value.value %}
+                                                {{ filter.min_value.value | money }}
+                                            {% else %}
+                                                {{ 0 | money }}
+                                            {% endif %}
+                                            -
+                                            {% if filter.max_value.value %}
+                                                {{ filter.max_value.value | money }}
+                                            {% else %}
+                                                {{ filter.range_max | money }}
+                                            {% endif %}
+                                            <span class="visually-hidden">
+                                                {{ 'collection.filters.clear_filter' | t }}
+                                            </span>
+                                        </button>
+                                        </facet-remove>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            <button class="btn-remove-active-filter btn btn-sm btn-secondary d-inline-flex align-items-center m-1 lh-sm" data-url="{{ collection.url }}" type="button" onclick="removeActiveCollectionFilter(this, event)">
+                                {{ 'collection.filters.clear_all' | t }}
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="collection-sort-by input-group w-100 w-lg-auto">
+                    <label class="input-group-text" for="sort-by">
+                        {{ 'collection.sort_by' | t }}
+                    </label>
+                    <select id="sort-by" name="sort_by" class="form-select" onchange="onChangeSortBy(value)">
+                        {% for option in collection.sort_options %}
+                            <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                                {{ option.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% if collection.products.size == 0 %}
+                <p class="alert alert-warning">
+                    {{ 'collection.empty_html' | t }}
+                </p>
+            {% else %}
+                <ul class="product-list list-unstyled row mx-n3 mb-0 {{ section.settings.text_align }} {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+                    {% for product in collection.products %}
+                        {% render 'product-item', product: product %}
+                    {% endfor %}
+                </ul>
+                <div id="collection-pagination" class="text-center mx-auto pt-8 pb-4" style="max-width: 400px;">
+                    <small class="d-block text-muted mb-3 fst-italic">
+                        {% assign paginate_count = paginate.current_offset | plus: collection.products.size %}
+                        {{ 'collection.paginate_count' | t: count: paginate_count, total: paginate.items }}
+                    </small>
+                    <div class="progress mb-0" style="height: 1px;">
+                        {% assign collection_progress = paginate.items | minus: paginate.items | minus: paginate_count | times: 100.0 | divided_by: paginate.items | round | remove: '-' %}
+                        <div 
+                            class="progress-bar bg-primary" 
+                            role="progressbar" 
+                            style="width: {{ collection_progress }}%;" 
+                            aria-valuenow="{{ paginate_count }}" 
+                            aria-valuemin="0" 
+                            aria-valuemax="{{ paginate.items }}">
+                        </div>
+                    </div>
+                    {% if paginate.next %}
+                        <a class="btn btn-outline-primary d-inline-flex align-items-center mt-5 mb-0" href="{{ paginate.next.url }}" onclick="onClickCollectionPagination(this, event)">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                            </svg>
+                            {{ 'collection.load_more' | t }}
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="offcanvas-filters" class="offcanvas offcanvas-start" tabindex="-1"  aria-labelledby="offcanvas-collection-filters-label" style="width: 300px">
+        <div class="offcanvas-header bg-light">
+            <h2 id="offcanvas-collection-filters-label" class="offcanvas-title h5">
+                {{ 'collection.filters.title' | t }}
+            </h2>
+            <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <form action="" class="collection-filters-form">
+                <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+                {%- for filter in collection.filters -%}
+                    <button 
+                        class="accordion-button py-4 px-5" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target="#filter-collapse-{{ forloop.index }}" 
+                        aria-expanded="true" 
+                        aria-controls="filter-collapse-{{ forloop.index }}">
+                        {{ filter.label }}
+                        {%- if filter.type == 'price_range' -%} 
+                            ({{ cart.currency.symbol }})
+                        {%- endif -%}
+                    </button>
+                    <div id="filter-collapse-{{ forloop.index }}" class="collapse show">
+                        <div class="collapse-inner py-4">
+                            {%- case filter.type -%}
+                                {%- when 'list' -%}
+                                    <ul class="list-unstyled mb-5">
+                                        {%- for filter_value in filter.values -%}
+                                            <li class="form-check d-flex align-items-center mb-2">
+                                                <input 
+                                                    type="checkbox" 
+                                                    id="collection-filter-{{ filter_value.label | handleize }}"
+                                                    class="form-check-input mt-n1 me-3" 
+                                                    name="{{ filter_value.param_name }}" 
+                                                    value="{{ filter_value.value }}"
+                                                    onchange="onChangeCollectionFilter(this, event)"
+                                                    {% if filter_value.active -%}checked{%- endif %}
+                                                    {% if filter_value.count == 0 and filter_value.active == false -%}disabled{%- endif %}>
+                                                <label 
+                                                    class="form-check-label d-flex align-items-center" 
+                                                    for="collection-filter-{{ filter_value.label | handleize }}">
+                                                    {% if filter.label == 'Color' or filter.label == 'Colors' %}
+                                                        {% assign swatch_image = filter_value.label | handleize | prepend: 'swatch-' | append: '.png' %}
+                                                        <span 
+                                                            class="badge rounded-circle p-0 me-3" 
+                                                            style="
+                                                                width: 10px;
+                                                                height: 10px;
+                                                                background-color: {{ filter_value.label | handleize }}; 
+                                                                background-image: url({{ swatch_image | file_img_url: '32x32', crop: 'center' }});">
+                                                        </span>
+                                                    {% endif %}
+                                                    <span class="small">
+                                                        {{ filter_value.label | escape }} ({{ filter_value.count }})
+                                                    </span>
+                                                </label>
+                                            </li>
+                                        {%- endfor -%}
+                                    </ul>
+                                {%- when 'price_range' -%}
+                                    <div class="filter-price-group row mx-n2 mb-4">
+                                        <div class="col-6 px-2">
+                                            <input 
+                                                class="form-control"
+                                                name="{{ filter.min_value.param_name }}"
+                                                {% if filter.min_value.value -%}
+                                                    value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                                                {%- endif %}
+                                                type="number"
+                                                min="0"
+                                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                                placeholder="{{ 'collection.filters.from' | t }}"
+                                                aria-label=" {{ 'collection.filters.from' | t }}"
+                                                onchange="onChangeCollectionFilter(this, event)">
+                                        </div>
+                                        <div class="col-6 px-2">
+                                            <input 
+                                                class="form-control"
+                                                name="{{ filter.max_value.param_name }}"
+                                                {% if filter.max_value.value -%}
+                                                    value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                                                {%- endif %}
+                                                type="number"
+                                                min="0"
+                                                max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                                placeholder="{{ 'collection.filters.to' | t }}"
+                                                aria-label="{{ 'collection.filters.to' | t }}"
+                                                onchange="onChangeCollectionFilter(this, event)">
+                                        </div>
+                                    </div>
+                            {%- endcase -%}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </form>
+        </div>
+        <div id="offcanvas-collections-filters-footer" class="offcanvas-footer border-top px-5 py-4">
+            <button class="btn btn-primary w-100" type="button" data-bs-dismiss="offcanvas">
+                {{ 'collection.filters.view_results' | t: count: paginate.items }}
+            </button>
+        </div>
+    </div>
+{% endpaginate %}
+
+{% schema %}
+{
+    "name": "Collections",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_collection_img",
+            "label": "Show collection image",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "show_collection_description",
+            "label": "Show collection description",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Products per page",
+            "min": 10,
+            "max": 50,
+            "default": 40
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "default": "text-center",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Items per row"
+        },
+        {
+            "type": "range",
+            "id": "row_xs",
+            "label": "Mobile",
+            "info": "up to 575px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Tablet",
+            "info": "576px - 991px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_lg",
+            "label": "Desktop",
+            "info": "992px and up",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 10
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 10
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collections",
+            "category": "Template"
+        }
+    ]
+}
+{% endschema %}

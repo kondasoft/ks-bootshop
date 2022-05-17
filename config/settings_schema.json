@@ -1,141 +1,98 @@
 [
-    {
-      "name": "theme_info",
-      "theme_name": "Firetheme",
-      "theme_version": "1.0.0",
-      "theme_author": "FireTheme",
-      "theme_documentation_url": "https://github.com/firetheme/firetheme-shopify-bs5",
-      "theme_support_url": "https://github.com/firetheme/firetheme-shopify-bs5/issues"
-    },
-    {
-        "name": "Colors",
-        "settings": [
-            {
-                "type": "color",
-                "id": "color_primary",
-                "label": "Primary",
-                "default": "#dc3545"
-            },
-            {
-                "type": "color",
-                "id": "color_secondary",
-                "label": "Secondary",
-                "default": "#6c757d"
-            }
-        ]
-    },
-    {
-        "name": "Predictive Search",
-        "settings": [
-            {
-                "type": "range",
-                "id": "predictive_search_limit",
-                "label": "Limit results",
-                "min": 1,
-                "max": 10,
-                "default": 10
-            },
-            {
-                "type": "text",
-                "id": "predictive_search_img_width",
-                "label": "Image width (px)",
-                "default": "160"
-            },
-            {
-                "type": "text",
-                "id": "predictive_search_img_height",
-                "label": "Image height (px)",
-                "default": "160"
-            },
-            {
-                "type": "checkbox",
-                "id": "predictive_search_img_thumbnail",
-                "label": "Image thumbnail",
-                "default": true
-            }
-        ]
-    },
-    {
-        "name": "Social media",
-        "settings": [
-            {
-                "type": "header",
-                "content": "Social sharing buttons"
-            },
-            {
-                "type": "checkbox",
-                "id": "share_facebook",
-                "label": "Share on Facebook",
-                "default": true
-            },
-            {
-                "type": "checkbox",
-                "id": "share_twitter",
-                "label": "Tweet on Twitter",
-                "default": true
-            },
-            {
-                "type": "checkbox",
-                "id": "share_pinterest",
-                "label": "Pin on Pinterest",
-                "default": true
-            },
-            {
-                "type": "checkbox",
-                "id": "share_whatsapp",
-                "label": "Share on Whatsapp",
-                "default": true
-            },
-            {
-                "type": "checkbox",
-                "id": "share_email",
-                "label": "Send via Email",
-                "default": true
-            },
-            {
-                "type": "header",
-                "content": "Social media links"
-            },
-            {
-                "type": "text",
-                "id": "social_facebook",
-                "label": "Facebook link"
-            },
-            {
-                "type": "text",
-                "id": "social_twitter",
-                "label": "Twitter link"
-            },
-            {
-                "type": "text",
-                "id": "social_instagram",
-                "label": "Instagram link"
-            },
-            {
-                "type": "text",
-                "id": "social_pinterest",
-                "label": "Pinterest link"
-            },
-            {
-                "type": "text",
-                "id": "social_tiktok",
-                "label": "TikTok link"
-            },
-            {
-                "type": "text",
-                "id": "social_snapchat",
-                "label": "Snapchat link"
-            },
-            {
-                "type": "text",
-                "id": "social_youtube",
-                "label": "Youtube link"
-            },
-            {
-                "type": "text",
-                "id": "social_linkedin",
-                "label": "Linkedin link"
-            }
-        ]
-    }
+  {
+    "name": "theme_info",
+    "theme_name": "ks-bootshop",
+    "theme_version": "3.0.0",
+    "theme_author": "KondaSoft.com",
+    "theme_documentation_url": "https:\/\/www.kondasoft.com",
+    "theme_support_url": "https:\/\/www.kondasoft.com"
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32x32"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_headings",
+        "label": "Headings font-family",
+        "default": "sans-serif"
+      }
+    ]
+  },
+  {
+    "name": "Offcanvas Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "offcanvas_cart_show_note",
+        "label": "Show note input",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "offcanvas_cart_show_view_cart",
+        "label": "Show \"View Cart\" link",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social links",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Enter the full URL for each social media site below. E.g: https:\/\/www.facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat",
+        "label": "Snapchat"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "Youtube"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin",
+        "label": "Linkedin"
+      }
+    ]
+  }
 ]

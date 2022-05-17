@@ -1,27 +1,32 @@
-{% assign mt = section.settings.margin_top | prepend: 'mt-' %}
-{% assign mb = section.settings.margin_bottom | prepend: 'mb-' %}
+{% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
 
-<section 
-    id="{{ section.id | prepend: 'featured-collections-' }}"
-    class="featured-collections {{ mt }} {{ mb }}">
-    <div class="{% if section.settings.container %}container{% else %}container-fluid{% endif %}">
-        <h2 class="text-center mb-2">
+    assign row_xs =  section.settings.row_xs | prepend: 'row-cols-'
+    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
+    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
+
+%}
+
+<section id="featured-collections-{{ section.id }}" class="featured-collections {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container">
+        <h2 class="title mb-4 {{ section.settings.title_size }}">
             {{ section.settings.title }}
         </h2>
-        <ul class="
-            collection-list 
-            list-unstyled 
-            row 
-            {{ section.settings.row_xs | prepend: 'row-cols-' }} 
-            {{ section.settings.row_sm | prepend: 'row-cols-sm-' }} 
-            {{ section.settings.row_xl | prepend: 'row-cols-xl-' }} 
-            mx-n2
-        ">
+        <ul class="collection-list list-unstyled row mx-n3 mb-0 {{ row_xs }} {{ row_sm }} {{ row_lg }}">
             {% for block in section.blocks %}
-                {% assign collection = collections[block.settings.collection] %}
-                {% render 'collection-list-item' with collection as collection %}
+                {% render 'collection-item', collection: collections[block.settings.collection] %}
             {% endfor %}
         </ul>
+        {% unless section.settings.btn_text == blank %}
+            <div class="text-center">
+                <a class="btn mt-8 mb-0 {{ section.settings.btn_color }}" href="{{ routes.collections_url }}">
+                    {{ section.settings.btn_text }} 
+                </a>
+            </div>
+        {% endunless %}
     </div>
 </section>
 
@@ -34,38 +39,66 @@
             "content": "General"
         },
         {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "bg-white text-dark",
+            "options": [
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "default": "text-center",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" }
+            ]
+        },
+        {
             "type": "text",
             "id": "title",
             "label": "Title",
             "default": "Featured Collections"
         },
         {
-            "type": "checkbox",
-            "id": "container",
-            "label": "Wrap in a container",
-            "default": true
-        },
-        {
-            "type": "header",
-            "content": "Collection"
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h2",
+            "options": [
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
         },
         {
             "type": "text",
-            "id": "img_width",
-            "label": "Image width (px)",
-            "default": "480"
+            "id": "btn_text",
+            "label": "Button text",
+            "default": "View all collections",
+            "info": "Leave empty to disable"
         },
         {
-            "type": "text",
-            "id": "img_height",
-            "label": "Image height (px)",
-            "default": "480"
-        }, 
-        {
-            "type": "checkbox",
-            "id": "img_thumbnail",
-            "label": "Image thumbnail",
-            "default": true
+            "type": "select",
+            "id": "btn_color",
+            "label": "Button color",
+            "default": "btn-primary",
+            "options": [
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" }
+            ]
         },
         {
             "type": "header",
@@ -74,8 +107,8 @@
         {
             "type": "range",
             "id": "row_xs",
-            "label": "Items per row / mobile",
-            "info": "Screen width: <576px",
+            "label": "Mobile",
+            "info": "up to 575px",
             "min": 1,
             "max": 3,
             "step": 1,
@@ -84,8 +117,8 @@
         {
             "type": "range",
             "id": "row_sm",
-            "label": "Items per row / tablet",
-            "info": "Screen width: ≥576px",
+            "label": "Tablet",
+            "info": "576px - 991px",
             "min": 1,
             "max": 4,
             "step": 1,
@@ -93,9 +126,9 @@
         },
         {
             "type": "range",
-            "id": "row_xl",
-            "label": "Items per row / desktop",
-            "info": "Screen width: ≥1200px",
+            "id": "row_lg",
+            "label": "Desktop",
+            "info": "992px and up",
             "min": 1,
             "max": 6,
             "step": 1,
@@ -103,26 +136,43 @@
         },
         {
             "type": "header",
-            "content": "Spacing",
-            "info": "Based on Bootstrap spacing utility classes [Learn more](https://getbootstrap.com/docs/5.0/utilities/spacing/)"
+            "content": "Spacing"
         },
         {
             "type": "range",
-            "id": "margin_top",
-            "label": "Margin top",
+            "id": "pt",
+            "label": "Padding top",
             "min": 0,
-            "max": 12,
+            "max": 20,
             "step": 1,
             "default": 0
         },
         {
             "type": "range",
-            "id": "margin_bottom",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mb",
             "label": "Margin bottom",
             "min": 0,
-            "max": 12,
+            "max": 20,
             "step": 1,
-            "default": 8
+            "default": 0
         }
     ],
     "blocks": [
@@ -131,9 +181,9 @@
             "name": "Collection",
             "settings": [
                 {
-                    "label": "Collection",
+                    "type": "collection",
                     "id": "collection",
-                    "type": "collection"
+                    "label": "Collection"
                 }
             ]
         }
@@ -141,7 +191,7 @@
     "presets": [
         {
             "name": "Featured Collections",
-            "category": "Collection"
+            "category": "Collections"
         }
     ]
 }

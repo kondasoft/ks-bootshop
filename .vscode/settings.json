@@ -1,9 +1,9 @@
 {
     "css.styleSheets": [
-        "/assets/bootstrap.min.css"
+        "/assets/bootstrap.css"
     ],
     "search.exclude": {
-        "/assets/bootstrap.bundle.min.js": true,
-        "/assets/bootstrap.min.css": true
+        "/assets/bootstrap.bundle.js": true,
+        "/assets/bootstrap.css": true
     }
 }
