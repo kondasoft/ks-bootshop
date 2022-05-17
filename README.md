@@ -45,13 +45,6 @@ Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the
 In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
 https://www.kondasoft.com
 
-## Getting started
-There are 2 ways to install our theme (or any other Shopify theme) on your Shopify store. 
-
-1- The simplest option is by going to your Shopify Admin and installing the latest package (.zip file) from our [releases](https://github.com/kondasoft/ks-bootshop/releases/). In case you need help with this please check the [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/adding-themes#add-a-free-theme-from-the-admin) from Shopify. 
-
-2- The second option is by using [Theme kit](https://shopify.github.io/themekit/), the the official command line tool from Shopify. This is the option which we will be covering below, as it gives you far more freedom to customize and modify our theme.
-
 ## Installation
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), official documentation before proceeding. We are assuming that at this point you have already installed Theme Kit.
 
@@ -79,11 +72,11 @@ We have provided only a few additional styling for this Shopify theme, and all o
 
 All bootstrap related styles and variables are in `src/bootstrap.scss` file. Assuming that you already know how to work with [Bootstrap variables](https://getbootstrap.com/docs/5.1/customize/overview/), feel free to modify this file, especially the color variables in the top of the file.
 
-After that install all the needed npm packages which are already defined in the `packages.json` file
+After that, install all the needed npm packages that are already defined in the `packages.json` file
 `npm install`
 
-Now, you can compile Bootstrap styles that you have just modified using with the following command
-`npm run bs-css` or `npm run watch` to continuously watch for changes
+Now, you can compile the `bootstrap.scss` file that you have just modified using with the following command:
+`npm run bs-css` or `npm run watch` (to continuously watch for changes)
 
 To deploy your changes on your Shopify store run the following Theme Kit command:
 `theme deploy` or: `theme watch`
