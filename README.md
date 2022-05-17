@@ -19,7 +19,7 @@ Click on the screenshot below to play the video on Youtube.
 * All Shopify templates (cart, product, etc) have their corresponding settings
 * Product layout option grid or list
 * Ajax add to cart
-* Reccomended products section [Learn more](https://shopify.dev/tutorials/develop-theme-recommended-products)
+* Recommended products section [Learn more](https://shopify.dev/tutorials/develop-theme-recommended-products)
 
 ## Homepage sections
 * Carousel
@@ -75,7 +75,7 @@ It is advised to not directly modify theme files as you will lose changes when y
 Also, we have provided 2 blank files (`custom.css` and `custom.js`) which are inside the `assets` folder. It is recommended that you use these 2 files to add your styles and scripts since they will not be changed during the upgrade.
 
 ### Modifying styles (SCSS)
-We have provided only a few additonal styling for this Shopify theme, and all of those are done via plain CSS in the `assets` folder. Our goal for this theme is to provide a solid foundation, completely backed by the Bootstrap framework, so that you can easily get it going with the framework you already know and love. 
+We have provided only a few additional styling for this Shopify theme, and all of those are done via plain CSS in the `assets` folder. Our goal for this theme is to provide a solid foundation, completely backed by the Bootstrap framework, so that you can easily get it going with the framework you already know and love. 
 
 All bootstrap related styles and variables are in `src/bootstrap.scss` file. Assuming that you already know how to work with [Bootstrap variables](https://getbootstrap.com/docs/5.1/customize/overview/), feel free to modify this file, especially the color variables in the top of the file.
 
@@ -83,7 +83,7 @@ After that install all the needed npm packages which are already defined in the 
 `npm install`
 
 Now, you can compile Bootstrap styles that you have just modified using with the following command
-`npm run bs-css` or `npm run watch` to continuesly watch for changes
+`npm run bs-css` or `npm run watch` to continuously watch for changes
 
 To deploy your changes on your Shopify store run the following Theme Kit command:
 `theme deploy` or: `theme watch`
