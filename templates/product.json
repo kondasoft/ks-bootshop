@@ -23,7 +23,7 @@
       ],
       "settings": {
         "title_size": "h2",
-        "show_social_sharing": true,
+        "show_share_btn": true,
         "pt": 10,
         "pb": 10,
         "mt": 0,
@@ -35,10 +35,10 @@
       "settings": {
         "recommended_mode": true,
         "collection": "",
-        "limit": 8,
+        "limit": 4,
         "bg_color": "bg-white",
         "text_align": "text-center",
-        "title": "Featured Products",
+        "title": "Recommended Products",
         "title_size": "h2",
         "btn_text": "",
         "btn_color": "btn-primary",
@@ -47,7 +47,7 @@
         "pt": 0,
         "pb": 0,
         "mt": 0,
-        "mb": 10
+        "mb": 8
       }
     }
   },

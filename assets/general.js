@@ -123,7 +123,9 @@ window.onLinkShare = (btn, e) => {
 
 // Shopify's recommended products
 // https://shopify.dev/themes/product-merchandising/recommendations
-document.querySelectorAll('.recommended-products').forEach(async (section) => {
+const initRecommendedProducts = async () => {
+    const section = document.querySelector('.recommended-products')
+
     const {
         sectionId, baseUrl, productId, limit
     } = section.dataset
@@ -134,4 +136,12 @@ document.querySelectorAll('.recommended-products').forEach(async (section) => {
     const data = await response.text()
 
     section.closest('.shopify-section').outerHTML = data
+}
+initRecommendedProducts()
+
+// Listen for changes in the Shopify Theme Editor
+document.addEventListener('shopify:section:load', (e) => {
+    if (e.target.querySelector('.recommended-products')) {
+        initRecommendedProducts()
+    }
 })

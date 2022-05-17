@@ -14,7 +14,7 @@
             "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
             "description_size": "fs-5",
             "btn_text": "Download FREE",
-            "btn_url": "#",
+            "btn_url": "https:\/\/github.com\/kondasoft\/ks-bootshop",
             "btn_color": "btn-primary",
             "btn_size": ""
           }
@@ -30,7 +30,7 @@
             "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
             "description_size": "fs-5",
             "btn_text": "Download FREE",
-            "btn_url": "#",
+            "btn_url": "https:\/\/github.com\/kondasoft\/ks-bootshop",
             "btn_color": "btn-primary",
             "btn_size": ""
           }
@@ -130,30 +130,20 @@
         "pt": 10,
         "pb": 10,
         "mt": 0,
-        "mb": 11
+        "mb": 10
       }
     },
-    "16517348541d37c171": {
-      "type": "separator",
-      "disabled": true,
-      "settings": {
-        "full_width": false,
-        "opacity": 0.1,
-        "mt": 0,
-        "mb": 0
-      }
-    },
-    "16526904738ba745b1": {
-      "type": "columns-with-image",
+    "16527743361f98366e": {
+      "type": "cards-with-image",
       "blocks": {
-        "b737d82b-0599-4d66-b2db-3b7a9c7c82b6": {
+        "a31f2a51-209c-40f5-8782-38280ee0b30d": {
           "type": "item",
           "settings": {
-            "img": "shopify:\/\/shop_images\/collection-1.jpg",
+            "img": "shopify:\/\/shop_images\/collection-5.jpg",
             "img_width": "600",
-            "img_height": "400",
+            "img_height": "300",
             "img_crop": "center",
-            "title": "Columns with image",
+            "title": "Card with image",
             "title_size": "h4",
             "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "description_size": "fs-6",
@@ -163,14 +153,14 @@
             "btn_size": ""
           }
         },
-        "05d46dec-75df-444f-a57a-40e8d79e9a11": {
+        "8e95535f-a8b1-440c-8dc1-47263a1da13e": {
           "type": "item",
           "settings": {
             "img": "shopify:\/\/shop_images\/collection-3.jpg",
             "img_width": "600",
-            "img_height": "400",
+            "img_height": "300",
             "img_crop": "center",
-            "title": "Columns with image",
+            "title": "Card with image",
             "title_size": "h4",
             "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "description_size": "fs-6",
@@ -180,14 +170,14 @@
             "btn_size": ""
           }
         },
-        "0c0ea25f-f442-4277-97f4-e69de164aa6d": {
+        "9450772e-4e92-4251-97cd-69e844e7fe9f": {
           "type": "item",
           "settings": {
             "img": "shopify:\/\/shop_images\/collection-2.jpg",
             "img_width": "600",
-            "img_height": "400",
+            "img_height": "300",
             "img_crop": "center",
-            "title": "Columns with image",
+            "title": "Card with image",
             "title_size": "h4",
             "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "description_size": "fs-6",
@@ -197,14 +187,14 @@
             "btn_size": ""
           }
         },
-        "abc35a75-9abd-4c5c-a071-ac2b88246990": {
+        "5f2ca4c4-dfa9-477b-95dc-1887e7efbb45": {
           "type": "item",
           "settings": {
-            "img": "shopify:\/\/shop_images\/collection-6.jpg",
+            "img": "shopify:\/\/shop_images\/collection-4.jpg",
             "img_width": "600",
-            "img_height": "400",
+            "img_height": "300",
             "img_crop": "center",
-            "title": "Columns with image",
+            "title": "Card with image",
             "title_size": "h4",
             "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
             "description_size": "fs-6",
@@ -216,18 +206,28 @@
         }
       },
       "block_order": [
-        "b737d82b-0599-4d66-b2db-3b7a9c7c82b6",
-        "05d46dec-75df-444f-a57a-40e8d79e9a11",
-        "0c0ea25f-f442-4277-97f4-e69de164aa6d",
-        "abc35a75-9abd-4c5c-a071-ac2b88246990"
+        "a31f2a51-209c-40f5-8782-38280ee0b30d",
+        "8e95535f-a8b1-440c-8dc1-47263a1da13e",
+        "9450772e-4e92-4251-97cd-69e844e7fe9f",
+        "5f2ca4c4-dfa9-477b-95dc-1887e7efbb45"
       ],
       "settings": {
         "bg_color": "bg-white text-dark",
-        "row_xs": 2,
+        "row_xs": 1,
         "row_sm": 2,
         "row_lg": 4,
         "pt": 0,
         "pb": 0,
+        "mt": 0,
+        "mb": 10
+      }
+    },
+    "16517348541d37c171": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "opacity": 0.1,
         "mt": 0,
         "mb": 0
       }
@@ -294,10 +294,10 @@
         "title_size": "h2",
         "description": "<p>Write something useful to describe this section.<\/p>",
         "description_size": "fs-6",
-        "pt": 11,
-        "pb": 11,
+        "pt": 0,
+        "pb": 0,
         "mt": 0,
-        "mb": 0
+        "mb": 10
       }
     },
     "1651754599ab801902": {
@@ -338,7 +338,19 @@
         "pt": 11,
         "pb": 0,
         "mt": 0,
-        "mb": 0
+        "mb": 10
+      }
+    },
+    "1652774279e1f464d3": {
+      "type": "video",
+      "settings": {
+        "external_video": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "bg_color": "bg-white text-dark",
+        "max_width": "992",
+        "pt": 0,
+        "pb": 0,
+        "mt": 0,
+        "mb": 10
       }
     },
     "165168956137e2ed29": {
@@ -363,11 +375,12 @@
     "carousel",
     "165151877352b831f8",
     "1651733459a1bea1c2",
+    "16527743361f98366e",
     "16517348541d37c171",
-    "16526904738ba745b1",
     "165175524396f2667c",
     "1651754599ab801902",
     "165175637554e00750",
+    "1652774279e1f464d3",
     "165168956137e2ed29"
   ]
 }
