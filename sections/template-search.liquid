@@ -1,0 +1,154 @@
+{% liquid 
+    assign mt = section.settings.mt | prepend: 'mt-'
+    assign mb = section.settings.mb | prepend: 'mb-'
+
+    assign row_xs = section.settings.row_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.row_sm | prepend: 'row-cols-sm-'
+    assign row_lg = section.settings.row_lg | prepend: 'row-cols-lg-'
+
+%}
+
+<section id="template-search" class="{{ mt }} {{ mb }}">
+    <div id="template-search-header" class="mb-9 bg-light overflow-hidden">
+        <div class="container">
+            <div class="mx-auto text-center py-10" style="max-width: 560px">
+                <h1 class="title text-uppercase mb-4">
+                    {% if search.performed %}
+                        {{ 'general.search_page.title_search_performed' | t }}
+                    {% else %}
+                        {{ 'general.search_page.title' | t }}
+                    {% endif %}
+                </h1>
+                <form action="{{ routes.search_url }}">
+                    <div class="input-group input-group-lg">
+                        <input 
+                            class="form-control"
+                            type="search"
+                            placeholder="{{ 'general.search_page.form.input_label' | t }}"
+                            aria-label="{{ 'general.search_page.form.input_label' | t }}"
+                            name="q"
+                            value="{{ search.terms | escape }}">
+                        <button 
+                            type="submit"
+                            class="btn btn-primary">
+                            {{ 'general.search_page.form.btn_text' | t }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if search.performed %}
+        <div class="container">
+        
+            {% if search.results_count == 0 %}        
+                <p class="alert alert-warning" role="status">
+                    {{ 'general.search_page.no_results' | t: terms: search.terms }}
+                </p>
+            {% else %}
+                <p class="alert alert-info" role="status">
+                    {{ 'general.search_page.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
+                </p>
+                {% paginate search.results by section.settings.limit %}
+                    <ul class="product-list list-unstyled row mx-n3 mb-0 {{ section.settings.text_align }} {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+                        {% for item in search.results %}
+                            {% case item.object_type %}
+                                {% when 'product' %}
+                                    {% render 'product-item', product: item %}
+                            {% endcase %}
+                        {% endfor %}
+                    </ul>
+                    {% render 'pagination' with paginate: paginate %}
+                {% endpaginate %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+
+{% schema %}
+{
+    "name": "Search template",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General"
+        },
+        {
+            "type": "range",
+            "id": "limit",
+            "label": "Products per page",
+            "min": 10,
+            "max": 50,
+            "default": 40
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "default": "text-center",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Items per row"
+        },
+        {
+            "type": "range",
+            "id": "row_xs",
+            "label": "Mobile",
+            "info": "up to 575px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_sm",
+            "label": "Tablet",
+            "info": "576px - 991px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "row_lg",
+            "label": "Desktop",
+            "info": "992px and up",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "header",
+            "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "mt",
+            "label": "Margin top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "mb",
+            "label": "Margin bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 10
+        }
+    ]
+}
+{% endschema %}

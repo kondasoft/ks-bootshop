@@ -27,16 +27,15 @@
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
-    
+
+    <link href="{{ 'bootstrap.css' | asset_url }}" rel="stylesheet">
     <style>
         {{ settings.font_headings | font_face: font_display: 'swap' }}
         :root {
             --bs-headings-font-family: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
-            --bs-headings-font-weight: {{ settings.font_headings.weight }}
+            --bs-headings-font-weight: {{ settings.font_headings.weight }};
         }
     </style>
-
-    <link href="{{ 'bootstrap.css' | asset_url }}" rel="stylesheet">
     <link href="{{ 'general.css' | asset_url }}" rel="stylesheet">
     <link href="{{ 'sections.css' | asset_url }}" rel="stylesheet">
     <link href="{{ 'custom.css' | asset_url }}" rel="stylesheet">

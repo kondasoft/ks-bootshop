@@ -126,6 +126,10 @@ window.onLinkShare = (btn, e) => {
 const initRecommendedProducts = async () => {
     const section = document.querySelector('.recommended-products')
 
+    if (!section) {
+        return
+    }
+
     const {
         sectionId, baseUrl, productId, limit
     } = section.dataset

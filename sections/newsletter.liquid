@@ -17,31 +17,30 @@
                 {{ section.settings.description }}
             </div>
         {% endunless %}
-            {% form 'customer' %}
-                <input type="hidden" name="contact[tags]" value="newsletter">
-                {{ form.errors | default_errors }}
-                {% if form.posted_successfully? %}
-                    <p class="alert alert-success">
-                        {{ 'general.newsletter.confirmation_text' | t }}
-                    </p>
-                {% endif %}
-                <div class="input-group mb-2 {{ section.settings.input_group_size }}">
-                    <input 
-                        type="email" 
-                        name="contact[email]" 
-                        size="30"
-                        class="form-control" 
-                        value="{% if customer.email != blank %}{{ customer.email }}{% endif %}" 
-                        placeholder="{{ 'general.newsletter.input_label' | t }}" 
-                        aria-label="{{ 'general.newsletter.input_label' | t }}" 
-                        autocorrect="off" 
-                        autocapitalize="off">
-                    <button class="btn {{ section.settings.btn_color }} {{ section.settings.btn_size }}" type="submit" name="commit">
-                        {{ 'general.newsletter.submit_button' | t }}
-                    </button>
-                </div>
-            {% endform %}
-        </div>
+        {% form 'customer' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            {{ form.errors | default_errors }}
+            {% if form.posted_successfully? %}
+                <p class="alert alert-success">
+                    {{ 'general.newsletter.confirmation_text' | t }}
+                </p>
+            {% endif %}
+            <div class="input-group mb-2 {{ section.settings.input_group_size }}">
+                <input 
+                    type="email" 
+                    name="contact[email]" 
+                    size="30"
+                    class="form-control" 
+                    value="{% if customer.email != blank %}{{ customer.email }}{% endif %}" 
+                    placeholder="{{ 'general.newsletter.input_label' | t }}" 
+                    aria-label="{{ 'general.newsletter.input_label' | t }}" 
+                    autocorrect="off" 
+                    autocapitalize="off">
+                <button class="btn {{ section.settings.btn_color }} {{ section.settings.btn_size }}" type="submit" name="commit">
+                    {{ 'general.newsletter.submit_button' | t }}
+                </button>
+            </div>
+        {% endform %}
     </div>
 </section>
 

@@ -195,7 +195,27 @@
                         <div id="collapse-level-0-{{ forloop.index }}" class="collapse">
                             <ul class="nav flex-column">
                                 {% for child_link in link.links %}
-                                   {% if child_link.links == blank %}
+                                    {% if child_link.title contains '.jpg' or child_link.title contains '.png' %}
+                                        <li class="nav-item">
+                                            <a href="{{ child_link.url }}" class="megamenu-block d-block py-5 px-5 text-center text-dark">
+                                                {% liquid 
+                                                    assign image = child_link.title | split: '|' | last | strip
+                                                %}
+                                                {% comment %}theme-check-disable{% endcomment %}
+                                                <img
+                                                    src="{{ image | file_img_url: '480x320', crop: 'center' }}"
+                                                    class="img-fluid mb-2 img-thumbnail"
+                                                    alt=""
+                                                    width="480"
+                                                    height="320"
+                                                    loading="lazy">
+                                                {% comment %}theme-check-enable{% endcomment %}
+                                                <span class="">
+                                                    {{ child_link.title | split: '|' | first }}
+                                                </span>
+                                            </a>
+                                        </li>
+                                   {% elsif child_link.links == blank %}
                                         <li class="nav-item">
                                             <a 
                                                 class="nav-link py-4 px-5 {% if child_link.active %}active{% endif %}" 

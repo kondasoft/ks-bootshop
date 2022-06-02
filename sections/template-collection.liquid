@@ -202,7 +202,7 @@
                                             <li class="form-check d-flex align-items-center mb-2">
                                                 <input 
                                                     type="checkbox" 
-                                                    id="collection-filter-{{ filter_value.label | handleize }}"
+                                                    id="collection-filter-{{ filter.label | handleize }}-{{ filter_value.label | handleize }}"
                                                     class="form-check-input mt-n1 me-3" 
                                                     name="{{ filter_value.param_name }}" 
                                                     value="{{ filter_value.value }}"
@@ -211,7 +211,7 @@
                                                     {% if filter_value.count == 0 and filter_value.active == false -%}disabled{%- endif %}>
                                                 <label 
                                                     class="form-check-label d-flex align-items-center" 
-                                                    for="collection-filter-{{ filter_value.label | handleize }}">
+                                                    for="collection-filter-{{ filter.label | handleize }}-{{ filter_value.label | handleize }}">
                                                     {% if filter.label == 'Color' or filter.label == 'Colors' %}
                                                         {% assign swatch_image = filter_value.label | handleize | prepend: 'swatch-' | append: '.png' %}
                                                         <span 
