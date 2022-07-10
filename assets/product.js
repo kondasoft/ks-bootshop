@@ -40,7 +40,7 @@ window.onChangeProductOption = async (input) => {
     })
 
     const selectedVariant = productData.variants.find(variant =>
-        variant.title.includes(productOptions.toString().replace(',', ' / '))
+        variant.title.includes(productOptions.toString().replaceAll(',', ' / '))
     )
 
     console.log(selectedVariant)
