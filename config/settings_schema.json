@@ -92,6 +92,16 @@
         "type": "text",
         "id": "social_linkedin",
         "label": "Linkedin"
+      },
+      {
+        "type": "text",
+        "id": "social_whatsapp",
+        "label": "Whatsapp"
+      },
+      {
+        "type": "text",
+        "id": "social_email",
+        "label": "Email"
       }
     ]
   }
