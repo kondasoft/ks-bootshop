@@ -42,7 +42,7 @@ https://ks-bootshop.myshopify.com/?preview_theme_id=132279107746
 
 ## Demo 
 - Free Version
-https://ks-bootshop.myshopify.com/
+https://ks-bootshop.myshopify.com/?preview_theme_id=132413784226
 
 - Pro Version
 https://ks-bootshop.myshopify.com/?preview_theme_id=132279107746
