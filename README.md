@@ -36,11 +36,8 @@ Click on the screenshot below to play the video on Youtube.
 * Separator
 
 ## Demo 
-- Free Version
-https://ks-bootshop.myshopify.com/?preview_theme_id=132413784226
+https://ks-bootshop.myshopify.com
 
-- Pro Version
-https://ks-bootshop.myshopify.com/?preview_theme_id=132279107746
 
 ## Download 
 Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.
