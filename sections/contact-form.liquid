@@ -29,7 +29,7 @@
             <div class="row g-3 mb-3">
                 <div class="form-group col-md-4">
                     <input 
-                        class="form-control" 
+                        class="form-control form-control-md" 
                         type="text" 
                         name="contact[name]" 
                         id="ContactFormName" 
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <input 
-                        class="form-control" 
+                        class="form-control form-control-md" 
                         type="email" 
                         name="contact[email]" 
                         id="ContactFormEmail" 
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <input 
-                        class="form-control" 
+                        class="form-control form-control-md" 
                         type="tel" 
                         name="contact[phone]" 
                         id="ContactFormPhone" 
@@ -66,7 +66,7 @@
             </div>
             <div class="form-group mb-3">
                 <textarea 
-                    class="form-control" 
+                    class="form-control form-control-md" 
                     rows="8" 
                     name="contact[body]" 
                     id="ContactFormMessage" 
@@ -74,10 +74,11 @@
                     aria-label="{{ 'general.contact.message' | t }}" 
                     required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
             </div>
-            <input 
+            <button 
                 type="submit" 
-                class="btn btn-primary" 
-                value="{{ 'general.contact.send' | t }}">
+                class="btn btn-md px-8 {{ section.settings.btn_color }} {{ section.settings.btn_size }}">
+                {{ 'general.contact.send' | t }}
+            </button>
         {% endform %}
     </div>
 </section>
@@ -94,8 +95,9 @@
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white text-dark",
+            "default": "",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
@@ -134,7 +136,7 @@
             "type": "richtext",
             "id": "description",
             "label": "Description",
-            "default": "<p>Write something catchy for this section</p>"
+            "default": "<p>Add on optional description to this section</p>"
         },
         {
             "type": "select",
@@ -148,6 +150,42 @@
                 { "value": "fs-4", "label": "fs-4" },
                 { "value": "fs-5", "label": "fs-5" },
                 { "value": "fs-6", "label": "fs-6" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_color",
+            "label": "Button color",
+            "default": "btn-primary",
+            "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
+                { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
+                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
+                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
+                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "btn_size",
+            "label": "Button size",
+            "default": "",
+            "options": [
+                { "value": "btn-sm", "label": "Small" },
+                { "value": "", "label": "Normal" },
+                { "value": "btn-lg", "label": "Large" }
             ]
         },
         {

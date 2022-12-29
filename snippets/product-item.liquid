@@ -1,38 +1,66 @@
 {% liquid
-    assign img_width  = 600
-    assign img_height = 600
-    assign img_thumbnail = 'img-thumbnail'
+    case section.settings.product_img_orientation
+        when 'square'
+            assign img_width  = 600
+            assign img_height = 600
+        when 'landscape'
+            assign img_width  = 600
+            assign img_height = 480
+        when 'potrait'
+            assign img_width  = 480
+            assign img_height = 600
+    endcase
 %}
 
-<li class="product-item p-3 mb-4">
-    <a class="position-relative d-block" href="{{ product.url | within: collection }}">
+<li 
+    class="product-item splide__slide p-3 p-lg-4 mb-4"
+    data-product-id="{{ product.id }}">
+    <a class="product-link position-relative d-block link-dark" href="{{ product.url | within: collection }}" onclick="setCollectionItemHash(this, event)">
+        {% if product.available and product.compare_at_price > product.price %}
+            <span class="img-badge-sale badge">
+                {{ 'product.save' | t }} {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round | append: '%' }}
+            </span>    
+        {% endif %}
         {% unless product.available %}
-            <span class="badge-sold-out badge bg-secondary position-absolute top-0 end-0 me-3 mt-3">
+            <span class="img-badge-sold-out badge">
                 {{ 'product.sold_out' | t }}
             </span>        
         {% endunless %}
         <img 
-            class="product-item-img img-fluid mb-3 {{ img_thumbnail }}"
+            class="product-item-img img-fluid mb-4 {{ section.settings.product_img_border }}"
             src="{{ product.featured_image.src | image_url: width: img_width, height: img_height, crop: 'center' }}" 
             alt="{{ product.featured_image.alt | escape }}"
             width="{{ img_width }}"
             height="{{ img_height }}"
             loading="lazy">
-        <h3 class="product-item-title h6 mb-2">
+        <h3 class="product-item-title mb-2 {{ section.settings.product_title_size }}">
             {{ product.title }}
         </h3>
     </a>
-    <div class="product-item-price mb-0">
-        <span 
-            class="product-item-price-compare text-muted me-1" 
-            style="{% unless product.compare_at_price > product.price %}display: none{% endunless %}">
-            <span class="visually-hidden">
-                {{ 'product.regular_price' | t }}
+    <p class="product-item-price mb-0">
+        {% if product.compare_at_price > product.price %}
+            <span class="product-item-price-compare text-muted me-1">
+                <span class="visually-hidden">
+                    {{ 'product.price_regular' | t }} &nbsp;
+                </span>
+                <s>{{ product.compare_at_price | money }}</s>
             </span>
-            <s>{{ product.compare_at_price | money }}</s>
-        </span>
-        <span class="product-item-price-final {% if product.compare_at_price > product.price %}text-success{% endif %}">
-            {{ product.price | money }}
-        </span>
-    </div>
+            <span class="product-item-price-final">
+                <span class="visually-hidden">
+                    {{ 'product.price_sale' | t }} &nbsp;
+                </span>
+                {% if product.price_varies %}
+                    {{ 'product.price_from' | t }}
+                {% endif %}
+                {{ product.price | money }}
+            </span>
+        {% else %}
+            <span class="product-item-price-final">
+                {% if product.price_varies %}
+                    {{ 'product.price_from' | t }}
+                {% endif %}
+                {{ product.price | money }}
+            </span>
+        {% endif %}
+    </p>
 </li>

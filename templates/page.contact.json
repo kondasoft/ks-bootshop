@@ -1,22 +1,22 @@
 {
   "sections": {
-    "contact-form": {
+    "23e845c6-1e65-48b9-b6fb-62265282463d": {
       "type": "contact-form",
       "settings": {
-        "bg_color": "bg-light text-body",
+        "bg_color": "bg-light text-dark",
         "max_width": "992",
         "title": "Contact us",
         "title_size": "h1",
-        "description": "<p>Please complete the following form to send us an email<\/p>",
+        "description": "<p>Add on optional description to this section.<br\/>Want to call? <a href=\"tel:+1-555-555-1234\" title=\"tel:+1-555-555-1234\">(555) 555-1234<\/a><\/p>",
         "description_size": "fs-6",
-        "pt": 10,
-        "pb": 10,
+        "pt": 11,
+        "pb": 11,
         "mt": 0,
         "mb": 0
       }
     }
   },
   "order": [
-    "contact-form"
+    "23e845c6-1e65-48b9-b6fb-62265282463d"
   ]
 }

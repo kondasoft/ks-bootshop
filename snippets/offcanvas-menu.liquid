@@ -1,0 +1,97 @@
+<div 
+    id="offcanvas-menu" 
+    class="offcanvas offcanvas-start" 
+    tabindex="-1"
+    aria-labelledby="offcanvas-menu-label">
+    <div class="offcanvas-header bg-dark text-white">
+        <h5 id="offcanvas-menu-label" class="offcanvas-title">
+            {{ 'general.accessibility.menu' | t }}
+        </h5>
+        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
+        </button>
+    </div>
+    <div class="offcanvas-body px-0 py-4">
+        <ul 
+            id="offcanvas-menu-nav" 
+            class="nav nav-level-0 flex-column mb-4">
+            {% for link in linklists[section.settings.menu_mobile].links %}
+                {% if link.links == blank %}
+                    <li class="nav-item">
+                        <a 
+                            class="nav-link {% if link.active %}active{% endif %}" 
+                            href="{{ link.url }}" 
+                            aria-current="{% if link.active %}page{% endif %}">
+                            {{ link.title }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a 
+                            class="nav-link {% if link.child_active %}active{% endif %}" 
+                            href="#offcanvas-menu-collapse-level-1-{{ forloop.index }}" 
+                            aria-controls="offcanvas-menu-collapse-level-1-{{ forloop.index }}"
+                            aria-expanded="{% if link.child_active %}true{% else %}false{% endif %}" 
+                            data-bs-toggle="collapse"
+                            role="button">
+                            {{ link.title }}
+                        </a>
+                        <div 
+                            id="offcanvas-menu-collapse-level-1-{{ forloop.index }}" 
+                            class="collapse {% if link.child_active %}show{% endif %}">
+                            <ul class="nav flex-column">
+                                {% for child_link in link.links %}
+                                    <li>
+                                        <a 
+                                            class="dropdown-item {% if child_link.active %}active{% endif %}" 
+                                            href="{{ child_link.url }}"
+                                            aria-current="{% if child_link.active %}page{% endif %}">
+                                            {{ child_link.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% unless section.settings.utilities_menu == blank %}
+            <ul 
+                id="offcanvas-menu-utilities-nav" 
+                class="nav nav-level-0 flex-column mb-5">
+                {% for link in linklists[section.settings.utilities_menu].links %}
+                    <li>
+                        {% if link.url contains 'search' %}
+                            <a 
+                                class="nav-link" 
+                                href="#offcanvas-search"
+                                data-bs-toggle="offcanvas"
+                                aria-controls="offcanvas-search" 
+                                role="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="me-3" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                {{ link.title }}
+                            </a>
+                        {% else %}
+                            <a 
+                                class="nav-link {% if link.active %}active{% endif %}" 
+                                href="{{ link.url }}"
+                                aria-current="{% if link.active %}page{% endif %}">
+                                {{ link.title }}
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </u>
+        {% endunless %}
+    </div>
+    {% if section.settings.offcanvas_menu_show_social_icons %}
+        <div class="offcanvas-footer">
+            <div class="text-center">
+                {% render 'social-icons', icon_size: 18 %}
+            </div>
+        </div>
+    {% endif %}
+</div>

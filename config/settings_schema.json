@@ -1,108 +1,221 @@
 [
-  {
-    "name": "theme_info",
-    "theme_name": "ks-bootshop",
-    "theme_version": "3.0.0",
-    "theme_author": "KondaSoft.com",
-    "theme_documentation_url": "https:\/\/www.kondasoft.com",
-    "theme_support_url": "https:\/\/www.kondasoft.com"
-  },
-  {
-    "name": "Favicon",
-    "settings": [
-      {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon image",
-        "info": "Will be scaled down to 32x32"
-      }
-    ]
-  },
-  {
-    "name": "Typography",
-    "settings": [
-      {
-        "type": "font_picker",
-        "id": "font_headings",
-        "label": "Headings font-family",
-        "default": "sans-serif"
-      }
-    ]
-  },
-  {
-    "name": "Offcanvas Cart",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "offcanvas_cart_show_note",
-        "label": "Show note input",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "offcanvas_cart_show_view_cart",
-        "label": "Show \"View Cart\" link",
-        "default": true
-      }
-    ]
-  },
-  {
-    "name": "Social links",
-    "settings": [
-      {
-        "type": "paragraph",
-        "content": "Enter the full URL for each social media site below. E.g: https:\/\/www.facebook.com\/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_facebook",
-        "label": "Facebook"
-      },
-      {
-        "type": "text",
-        "id": "social_twitter",
-        "label": "Twitter"
-      },
-      {
-        "type": "text",
-        "id": "social_instagram",
-        "label": "Instagram"
-      },
-      {
-        "type": "text",
-        "id": "social_pinterest",
-        "label": "Pinterest"
-      },
-      {
-        "type": "text",
-        "id": "social_tiktok",
-        "label": "TikTok"
-      },
-      {
-        "type": "text",
-        "id": "social_snapchat",
-        "label": "Snapchat"
-      },
-      {
-        "type": "text",
-        "id": "social_youtube",
-        "label": "Youtube"
-      },
-      {
-        "type": "text",
-        "id": "social_linkedin",
-        "label": "Linkedin"
-      },
-      {
-        "type": "text",
-        "id": "social_whatsapp",
-        "label": "Whatsapp"
-      },
-      {
-        "type": "text",
-        "id": "social_email",
-        "label": "Email"
-      }
-    ]
-  }
+    {
+        "name": "theme_info",
+        "theme_name": "ks-bootshop",
+        "theme_version": "4.0.0",
+        "theme_author": "KondaSoft.com",
+        "theme_documentation_url": "https:\/\/www.kondasoft.com",
+        "theme_support_url": "https:\/\/www.kondasoft.com"
+    },
+    {
+        "name": "Styling",
+        "settings": [
+            {
+                "type": "header",
+                "content": "• Colors"
+            },
+            {
+                "type": "color",
+                "id": "color_primary",
+                "label": "Primary",
+                "default": "#d32f2f"
+            },
+            {
+                "type": "color",
+                "id": "color_secondary",
+                "label": "Secondary",
+                "default": "#455a64"
+            },
+            {
+                "type": "color",
+                "id": "color_dark",
+                "label": "Dark",
+                "default": "#212529"
+            },
+            {
+                "type": "color",
+                "id": "color_light",
+                "label": "Light",
+                "default": "#f8f9fa"
+            },
+            {
+                "type": "color",
+                "id": "color_body_bg",
+                "label": "Body bg",
+                "default": "#ffffff"
+            },
+            {
+                "type": "color",
+                "id": "color_body_text",
+                "label": "Body text",
+                "default": "#212529"
+            },
+            {
+                "type": "header",
+                "content": "• Tyypography"
+            },
+            {
+                "type": "font_picker",
+                "id": "font_headings",
+                "label": "Headings font",
+                "default": "sans-serif"
+            },
+            {
+                "type": "font_picker",
+                "id": "font_body",
+                "label": "Body font",
+                "default": "sans-serif",
+                "info": "We recommend that you keep the default 'sans-serif' system font. Beside that your store will load faster, all the corresponding font-weights, italic variant, etc, will display with better accuracy."
+            },
+            {
+                "type": "header",
+                "content": "• Offcanvas"
+            },
+            {
+                "type": "select",
+                "id": "offcanvas_img_orientation",
+                "label": "Image orientation",
+                "default": "square",
+                "options": [
+                    { "value": "square", "label": "Square" },
+                    { "value": "landscape", "label": "Landscape" },
+                    { "value": "potrait", "label": "Potrait" }
+                ]
+            },
+            {
+                "type": "select",
+                "id": "offcanvas_img_border",
+                "label": "Image border",
+                "default": "img-thumbnail",
+                "options": [
+                    { "value": "", "label": "Square" },
+                    { "value": "rounded", "label": "Rounded" },
+                    { "value": "img-thumbnail", "label": "Thumbnail" }
+                ]
+            },
+            {
+                "type": "header",
+                "content": "• Favicon"
+            },
+            {
+                "type": "image_picker",
+                "id": "favicon",
+                "label": "Favicon image",
+                "info": "Will be scaled down to 32x32"
+            }
+        ]
+    },
+    {
+        "name": "Cart",
+        "settings": [
+            {
+                "type": "header",
+                "content": "• Cart Drawer"
+            },
+            {
+                "type": "checkbox",
+                "id": "cart_drawer_show_cart_link",
+                "label": "Show 'View cart' link",
+                "default": false
+            },
+            {
+                "type": "checkbox",
+                "id": "cart_drawer_show_payment_icons",
+                "label": "Show payment icons",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "cart_drawer_show_note",
+                "label": "Show Note field",
+                "default": true
+            }
+        ]
+    },
+    {
+        "name": "Search",
+        "settings": [
+            {
+                "type": "header",
+                "content": "• Predictive Search"
+            },
+            {
+                "type": "checkbox",
+                "id": "search_collections",
+                "label": "Search in collections",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "search_pages",
+                "label": "Search in pages",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "search_articles",
+                "label": "Search in blog posts",
+                "default": true
+            }
+        ]
+    },
+    {
+        "name": "Social",
+        "settings": [
+            {
+                "type": "paragraph",
+                "content": "Enter the full URL for each social media site below. E.g: https:\/\/www.facebook.com\/shopify"
+            },
+            {
+                "type": "text",
+                "id": "social_facebook",
+                "label": "Facebook"
+            },
+            {
+                "type": "text",
+                "id": "social_twitter",
+                "label": "Twitter"
+            },
+            {
+                "type": "text",
+                "id": "social_instagram",
+                "label": "Instagram"
+            },
+            {
+                "type": "text",
+                "id": "social_pinterest",
+                "label": "Pinterest"
+            },
+            {
+                "type": "text",
+                "id": "social_tiktok",
+                "label": "TikTok"
+            },
+            {
+                "type": "text",
+                "id": "social_snapchat",
+                "label": "Snapchat"
+            },
+            {
+                "type": "text",
+                "id": "social_youtube",
+                "label": "Youtube"
+            },
+            {
+                "type": "text",
+                "id": "social_linkedin",
+                "label": "Linkedin"
+            },
+            {
+                "type": "text",
+                "id": "social_whatsapp",
+                "label": "Whatsapp"
+            },
+            {
+                "type": "text",
+                "id": "social_email",
+                "label": "Email"
+            }
+        ]
+    }
 ]

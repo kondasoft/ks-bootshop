@@ -1,15 +1,5 @@
 {
   "sections": {
-    "1636275108720b76b1": {
-      "type": "separator",
-      "disabled": true,
-      "settings": {
-        "full_width": false,
-        "opacity": 0.1,
-        "mt": 9,
-        "mb": 9
-      }
-    },
     "165268949817e427ae": {
       "type": "carousel",
       "blocks": {
@@ -17,8 +7,17 @@
           "type": "slide",
           "settings": {
             "img_mobile": "shopify:\/\/shop_images\/lifestyle-2-mobile.jpg",
+            "img_mobile_height": 360,
+            "img_mobile_opacity": 0.7,
+            "img_mobile_blur": 0,
+            "caption_position_mobile": "carousel-caption-mobile-center",
             "img_desktop": "shopify:\/\/shop_images\/lifestyle-2.jpg",
-            "img_opacity": 0.7,
+            "img_desktop_height": 600,
+            "img_desktop_opacity": 0.7,
+            "img_desktop_blur": 0,
+            "caption_position_desktop": "carousel-caption-desktop-bottom",
+            "subtitle": "",
+            "subtitle_size": "fs-5",
             "title": "",
             "title_size": "h2",
             "description": "",
@@ -26,7 +25,11 @@
             "btn_text": "",
             "btn_url": "",
             "btn_color": "btn-primary",
-            "btn_size": ""
+            "btn_size": "",
+            "btn_secondary_text": "",
+            "btn_secondary_url": "",
+            "btn_secondary_color": "btn-primary",
+            "btn_secondary_size": ""
           }
         }
       },
@@ -35,11 +38,14 @@
       ],
       "settings": {
         "controls": true,
+        "controls_style": "carousel-controls-arrows",
         "indicators": true,
+        "indicators_style": "carousel-indicators-circles",
         "autoplay": false,
         "animation": "slide",
+        "ken_burns": true,
         "mt": 0,
-        "mb": 10
+        "mb": 0
       }
     },
     "1652689700430c7f0b": {
@@ -49,23 +55,187 @@
         "max_width": "768",
         "text_align": "text-start",
         "title": "About us",
-        "title_size": "h2",
+        "title_size": "h1",
         "description": "<p>Welcome to [company name], your number one source for all things [product]. We're dedicated to giving you the very best of [product], with a focus on [store characteristic 1], [store characteristic 2], [store characteristic 3].<\/p><p>Founded in [year] by [founder name], [company name] has come a long way from its beginnings in [starting location]. When [founder name] first started out, [his\/her\/their] passion for [brand message - e.g. \"eco-friendly cleaning products\"] drove them to [action: quit day job, do tons of research, etc.] so that [company name] can offer you [competitive differentiator - e.g. \"the world's most advanced toothbrush\"]. We now serve customers all over [place - town, country, the world], and are thrilled that we're able to turn our passion into [my\/our] own website.<\/p><p>[I\/we] hope you enjoy [my\/our] products as much as [I\/we] enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact [me\/us].<\/p><p>Sincerely,<br\/>[founder name]<\/p>",
         "description_size": "fs-6",
         "btn_text": "",
         "btn_url": "",
         "btn_color": "btn-outline-primary",
         "btn_size": "",
-        "pt": 0,
-        "pb": 0,
+        "pt": 10,
+        "pb": 10,
         "mt": 0,
-        "mb": 10
+        "mb": 0
+      }
+    },
+    "751e8a6f-3175-422f-918b-79bfa3efbba6": {
+      "type": "cards-with-image",
+      "blocks": {
+        "e6fbab57-3cca-47b2-bb1b-e2b18653ae1b": {
+          "type": "item",
+          "settings": {
+            "text_align": "text-start",
+            "shadow": "shadow-sm",
+            "border_color": "",
+            "border_width": 1,
+            "img": "shopify:\/\/shop_images\/collection-1.jpg",
+            "img_orientation": "landscape",
+            "img_crop": "center",
+            "title": "John Doe",
+            "title_size": "h5",
+            "description": "<p>Team Position<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": "btn-sm"
+          }
+        },
+        "751a5030-aaaa-44b1-bca1-8f5d9a811a8b": {
+          "type": "item",
+          "settings": {
+            "text_align": "text-start",
+            "shadow": "shadow-sm",
+            "border_color": "",
+            "border_width": 1,
+            "img": "shopify:\/\/shop_images\/collection-6.jpg",
+            "img_orientation": "landscape",
+            "img_crop": "center",
+            "title": "Jane Doe",
+            "title_size": "h5",
+            "description": "<p>Team Position<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": "btn-sm"
+          }
+        },
+        "13b37b67-199f-46d5-9083-3e27d855729b": {
+          "type": "item",
+          "settings": {
+            "text_align": "text-start",
+            "shadow": "shadow-sm",
+            "border_color": "",
+            "border_width": 1,
+            "img": "shopify:\/\/shop_images\/collection-4.jpg",
+            "img_orientation": "landscape",
+            "img_crop": "center",
+            "title": "John Doe",
+            "title_size": "h5",
+            "description": "<p>Team Position<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": "btn-sm"
+          }
+        },
+        "4eb76491-34b9-433c-b644-3e29b11754cf": {
+          "type": "item",
+          "settings": {
+            "text_align": "text-start",
+            "shadow": "shadow-sm",
+            "border_color": "",
+            "border_width": 1,
+            "img": "shopify:\/\/shop_images\/collection-2.jpg",
+            "img_orientation": "landscape",
+            "img_crop": "center",
+            "title": "Jane Doe",
+            "title_size": "h5",
+            "description": "<p>Team Position<\/p>",
+            "description_size": "fs-6",
+            "btn_text": "Learn more",
+            "btn_url": "",
+            "btn_color": "btn-outline-primary",
+            "btn_size": "btn-sm"
+          }
+        }
+      },
+      "block_order": [
+        "e6fbab57-3cca-47b2-bb1b-e2b18653ae1b",
+        "751a5030-aaaa-44b1-bca1-8f5d9a811a8b",
+        "13b37b67-199f-46d5-9083-3e27d855729b",
+        "4eb76491-34b9-433c-b644-3e29b11754cf"
+      ],
+      "settings": {
+        "bg_color": "bg-light text-dark",
+        "text_align": "text-center",
+        "title": "Our Team",
+        "title_size": "h2",
+        "description": "<p>Add on optional description to this section<\/p>",
+        "description_size": "fs-6",
+        "row_xs": 1,
+        "row_sm": 2,
+        "row_lg": 4,
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "bcc4442b-9440-4589-9f26-b0c513404d8c": {
+      "type": "image-with-text",
+      "settings": {
+        "bg_color": "",
+        "text_align": "text-start",
+        "image": "shopify:\/\/shop_images\/collection-5.jpg",
+        "img_orientation": "landscape",
+        "img_crop": "center",
+        "img_border": "img-thumbnail",
+        "img_align_desktop": "flex-lg-row",
+        "title": "The Best Products!",
+        "title_size": "h2",
+        "subtitle": "Some Optional Subtitle",
+        "subtitle_size": "fs-6",
+        "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+        "description_size": "fs-6",
+        "btn_text": "Shop now",
+        "btn_url": "shopify:\/\/collections\/all",
+        "btn_color": "btn-primary",
+        "btn_size": "",
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "d751c1ef-ae9a-4d2f-b415-f968dcca9f73": {
+      "type": "separator",
+      "settings": {
+        "full_width": false,
+        "opacity": 0.1,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "9ef7cc85-571e-4685-b0f4-c655656a9c8c": {
+      "type": "richtext",
+      "settings": {
+        "bg_color": "",
+        "max_width": "960",
+        "text_align": "text-center",
+        "title": "Want To Say Hi?",
+        "title_size": "h3",
+        "description": "<p>Add on optional description to this section<\/p>",
+        "description_size": "fs-6",
+        "btn_text": "Drop us an email",
+        "btn_url": "shopify:\/\/pages\/contact",
+        "btn_color": "btn-primary",
+        "btn_size": "",
+        "pt": 10,
+        "pb": 10,
+        "mt": 0,
+        "mb": 0
       }
     }
   },
   "order": [
-    "1636275108720b76b1",
     "165268949817e427ae",
-    "1652689700430c7f0b"
+    "1652689700430c7f0b",
+    "751e8a6f-3175-422f-918b-79bfa3efbba6",
+    "bcc4442b-9440-4589-9f26-b0c513404d8c",
+    "d751c1ef-ae9a-4d2f-b415-f968dcca9f73",
+    "9ef7cc85-571e-4685-b0f4-c655656a9c8c"
   ]
 }

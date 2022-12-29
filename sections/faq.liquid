@@ -5,45 +5,49 @@
     assign mb = section.settings.mb | prepend: 'mb-'
 %}
 
-<section id="faq-{{ section.id }}" class="faq {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="container" style="max-width: {{ section.settings.max_width }}px">
-        {% unless section.settings.title == blank %}
-            <h2 class="title mb-5 {{ section.settings.text_align }} {{ section.settings.title_size }}">
-                {{ section.settings.title }}
-            </h2>
-        {% endunless %}
-        {% unless section.settings.description == blank %}
-            <div class="description text-muted rte mt-n3 mb-7 {{ section.settings.text_align }} {{ section.settings.description_size }}">
-                {{ section.settings.description }}
-            </div>
-        {% endunless %}
-        <div id="faq-accordion-{{ section.id }}" class="accordion">
-            {% for block in section.blocks %}
-                <div class="accordion-item">
-                    <h3 
-                        id="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
-                        class="accordion-header">
-                        <button 
-                            class="accordion-button {% unless forloop.first %}collapsed{% endunless %}" 
-                            type="button" 
-                            data-bs-toggle="collapse" 
-                            data-bs-target="#faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
-                            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" 
-                            aria-controls="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}">
-                            {{ block.settings.title | escape }}
-                        </button>
-                    </h3>
-                    <div 
-                        id="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
-                        class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
-                        aria-labelledby="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
-                        data-bs-parent="#faq-accordion-{{ section.id }}">
-                        <div class="accordion-body rte pt-4 pb-6">
-                            {{ block.settings.description }}
+<section 
+    id="faq-{{ section.id }}" 
+    class="faq {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container">
+        <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px">
+            {% unless section.settings.title == blank %}
+                <h2 class="title mb-5 {{ section.settings.text_align }} {{ section.settings.title_size }}">
+                    {{ section.settings.title }}
+                </h2>
+            {% endunless %}
+            {% unless section.settings.description == blank %}
+                <div class="description text-muted rte mt-n3 mb-7 {{ section.settings.text_align }} {{ section.settings.description_size }}">
+                    {{ section.settings.description }}
+                </div>
+            {% endunless %}
+            <div id="faq-accordion-{{ section.id }}" class="accordion">
+                {% for block in section.blocks %}
+                    <div class="accordion-item">
+                        <h3 
+                            id="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
+                            class="accordion-header">
+                            <button 
+                                class="accordion-button {% unless forloop.first %}collapsed{% endunless %}" 
+                                type="button" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
+                                aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" 
+                                aria-controls="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}">
+                                {{ block.settings.title | escape }}
+                            </button>
+                        </h3>
+                        <div 
+                            id="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
+                            class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
+                            aria-labelledby="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
+                            data-bs-parent="#faq-accordion-{{ section.id }}">
+                            <div class="accordion-body rte pt-4 pb-6">
+                                {{ block.settings.description }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </section>
@@ -54,14 +58,15 @@
     "settings": [
         {
             "type": "header",
-            "content": "General settings"
+            "content": "General"
         },
         {
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white text-dark",
+            "default": "",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
@@ -74,7 +79,7 @@
             "id": "max_width",
             "label": "Max width (px)",
             "info": "Adjust container width (in pixels)",
-            "default": "768"
+            "default": "960"
         },
         {
             "type": "select",
@@ -109,8 +114,8 @@
         {
             "type": "richtext",
             "id": "description",
-            "label": "Description",
-            "default": "<p>Write something useful to describe this section.</p>"
+            "label": "Description (optional)",
+            "default": "<p>Add on optional description to this section</p>"
         },
         {
             "type": "select",

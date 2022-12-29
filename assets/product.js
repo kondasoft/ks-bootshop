@@ -3,84 +3,158 @@
     https://www.kondasoft.com
 */
 
-// Ajax 'Add To Cart' (ATC) forms
+/*
+    Main 'Add to cart' (ATC) form
+*/
 window.onSubmitAtcForm = async (form, event) => {
     event.preventDefault()
 
-    const btn = form.querySelector('button[name="add"]')
+    const btn = form.querySelector('.btn-atc')
+
     btn.innerHTML = `
         <div class="spinner-border spinner-border-sm" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     `
 
-    await fetch('/cart/add.js', { method: 'POST', body: new FormData(form) })
+    form.classList.add('loading')
 
-    btn.innerHTML = window.themeStrings.addToCart
+    const response = await fetch('/cart/add.js', { method: 'POST', body: new FormData(form) })
 
-    if (document.querySelector('#offcanvas-cart')) {
-        bootstrap.Offcanvas.getOrCreateInstance('#offcanvas-cart').show()
-    }
+    form.classList.remove('loading')
+    btn.innerHTML = window.theme.product.addedToCart
 
-    window.refreshCartContents()
+    setTimeout(() => {
+        btn.innerHTML = btn.dataset.textAddToCart
+    }, 2000)
+
+    window.refreshCartContents(response)
+
+    bootstrap.Offcanvas.getOrCreateInstance('#offcanvas-cart').show()
 }
 
-// Product Options - listen for onchange events
+/*
+    Product options selector - Listen for change events
+    Works only in the product page
+*/
 window.onChangeProductOption = async (input) => {
-    const productWrapper = input.closest('.product')
-    const addToCartBtn = productWrapper.querySelector('[name="add"]')
+    const selectedOptions = []
 
-    const response = await fetch(`/products/${input.dataset.productHandle}.js`)
-    const productData = await response.json()
-
-    const productOptions = []
-
-    productWrapper.querySelectorAll('.product-option').forEach(el => {
-        productOptions.push(el.value)
+    input.closest('form').querySelectorAll('.product-option').forEach(elem => {
+        if (elem.type === 'radio') {
+            if (elem.checked) {
+                selectedOptions.push(elem.value)
+            }
+        } else {
+            selectedOptions.push(elem.value)
+        }
     })
 
-    const selectedVariant = productData.variants.find(variant =>
-        variant.title.includes(productOptions.toString().replace(',', ' / '))
+    const selectedVariant = window.productVariants.find(variant =>
+        JSON.stringify(variant.options) === JSON.stringify(selectedOptions)
     )
 
     console.log(selectedVariant)
 
+    const btn = input.closest('form').querySelector('.btn-atc')
+
     if (selectedVariant) {
-        productWrapper.querySelector('[name="id"]').value = selectedVariant.id
+        input.closest('form').querySelector('[name="id"]').value = selectedVariant.id
 
         if (selectedVariant.available) {
-            addToCartBtn.disabled = false
-            addToCartBtn.innerHTML = window.themeStrings.addToCart
+            btn.disabled = false
+            btn.innerHTML = window.theme.product.addToCart
         } else {
-            addToCartBtn.disabled = true
-            addToCartBtn.innerHTML = window.themeStrings.soldOut
+            btn.disabled = true
+            btn.innerHTML = window.theme.product.soldOut
         }
 
         if (selectedVariant.compare_at_price) {
-            productWrapper.querySelector('.product-price-compare').style.display = 'inline-block'
-            productWrapper.querySelector('.product-price-compare s').textContent = window.formatMoney(selectedVariant.compare_at_price)
-            productWrapper.querySelector('.product-price-final').classList.add('text-success')
-            productWrapper.querySelector('.product-price-final').textContent = window.formatMoney(selectedVariant.price)
+            input.closest('#product-content').querySelector('.product-price').innerHTML = `
+                <span class="product-price-compare text-muted me-3">
+                    <span class="visually-hidden">
+                        ${window.theme.product.priceFrom} &nbsp;
+                    </span>
+                    <s>
+                        ${Shopify.formatMoney(selectedVariant.compare_at_price)}
+                    </s>
+                </span>
+                <span class="product-price-final">
+                    <span class="visually-hidden">
+                        ${window.theme.product.priceSale} &nbsp;
+                    </span>
+                    ${Shopify.formatMoney(selectedVariant.price)}
+                </span>
+            `
         } else {
-            productWrapper.querySelector('.product-price-compare').style.display = 'none'
-            productWrapper.querySelector('.product-price-compare s').textContent = ''
-            productWrapper.querySelector('.product-price-final').classList.remove('text-success')
-            productWrapper.querySelector('.product-price-final').textContent = window.formatMoney(selectedVariant.price)
+            input.closest('#product-content').querySelector('.product-price').innerHTML = `
+                <span class="product-price-final">
+                    ${Shopify.formatMoney(selectedVariant.price)}
+                </span>
+            `
         }
-
-        bootstrap.Carousel.getOrCreateInstance('#product-carousel')
-            ?.to(selectedVariant.featured_media.position - 1)
+        if (selectedVariant.available && selectedVariant.compare_at_price) {
+            input.closest('#product-content').querySelector('.product-price').insertAdjacentHTML('beforeend', `
+                <span class="price-badge-sale badge">
+                    ${window.theme.product.save}: ${Math.round((1 - (selectedVariant.price / selectedVariant.compare_at_price)) * 100)}%
+                </span>    
+            `)
+        } else if (!selectedVariant.available) {
+            input.closest('#product-content').querySelector('.product-price').insertAdjacentHTML('beforeend', `
+                <span class="price-badge-sold-out badge">
+                    ${window.theme.product.soldOut}
+                </span>
+            `)
+        }
 
         const url = new URL(window.location)
         url.searchParams.set('variant', selectedVariant.id)
         window.history.replaceState({}, '', url)
+
+        const customEvent = new CustomEvent('variantChange.ks.product', {
+            detail: selectedVariant
+        })
+        window.dispatchEvent(customEvent)
     } else {
-        addToCartBtn.disabled = true
-        addToCartBtn.innerHTML = window.themeStrings.unavailable
+        btn.disabled = true
+        btn.innerHTML = window.theme.product.unavailable
     }
 }
 
-// 'Buy it now' buttons
+/*
+    Product Gallery
+*/
+const initProductGallery = () => {
+    const wrapper = document.querySelector('#product-gallery')
+
+    if (!wrapper) return
+
+    window.addEventListener('variantChange.ks.product', (event) => {
+        const selectedVariant = event.detail
+
+        if (selectedVariant.featured_media) {
+            bootstrap.Carousel.getOrCreateInstance('#product-gallery').to(selectedVariant.featured_media.position - 1)
+        }
+    }, false)
+
+    if (window.matchMedia('(min-width: 992px)').matches) {
+        const navbarHeight = document.querySelector('#shopify-section-navbar.sticky-top').clientHeight || 0
+        wrapper.style.position = 'sticky'
+        wrapper.style.top = `${navbarHeight + 20}px`
+        wrapper.style.zIndex = '1'
+    }
+}
+initProductGallery()
+
+document.addEventListener('shopify:section:load', (e) => {
+    if (e.target.querySelector('#product-gallery')) {
+        initProductGallery()
+    }
+})
+
+/*
+    'Buy it now' button
+*/
 window.onClickBuyBtn = (btn) => {
     btn.innerHTML = `
         <div class="spinner-border spinner-border-sm" role="status">
@@ -91,12 +165,4 @@ window.onClickBuyBtn = (btn) => {
     const variantId = form.querySelector('[name="id"]').value
     const qty = Number(form.querySelector('input[name="quantity"]').value || 1)
     window.location.href = `/cart/${variantId}:${qty}`
-}
-
-// Product Carousel - Sticky position on scroll (only desktop)
-const productCarousel = document.querySelector('#product-carousel.sticky-top')
-if (productCarousel) {
-    const navbarHeight = document.querySelector('#shopify-section-navbar.sticky-top').clientHeight || 0
-    productCarousel.style.top = `${navbarHeight + 20}px`
-    productCarousel.style.zIndex = '1'
 }

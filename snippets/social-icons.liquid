@@ -6,13 +6,18 @@
         {% capture social_link %}social_{{ social_handle }}{% endcapture %}
         {% unless settings[social_link] == blank %}
             <li class="nav-item">
-                <a class="nav-link p-3" href="{{ settings[social_link] }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ social }}" aria-label="{{ social }}">
+                <a 
+                    class="nav-link p-3 text-current-color" 
+                    href="{{ settings[social_link] }}" 
+                    data-bs-toggle="tooltip" 
+                    data-bs-placement="bottom" 
+                    title="{{ social }}" aria-label="{{ social }}">
                     {% case social_handle %}
                         {% when 'facebook' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-facebook {{ class }}" 
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -21,8 +26,8 @@
                         {% when 'twitter' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-twitter {{ class }}" 
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -31,8 +36,8 @@
                         {% when 'instagram' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-instagram {{ class }}" 
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -41,8 +46,8 @@
                         {% when 'pinterest' %}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-pinterest {{ class }}" 
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -51,8 +56,8 @@
                         {% when 'snapchat' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-snapchat {{ class }}" 
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -61,8 +66,8 @@
                         {% when 'youtube' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg"
-                                width="{{ size | default: 21 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-youtube {{ class }}"
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -71,8 +76,8 @@
                         {% when 'linkedin' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-linkedin {{ class }}" 
                                 viewBox="0 0 24 24" 
                                 fill="currentColor">
@@ -81,8 +86,8 @@
                         {% when 'tiktok' %}
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-tiktok {{ class }}"
                                 viewBox="0 0 32 32"
                                 fill="currentColor">
@@ -91,8 +96,8 @@
                         {% when 'whatsapp' %}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-whatsapp {{ class }}"
                                 viewBox="0 0 24 24"
                                 fill="currentColor">
@@ -101,8 +106,8 @@
                         {% when 'email' %}
                             <svg
                                 xmlns="http://www.w3.org/2000/svg" 
-                                width="{{ size | default: 20 }}" 
-                                height="{{ size | default: 20 }}"
+                                width="{{ icon_size | default: 18 }}" 
+                                height="{{ icon_size | default: 18 }}"
                                 class="icon-social-email {{ class }}"
                                 viewBox="0 0 16 16"
                                 fill="currentColor">

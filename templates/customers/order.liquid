@@ -1,4 +1,4 @@
-<style>
+{% comment %} <style>
 @media (max-width: 991px) {
     table.order-details tfoot {
         display: block;
@@ -15,46 +15,52 @@
         padding: .25rem 0;
     }
 }
-</style>
+</style> {% endcomment %}
 
-<div class="container my-9">
-    <div class="text-center mb-6">
-        <h1 class="mb-1">
-            {{ 'customer.account.title' | t }}
-        </h1>
-        <a class="btn btn-outline-secondary btn-sm" href="{{ routes.account_url }}">
-            ← {{ 'customer.account.return' | t }}
-        </a>
-    </div>
+{% liquid 
+    assign order_date = order.created_at | time_tag: format: "date_at_time"
+%}
+
+<div id="order" class="container my-9">
     <div class="row">
         <div class="col-lg-8">
-            <h2 class="h3 mb-3">
-                {{ 'customer.account.order_history' | t }}
-            </h2>
-            {% assign order_date = order.created_at | time_tag: format: "date_at_time" %}
-            <p class="alert alert-info py-2">{{ 'customer.order.date_html' | t: date: order_date }}</p>
+            <h1 class="h2 mb-1">
+                {{ 'customer.order.title' | t: name: order.name }}
+            </h1>
+            <p class="mb-5">
+                {{ 'customer.order.date_html' | t: date: order_date }}
+            </p>
+            <a 
+                class="btn btn-outline-secondary btn-sm mb-7" 
+                href="{{ routes.account_url }}">
+                ← {{ 'customer.account.return' | t }}
+            </a>
             {% if order.cancelled %}
-                {% assign cancelled_at = order.cancelled_at | time_tag: format: "date_at_time" %}
-                <p>{{ 'customer.order.cancelled_html' | t: date: cancelled_at }}</p>
-                <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason_label }}</p>
+                <p class="alert alert-warning">
+                    {% assign cancelled_at = order.cancelled_at | time_tag: format: "date_at_time" %}
+                    {{ 'customer.order.cancelled_html' | t: date: cancelled_at }}<br>
+                    {{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason_label }}
+                </p>
             {% endif %}
-            <div class="mt-6 mb-2">
-                <table class="order-details table table-responsive align-middle">
-                    <thead>
-                        <tr role="row">
-                            <th scope="col" role="columnheader" class="text-nowrap">
+            <div class="table-collapsible mb-6">
+                <table
+                    id="order-table" 
+                    class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="text-nowrap">
                                 {{ 'customer.order.product' | t }}
                             </th>
-                            <th scope="col" role="columnheader" class="text-nowrap">
+                            <th scope="col" class="text-nowrap">
                                 {{ 'customer.order.sku' | t }}
                             </th>
-                            <th scope="col" role="columnheader" class="text-nowrap text-end">
+                            <th scope="col" class="text-nowrap text-end">
                                 {{ 'customer.order.price' | t }}
                             </th>
-                            <th scope="col" role="columnheader" class="text-nowrap text-end">
+                            <th scope="col" class="text-nowrap text-end">
                                 {{ 'customer.order.quantity' | t }}
                             </th>
-                            <th scope="col" role="columnheader" class="text-nowrap text-end">
+                            <th scope="col" class="text-nowrap text-end">
                                 {{ 'customer.order.total' | t }}
                             </th>
                         </tr>
@@ -133,23 +139,29 @@
                                 </td>
                                 <td class="text-lg-end" data-label="{{ 'customer.order.price' | t }}">
                                     {% if line_item.original_price != line_item.final_price or line_item.unit_price_measurement %}
-                                        <dl>
+                                        <dl class="mb-0">
                                             {% if line_item.original_price != line_item.final_price %}
                                                 <dt class="mb-0">
-                                                    <span class="visually-hidden">{{ 'product.regular_price' | t }}</span>
+                                                    <span class="visually-hidden">
+                                                        {{ 'product.price_regular' | t }} &nbsp;
+                                                    </span>
                                                 </dt>
                                                 <dd class="mb-0">
                                                     <s>{{ line_item.original_price | money }}</s>
                                                 </dd>
                                                 <dt>
-                                                    <span class="visually-hidden">{{ 'product.sale_price' | t }}</span>
+                                                    <span class="visually-hidden">
+                                                        {{ 'product.price_sale' | t }}
+                                                    </span>
                                                 </dt>
                                                 <dd class="mb-0">
                                                     <span>{{ line_item.final_price | money }}</span>
                                                 </dd>
                                             {% else %}
                                                 <dt class="mb-0">
-                                                    <span class="visually-hidden">{{ 'product.regular_price' | t }}</span>
+                                                    <span class="visually-hidden">
+                                                        {{ 'product.price_regular' | t }} &nbsp;
+                                                    </span>
                                                 </dt>
                                                 <dd class="mb-0">
                                                     {{ line_item.original_price | money }}
@@ -157,7 +169,9 @@
                                             {% endif %}
                                             {% if line_item.unit_price_measurement %}
                                                 <dt class="mb-0">
-                                                    <span class="visually-hidden">{{ 'product.unit_price' | t }}</span>
+                                                    <span class="visually-hidden">
+                                                        {{ 'product.price_unit' | t }}
+                                                    </span>
                                                 </dt>
                                                 <dd class="mb-0">
                                                     <span>
@@ -188,18 +202,18 @@
                                 </td>
                                 <td class="text-lg-end" data-label="{{ 'customer.order.total' | t }}">
                                     {% if line_item.original_line_price != line_item.final_line_price %}
-                                        <dl>
+                                        <dl class="mb-0">
                                             <dt class="mb-0">
                                                 <span class="visually-hidden">
-                                                    {{ 'product.regular_price' | t }}
+                                                    {{ 'product.price_regular' | t }} &nbsp;
                                                 </span>
                                             </dt>
                                             <dd class="mb-0">
-                                                <s>{{ line_item.original_line_price | money }}</s>
+                                                <s class="opacity-75">{{ line_item.original_line_price | money }}</s>
                                             </dd>
                                             <dt class="mb-0">
                                                 <span class="visually-hidden">
-                                                    {{ 'product.sale_price' | t }}
+                                                    {{ 'product.price_from' | t }}
                                                 </span>
                                             </dt>
                                             <dd class="mb-0">
@@ -215,7 +229,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td class="d-none d-lg-table-cell" role="rowheader" scope="row" colspan="4">
+                            <td class="d-none d-lg-table-cell" colspan="4">
                                 {{ 'customer.order.subtotal' | t }}
                             </td>
                             <td class="text-lg-end" data-label="{{ 'customer.order.subtotal' | t }}">
@@ -277,7 +291,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card card-body mb-5">
+            <div class="p-4">
                 <h3 class="h4">
                     {{ 'customer.order.billing_address' | t }}
                 </h3>
@@ -287,8 +301,8 @@
                 </p>
                 {{ order.billing_address | format_address }}
             </div>
-            <div class="card card-body mb-5">
-                <h3 class="h4 mt-4">
+            <div class="p-4">
+                <h3 class="h4">
                     {{ 'customer.order.shipping_address' | t }}
                 </h3>
                 <p class="mb-1">

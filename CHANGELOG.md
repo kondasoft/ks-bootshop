@@ -1,6 +1,9 @@
 
 # Change Log
 
+## [4.0.0] - 2022-12-26
+- New release
+
 ## [3.1.0] - 2021-06-02
 - Small fix with fonts missing semicolumn #57
 - Recommended products JS issue in the homepage #58

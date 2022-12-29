@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "template-list-collections": {
+      "type": "template-list-collections",
+      "settings": {
+        "limit": 48,
+        "bg_color": "",
+        "text_align": "text-center",
+        "title": "Collections",
+        "title_size": "h1",
+        "description": "<p>Add on optional description to this section<\/p>",
+        "description_size": "fs-5",
+        "collection_img_orientation": "square",
+        "collection_img_border": "img-thumbnail",
+        "breakpoint_xs": 1,
+        "breakpoint_sm": 2,
+        "breakpoint_md": 2,
+        "breakpoint_lg": 3,
+        "breakpoint_xl": 3,
+        "breakpoint_xxl": 3,
+        "pt": 11,
+        "pb": 11,
+        "mt": 0,
+        "mb": 0
+      }
+    }
+  },
+  "order": [
+    "template-list-collections"
+  ]
+}

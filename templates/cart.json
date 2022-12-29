@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "template-cart": {
+      "type": "template-cart",
+      "settings": {
+        "bg_color": "",
+        "show_note": true,
+        "pt": 11,
+        "pb": 11,
+        "mt": 0,
+        "mb": 0
+      }
+    }
+  },
+  "order": [
+    "template-cart"
+  ]
+}

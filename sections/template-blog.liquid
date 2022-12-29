@@ -1,74 +1,61 @@
 {% liquid
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
     assign mt = section.settings.mt | prepend: 'mt-'
     assign mb = section.settings.mb | prepend: 'mb-'
 
-    assign row_xs =  section.settings.row_xs | prepend: 'row-cols-'
-    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
-    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
-
-    assign img_width  = 600
-    assign img_height = 300
+    assign row_xs = section.settings.breakpoint_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.breakpoint_sm | prepend: 'row-cols-sm-'
+    assign row_md = section.settings.breakpoint_md | prepend: 'row-cols-md-'
+    assign row_lg = section.settings.breakpoint_lg | prepend: 'row-cols-lg-'
+    assign row_xl = section.settings.breakpoint_xl | prepend: 'row-cols-xl-'
+    assign row_xxl = section.settings.breakpoint_xxl | prepend: 'row-cols-xxl-'
 %}
 
-<section id="blog-{{ section.id }}" class="blog {{ mt }} {{ mb }}">
+<section 
+    id="blog-{{ section.id }}" 
+    class="blog {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
     <div class="container">
-        <h1 class="title text-center mb-4 {{ section.settings.title_size }}">
+        <h1 
+            class="
+                title text-center {{ section.settings.title_size }}
+                {% if section.settings.title_show %}
+                    mb-6
+                {% else %}
+                    visually-hidden
+                {% endif %}">
             {{ blog.title }}
         </h1>
         {% if section.settings.show_filter_by %}
-            <div class="input-group justify-content-center mb-8">
-                <label class="input-group-text" for="blog-tag-select">
-                    {{ 'blogs.filter_by' | t }}
-                </label>
-                <select
-                    id="blog-tags-select"
-                    class="form-select w-auto flex-grow-0"
-                    style="min-width: 140px;"
-                    onchange="javascript:location.href = window.location.href = this.value">
-                    <option value="{{ blog.url }}">
-                        {{ 'blogs.all_topics' | t }}
-                    </option>
-                    {% for tag in blog.all_tags %}
-                        <option value="{{ blog.url }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}selected{% endif %}>
-                            {{ tag }}
+            <div class="blog-utilities d-lg-flex justify-content-lg-between align-items-lg-center bg-light py-4 px-4 mb-6 rounded">
+                <div class="breadcrumbs-wrapper mb-4 mb-lg-0">
+                    {% render 'breadcrumbs' %}
+                </div>
+                <div class="input-group w-auto">
+                    <label class="input-group-text" for="blog-tag-select">
+                        {{ 'blogs.filter_by' | t }}
+                    </label>
+                    <select
+                        id="blog-tags-select"
+                        class="form-select w-auto"
+                        style="min-width: 160px;"
+                        onchange="javascript:location.href = window.location.href = this.value">
+                        <option value="{{ blog.url }}">
+                            {{ 'blogs.all_topics' | t }}
                         </option>
-                    {% endfor %}
-                </select>
+                        {% for tag in blog.all_tags %}
+                            <option value="{{ blog.url }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}selected{% endif %}>
+                                {{ tag }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
         {% endif %}
         {% paginate blog.articles by section.settings.limit %}
-            <ul class="blog-list list-unstyled row mx-n3 {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+            <ul class="blog-list list-unstyled row mx-n3 mx-lg-n4 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }}">
                 {% for article in blog.articles %}
-                    <li class="col p-3">
-                        <div class="card h-100">
-                            <a class="" href="{{ article.url }}">
-                                <img
-                                    class="img-fluid card-img-top"
-                                    src="{{ article.image.src | image_url: width: img_width, height: img_height }}"
-                                    alt="{{ article.image.alt | escape }}"
-                                    width="{{ img_width }}"
-                                    height="{{ img_height }}"
-                                    loading="lazy">
-                            </a>
-                            <div class="card-body">
-                                <h3 class="title {{ section.settings.article_title_size }} mb-0">
-                                    <a href="{{ article.url }}" class="">
-                                        {{ article.title }}
-                                    </a>
-                                </h3>
-                                {% if section.settings.show_article_meta %}
-                                    <p class="article-meta text-muted mt-3 mb-0 small">
-                                        {{ article.author }} @ {{ article.created_at | time_tag: '%b %d, %Y' }}
-                                    </p>
-                                {% endif %}
-                                {% if section.settings.show_article_excerpt %}
-                                    <div class="article-excerpt rte mt-3">
-                                        {{ article.excerpt }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </li>
+                    {% render 'article-item', article: article %}
                 {% endfor %}
             </ul>
             {% render 'pagination' with paginate: paginate %}
@@ -78,11 +65,17 @@
 
 {% schema %}
 {
-    "name": "Blog template",
+    "name": "Blog",
     "settings": [
         {
             "type": "header",
             "content": "General"
+        },
+        {
+            "type": "checkbox",
+            "id": "title_show",
+            "label": "Show title",
+            "default": true
         },
         {
             "type": "select",
@@ -113,9 +106,26 @@
             "default": true
         },
         {
+            "type": "header",
+            "content": "Article"
+        },
+        {
+            "type": "select",
+            "id": "article_img_orientation",
+            "label": "Image orientation",
+            "default": "landscape-2",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "landscape-2", "label": "Landscape 2" },
+                { "value": "landscape-3", "label": "Landscape 3" },
+                { "value": "potrait", "label": "Potrait" }
+            ]
+        },
+        {
             "type": "select",
             "id": "article_title_size",
-            "label": "Article title size",
+            "label": "Title size",
             "default": "h5",
             "options": [
                 { "value": "h1", "label": "H1" },
@@ -128,25 +138,26 @@
         },
         {
             "type": "checkbox",
-            "id": "show_article_meta",
+            "id": "article_meta",
             "label": "Show article meta",
             "default": true
         },
         {
             "type": "checkbox",
-            "id": "show_article_excerpt",
+            "id": "article_excerpt",
             "label": "Show article excerpt",
             "default": true
         },
         {
             "type": "header",
-            "content": "Items per row"
+            "content": "Breakpoints",
+            "info": "Adjust items per slide based on screen resolution"
         },
         {
             "type": "range",
-            "id": "row_xs",
-            "label": "Mobile",
-            "info": "up to 575px",
+            "id": "breakpoint_xs",
+            "label": "Items per slide / xs",
+            "info": "Screen width: less than 576px",
             "min": 1,
             "max": 3,
             "step": 1,
@@ -154,9 +165,19 @@
         },
         {
             "type": "range",
-            "id": "row_sm",
-            "label": "Tablet",
-            "info": "576px - 991px",
+            "id": "breakpoint_sm",
+            "label": "Items per slide / sm",
+            "info": "Screen width: ≥576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_md",
+            "label": "Items per slide / md",
+            "info": "Screen width: ≥768px",
             "min": 1,
             "max": 4,
             "step": 1,
@@ -164,11 +185,31 @@
         },
         {
             "type": "range",
-            "id": "row_lg",
-            "label": "Desktop",
-            "info": "992px and up",
+            "id": "breakpoint_lg",
+            "label": "Items per slide / lg",
+            "info": "Screen width: ≥992px",
             "min": 1,
             "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xl",
+            "label": "Items per slide / xl",
+            "info": "Screen width: ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xxl",
+            "label": "Items per slide / xxl",
+            "info": "Screen width: ≥1400px",
+            "min": 1,
+            "max": 8,
             "step": 1,
             "default": 3
         },
@@ -178,12 +219,30 @@
         },
         {
             "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
             "id": "mt",
             "label": "Margin top",
             "min": 0,
             "max": 20,
             "step": 1,
-            "default": 10
+            "default": 0
         },
         {
             "type": "range",
@@ -192,13 +251,14 @@
             "min": 0,
             "max": 20,
             "step": 1,
-            "default": 10
+            "default": 0
         }
     ],
+    "templates": ["blog"],
     "presets": [
         {
-            "name": "Blog template",
-            "category": "Blog page"
+            "name": "Blog",
+            "category": "Blog"
         }
     ]
 }

@@ -1,0 +1,75 @@
+/*
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
+*/
+
+/*
+    Cart icon (badge)
+*/
+.cart-icon {
+    position: relative;
+}
+
+.cart-icon .badge {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*
+    Offcanvas cart
+*/
+#offcanvas-cart .offcanvas-body {
+    transition: all .2s ease-out;
+}
+
+#offcanvas-cart.loading .offcanvas-body {
+    opacity: .25;
+}
+
+#offcanvas-cart .product-item-price {
+    flex-shrink: 0;
+    line-height: 1.2;
+}
+
+#offcanvas-cart [name="updates[]"] {
+    max-width: 90px;
+}
+
+#offcanvas-cart .btn[data-remove-line-item] {
+    display: flex;
+    color: var(--bs-dark);
+    opacity: .75;
+}
+
+#offcanvas-cart .btn[data-remove-line-item]:hover,
+#offcanvas-cart .btn[data-remove-line-item]:focus {
+    opacity: 1;
+}
+
+#offcanvas-cart #cart-note {
+    margin-bottom: 1.5rem;
+}
+
+#offcanvas-cart #cart-note-title {
+}
+
+#offcanvas-cart .payment-icons svg {
+    width: auto;
+    max-height: 20px;
+}
+
+#offcanvas-cart-empty {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}

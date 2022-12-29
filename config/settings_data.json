@@ -1,31 +1,49 @@
 {
   "current": {
-    "font_headings": "roboto_n4",
+    "color_primary": "#0d6efd",
+    "color_light": "#f8f9fa",
+    "color_body_bg": "#ffffff",
+    "color_body_text": "#212529",
+    "font_headings": "roboto_n5",
+    "font_body": "sans-serif",
     "social_facebook": "#",
     "social_twitter": "#",
     "social_instagram": "#",
-    "social_pinterest": "#",
+    "social_pinterest": "",
     "social_tiktok": "#",
-    "social_snapchat": "#",
+    "social_snapchat": "",
     "social_youtube": "#",
-    "social_linkedin": "#",
+    "social_linkedin": "",
+    "social_whatsapp": "#",
+    "buttons_border_radius": "0.25rem",
+    "cart_goal_enable": true,
+    "cart_goal_value": 300,
+    "search_show_popular_products": true,
+    "search_popular_products": [
+      "bag-series-1",
+      "glasses-series-1",
+      "heat-series-1",
+      "lamp-series-1",
+      "watch-series-14",
+      "bag-series-2",
+      "glasses-series-2",
+      "heat-series-2",
+      "lamp-series-2",
+      "shoes-series-2"
+    ],
     "sections": {
-      "announcement-bar": {
-        "type": "announcement-bar",
-        "settings": {
-          "announcement": "<p>Announce Something Important Here. <a href=\"#\" title=\"#\">Learn more<\/a><\/p>",
-          "bg_color": "bg-dark text-white",
-          "pt": 3,
-          "pb": 3
-        }
-      },
       "navbar": {
         "type": "navbar",
         "settings": {
-          "bg_color": "bg-white navbar-light",
-          "logo": "shopify:\/\/shop_images\/logo.png",
-          "menu_mobile": "main-menu",
-          "menu_desktop": "main-menu",
+          "bg_color": "bg-white text-dark",
+          "shadow": "shadow-sm",
+          "menu_desktop": "dropdown-menu",
+          "logo_height_mobile": 40,
+          "logo_height_desktop": 40,
+          "offcanvas_menu_header_bg": "bg-dark text-white",
+          "menu_mobile": "dropdown-menu",
+          "utilities_menu": "utilities-menu",
+          "offcanvas_menu_show_social_icons": true,
           "pt": 3,
           "pb": 3
         }
@@ -78,17 +96,12 @@
         ],
         "settings": {
           "bg_color": "bg-dark text-white",
-          "show_payment_icons": true,
+          "show_payment_icons": false,
           "show_social_icons": true,
-          "row_sm": 2,
-          "row_lg": 4,
-          "pt": 11,
+          "show_powered_by": true,
+          "pt": 10,
           "pb": 6
         }
-      },
-      "offcanvas-menu": {
-        "type": "offcanvas-menu",
-        "settings": {}
       },
       "template-cart": {
         "type": "template-cart",
@@ -96,6 +109,38 @@
           "show_note": true,
           "mt": 10,
           "mb": 10
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "announcement": "<p>Announce something important here<\/p>",
+          "show": true,
+          "homepage": false,
+          "bg_color": "bg-dark text-white",
+          "max_width": "600",
+          "font_size": "small",
+          "text_transform": "text-capitalize",
+          "pt": 3,
+          "pb": 3
+        }
+      },
+      "newsletter": {
+        "type": "newsletter",
+        "settings": {
+          "bg_color": "bg-light text-dark",
+          "max_width": "560",
+          "title": "Newsletter Subscribe",
+          "title_size": "h3",
+          "description": "<p>Subscribe to get updates about our latest offers and other important stuff. We usually send once per week.<\/p>",
+          "description_size": "fs-6",
+          "input_group_size": "",
+          "btn_color": "btn-primary",
+          "notice": "<p>By signing up for email, you agree to our <a href=\"#\" title=\"#\">Terms of Service<\/a> and <a href=\"#\" title=\"#\">Privacy Policy<\/a>.<\/p>",
+          "pt": 10,
+          "pb": 10,
+          "mt": 0,
+          "mb": 0
         }
       }
     },

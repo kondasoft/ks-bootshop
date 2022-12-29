@@ -1,34 +1,58 @@
-<div id="offcanvas-search" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="offcanvas-search-label">
+<div 
+    id="offcanvas-search" 
+    class="offcanvas offcanvas-end offcanvas-mobile-full" 
+    tabindex="-1" 
+    aria-labelledby="offcanvas-search-label">
     <div class="offcanvas-header bg-light">
-        <h2 id="offcanvas-cart-label" class="h5 offcanvas-title">
-            {{ 'general.search.title' | t }}
-        </h2>
+        <h5 id="offcanvas-search-label" class="offcanvas-title">
+            {{ 'general.offcanvas_search.title' | t }}
+        </h5>
         <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
         </button>
     </div>
     <div class="offcanvas-body">
         <predictive-search>
-            <form action="{{ routes.search_url }}" method="get" role="search">
-                <input
-                    class="form-control"
-                    type="search"
-                    name="q"
-                    value="{{ search.terms | escape }}"
-                    role="combobox"
-                    aria-expanded="false"
-                    aria-owns="predictive-search-results-list"
-                    aria-controls="predictive-search-results-list"
-                    aria-haspopup="listbox"
-                    aria-autocomplete="list"
-                    aria-label="{{ 'general.search.input_label' | t }}"
-                    placeholder="{{ 'general.search.input_label' | t }}"
-                    autocorrect="off"
-                    autocomplete="off"
-                    autocapitalize="off"
-                    spellcheck="false">
-                <input name="options[prefix]" type="hidden" value="last">
-                <div id="predictive-search" tabindex="-1"></div>
+            <form 
+                action="{{ routes.search_url }}" method="get" role="search">
+                <div class="form-control-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-search" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input
+                        class="form-control"
+                        type="search"
+                        name="q"
+                        value="{{ search.terms | escape }}"
+                        aria-describedby="predictive-search-alert"
+                        aria-label="{{ 'general.offcanvas_search.input_label' | t }}"
+                        placeholder="{{ 'general.offcanvas_search.input_label' | t }}"
+                        data-search-collections="{{ settings.search_collections }}"
+                        data-search-pages="{{ settings.search_pages }}"
+                        data-search-articles="{{ settings.search_articles }}">
+                </div>
+                <input type="hidden" name="type" value="product">
             </form>
+            <p 
+                id="predictive-search-alert" 
+                class="visually-hidden" 
+                role="status"
+                data-text-result-found="{{ 'general.offcanvas_search.result_found' | t }}"
+                data-text-results-found="{{ 'general.offcanvas_search.results_found' | t }}"
+                data-text-no-results="{{ 'general.offcanvas_search.no_results' | t }}">
+            </p>
+            <div id="predictive-search" tabindex="-1"></div>
         </predictive-search>
+    </div>
+    <div class="offcanvas-footer border-top p-5" hidden>
+        <form action="{{ routes.search_url }}" method="get" role="search">
+            <input type="hidden" name="q" value="">
+            <input type="hidden" name="type" value="product">
+            <button 
+                class="btn btn-outline-primary w-100" 
+                data-text-search-for="{{ 'general.offcanvas_search.search_for' | t }}"
+                tabindex="-1">
+            </button>
+        </form>
     </div>
 </div>

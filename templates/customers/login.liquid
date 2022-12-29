@@ -14,9 +14,11 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 </script>
     
-<div class="container my-10" style="max-width: 720px">
-    <div class="bg-light rounded px-6 py-6 mb-6">
-        <h1 class="text-center mb-6">
+<div id="login" class="container my-11">
+    <div 
+        class="bg-light px-6 py-6 mx-auto mb-6 rounded" 
+        style="max-width: 720px;">
+        <h1 class="h2 text-center mb-6">
             {{ 'customer.login.title' | t }}
         </h1>
         {% form 'customer_login' %}
@@ -52,7 +54,9 @@ window.addEventListener('DOMContentLoaded', () => {
         <h4 class="title text-center mb-4">
             {{ 'customer.login.new' | t }}
         </h4>
-        <a class="btn btn-outline-primary mb-2" href="{{ routes.account_register_url }}">
+        <a 
+            class="btn btn-outline-primary mb-2" 
+            href="{{ routes.account_register_url }}">
             {{ 'customer.login.create_account' | t }}
         </a>
     </div>

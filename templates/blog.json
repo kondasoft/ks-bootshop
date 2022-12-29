@@ -1,23 +1,59 @@
 {
   "sections": {
+    "2a27646b-e8bc-4cd1-91bc-be72dd0920c5": {
+      "type": "parallax-image",
+      "settings": {
+        "img_mobile": "shopify:\/\/shop_images\/lifestyle-2-mobile.jpg",
+        "img_mobile_opacity": 0.7,
+        "img_mobile_blur": 0,
+        "img_mobile_orientation": "down",
+        "img_mobile_scale": 120,
+        "img_desktop": "shopify:\/\/shop_images\/lifestyle-2.jpg",
+        "img_desktop_opacity": 0.7,
+        "img_desktop_blur": 0,
+        "img_desktop_orientation": "down",
+        "img_desktop_scale": 120,
+        "max_width": "720",
+        "title": "Blog",
+        "title_size": "h1",
+        "description": "<p>Add on optional description for your blog<\/p>",
+        "description_size": "fs-5",
+        "btn_text": "",
+        "btn_url": "",
+        "btn_color": "btn-primary",
+        "btn_size": "",
+        "pt": 12,
+        "pb": 12,
+        "mt": 0,
+        "mb": 0
+      }
+    },
     "template-blog": {
       "type": "template-blog",
       "settings": {
+        "title_show": false,
         "title_size": "h1",
         "limit": 40,
         "show_filter_by": true,
+        "article_img_orientation": "landscape-2",
         "article_title_size": "h5",
-        "show_article_meta": true,
-        "show_article_excerpt": true,
-        "row_xs": 1,
-        "row_sm": 2,
-        "row_lg": 3,
+        "article_meta": true,
+        "article_excerpt": true,
+        "breakpoint_xs": 1,
+        "breakpoint_sm": 2,
+        "breakpoint_md": 2,
+        "breakpoint_lg": 3,
+        "breakpoint_xl": 3,
+        "breakpoint_xxl": 3,
+        "pt": 0,
+        "pb": 0,
         "mt": 10,
         "mb": 10
       }
     }
   },
   "order": [
+    "2a27646b-e8bc-4cd1-91bc-be72dd0920c5",
     "template-blog"
   ]
 }

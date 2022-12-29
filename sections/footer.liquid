@@ -1,48 +1,46 @@
 {% liquid 
     assign pt = section.settings.pt | prepend: 'pt-'
     assign pb = section.settings.pb | prepend: 'pb-'
-
-    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
-    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
 %}
 
 <footer id="footer" class="{{ section.settings.bg_color }} {{ pt }} {{ pb }}">
     <div class="container">
-        {% if section.blocks.size > 0 %}
-            <ul id="footer-blocks" class="list-unstyled mb-7 mb-sm-0 row row-cols-1 {{ row_sm }} {{ row_lg }}">
-                {% for block in section.blocks %}
-                    <li class="footer-block col">
-                        <button 
-                            class="position-relative accordion-button collapsed d-sm-none py-4 mb-2" 
-                            data-bs-toggle="collapse" 
-                            data-bs-target="#footer-block-collapse-{{ block.id }}"
-                            aria-expanded="false" 
-                            aria-controls="footer-block-collapse-{{ block.id }}">
+        <div id="footer-blocks" class="list-unstyled row mb-10">
+            {% for block in section.blocks %}
+                <div class="footer-block col-lg">
+                    <a 
+                        class="nav-link h6 collapsed d-lg-none" 
+                        href="#block-collapse-{{ block.id }}"
+                        data-bs-toggle="collapse"
+                        aria-expanded="false" 
+                        aria-controls="block-collapse-{{ block.id }}"
+                        role="button">
+                        {{ block.settings.title }}
+                    </a>
+                    <h3 class="title d-none d-lg-inline-block {{ block.settings.title_size }}">
+                        <span>
                             {{ block.settings.title }}
-                        </button>
-                        <h3 class="title d-none d-sm-inline-block {{ block.settings.title_size }}">
-                            <span>
-                                {{ block.settings.title }}
-                            </span>
-                        </h3>
-                        <div id="footer-block-collapse-{{ block.id }}" class="collapse d-sm-block">
+                        </span>
+                    </h3>
+                    <div id="block-collapse-{{ block.id }}" class="collapse d-lg-block">
+                        <div class="mt-4 mb-6 my-lg-0">
                             {% case block.type %}
                                 {% when 'richtext' %}
                                     {% unless block.settings.description == blank %}
-                                        <div class="rte pt-2 mb-6 small">
+                                        <div class="rte mt-2 small">
                                             {{ block.settings.description }}
                                         </div>
                                     {% endunless %}
                                     {% unless block.settings.btn_text == blank %}
-                                        <a class="btn mb-6 {{ block.settings.btn_color }} {{ block.settings.btn_size }}" href="{{ block.settings.btn_url }}">
+                                        <a class="btn mt-6 {{ block.settings.btn_color }} {{ block.settings.btn_size }}" href="{{ block.settings.btn_url }}">
                                             {{ block.settings.btn_text }}
                                         </a>
                                     {% endunless %}
                                 {% when 'menu' %}
-                                    <ul class="nav flex-column pt-2 pt-lg-0 mb-6">
+                                    <ul class="nav flex-column mb-0">
                                         {% for link in linklists[block.settings.menu].links %}
                                             <li class="nav-item">
-                                                <a class="nav-link px-0 py-2 small" href="{{ link.url }}">
+                                                <a class="nav-link px-0 py-3 py-lg-2" href="{{ link.url }}">
                                                     {{ link.title }}
                                                 </a>
                                             </li>
@@ -50,29 +48,35 @@
                                     </ul>
                             {% endcase %}
                         </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         
-        <hr class="d-none d-sm-block mt-4 mb-7">
+        <hr class="d-none d-sm-block mb-7">
 
         <div id="footer-copyright" class="small text-center">
-                    
-            <p id="copyright-copy" class="mb-0">
+            <p class="mb-0">
                 &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. {{ 'general.general.all_rights_reserved' | t }}
             </p>
-            <p id="copyright-powered" class="mb-4">
-                Powered by <a href="https://www.shopify.com" target="_blank" rel="sponsored">Shopify</a>. 
-                Theme by <a href="https://www.kondasoft.com" target="_blank" rel="sponsored">KondaSoft</a>
-            </p>
+            {% if section.settings.show_powered_by %}
+                <p class="mb-0">
+                    Powered by <a href="https://www.shopify.com" target="_blank" rel="sponsored">Shopify</a>. 
+                    Theme by <a href="https://www.kondasoft.com" target="_blank" rel="sponsored">KondaSoft</a>
+                </p>
+            {% endif %}
             {% if section.settings.show_social_icons %}
-                <div class="mb-5">
-                    {% render 'social-icons' %}
+                <div class="social-icons-wrapper mt-4">
+                    <small class="opacity-75 lh-sm visually-hidden">
+                        {{ 'general.general.follow_us' | t }}
+                    </small>
+                    {% render 'social-icons', icon_size: 18 %}
                 </div>
             {% endif %}
             {% if section.settings.show_payment_icons %}
-                {% render 'payment-icons' %}
+                <div class="payment-icons-wrapper mt-4">
+                    {% render 'payment-icons' %}
+                </div>
             {% endif %}
         </div>
     </div>
@@ -88,6 +92,7 @@
             "label": "Background color",
             "default": "bg-dark text-white",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
@@ -108,29 +113,10 @@
             "default": true
         },
         {
-            "type": "header",
-            "content": "Items per Row",
-            "info": "Based on screen resolution."
-        },
-        {
-            "type": "range",
-            "id": "row_sm",
-            "label": "Tablet",
-            "info": "576px - 991px",
-            "min": 2,
-            "max": 4,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "row_lg",
-            "label": "Desktop",
-            "info": "992px and up",
-            "min": 2,
-            "max": 6,
-            "step": 1,
-            "default": 4
+            "type": "checkbox",
+            "id": "show_powered_by",
+            "label": "Show Powered by",
+            "default": true
         },
         {
             "type": "header",

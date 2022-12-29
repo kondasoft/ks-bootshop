@@ -1,0 +1,151 @@
+/*
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
+*/
+
+/*
+    Collection header
+*/
+.collection-header {
+}
+
+.collection-header .description {
+    max-width: 720px;
+}
+
+.text-center .collection-header .description {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.collection-header-img {
+    position: relative;
+    background-color: var(--bs-dark);
+    color: white;
+}
+
+.collection-header-img .container {
+    position: relative;
+}
+
+.collection-header-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.collection-header-img-blur {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/*
+    Collection Utilities
+*/
+#collection-utilities {
+}
+
+#collection-utilities-inner {   
+}
+
+@media (max-width: 575px) {
+    #collection-utilities .btn-filters {
+        justify-content: center;
+        width: 100%;
+        margin-bottom: .75rem;
+    }
+}
+
+@media (min-width: 576px) {
+    #collection-utilities-inner {
+        display: flex;
+        justify-content: space-between;
+    }
+    #collection-utilities #sort-by-wrapper {
+        max-width: 300px;
+    }
+}
+
+
+/*
+    Collection list
+*/
+.collection-list {
+}
+
+.collection-item a {
+    text-decoration: none;
+}
+
+.collection-item-title {
+}
+
+.product-item-price-compare + .product-item-price-final {
+    color: var(--bs-success);
+}
+
+.collection-item-img {
+    transition: all .2s ease-out;
+}
+
+a:hover .collection-item-img {
+    opacity: .75;
+}
+
+.collection-item .img-thumbnail {
+    transition: all .2s ease-out;
+}
+
+.collection-item a:hover .img-thumbnail {
+    border-color: rgba(0, 0, 0, .25);
+}
+
+
+/*
+    Offcanvas Filters
+*/
+#offcanvas-filters {
+    width: 300px;
+}
+
+#offcanvas-filters .nav-link {
+    color: var(--bs-dark);
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.75rem 2rem .75rem 0;
+    font-weight: 500;
+    position: relative;
+}
+
+#offcanvas-filters .nav-link[aria-expanded]::after {
+    content: "";
+    position: absolute;
+    right: .125rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='var%28--bs-body-color%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-size: cover;
+    transition: all .2s ease-out;
+}
+
+#offcanvas-filters .nav-link[aria-expanded="true"]::after {
+    transform: translateY(-50%) rotate(-180deg);
+}
+
+#offcanvas-filters .form-check {
+    display: flex;
+    align-items: center;
+}
+
+#offcanvas-filters .form-check-label {
+    display: flex;
+    align-items: center;
+}

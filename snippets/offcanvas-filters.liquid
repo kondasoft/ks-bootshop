@@ -1,0 +1,158 @@
+{% liquid 
+    for filter in collection.filters
+        if filter.type == "price_range"
+           if filter.min_value.value != nil or filter.max_value.value != nil
+                assign active_filter_values = 1 | plus: active_filter_values
+            endif
+        else
+            assign active_filter_values = filter.active_values.size | plus: active_filter_values
+        endif
+    endfor
+%}
+
+<div 
+    id="offcanvas-filters"
+    class="offcanvas offcanvas-start" 
+    tabindex="-1"  
+    aria-labelledby="offcanvas-filters-label">
+    <div class="offcanvas-header bg-light">
+        <h5 id="offcanvas-filters-label" class="offcanvas-title">
+            {{ 'collection.filters.title' | t }}
+        </h5>
+        <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="" class="collection-filters-form">
+            <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+            <button 
+                class="btn-filters-clear-all btn btn-outline-secondary btn-sm w-100 mb-4" {% if active_filter_values == 0 %}hidden{% endif %}
+                onclick="onClickClearAllFilters(this, event)"
+                type="button">
+                {{ 'collection.filters.clear_all' | t: count: active_filter_values }}
+            </button>
+            <ul 
+                id="collection-filters-list" 
+                class="nav flex-column mb-0" 
+                aria-labelledby="offcanvas-filters-label">
+                {% for filter in collection.filters %}
+                    <li class="nav-item">
+                        <a 
+                            id="filter-collapse-link-{{ forloop.index }}"
+                            class="nav-link active"
+                            href="#filters-collapse-{{ forloop.index }}" 
+                            data-bs-toggle="collapse"
+                            aria-expanded="true" 
+                            aria-controls="filter-collapse-{{ forloop.index }}"
+                            role="button">
+                            {{ filter.label }}
+                        </a>
+                        <div id="filters-collapse-{{ forloop.index }}" class="collapse show">
+                            <div class="collapse-inner py-5">
+                                {% case filter.type %}
+                                    {% when 'list' %}
+                                        <ul 
+                                            class="filters-values-list list-unstyled mb-0"
+                                            ari-labelledby="filter-collapse-link-{{ forloop.index }}">
+                                            {% for filter_value in filter.values %}
+                                                <li class="form-check mb-2" {% if forloop.index > 10 %}hidden{% endif %}>
+                                                    <input 
+                                                        type="checkbox" 
+                                                        id="collection-filter-{{ filter.label | handleize }}-{{ filter_value.label | handleize }}"
+                                                        class="form-check-input mt-n1 me-3" 
+                                                        name="{{ filter_value.param_name }}" 
+                                                        value="{{ filter_value.value }}"
+                                                        onchange="onChangeCollectionFilter(this, event)"
+                                                        {% if filter_value.active -%}checked{%- endif %}
+                                                        {% if filter_value.count == 0 and filter_value.active == false -%}disabled{%- endif %}>
+                                                    <label 
+                                                        class="form-check-label" 
+                                                        for="collection-filter-{{ filter.label | handleize }}-{{ filter_value.label | handleize }}">
+                                                        {% if settings.color_swatches_names contains filter.label %}
+                                                            {% assign swatch_image = filter_value.label | handleize | prepend: 'swatch-' | append: '.png' %}
+                                                            <span 
+                                                                class="badge rounded-circle p-0 me-3" 
+                                                                style="
+                                                                    width: 10px;
+                                                                    height: 10px;
+                                                                    background-color: {{ filter_value.label | handleize }}; 
+                                                                    background-image: url({{ swatch_image | file_img_url: '32x32', crop: 'center' }});">
+                                                            </span>
+                                                        {% endif %}
+                                                        <span class="small">
+                                                            {{ filter_value.label | escape }} ({{ filter_value.count }})
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% if filter.values.size > 10 %}
+                                            <button 
+                                                class="btn btn-filters-view-more btn-light btn-sm d-flex align-items-center mt-4 fw-normal" 
+                                                type="button" 
+                                                onclick="onClickFiltersViewMore(this, event)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="me-3" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
+                                                </svg>
+                                                {{ 'collection.filters.view_more' | t }}
+                                            </button>
+                                        {% endif %}
+                                    {% when 'price_range' %}
+                                        {% assign max_range_money = filter.range_max | money %}
+                                        <div class="filter-price-group row mx-n2">
+                                            <div class="col-6 px-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-text px-3">
+                                                        {{ cart.currency.symbol }}
+                                                    </span>
+                                                    <input 
+                                                        class="form-control"
+                                                        name="{{ filter.min_value.param_name }}"
+                                                        {% if filter.min_value.value -%}
+                                                            value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                                                        {%- endif %}
+                                                        type="number"
+                                                        min="0"
+                                                        max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                                        placeholder="{{ 'collection.filters.from' | t }}"
+                                                        aria-label=" {{ 'collection.filters.from' | t }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-6 px-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-text px-3">
+                                                        {{ cart.currency.symbol }}
+                                                    </span>
+                                                    <input 
+                                                        class="form-control"
+                                                        name="{{ filter.max_value.param_name }}"
+                                                        {% if filter.max_value.value %}
+                                                            value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                                                        {% endif %}
+                                                        type="number"
+                                                        min="0"
+                                                        max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                                                        placeholder="{{ 'collection.filters.to' | t }}"
+                                                        aria-label="{{ 'collection.filters.to' | t }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="small text-muted text-center mt-3 mb-0">
+                                            {{ 'collection.filters.max_range_notice' | t: value: max_range_money }}
+                                        </p>
+                                {% endcase %}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+    <div
+        id="offcanvas-filters-footer" 
+        class="offcanvas-footer border-top px-5 py-4">
+        <button class="btn btn-primary w-100" type="button" data-bs-dismiss="offcanvas">
+            {{ 'collection.filters.view_results' | t: count: collection.products_count }}
+        </button>
+    </div>
+</div>

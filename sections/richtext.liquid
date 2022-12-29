@@ -5,23 +5,27 @@
     assign mb = section.settings.mb | prepend: 'mb-'
 %}
 
-<section id="richtext-{{ section.id }}" class="richtext {{ section.settings.text_align }} {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="container" style="max-width: {{ section.settings.max_width }}px">
-        {% unless section.settings.title == blank %}
-            <h2 class="title mb-4 {{ section.settings.title_size }}">
-                {{ section.settings.title }}
-            </h2>
-        {% endunless %}
-        {% unless section.settings.description == blank %}
-            <div class="description rte mt-n2 mb-6 {{ section.settings.description_size }}">
-                {{ section.settings.description }}
-            </div>
-        {% endunless %}
-        {% unless section.settings.btn_text == blank %}
-            <a class="btn mb-1 {{ section.settings.btn_color }} {{ section.settings.btn_size }}" href="{{ section.settings.btn_url }}">
-                {{ section.settings.btn_text }}
-            </a>
-        {% endunless %}
+<section 
+    id="richtext-{{ section.id }}" 
+    class="richtext {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container">
+        <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px">
+            {% unless section.settings.title == blank %}
+                <h2 class="title mb-4 {{ section.settings.title_size }}">
+                    {{ section.settings.title }}
+                </h2>
+            {% endunless %}
+            {% unless section.settings.description == blank %}
+                <div class="description rte mt-n2 mb-6 {{ section.settings.description_size }}">
+                    {{ section.settings.description }}
+                </div>
+            {% endunless %}
+            {% unless section.settings.btn_text == blank %}
+                <a class="btn mb-1 {{ section.settings.btn_color }} {{ section.settings.btn_size }}" href="{{ section.settings.btn_url }}">
+                    {{ section.settings.btn_text }}
+                </a>
+            {% endunless %}
+        </div>
     </div>
 </section>
 
@@ -37,8 +41,9 @@
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white text-dark",
+            "default": "",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
@@ -51,7 +56,7 @@
             "id": "max_width",
             "label": "Max width (px)",
             "info": "Adjust container width (in pixels)",
-            "default": "768"
+            "default": "960"
         },
         {
             "type": "select",
@@ -90,8 +95,8 @@
         {
             "type": "richtext",
             "id": "description",
-            "label": "Description",
-            "default": "<p>Write something catchy for this section.</p>"
+            "label": "Description (optional)",
+            "default": "<p>Add on optional description to this section</p>"
         },
         {
             "type": "select",
@@ -126,7 +131,7 @@
             "type": "select",
             "id": "btn_color",
             "label": "Button color",
-            "default": "btn-outline-primary",
+            "default": "btn-primary",
             "options": [
                 { "group": "Normal", "value": "btn-link", "label": "Link" },
                 { "group": "Normal", "value": "btn-light", "label": "Light" },

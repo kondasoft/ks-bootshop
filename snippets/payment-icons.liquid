@@ -3,15 +3,15 @@
         <span class="visually-hidden">
             {{ 'general.accessibility.payment_methods' | t }}
         </span>
-        <ul class="list-unstyled d-flex flex-wrap justify-content-center mb-2">
+        <ul class="list-unstyled d-inline-flex mb-1">
             {% for type in shop.enabled_payment_types %}
-                <li class="pe-1 pb-1" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ type | replace: "_", " " | camelcase }}">
+                <li class="p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ type | replace: "_", " " | camelcase }}">
                     {{ type | payment_type_svg_tag: class: 'icon' }}
                 </li>
             {% endfor %}
         </ul>
-        <span class="d-block fst-italic">
+        <small class="d-block lh-sm opacity-75">
             {{ 'general.general.secure_payments' | t }}
-        </span>
+        </small>
     </div>
 {% endunless %}

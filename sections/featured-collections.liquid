@@ -4,28 +4,37 @@
     assign mt = section.settings.mt | prepend: 'mt-'
     assign mb = section.settings.mb | prepend: 'mb-'
 
-    assign row_xs =  section.settings.row_xs | prepend: 'row-cols-'
-    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
-    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
-
+    assign row_xs = section.settings.breakpoint_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.breakpoint_sm | prepend: 'row-cols-sm-'
+    assign row_md = section.settings.breakpoint_md | prepend: 'row-cols-md-'
+    assign row_lg = section.settings.breakpoint_lg | prepend: 'row-cols-lg-'
+    assign row_xl = section.settings.breakpoint_xl | prepend: 'row-cols-xl-'
+    assign row_xxl = section.settings.breakpoint_xxl | prepend: 'row-cols-xxl-'
 %}
 
-<section id="featured-collections-{{ section.id }}" class="featured-collections {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+<section 
+    id="featured-collections-{{ section.id }}" 
+    class="featured-collections {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
     <div class="container">
         <h2 class="title mb-4 {{ section.settings.title_size }}">
             {{ section.settings.title }}
         </h2>
-        <ul class="collection-list list-unstyled row mx-n3 mb-0 {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+        {% unless section.settings.description == blank %}
+            <div class="description rte mt-n3 mb-5 {{ section.settings.description_size }}">
+                {{ section.settings.description }}
+            </div>
+        {% endunless %}
+        <ul class="collection-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }}">
             {% for block in section.blocks %}
-                {% render 'collection-item', collection: collections[block.settings.collection] %}
+                {% render 'collection-item', collection: collections[block.settings.collection], block: block %}
             {% endfor %}
         </ul>
         {% unless section.settings.btn_text == blank %}
-            <div class="text-center">
-                <a class="btn mt-8 mb-0 {{ section.settings.btn_color }}" href="{{ routes.collections_url }}">
-                    {{ section.settings.btn_text }} 
-                </a>
-            </div>
+            <a 
+                class="btn mt-8 mb-0 {{ section.settings.btn_color }}" 
+                href="{{ routes.collections_url }}">
+                {{ section.settings.btn_text }} 
+            </a>
         {% endunless %}
     </div>
 </section>
@@ -42,8 +51,9 @@
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white text-dark",
+            "default": "",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" }
             ]
@@ -79,6 +89,56 @@
             ]
         },
         {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description (optional)",
+            "default": "<p>Add on optional description to this section</p>"
+        },
+        {
+            "type": "select",
+            "id": "description_size",
+            "label": "Description size",
+            "default": "fs-6",
+            "options": [
+                { "value": "fs-1", "label": "fs-1" },
+                { "value": "fs-2", "label": "fs-2" },
+                { "value": "fs-3", "label": "fs-3" },
+                { "value": "fs-4", "label": "fs-4" },
+                { "value": "fs-5", "label": "fs-5" },
+                { "value": "fs-6", "label": "fs-6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Collection"
+        },
+        {
+            "type": "select",
+            "id": "collection_img_orientation",
+            "label": "Image orientation",
+            "default": "square",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "potrait", "label": "Potrait" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "collection_img_border",
+            "label": "Image border",
+            "default": "img-thumbnail",
+            "options": [
+                { "value": "", "label": "Square" },
+                { "value": "rounded", "label": "Rounded" },
+                { "value": "img-thumbnail", "label": "Thumbnail" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Button"
+        },
+        {
             "type": "text",
             "id": "btn_text",
             "label": "Button text",
@@ -91,24 +151,45 @@
             "label": "Button color",
             "default": "btn-primary",
             "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
                 { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
                 { "group": "Normal", "value": "btn-primary", "label": "Primary" },
                 { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
                 { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
                 { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" }
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
             ]
         },
         {
             "type": "header",
-            "content": "Items per row"
+            "content": "Breakpoints",
+            "info": "Adjust items per slide based on screen resolution"
         },
         {
             "type": "range",
-            "id": "row_xs",
-            "label": "Mobile",
-            "info": "up to 575px",
+            "id": "breakpoint_xs",
+            "label": "Items per slide / xs",
+            "info": "Screen width: less than 576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_sm",
+            "label": "Items per slide / sm",
+            "info": "Screen width: ≥576px",
             "min": 1,
             "max": 3,
             "step": 1,
@@ -116,9 +197,9 @@
         },
         {
             "type": "range",
-            "id": "row_sm",
-            "label": "Tablet",
-            "info": "576px - 991px",
+            "id": "breakpoint_md",
+            "label": "Items per slide / md",
+            "info": "Screen width: ≥768px",
             "min": 1,
             "max": 4,
             "step": 1,
@@ -126,11 +207,31 @@
         },
         {
             "type": "range",
-            "id": "row_lg",
-            "label": "Desktop",
-            "info": "992px and up",
+            "id": "breakpoint_lg",
+            "label": "Items per slide / lg",
+            "info": "Screen width: ≥992px",
             "min": 1,
             "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xl",
+            "label": "Items per slide / xl",
+            "info": "Screen width: ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xxl",
+            "label": "Items per slide / xxl",
+            "info": "Screen width: ≥1400px",
+            "min": 1,
+            "max": 8,
             "step": 1,
             "default": 3
         },
@@ -184,6 +285,18 @@
                     "type": "collection",
                     "id": "collection",
                     "label": "Collection"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img",
+                    "label": "Image",
+                    "info": "In case you prefer to use a different image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "info": "In case you prefer to use a different title"
                 }
             ]
         }
