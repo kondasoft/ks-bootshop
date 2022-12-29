@@ -8,11 +8,6 @@ Click on the screenshot below to play the video on Youtube.
 
 [<img src="https://img.youtube.com/vi/_G9IRSFAI_A/maxresdefault.jpg" width="50%">](https://youtu.be/_G9IRSFAI_A)
 
-## Premium (Pro) version
-We are building a pro version for this theme (with many pro features like Wishlist, Cart Upsells, Parallax sections and much more). Checkout the demo from the link below. If you are interested, please [contact us](https://www.kondasoft.com/pages/contact). 
-
-https://ks-bootshop.myshopify.com/?preview_theme_id=132279107746
-
 ## Highlighted features:
 * Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
 * Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
@@ -41,7 +36,8 @@ https://ks-bootshop.myshopify.com/?preview_theme_id=132279107746
 * Separator
 
 ## Demo 
-https://ks-bootshop.myshopify.com/
+https://ks-bootshop.myshopify.com
+
 
 ## Download 
 Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.
