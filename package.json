@@ -15,17 +15,17 @@
     "dependencies": {
         "@types/bootstrap": "^5.2.6",
         "autoprefixer": "^10.4.13",
-        "bootstrap": "^5.2.2",
-        "caniuse-lite": "^1.0.30001431",
-        "eslint": "^8.27.0",
+        "bootstrap": "^5.2.3",
+        "caniuse-lite": "^1.0.30001441",
+        "eslint": "^8.30.0",
         "eslint-config-standard": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-n": "^15.5.1",
+        "eslint-plugin-n": "^15.6.0",
         "eslint-plugin-promise": "^6.1.1",
         "minify": "^9.1.0",
         "npm-watch": "^0.11.0",
-        "postcss": "^8.4.19",
-        "postcss-cli": "^10.0.0",
-        "sass": "^1.56.1"
+        "postcss": "^8.4.20",
+        "postcss-cli": "^10.1.0",
+        "sass": "^1.57.1"
     }
 }
