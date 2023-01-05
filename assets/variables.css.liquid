@@ -1,0 +1,65 @@
+/*
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
+*/
+
+{% comment %} 
+    Fonts 
+{% endcomment %}
+{{ settings.font_headings | font_face: font_display: 'swap' }}
+
+{% unless settings.font_body.system %}
+    {{ settings.font_body | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+    {{ settings.font_body | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+{% endunless %}
+
+
+{% comment %} 
+    Variables
+{% endcomment %}
+:root {
+    --bs-primary: {{ settings.color_primary }};
+    --bs-primary-rgb: {{ settings.color_primary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+    --bs-primary-lighten-5: {{ settings.color_primary | color_lighten: 5 }};
+    --bs-primary-lighten-10: {{ settings.color_primary | color_lighten: 5 }};
+    --bs-primary-darken-5:  {{ settings.color_primary | color_darken: 5 }};
+    --bs-primary-darken-10:  {{ settings.color_primary | color_darken: 10 }};
+
+    --bs-secondary: {{ settings.color_secondary }};
+    --bs-secondary-rgb: {{ settings.color_secondary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+    --bs-secondary-lighten-5: {{ settings.color_secondary | color_lighten: 5 }};
+    --bs-secondary-lighten-10: {{ settings.color_secondary | color_lighten: 10 }};
+    --bs-secondary-darken-5:  {{ settings.color_secondary | color_darken: 5 }};
+    --bs-secondary-darken-10:  {{ settings.color_secondary | color_darken: 10 }};
+
+    --bs-dark: {{ settings.color_dark }};
+    --bs-dark-rgb: {{ settings.color_dark | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+    --bs-dark-lighten-5: {{ settings.color_dark | color_lighten: 5 }};
+    --bs-dark-lighten-10: {{ settings.color_dark | color_lighten: 10 }};
+    --bs-dark-darken-5:  {{ settings.color_dark | color_darken: 5 }};
+    --bs-dark-darken-10:  {{ settings.color_dark | color_darken: 10 }};
+
+    --bs-light: {{ settings.color_light }};
+    --bs-light-rgb: {{ settings.color_light | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+    --bs-light-darken-5:  {{ settings.color_light | color_darken: 5 }};
+    --bs-light-darken-10:  {{ settings.color_light | color_darken: 10 }};
+
+    --bs-body-bg: {{ settings.color_body_bg }};
+    --bs-body-bg-rgb: {{ settings.color_body_bg | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+    --bs-body-color: {{ settings.color_body_text }};
+    --bs-body-color-rgb: {{ settings.color_body_text | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+
+    --bs-border-color: var(--bs-light-darken-10);
+
+    --bs-link-color: var(--bs-primary);
+    --bs-link-hover-color: var(--bs-primary-darken-10);
+
+    --bs-headings-font-family: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
+    --bs-headings-font-weight: {{ settings.font_headings.weight }};
+    {% unless settings.font_body.system %}
+        --bs-body-font-family:  {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+    {% endunless %}
+
+    --bs-border-radius: {{ settings.buttons_border_radius }};
+}

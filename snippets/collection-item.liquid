@@ -1,22 +1,39 @@
 {% liquid
-    assign img_width  = 600
-    assign img_height = 600
-    assign img_thumbnail = 'img-thumbnail'
+    case section.settings.collection_img_orientation
+        when 'square'
+            assign img_width  = 900
+            assign img_height = 900
+        when 'landscape'
+            assign img_width  = 900
+            assign img_height = 720
+        when 'potrait'
+            assign img_width  = 720
+            assign img_height = 900
+    endcase
 
     assign image = collection.image | default: collection.products.first.featured_image
+    assign title = collection.title 
+
+    unless block.settings.img == blank
+        assign image = block.settings.img
+    endunless
+
+    unless block.settings.title == blank
+        assign title = block.settings.title
+    endunless
 %}
 
-<li class="collection-item p-3 mb-4">
-    <a class="" href="{{ collection.url }}">
+<li class="collection-item p-3 p-lg-4">
+    <a class="collection-link position-relative d-block link-dark" href="{{ collection.url }}">
         <img 
-            class="collection-item-img img-fluid mb-3 {{ img_thumbnail }}"
+            class="collection-item-img img-fluid mb-4 {{ section.settings.collection_img_border }}"
             src="{{ image | image_url: width: img_width, height: img_height, crop: 'center' }}" 
             alt="{{ image.alt | escape }}"
             width="{{ img_width }}"
             height="{{ img_height }}"
             loading="lazy">
         <h3 class="collection-item-title h6 mb-0">
-            {{ collection.title }}
+            {{ title }}
         </h3>
     </a>
 </li>

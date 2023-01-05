@@ -1,0 +1,135 @@
+/*
+    © 2022 KondaSoft.com
+    https://www.kondasoft.com
+*/
+
+/*
+    Product Gallery
+*/
+#product-gallery {
+}
+
+#product-gallery .carousel-control-icon {
+    background-color: rgba(0, 0, 0, .25);
+    border-radius: 50%;
+    background-size: 70%;
+    width: 2.5rem;
+    height: 2.5rem; 
+}
+
+
+/*
+    Product content
+*/
+#product-content {
+}
+
+#product-content .product-price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.product-price-compare + .product-price-final {
+    color: var(--bs-success);
+}
+
+#product-content .product-price .price-badge-sale {
+    background-color: var(--bs-success);
+    font-size: .75rem;
+    margin-left: .75rem;
+}
+
+#product-content .product-price .price-badge-sold-out {
+    background-color: var(--bs-secondary);
+    font-size: .75rem;
+    margin-left: .75rem;
+}
+
+
+/*
+    Product Form
+*/
+
+
+/*
+    Inventory bar
+*/
+#inventory-bar {
+    transition: all .2s ease-out;
+}
+
+#inventory-bar .progress {
+    height: .5rem;
+}
+
+
+/*
+    Product accordion
+*/
+#product-accordion .accordion-button {
+    background-color: var(--bs-light);
+    box-shadow: none;
+}
+
+#product-accordion .accordion-button:focus-visible {
+    box-shadow: 0 0 0 0.125rem rgba(var(--bs-dark-rgb), .5);
+}
+
+
+/*
+    Product list
+*/
+.product-list {
+    transition: all .2s ease-out;
+}
+
+.product-item {
+}
+
+.product-item .img-badge-sale {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    z-index: 1;
+}
+
+.product-item .img-badge-sold-out {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    z-index: 1;
+}
+
+.product-item a {
+    text-decoration: none;
+}
+
+.product-item-title {
+}
+
+.product-item-price-compare + .product-item-price-final {
+    color: var(--bs-success);
+}
+
+.product-item-img {
+    transition: all .2s ease-out;
+}
+
+a:hover .product-item-img {
+    opacity: .75;
+}
+
+.product-item .img-thumbnail {
+    transition: all .2s ease-out;
+}
+
+.product-item a:hover .img-thumbnail {
+    border-color: rgba(0, 0, 0, .25);
+}
+
+@media (max-width: 575px) {
+    .collection .product-item-price {
+        font-size: .875rem;
+    }
+}

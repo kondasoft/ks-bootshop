@@ -36,7 +36,8 @@ Click on the screenshot below to play the video on Youtube.
 * Separator
 
 ## Demo 
-https://ks-bootshop.myshopify.com/
+https://ks-bootshop.myshopify.com
+
 
 ## Download 
 Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.

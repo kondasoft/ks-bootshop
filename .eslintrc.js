@@ -14,6 +14,11 @@ module.exports = {
         indent: ['error', 4]
     },
     globals: {
-        bootstrap: 'readonly'
+        Shopify: 'readonly',
+        bootstrap: 'readonly',
+        Splide: 'readonly',
+        simpleParallax: 'readonly',
+        SPR: 'readonly',
+        GLightbox: 'readonly'
     }
 }

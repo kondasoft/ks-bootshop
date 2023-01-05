@@ -1,42 +1,47 @@
 {% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
     assign mt = section.settings.mt | prepend: 'mt-'
     assign mb = section.settings.mb | prepend: 'mb-'
-    
-    assign row_xs = section.settings.row_xs | prepend: 'row-cols-'
-    assign row_sm = section.settings.row_sm | prepend: 'row-cols-sm-'
-    assign row_lg = section.settings.row_lg | prepend: 'row-cols-lg-'
+
+    assign row_xs = section.settings.breakpoint_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.breakpoint_sm | prepend: 'row-cols-sm-'
+    assign row_md = section.settings.breakpoint_md | prepend: 'row-cols-md-'
+    assign row_lg = section.settings.breakpoint_lg | prepend: 'row-cols-lg-'
+    assign row_xl = section.settings.breakpoint_xl | prepend: 'row-cols-xl-'
+    assign row_xxl = section.settings.breakpoint_xxl | prepend: 'row-cols-xxl-'
 %}
 
-<section id="template-list-collections-{{ section.id }}"class="template-list-collections {{ section.settings.text_align }} {{ mt }} {{ mb }}">
+<section 
+    id="list-collections-{{ section.id }}"
+    class="list-collections {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
     <div class="container">
-        <h1 class="mb-4">
+        <h1 class="title mb-4 {{ section.settings.title_size }}">
             {{ section.settings.title }}
         </h1>
+        {% unless section.settings.description == blank %}
+            <div class="description rte mt-n3 mb-5 {{ section.settings.description_size }}">
+                {{ section.settings.description }}
+            </div>
+        {% endunless %}
         {% paginate collections by section.settings.limit %}
-            <ul class="collection-list list-unstyled row mx-n3 mb-0 {{ row_xs }} {{ row_sm }} {{ row_lg }}">
+            <ul class="collection-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }}">
                 {% for collection in collections %}
                     {% render 'collection-item', collection: collection %}
                 {% endfor %}
             </ul>
             {% render 'pagination' with paginate: paginate %}
         {% endpaginate %}
-
     </div>
 </div>
 
 {% schema %}
 {
-    "name": "Collections list",
+    "name": "List collections",
     "settings": [
         {
             "type": "header",
             "content": "General"
-        },
-        {
-            "type": "text",
-            "id": "title",
-            "label": "Title",
-            "default": "Collections"
         },
         {
             "type": "range",
@@ -45,7 +50,18 @@
             "info": "Collections per page",
             "min": 2,
             "max": 50,
-            "default": 24
+            "default": 48
+        },
+        {
+            "type": "select",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "",
+            "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" }
+            ]
         },
         {
             "type": "select",
@@ -58,14 +74,91 @@
             ]
         },
         {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Collections"
+        },
+        {
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h1",
+            "options": [
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description (optional)",
+            "default": "<p>Add on optional description to this section</p>"
+        },
+        {
+            "type": "select",
+            "id": "description_size",
+            "label": "Description size",
+            "default": "fs-5",
+            "options": [
+                { "value": "fs-1", "label": "fs-1" },
+                { "value": "fs-2", "label": "fs-2" },
+                { "value": "fs-3", "label": "fs-3" },
+                { "value": "fs-4", "label": "fs-4" },
+                { "value": "fs-5", "label": "fs-5" },
+                { "value": "fs-6", "label": "fs-6" }
+            ]
+        },
+        {
             "type": "header",
-            "content": "Items per row"
+            "content": "Collection"
+        },
+        {
+            "type": "select",
+            "id": "collection_img_orientation",
+            "label": "Image orientation",
+            "default": "square",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "potrait", "label": "Potrait" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "collection_img_border",
+            "label": "Image border",
+            "default": "img-thumbnail",
+            "options": [
+                { "value": "", "label": "Square" },
+                { "value": "rounded", "label": "Rounded" },
+                { "value": "img-thumbnail", "label": "Thumbnail" }
+            ]
+        }, 
+        {
+            "type": "header",
+            "content": "Breakpoints",
+            "info": "Adjust items per slide based on screen resolution"
         },
         {
             "type": "range",
-            "id": "row_xs",
-            "label": "Mobile",
-            "info": "up to 575px",
+            "id": "breakpoint_xs",
+            "label": "Items per slide / xs",
+            "info": "Screen width: less than 576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 1
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_sm",
+            "label": "Items per slide / sm",
+            "info": "Screen width: ≥576px",
             "min": 1,
             "max": 3,
             "step": 1,
@@ -73,9 +166,9 @@
         },
         {
             "type": "range",
-            "id": "row_sm",
-            "label": "Tablet",
-            "info": "576px - 991px",
+            "id": "breakpoint_md",
+            "label": "Items per slide / md",
+            "info": "Screen width: ≥768px",
             "min": 1,
             "max": 4,
             "step": 1,
@@ -83,17 +176,55 @@
         },
         {
             "type": "range",
-            "id": "row_lg",
-            "label": "Desktop",
-            "info": "992px and up",
+            "id": "breakpoint_lg",
+            "label": "Items per slide / lg",
+            "info": "Screen width: ≥992px",
             "min": 1,
             "max": 6,
             "step": 1,
             "default": 3
         },
         {
+            "type": "range",
+            "id": "breakpoint_xl",
+            "label": "Items per slide / xl",
+            "info": "Screen width: ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xxl",
+            "label": "Items per slide / xxl",
+            "info": "Screen width: ≥1400px",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 4
+        },
+        {
             "type": "header",
             "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
         },
         {
             "type": "range",
@@ -102,7 +233,7 @@
             "min": 0,
             "max": 20,
             "step": 1,
-            "default": 10
+            "default": 0
         },
         {
             "type": "range",
@@ -111,7 +242,14 @@
             "min": 0,
             "max": 20,
             "step": 1,
-            "default": 10
+            "default": 0
+        }
+    ],
+    "templates": ["list-collections"], 
+    "presets": [
+        {
+            "name": "List collections",
+            "category": "List collections"
         }
     ]
 }

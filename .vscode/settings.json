@@ -1,9 +1,10 @@
 {
     "css.styleSheets": [
-        "/assets/bootstrap.css"
+        "/assets/vendor-bootstrap.min.css"
     ],
     "search.exclude": {
         "/assets/bootstrap.bundle.js": true,
         "/assets/bootstrap.css": true
-    }
+    },
+    "task.allowAutomaticTasks": "on"
 }

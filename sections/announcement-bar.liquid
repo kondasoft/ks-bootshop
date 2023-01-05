@@ -3,19 +3,25 @@
     assign pb = section.settings.pb | prepend: 'pb-'
 %}
 
-{% unless section.settings.announcement == blank %}
-    <section id="announcement-bar" class="{{ section.settings.bg_color }} {{ pt }} {{ pb }}">
-        <div class="container">
-            <div class="rte text-center lh-sm small">
-                {{ section.settings.announcement }}
+{% if section.settings.show %}
+    {% if section.settings.homepage == false or template.name == 'index' %}
+        <section 
+            id="announcement-bar-{{ section.id }}" 
+            class="announcement-bar {{ section.settings.bg_color }} {{ section.settings.font_size }} {{ section.settings.text_transform }} {{ pt }} {{ pb }}">
+            <div class="container">
+                <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px;">
+                    <div class="rte text-center lh-sm">
+                        {{ section.settings.announcement }}
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
-{% endunless %}
+        </section>
+    {% endif %}
+{% endif %}
 
 {% schema %}
 {
-    "name": "Announcement Bar",
+    "name": "Announcement bar",
     "settings": [
         {
             "type": "richtext",
@@ -27,11 +33,24 @@
             "content": "General"
         },
         {
+            "type": "checkbox",
+            "id": "show",
+            "label": "Show announcement bar",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "homepage",
+            "label": "Show only on homepage",
+            "default": false
+        },
+        {
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
             "default": "bg-dark text-white",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
@@ -41,6 +60,35 @@
                 { "group": "Alert", "value": "bg-warning text-dark", "label": "Warning" },
                 { "group": "Alert", "value": "bg-danger text-white", "label": "Danger" },
                 { "group": "Alert", "value": "bg-info text-white", "label": "Info" }
+            ]
+        },
+                {
+            "type": "text",
+            "id": "max_width",
+            "label": "Max-width (px)",
+            "default": "600"
+        },
+        {
+            "type": "select",
+            "id": "font_size",
+            "label": "Font size",
+            "default": "small",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "small", "label": "Small" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_transform",
+            "label": "Text transform",
+            "default": "text-capitalize",
+            "options": [
+                { "value": "", "label": "Normal" },
+                { "value": "text-capitalize", "label": "Capitalize" },
+                { "value": "text-lowercase", "label": "Lowercase" },
+                { "value": "text-uppercase", "label": "Uppercase" }
+
             ]
         },
         {

@@ -1,33 +1,59 @@
 {% liquid 
+    assign pt = section.settings.pt | prepend: 'pt-'
+    assign pb = section.settings.pb | prepend: 'pb-'
     assign mt = section.settings.mt | prepend: 'mt-'
     assign mb = section.settings.mb | prepend: 'mb-'
 
-    assign row_xs = section.settings.row_xs | prepend: 'row-cols-'
-    assign row_sm = section.settings.row_sm | prepend: 'row-cols-sm-'
-    assign row_lg = section.settings.row_lg | prepend: 'row-cols-lg-'
-
+    assign row_xs = section.settings.breakpoint_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.breakpoint_sm | prepend: 'row-cols-sm-'
+    assign row_md = section.settings.breakpoint_md | prepend: 'row-cols-md-'
+    assign row_lg = section.settings.breakpoint_lg | prepend: 'row-cols-lg-'
+    assign row_xl = section.settings.breakpoint_xl | prepend: 'row-cols-xl-'
+    assign row_xxl = section.settings.breakpoint_xxl | prepend: 'row-cols-xxl-'
 %}
 
-<section id="template-search" class="{{ mt }} {{ mb }}">
-    <div id="template-search-header" class="mb-9 bg-light overflow-hidden">
+<section 
+    id="search" 
+    class="{{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div id="search-header" class="mb-9 bg-light overflow-hidden">
         <div class="container">
-            <div class="mx-auto text-center py-10" style="max-width: 560px">
-                <h1 class="title text-uppercase mb-4">
+            <div 
+                class="mx-auto text-center py-10"
+                style="max-width: {{ section.settings.form_max_width }}px">
+                <h1 class="title mb-4 {{ section.settings.title_size }}">
                     {% if search.performed %}
                         {{ 'general.search_page.title_search_performed' | t }}
                     {% else %}
                         {{ 'general.search_page.title' | t }}
                     {% endif %}
                 </h1>
-                <form action="{{ routes.search_url }}">
-                    <div class="input-group input-group-lg">
+                <form action="{{ routes.search_url }}"> 
+                    <div class="d-lg-flex">
                         <input 
-                            class="form-control"
+                            class="form-control mb-3 mb-lg-0 me-lg-3"
                             type="search"
                             placeholder="{{ 'general.search_page.form.input_label' | t }}"
                             aria-label="{{ 'general.search_page.form.input_label' | t }}"
                             name="q"
                             value="{{ search.terms | escape }}">
+                        {% if section.settings.show_search_types_select %}
+                            <select 
+                                name="type" 
+                                class="form-select mb-3 mb-lg-0 me-lg-3" 
+                                aria-label="{{ 'general.search_page.form.select_label' | t }}">
+                                <option value="product">
+                                    {{ 'general.search_page.types.products' | t }}
+                                </option>
+                                <option value="article">
+                                    {{ 'general.search_page.types.articles' | t }}
+                                </option>
+                                <option value="page">
+                                    {{ 'general.search_page.types.pages' | t }}
+                                </option>
+                            </select>
+                        {% else %}
+                            <input type="hidden" name="type" value="product">
+                        {% endif %}
                         <button 
                             type="submit"
                             class="btn btn-primary">
@@ -40,25 +66,50 @@
     </div>
 
     {% if search.performed %}
-        <div class="container">
-        
+        <div class="{{ section.settings.container }}">
             {% if search.results_count == 0 %}        
-                <p class="alert alert-warning" role="status">
+                <p class="alert alert-warning py-3" role="status">
                     {{ 'general.search_page.no_results' | t: terms: search.terms }}
                 </p>
             {% else %}
-                <p class="alert alert-info" role="status">
+                <p class="alert alert-success py-3" role="status">
                     {{ 'general.search_page.results_with_count_and_term' | t: terms: search.terms, count: search.results_count }}
                 </p>
                 {% paginate search.results by section.settings.limit %}
-                    <ul class="product-list list-unstyled row mx-n3 mb-0 {{ section.settings.text_align }} {{ row_xs }} {{ row_sm }} {{ row_lg }}">
-                        {% for item in search.results %}
-                            {% case item.object_type %}
-                                {% when 'product' %}
-                                    {% render 'product-item', product: item %}
-                            {% endcase %}
-                        {% endfor %}
-                    </ul>
+                    {% if search.results.first.object_type == 'product' %}
+                        <ul class="product-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ section.settings.text_align }} {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }}">
+                            {% for item in search.results %}
+                                {% render 'product-item', product: item %}
+                            {% endfor %}
+                        </ul>
+                    {% elsif search.results.first.object_type == 'article' %}
+                        <ul class="article-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }}">
+                            {% for item in search.results %}
+                                {% render 'article-item', article: item %}
+                            {% endfor %}
+                        </ul>
+                    {% elsif search.results.first.object_type == 'page' %}
+                        <ul class="page-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }}">
+                            {% for page in search.results %}
+                                <li class="page-item p-3 p-lg-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h3 class="title {{ section.settings.page_title_size }} mb-0">
+                                                <a href="{{ page.url }}" class="">
+                                                    {{ page.title }}
+                                                </a>
+                                            </h3>
+                                            {% if section.settings.page_excerpt %}
+                                                <div class="page-excerpt rte small mt-3">
+                                                    {{ page.content | strip_html | truncatewords: 20 }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     {% render 'pagination' with paginate: paginate %}
                 {% endpaginate %}
             {% endif %}
@@ -69,19 +120,21 @@
 
 {% schema %}
 {
-    "name": "Search template",
+    "name": "Search",
     "settings": [
         {
             "type": "header",
             "content": "General"
         },
         {
-            "type": "range",
-            "id": "limit",
-            "label": "Products per page",
-            "min": 10,
-            "max": 50,
-            "default": 40
+            "type": "select",
+            "id": "container",
+            "label": "Container",
+            "default": "container",
+            "options": [
+                { "value": "container", "label": "Container" },
+                { "value": "container-fluid", "label": "Fluid" }
+            ]
         },
         {
             "type": "select",
@@ -94,14 +147,175 @@
             ]
         },
         {
+            "type": "range",
+            "id": "limit",
+            "label": "Products per page",
+            "min": 10,
+            "max": 50,
+            "default": 48
+        },
+        {
+            "type": "select",
+            "id": "title_size",
+            "label": "Title size",
+            "default": "h1",
+            "options": [
+                { "group": "Heading", "value": "h1", "label": "H1" },
+                { "group": "Heading", "value": "h2", "label": "H2" },
+                { "group": "Heading", "value": "h3", "label": "H3" },
+                { "group": "Heading", "value": "h4", "label": "H4" },
+                { "group": "Heading", "value": "h5", "label": "H5" },
+                { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "form_max_width",
+            "label": "Form max-width (px)",
+            "default": "540"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_search_types_select",
+            "label": "Show search types select",
+            "default": true
+        },
+        {
             "type": "header",
-            "content": "Items per row"
+            "content": "Product"
+        },
+        {
+            "type": "checkbox",
+            "id": "product_img_gallery",
+            "label": "Image gallery",
+            "default": true,
+            "info": "If disabled the featured image will be shown"
+        },
+        {
+            "type": "select",
+            "id": "product_img_orientation",
+            "label": "Image orientation",
+            "default": "square",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "potrait", "label": "Potrait" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "product_img_border",
+            "label": "Image border",
+            "default": "img-thumbnail",
+            "options": [
+                { "value": "", "label": "Square" },
+                { "value": "rounded", "label": "Rounded" },
+                { "value": "img-thumbnail", "label": "Thumbnail" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "product_title_size",
+            "label": "Title size",
+            "default": "h6",
+            "options": [
+                { "value": "h1", "label": "H1" },
+                { "value": "h2", "label": "H2" },
+                { "value": "h3", "label": "H3" },
+                { "value": "h4", "label": "H4" },
+                { "value": "h5", "label": "H5" },
+                { "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "product_show_atc_form",
+            "label": "Show 'Add to cart' form",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "product_show_wishlist_btn",
+            "label": "Show wishlist button",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Article"
+        },
+        {
+            "type": "select",
+            "id": "article_img_orientation",
+            "label": "Image orientation",
+            "default": "landscape-2",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "landscape-2", "label": "Landscape 2" },
+                { "value": "landscape-3", "label": "Landscape 3" },
+                { "value": "potrait", "label": "Potrait" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "article_title_size",
+            "label": "Title size",
+            "default": "h5",
+            "options": [
+                { "value": "h1", "label": "H1" },
+                { "value": "h2", "label": "H2" },
+                { "value": "h3", "label": "H3" },
+                { "value": "h4", "label": "H4" },
+                { "value": "h5", "label": "H5" },
+                { "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "article_meta",
+            "label": "Show article meta",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "article_excerpt",
+            "label": "Show article excerpt",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Page"
+        },
+        {
+            "type": "select",
+            "id": "page_title_size",
+            "label": "Title size",
+            "default": "h5",
+            "options": [
+                { "value": "h1", "label": "H1" },
+                { "value": "h2", "label": "H2" },
+                { "value": "h3", "label": "H3" },
+                { "value": "h4", "label": "H4" },
+                { "value": "h5", "label": "H5" },
+                { "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "id": "page_excerpt",
+            "label": "Show article excerpt",
+            "default": true
+        },
+        {
+            "type": "header",
+            "content": "Breakpoints",
+            "info": "Adjust items per slide based on screen resolution"
         },
         {
             "type": "range",
-            "id": "row_xs",
-            "label": "Mobile",
-            "info": "up to 575px",
+            "id": "breakpoint_xs",
+            "label": "Items per slide / xs",
+            "info": "Screen width: less than 576px",
             "min": 1,
             "max": 3,
             "step": 1,
@@ -109,27 +323,75 @@
         },
         {
             "type": "range",
-            "id": "row_sm",
-            "label": "Tablet",
-            "info": "576px - 991px",
+            "id": "breakpoint_sm",
+            "label": "Items per slide / sm",
+            "info": "Screen width: ≥576px",
             "min": 1,
-            "max": 4,
+            "max": 3,
             "step": 1,
             "default": 2
         },
         {
             "type": "range",
-            "id": "row_lg",
-            "label": "Desktop",
-            "info": "992px and up",
+            "id": "breakpoint_md",
+            "label": "Items per slide / md",
+            "info": "Screen width: ≥768px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_lg",
+            "label": "Items per slide / lg",
+            "info": "Screen width: ≥992px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xl",
+            "label": "Items per slide / xl",
+            "info": "Screen width: ≥1200px",
             "min": 1,
             "max": 6,
             "step": 1,
             "default": 4
         },
         {
+            "type": "range",
+            "id": "breakpoint_xxl",
+            "label": "Items per slide / xxl",
+            "info": "Screen width: ≥1400px",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 4
+        },
+        {
             "type": "header",
             "content": "Spacing"
+        },
+        {
+            "type": "range",
+            "id": "pt",
+            "label": "Padding top",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "pb",
+            "label": "Padding bottom",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 0
         },
         {
             "type": "range",
@@ -147,7 +409,14 @@
             "min": 0,
             "max": 20,
             "step": 1,
-            "default": 10
+            "default": 0
+        }
+    ],
+    "templates": ["search"],
+    "presets": [
+        {
+            "name": "Search",
+            "category": "Search"
         }
     ]
 }

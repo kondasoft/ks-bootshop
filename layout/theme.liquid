@@ -28,33 +28,42 @@
 
     {{ content_for_header }}
 
-    <link href="{{ 'bootstrap.css' | asset_url }}" rel="stylesheet">
-    <style>
-        {{ settings.font_headings | font_face: font_display: 'swap' }}
-        :root {
-            --bs-headings-font-family: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
-            --bs-headings-font-weight: {{ settings.font_headings.weight }};
-        }
-    </style>
+    <link href="{{ 'vendor-bootstrap.min.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'variables.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'base.css' | asset_url }}" rel="stylesheet">
     <link href="{{ 'general.css' | asset_url }}" rel="stylesheet">
     <link href="{{ 'sections.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'collection.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'product.css' | asset_url }}" rel="stylesheet">
+    <link href="{{ 'cart.css' | asset_url }}" rel="stylesheet">
     <link href="{{ 'custom.css' | asset_url }}" rel="stylesheet">
 
     <script>
-        window.money_format = "{{ shop.money_format }}"
-        window.themeStrings = {
-            addToCart: `{{ 'product.add_to_cart' | t }}`,
-            soldOut: `{{ 'product.sold_out' | t }}`,
-            unavailable: `{{ 'product.unavailable' | t }}`,
+        Shopify.money_format = "{{ shop.money_format }}"
+        window.theme = {
+            product: {
+                addToCart: '{{ 'product.add_to_cart' | t }}',
+                addedToCart: '{{ 'product.added_to_cart' | t }}',
+                soldOut: '{{ 'product.sold_out' | t }}',
+                unavailable: '{{ 'product.unavailable' | t }}',
+                priceRegular: '{{ 'product.price_regular' | t }}',
+                priceFrom: '{{ 'product.price_from' | t }}',
+                priceSale: '{{ 'product.price_sale' | t }}',
+                save: '{{ 'product.save' | t }}',
+            }
         }
     </script>
 
-    <script src="{{ 'bootstrap.bundle.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'vendor-bootstrap.bundle.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'base.js' | asset_url }}" defer></script>
     <script src="{{ 'general.js' | asset_url }}" defer></script>
+    <script src="{{ 'search.js' | asset_url }}" defer></script>
+    <script src="{{ 'sections.js' | asset_url }}" defer></script>
     <script src="{{ 'collection.js' | asset_url }}" defer></script>
     <script src="{{ 'product.js' | asset_url }}" defer></script>
     <script src="{{ 'cart.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
 </head>
 
 <body class="{{ request.page_type | prepend: 'page-type-' }}">
@@ -67,16 +76,19 @@
         section 'navbar' 
     %}
 
-    <main id="main" role="main">
+    <main id="main">
         {{ content_for_layout }}
     </main>
 
     {% liquid
+        section 'newsletter'
         section 'footer'
+    %}
+
+    {% liquid
         render 'offcanvas-cart'
         render 'offcanvas-search'
     %}
-    <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
 </body>
 </html>
     

@@ -5,42 +5,53 @@
     assign mb = section.settings.mb | prepend: 'mb-'
 %}
 
-<section id="newsletter-{{ section.id }}" class="newsletter {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="container" style="max-width: {{ section.settings.max_width }}px">
-        {% unless section.settings.title == blank %}
-            <h2 class="title mb-4 text-center {{ section.settings.title_size }}">
-                {{ section.settings.title }}
-            </h2>
-        {% endunless %}
-        {% unless section.settings.description == blank %}
-            <div class="description rte mb-7 text-center">
-                {{ section.settings.description }}
+<section 
+    id="newsletter-{{ section.id }}" 
+    class="newsletter {{ section.settings.bg_color }} {{ mt }} {{ mb }}">
+    <div class="container">
+        <div class="newsletter-inner {{ pt }} {{ pb }}">
+            <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px">
+                {% unless section.settings.title == blank %}
+                    <h2 class="title mb-2 text-center {{ section.settings.title_size }}">
+                        {{ section.settings.title }}
+                    </h2>
+                {% endunless %}
+                {% unless section.settings.description == blank %}
+                    <div class="description small rte text-center mb-6 {{ section.settings.description_size }}">
+                        {{ section.settings.description }}
+                    </div>
+                {% endunless %}
+                {% form 'customer' %}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    {{ form.errors | default_errors }}
+                    {% if form.posted_successfully? %}
+                        <p class="alert alert-success">
+                            {{ 'general.newsletter.confirmation_text' | t }}
+                        </p>
+                    {% endif %}
+                    <div class="input-group mb-0 {{ section.settings.input_group_size }}">
+                        <input 
+                            type="email" 
+                            name="contact[email]" 
+                            size="30"
+                            class="form-control" 
+                            value="{% if customer.email != blank %}{{ customer.email }}{% endif %}" 
+                            placeholder="{{ 'general.newsletter.input_label' | t }}" 
+                            aria-label="{{ 'general.newsletter.input_label' | t }}" 
+                            autocorrect="off" 
+                            autocapitalize="off">
+                        <button class="btn {{ section.settings.btn_color }} {{ section.settings.btn_size }}" type="submit" name="commit">
+                            {{ 'general.newsletter.submit_button' | t }}
+                        </button>
+                    </div>
+                    {% unless section.settings.notice == blank %}
+                        <div class="notice rte mt-4 lh-sm extra-small text-center">
+                            {{ section.settings.notice }}
+                        </div>
+                    {% endunless %}
+                {% endform %}
             </div>
-        {% endunless %}
-        {% form 'customer' %}
-            <input type="hidden" name="contact[tags]" value="newsletter">
-            {{ form.errors | default_errors }}
-            {% if form.posted_successfully? %}
-                <p class="alert alert-success">
-                    {{ 'general.newsletter.confirmation_text' | t }}
-                </p>
-            {% endif %}
-            <div class="input-group mb-2 {{ section.settings.input_group_size }}">
-                <input 
-                    type="email" 
-                    name="contact[email]" 
-                    size="30"
-                    class="form-control" 
-                    value="{% if customer.email != blank %}{{ customer.email }}{% endif %}" 
-                    placeholder="{{ 'general.newsletter.input_label' | t }}" 
-                    aria-label="{{ 'general.newsletter.input_label' | t }}" 
-                    autocorrect="off" 
-                    autocapitalize="off">
-                <button class="btn {{ section.settings.btn_color }} {{ section.settings.btn_size }}" type="submit" name="commit">
-                    {{ 'general.newsletter.submit_button' | t }}
-                </button>
-            </div>
-        {% endform %}
+        </div>
     </div>
 </section>
 
@@ -56,12 +67,13 @@
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white text-dark",
+            "default": "bg-dark text-white",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
-                { "group": "Dark", "value": "bg-secondary text-dark", "label": "Secondary" },
+                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
                 { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
             ]
         },
@@ -69,7 +81,7 @@
             "type": "text",
             "id": "max_width",
             "label": "Container max-width (px)",
-            "default": "960",
+            "default": "640",
             "info": "Leave empty to disable"
         },
         {
@@ -82,7 +94,7 @@
             "type": "select",
             "id": "title_size",
             "label": "Title size",
-            "default": "h2",
+            "default": "h3",
             "options": [
                 { "group": "Heading", "value": "h1", "label": "H1" },
                 { "group": "Heading", "value": "h2", "label": "H2" },
@@ -109,7 +121,8 @@
                 { "value": "fs-3", "label": "fs-3" },
                 { "value": "fs-4", "label": "fs-4" },
                 { "value": "fs-5", "label": "fs-5" },
-                { "value": "fs-6", "label": "fs-6" }
+                { "value": "fs-6", "label": "fs-6" },
+                { "value": "small", "label": "Small" }
             ]
         },
         {
@@ -126,7 +139,7 @@
             "type": "select",
             "id": "btn_color",
             "label": "Button color",
-            "default": "btn-outline-primary",
+            "default": "btn-primary",
             "options": [
                 { "group": "Normal", "value": "btn-link", "label": "Link" },
                 { "group": "Normal", "value": "btn-light", "label": "Light" },
@@ -146,6 +159,12 @@
                 { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
                 { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
             ]
+        },
+        {
+            "type": "richtext",
+            "id": "notice",
+            "label": "Notice",
+            "default": "<p>By signing up for email, you agree to our Terms of Service and Privacy Policy.</p>"
         },
         {
             "type": "header",
@@ -186,12 +205,6 @@
             "max": 20,
             "step": 1,
             "default": 0
-        }
-    ],
-    "presets": [
-        {
-            "name": "Newsletter",
-            "category": "Promotional"
         }
     ]
 }

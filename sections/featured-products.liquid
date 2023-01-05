@@ -4,39 +4,40 @@
     assign mt = section.settings.mt | prepend: 'mt-'
     assign mb = section.settings.mb | prepend: 'mb-'
 
-    assign row_sm =  section.settings.row_sm | prepend: 'row-cols-sm-'
-    assign row_lg =  section.settings.row_lg | prepend: 'row-cols-lg-'
+    assign row_xs = section.settings.breakpoint_xs | prepend: 'row-cols-'
+    assign row_sm = section.settings.breakpoint_sm | prepend: 'row-cols-sm-'
+    assign row_md = section.settings.breakpoint_md | prepend: 'row-cols-md-'
+    assign row_lg = section.settings.breakpoint_lg | prepend: 'row-cols-lg-'
+    assign row_xl = section.settings.breakpoint_xl | prepend: 'row-cols-xl-'
+    assign row_xxl = section.settings.breakpoint_xxl | prepend: 'row-cols-xxl-'
 %}
 
 <section 
     id="featured-products-{{ section.id }}" 
-    class="featured-products {% if section.settings.recommended_mode %}recommended-products{% endif %} {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}"
-    data-base-url="{{ routes.product_recommendations_url }}"
-    data-section-id="{{ section.id }}"
-    data-product-id="{{ product.id }}" 
-    data-limit="{{ section.settings.limit }}">
-    <div class="container position-relative overflow-hidden">
+    class="featured-products position-relative overflow-hidden {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+    <div class="container">
         <h2 class="title mb-4 {{ section.settings.title_size }}">
             {{ section.settings.title }}
         </h2>
-        <ul class="product-list list-unstyled row mx-n3 mb-0 {{ row_sm }} {{ row_lg }}">
+        {% unless section.settings.description == blank %}
+            <div class="description rte mt-n3 mb-5 {{ section.settings.description_size }}">
+                {{ section.settings.description }}
+            </div>
+        {% endunless %}
+        <ul class="product-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {% if section.settings.mobile_scroll %}mobile-scroll{% endif %}">
             {% liquid
-                if section.settings.recommended_mode
-                    for product in recommendations.products
-                        render 'product-item', product: product
-                    endfor
-                else
-                    for product in collections[section.settings.collection].products limit: section.settings.limit
-                        render 'product-item', product: product
-                    endfor
-                endif
+                for product in section.settings.products
+                    render 'product-item', product: product
+                endfor
             %}
         </ul>
-        {% unless section.settings.recommended_mode and section.settings.btn_text == blank %}
-            <a class="btn mt-6 mb-0 {{ section.settings.btn_color }}" href="{{ collections[section.settings.collection].url }}">
+        {% if section.settings.btn_show %}
+            <a 
+                class="btn mt-6 mb-0 {{ section.settings.btn_color }}" 
+                href="{{ section.settings.btn_url }}">
                 {{ section.settings.btn_text }}
             </a>
-        {% endunless %}
+        {% endif %}
     </div>
 </section>
 
@@ -45,24 +46,9 @@
     "name": "Featured Products",
     "settings": [
         {
-            "type": "checkbox",
-            "id": "recommended_mode",
-            "label": "Recommended mode",
-            "info": "Only works in the product page. It uses Shopify's product recommendations API. Do not select a collection below. [Learn more](https://shopify.dev/themes/product-merchandising/recommendations)",
-            "default": false
-        },
-        {
-            "type": "collection",
-            "id": "collection",
-            "label": "Collection"
-        },
-        {
-            "type": "range",
-            "id": "limit",
-            "label": "Limit products",
-            "min": 2,
-            "max": 20,
-            "default": 8
+            "type": "product_list",
+            "id": "products",
+            "label": "Products"
         },
         {
             "type": "header",
@@ -72,10 +58,11 @@
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white",
+            "default": "",
             "options": [
-                { "group": "Light", "value": "bg-white", "label": "White" },
-                { "group": "Light", "value": "bg-light", "label": "Light" }
+                { "group": "Inherit", "value": "", "label": "Body" },
+                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
+                { "group": "Light", "value": "bg-light text-dark", "label": "Light" }
             ]
         },
         {
@@ -109,11 +96,157 @@
             ]
         },
         {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description (optional)",
+            "default": "<p>Add on optional description to this section</p>"
+        },
+        {
+            "type": "select",
+            "id": "description_size",
+            "label": "Description size",
+            "default": "fs-6",
+            "options": [
+                { "value": "fs-1", "label": "fs-1" },
+                { "value": "fs-2", "label": "fs-2" },
+                { "value": "fs-3", "label": "fs-3" },
+                { "value": "fs-4", "label": "fs-4" },
+                { "value": "fs-5", "label": "fs-5" },
+                { "value": "fs-6", "label": "fs-6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Product"
+        },
+        {
+            "type": "select",
+            "id": "product_img_orientation",
+            "label": "Image orientation",
+            "default": "square",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "potrait", "label": "Potrait" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "product_img_border",
+            "label": "Image border",
+            "default": "img-thumbnail",
+            "options": [
+                { "value": "", "label": "Square" },
+                { "value": "rounded", "label": "Rounded" },
+                { "value": "img-thumbnail", "label": "Thumbnail" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "product_title_size",
+            "label": "Title size",
+            "default": "h6",
+            "options": [
+                { "value": "h1", "label": "H1" },
+                { "value": "h2", "label": "H2" },
+                { "value": "h3", "label": "H3" },
+                { "value": "h4", "label": "H4" },
+                { "value": "h5", "label": "H5" },
+                { "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Breakpoints",
+            "info": "Adjust items per slide based on screen resolution"
+        },
+                {
+            "type": "checkbox",
+            "id": "mobile_scroll",
+            "label": "Scroll on mobile (xs)",
+            "info": "If enabled, the value for the settings below (Items per slide / xs) is not applicable.",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xs",
+            "label": "Items per slide / xs",
+            "info": "Screen width: less than 576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_sm",
+            "label": "Items per slide / sm",
+            "info": "Screen width: ≥576px",
+            "min": 1,
+            "max": 3,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_md",
+            "label": "Items per slide / md",
+            "info": "Screen width: ≥768px",
+            "min": 1,
+            "max": 4,
+            "step": 1,
+            "default": 2
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_lg",
+            "label": "Items per slide / lg",
+            "info": "Screen width: ≥992px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 3
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xl",
+            "label": "Items per slide / xl",
+            "info": "Screen width: ≥1200px",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "range",
+            "id": "breakpoint_xxl",
+            "label": "Items per slide / xxl",
+            "info": "Screen width: ≥1400px",
+            "min": 1,
+            "max": 8,
+            "step": 1,
+            "default": 4
+        },
+        {
+            "type": "header",
+            "content": "'View more' Button"
+        },
+        {
+            "type": "checkbox",
+            "id": "btn_show",
+            "label": "Show button",
+            "default": true
+        },
+        {
             "type": "text",
             "id": "btn_text",
             "label": "Button text",
-            "default": "View all products",
-            "info": "Leave empty to disable"
+            "default": "View more products"
+        },
+        {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button URL"
         },
         {
             "type": "select",
@@ -121,39 +254,24 @@
             "label": "Button color",
             "default": "btn-primary",
             "options": [
+                { "group": "Normal", "value": "btn-link", "label": "Link" },
                 { "group": "Normal", "value": "btn-light", "label": "Light" },
+                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
                 { "group": "Normal", "value": "btn-primary", "label": "Primary" },
                 { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                { "group": "Normal", "value": "btn-success", "label": "Success" },
+                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                { "group": "Normal", "value": "btn-info", "label": "Info" },
+                { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
+                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
                 { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
                 { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" }
+                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
             ]
-        },
-        {
-            "type": "header",
-            "content": "Items per Row",
-            "info": "Based on screen resolution."
-        },
-        {
-            "type": "range",
-            "id": "row_sm",
-            "label": "Tablet",
-            "info": "576px - 991px",
-            "min": 2,
-            "max": 4,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "row_lg",
-            "label": "Desktop",
-            "info": "992px and up",
-            "min": 2,
-            "max": 6,
-            "step": 1,
-            "default": 4
         },
         {
             "type": "header",

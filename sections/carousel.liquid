@@ -3,18 +3,6 @@
     assign mb = section.settings.mb | prepend: 'mb-'
 %}
 
-{% javascript %}
-// Go to corresponding slide on Shopify's editor
-document.addEventListener('shopify:block:select', (e) => {
-    const carouselEl = e.target.closest('.carousel')
-
-    if (carouselEl) {
-        const selectedSlide = e.target.dataset.index
-        bootstrap.Carousel.getOrCreateInstance(carouselEl, { interval: false }).to(selectedSlide)
-    }
-})
-{% endjavascript %}
-
 <section 
     id="carousel-{{ section.id }}" 
     class="carousel bg-dark {{ section.settings.animation }} {{ mt }} {{ mb }}"
@@ -41,34 +29,36 @@ document.addEventListener('shopify:block:select', (e) => {
                     {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'bg-secondary' }}
                 {% else %}
                     <img 
-                        class="w-100 h-auto d-lg-none"
-                        src="{{ block.settings.img_mobile | image_url: width: '800', crop: 'center' }}" 
+                        class="carousel-item-img d-lg-none w-100"
+                        src="{{ block.settings.img_mobile | image_url: width: '960', crop: 'center' }}" 
                         alt=" {{ block.settings.img_mobile.alt }}"
-                        width="800"
-                        height="{{ 800 | divided_by: block.settings.img_mobile.aspect_ratio | round }}"
+                        width="960"
+                        height="{{ 960 | divided_by: block.settings.img_mobile.aspect_ratio | round }}"
                         loading="lazy"
-                        style="opacity: {{ block.settings.img_opacity }}; object-fit: cover;">
+                        style="height: {{ block.settings.img_mobile_height }}px; opacity: {{ block.settings.img_mobile_opacity }};">
                     <img 
-                        class="w-100 h-auto d-none d-lg-block"
-                        src="{{ block.settings.img_desktop | image_url: width: '1600', crop: 'center' }}" 
+                        class="carousel-item-img d-none d-lg-block w-100"
+                        src="{{ block.settings.img_desktop | image_url: width: '1920', crop: 'center' }}" 
                         alt=" {{ block.settings.img_desktop.alt }}"
-                        width="1600"
-                        height="{{ 1600 | divided_by: block.settings.img_desktop.aspect_ratio | round }}"
+                        width="1920"
+                        height="{{ 1920 | divided_by: block.settings.img_desktop.aspect_ratio | round }}"
                         loading="lazy"
-                        style="opacity: {{ block.settings.img_opacity }}; object-fit: cover;">
+                        style="height: {{ block.settings.img_desktop_height }}px; opacity: {{ block.settings.img_desktop_opacity }};">
                 {% endif %}
                 {% unless block.settings.title == blank %}
                     <div class="carousel-caption">
-                        <h3 class="{{ block.settings.title_size }}">
+                        <h3 class="title mb-3 {{ block.settings.title_size }}">
                             {{ block.settings.title }}
                         </h3>
                         {% unless block.settings.description == blank %}
-                            <div class="rte mb-6 {{ block.settings.description_size }}">
+                            <div class="description rte mb-6 {{ block.settings.description_size }}">
                                 {{ block.settings.description }}
                             </div>
                         {% endunless %}
                         {% unless block.settings.btn_text == blank %}
-                            <a class="btn mb-6 {{ block.settings.btn_color }} {{ block.settings.btn_size }}"  href="{{ block.settings.btn_url }}">
+                            <a 
+                                class="btn btn-md mb-5 {{ block.settings.btn_color }} {{ block.settings.btn_size }}"  
+                                href="{{ block.settings.btn_url }}">
                                 {{ block.settings.btn_text }}
                             </a>
                         {% endunless %}
@@ -129,7 +119,7 @@ document.addEventListener('shopify:block:select', (e) => {
             "label": "Enabled autoplay",
             "info": "Every 5 seconds",
             "default": false
-        },        
+        },
         {
             "type": "select",
             "id": "animation",
@@ -170,27 +160,57 @@ document.addEventListener('shopify:block:select', (e) => {
             "settings": [
                 {
                     "type": "header",
-                    "content": "Image"
+                    "content": "Mobile image"
                 },
                 {
                     "type": "image_picker",
                     "id": "img_mobile",
-                    "label": "Image - mobile"
-                },
-                {
-                    "type": "image_picker",
-                    "id": "img_desktop",
-                    "label": "Image - desktop"
+                    "label": "Image"
                 },
                 {
                     "type": "range",
-                    "id": "img_opacity",
+                    "id": "img_mobile_height",
+                    "label": "Image height (px)",
+                    "min": 200,
+                    "max": 1000,
+                    "step": 10,
+                    "default": 500
+                },
+                {
+                    "type": "range",
+                    "id": "img_mobile_opacity",
                     "label": "Opacity",
                     "min": 0,
                     "max": 1,
                     "step": 0.1,
-                    "default": 0.7,
-                    "info": "Decrease for more legible captions"
+                    "default": 0.7
+                },
+                {
+                    "type": "header",
+                    "content": "Desktop image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "img_desktop",
+                    "label": "Image"
+                },
+                {
+                    "type": "range",
+                    "id": "img_desktop_height",
+                    "label": "Image height (px)",
+                    "min": 200,
+                    "max": 1000,
+                    "step": 10,
+                    "default": 800
+                },
+                {
+                    "type": "range",
+                    "id": "img_desktop_opacity",
+                    "label": "Opacity",
+                    "min": 0,
+                    "max": 1,
+                    "step": 0.1,
+                    "default": 0.7
                 },
                 {
                     "type": "header",
@@ -237,6 +257,10 @@ document.addEventListener('shopify:block:select', (e) => {
                     ]
                 },
                 {
+                    "type": "header",
+                    "content": "button"
+                },
+                {
                     "type": "text",
                     "id": "btn_text",
                     "label": "Button text",
@@ -253,13 +277,23 @@ document.addEventListener('shopify:block:select', (e) => {
                     "label": "Button color",
                     "default": "btn-primary",
                     "options": [
+                        { "group": "Normal", "value": "btn-link", "label": "Link" },
                         { "group": "Normal", "value": "btn-light", "label": "Light" },
+                        { "group": "Normal", "value": "btn-dark", "label": "Dark" },
                         { "group": "Normal", "value": "btn-primary", "label": "Primary" },
                         { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                        { "group": "Normal", "value": "btn-dark", "label": "Dark" },
+                        { "group": "Normal", "value": "btn-success", "label": "Success" },
+                        { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+                        { "group": "Normal", "value": "btn-warning", "label": "Warning" },
+                        { "group": "Normal", "value": "btn-info", "label": "Info" },
+                        { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
+                        { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
                         { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
                         { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                        { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" }
+                        { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
+                        { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
+                        { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
+                        { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
                     ]
                 },
                 {

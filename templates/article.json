@@ -6,7 +6,8 @@
         "title_size": "h1",
         "max_width": "720",
         "show_tags": true,
-        "mt": 4,
+        "show_share_btn": true,
+        "mt": 6,
         "mb": 10
       }
     }

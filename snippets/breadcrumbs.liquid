@@ -1,0 +1,68 @@
+{% liquid 
+    assign supported_page_types = 'collection, product, blog, article, page'
+%}
+
+{% if supported_page_types contains request.page_type %}
+    <nav aria-label="{{ 'general.breadcrumbs.label' | t }}">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ routes.root_url }}">
+                    {{ 'general.breadcrumbs.home' | t }}
+                </a>
+            </li>
+            {% case request.page_type %}
+                {% when 'collection' %}
+                    {% if current_tags %}
+                        <li class="breadcrumb-item">
+                            {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+                            {{ collection.title | link_to: url }}
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ current_tags | join: ', ' | capitalize }}
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ collection.title }}
+                        </li>
+                    {% endif %}
+                {% when 'product' %}
+                    {% if collection %}
+                        <li class="breadcrumb-item">
+                            {{ collection.title | link_to: collection.url }}
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ product.title }}
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ product.title }}
+                        </li>
+                    {% endif %}
+                {% when 'blog' %}
+                    {% if current_tags %}
+                        <li class="breadcrumb-item">
+                            {{ blog.title | link_to: blog.url }}
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ current_tags | join: ', ' | capitalize }}
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ blog.title }}
+                        </li>
+                    {% endif %}
+                {% when 'article' %}
+                    <li class="breadcrumb-item">
+                        {{ blog.title | link_to: blog.url }}
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ article.title }}
+                    </li>
+                {% when 'page' %}
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{ page.title }}
+                    </li>
+            {% endcase %}
+        </ol>
+    </nav>
+{% endif %} 

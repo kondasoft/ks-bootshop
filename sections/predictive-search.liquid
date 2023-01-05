@@ -1,45 +1,155 @@
 {% liquid
-    assign img_width  = 360
-    assign img_height = 360
-    assign img_thumbnail = 'img-thumbnail'
+    case settings.offcanvas_img_orientation
+        when 'square'
+            assign img_width  = 600
+            assign img_height = 600
+        when 'landscape'
+            assign img_width  = 600
+            assign img_height = 480
+        when 'potrait'
+            assign img_width  = 480
+            assign img_height = 600
+    endcase
 %}
 
-{%- if predictive_search.performed -%}
+{% if predictive_search.performed %}
     <div id="predictive-search-results" class="my-6">
-        {% if predictive_search.resources.products.size > 0 -%}
-            <h3 id="predictive-search-products" class="h5 pb-3 mb-3 border-bottom">
-                {{ 'general.search.title_products' | t }}
+        {% if predictive_search.resources.products.size > 0 %}
+            <h3 
+                id="predictive-search-products" 
+                class="predictive-search-results-title h6 mb-4">
+                {{ 'general.offcanvas_search.title_products' | t }}
             </h3>
-        {%- endif -%}
-        <ul id="predictive-search-results-list" class="product-list list-unstyled mb-4" role="listbox" aria-labelledby="predictive-search-products">
-            {%- for product in predictive_search.resources.products -%}
-                <li class="product-item py-3" role="option">
-                    <a href="{{ product.url }}" class="" tabindex="-1">
+            <ul 
+                id="predictive-search-results-product-list" 
+                class="product-list list-unstyled mb-5"
+                aria-labelledby="predictive-search-products">
+                {% for product in predictive_search.resources.products %}
+                    <li class="product-item py-3">
                         <div class="row align-items-center mx-n3">
                             <div class="col-4 px-3">
-                                <img 
-                                    class="product-item-img img-fluid me-3 {{ img_thumbnail }}"
-                                    src="{{ product.featured_image | image_url: width: img_width, height: img_height }}"
-                                    alt="{{ product.featured_image.alt }}"
-                                    width="{{ img_width }}"
-                                    height="{{ img_height }}"
-                                    loading="lazy">
+                                <a href="{{ product.url }}" class="">
+                                    <img 
+                                        class="product-item-img img-fluid me-3 {{ settings.offcanvas_img_border }}""
+                                        src="{{ product.featured_image | image_url: width: img_width, height: img_height, crop: 'center' }}"
+                                        alt="{{ product.featured_image.alt }}"
+                                        width="{{ img_width }}"
+                                        height="{{ img_height }}"
+                                        loading="lazy">
+                                </a>
                             </div>
                             <div class="col-8 px-3">
-                                <h4 class="product-item-title h6 mb-2">
-                                    {{ product.title }}
+                                <h4 class="product-item-title h6 mb-1">
+                                    <a href="{{ product.url }}" class="link-dark">
+                                        {{ product.title }}
+                                    </a>
                                 </h4>
-                                <p class="product-item-price mb-0 text-dark">
-                                    {{ product.price | money }}
-                                </p> 
+                                <p class="product-item-price small mb-3">
+                                    {% if product.first_available_variant.compare_at_price > product.price %}
+                                        <span class="product-item-price-compare text-muted me-1">
+                                            <span class="visually-hidden">
+                                                {{ 'product.price_regular' | t }} &nbsp;
+                                            </span>
+                                            <s>
+                                                {{ product.first_available_variant.compare_at_price | money }}
+                                            </s>
+                                        </span>
+                                        <span class="product-item-price-final">
+                                            <span class="visually-hidden">
+                                                {{ 'product.price_sale' | t }} &nbsp;
+                                            </span>
+                                            {{ product.first_available_variant.price | money }}
+                                        </span>
+                                    {% else %}
+                                        <span class="product-item-price-final">
+                                            {{ product.first_available_variant.price | money }}
+                                        </span>
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
-                    </a>
-                </li>
-            {%- endfor -%}
-        </ul>
-        <button class="btn btn-outline-primary w-100" tabindex="-1">
-            {{ 'general.search.search_for' | t: terms: predictive_search.terms }}
-        </button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if settings.search_collections and predictive_search.resources.collections.size > 0 %}
+            <h3 
+                id="predictive-search-collections" 
+                class="predictive-search-results-title h6 mb-3">
+                {{ 'general.offcanvas_search.title_collections' | t }}
+            </h3>
+            <ul 
+                id="predictive-search-results-collection-list" 
+                class="collection-list list-unstyled d-flex flex-wrap mx-n2 mb-5"
+                aria-labelledby="predictive-search-collections">
+                {% for collection in predictive_search.resources.collections %}
+                    <li class="collection-item p-2">
+                        <a class="btn btn-outline-secondary" href="{{ collection.url }}">
+                            {{ collection.title }} ({{ collection.products_count }})
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if settings.search_pages and predictive_search.resources.pages.size > 0 %}
+            <h3 
+                id="predictive-search-pages" 
+                class="predictive-search-results-title h6 mb-3">
+                {{ 'general.offcanvas_search.title_pages' | t }}
+            </h3>
+            <ul 
+                id="predictive-search-results-page-list" 
+                class="page-list list-unstyled d-flex flex-wrap mx-n2 mb-5"
+                aria-labelledby="predictive-search-pages">
+                {% for page in predictive_search.resources.pages %}
+                    <li class="page-item p-2">
+                        <a class="btn btn-outline-secondary" href="{{ page.url }}">
+                            {{ page.title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if settings.search_articles and predictive_search.resources.articles.size > 0 %}
+            <h3 
+                id="predictive-search-articles" 
+                class="predictive-search-results-title h6 mb-3">
+                {{ 'general.offcanvas_search.title_articles' | t }}
+            </h3>
+            <ul 
+                id="predictive-search-results-article-list" 
+                class="articles-list list-unstyled d-flex flex-wrap mx-n2 mb-5"
+                aria-labelledby="predictive-search-articles">
+                {% for article in predictive_search.resources.articles %}
+                    <li class="article-item py-2">
+                        <div class="card">
+                            <a href="{{ article.url }}" class="link-dark text-decoration-none">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-4">
+                                        <img 
+                                            class="img-fluid rounded-start" 
+                                            src="{{ article.image.src | image_url: width: 480, height: 480 }}"
+                                            alt="{{ article.image.alt | escape }}"
+                                            width="480"
+                                            height="480"
+                                            loading="lazy">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="card-body">
+                                            <h4 class="card-title h6 mb-1">
+                                                {{ article.title }}
+                                            </h4>
+                                            <p class="article-meta text-muted mb-0 small">
+                                                {{ article.author }} @ {{ article.created_at | time_tag: '%b %d, %Y' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
-{%- endif -%}
+{% endif %}

@@ -3,21 +3,46 @@
     assign pb = section.settings.pb | prepend: 'pb-'
     assign mt = section.settings.mt | prepend: 'mt-'
     assign mb = section.settings.mb | prepend: 'mb-'
+
+    case section.settings.img_orientation
+        when 'square'
+            assign img_width  = 900
+            assign img_height = 900
+        when 'landscape'
+            assign img_width  = 900
+            assign img_height = 720
+        when 'landscape-x2'
+            assign img_width  = 900
+            assign img_height = 600
+        when 'potrait'
+            assign img_width  = 720
+            assign img_height = 900
+        when 'potrait-x2'
+            assign img_width  = 600
+            assign img_height = 900
+    endcase
 %}
 
-<section id="image-with-text-{{ section.id }}" class="image-with-text {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+<section 
+    id="image-with-text-{{ section.id }}" 
+    class="image-with-text {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
     <div class="container">
-        <div class="row align-items-center {{ section.settings.img_align }}">
-            <div class="col-md-6 mb-5 mb-mg-0">
+        <div class="row align-items-center {{ section.settings.img_align_desktop }}">
+            <div class="col-lg-6 mb-6 mb-lg-0">
                 <img
                     class="img-fluid {{ section.settings.img_border }}"
-                    src="{{ section.settings.image.src | image_url: width: section.settings.img_width, height: section.settings.img_height, crop: section.settings.img_crop }}"
+                    src="{{ section.settings.image.src | image_url: width: img_width, height: img_height, crop: section.settings.img_crop }}"
                     alt="{{ section.settings.image.alt | escape }}"
-                    width="{{ section.settings.img_width }}"
-                    height="{{ section.settings.img_height }}"
+                    width="{{ img_width }}"
+                    height="{{ img_height }}"
                     loading="lazy">
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6">
+                {% unless section.settings.subtitle == blank %}
+                    <p class="subtitle text-uppercase fw-500 mb-3 {{ section.settings.subtitle_size }}">
+                        {{ section.settings.subtitle }}
+                    </p>
+                {% endunless %}
                 {% unless section.settings.title == blank %}
                     <h2 class="title mb-4 {{ section.settings.title_size }}">
                         {{ section.settings.title }}
@@ -40,7 +65,7 @@
 
 {% schema %}
 {
-    "name": "Image with text",
+    "name": "Image With Text",
     "settings": [
         {
             "type": "header",
@@ -50,13 +75,24 @@
             "type": "select",
             "id": "bg_color",
             "label": "Background color",
-            "default": "bg-white text-dark",
+            "default": "",
             "options": [
+                { "group": "Inherit", "value": "", "label": "Body" },
                 { "group": "Light", "value": "bg-white text-dark", "label": "White" },
                 { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
                 { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
                 { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
                 { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "label": "Text align",
+            "default": "text-start",
+            "options": [
+                { "value": "text-start", "label": "Left" },
+                { "value": "text-center", "label": "Center" }
             ]
         },
         {
@@ -69,16 +105,17 @@
             "label": "Image"
         },
         {
-            "type": "text",
-            "id": "img_width",
-            "label": "Image width (px)",
-            "default": "900"
-        },
-        {
-            "type": "text",
-            "id": "img_height",
-            "label": "Image height (px)",
-            "default": "900"
+            "type": "select",
+            "id": "img_orientation",
+            "label": "Image orientation",
+            "default": "landscape",
+            "options": [
+                { "value": "square", "label": "Square" },
+                { "value": "landscape", "label": "Landscape" },
+                { "value": "landscape-x2", "label": "Landscape 2x" },
+                { "value": "potrait", "label": "Potrait" },
+                { "value": "potrait-x2", "label": "Potrait 2x" }
+            ]
         },
         {
             "type": "select",
@@ -106,13 +143,12 @@
         },
         {
             "type": "select",
-            "id": "img_align",
-            "label": "Image alignment",
-            "info": "Only on desktop view",
-            "default": "flex-row",
+            "id": "img_align_desktop",
+            "label": "Image alignment (desktop)",
+            "default": "flex-lg-row",
             "options": [
-                { "value": "flex-row", "label": "Left" },
-                { "value": "flex-row-reverse", "label": "Right" }
+                { "value": "flex-lg-row", "label": "Left" },
+                { "value": "flex-lg-row-reverse", "label": "Right" }
             ]
         },
         {
@@ -123,13 +159,13 @@
             "type": "text",
             "id": "title",
             "label": "Title",
-            "default": "Image with text"
+            "default": "Image With Text"
         },
         {
             "type": "select",
             "id": "title_size",
             "label": "Title size",
-            "default": "h3",
+            "default": "h2",
             "options": [
                 { "group": "Heading", "value": "h1", "label": "H1" },
                 { "group": "Heading", "value": "h2", "label": "H2" },
@@ -137,6 +173,26 @@
                 { "group": "Heading", "value": "h4", "label": "H4" },
                 { "group": "Heading", "value": "h5", "label": "H5" },
                 { "group": "Heading", "value": "h6", "label": "H6" }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "Some Optional Subtitle"
+        },
+        {
+            "type": "select",
+            "id": "subtitle_size",
+            "label": "Subtitle size",
+            "default": "fs-6",
+            "options": [
+                { "value": "fs-1", "label": "fs-1" },
+                { "value": "fs-2", "label": "fs-2" },
+                { "value": "fs-3", "label": "fs-3" },
+                { "value": "fs-4", "label": "fs-4" },
+                { "value": "fs-5", "label": "fs-5" },
+                { "value": "fs-6", "label": "fs-6" }
             ]
         },
         {
@@ -178,7 +234,7 @@
             "type": "select",
             "id": "btn_color",
             "label": "Button color",
-            "default": "btn-outline-primary",
+            "default": "btn-primary",
             "options": [
                 { "group": "Normal", "value": "btn-link", "label": "Link" },
                 { "group": "Normal", "value": "btn-light", "label": "Light" },
@@ -253,7 +309,7 @@
     ],
     "presets": [
         {
-            "name": "Image with text",
+            "name": "Image With Text",
             "category": "Image"
         }
     ]
