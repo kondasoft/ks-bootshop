@@ -9,95 +9,25 @@
             "title": "Details"
           }
         },
-        "8b1fb7b0-dfa9-43f1-90b7-3a36c06e06df": {
-          "type": "size_chart",
-          "settings": {
-            "title": "Size Chart",
-            "img": "shopify:\/\/shop_images\/size-chart-t-shirt.jpg",
-            "description": "<p>This is an optional description that you can show above the size chart table. Still have questions regarding your correct size? Please <a href=\"\/pages\/contact\" title=\"Contact us\">contact us<\/a><\/p>",
-            "page": "size-chart"
-          }
-        },
         "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5": {
           "type": "richtext",
           "settings": {
             "title": "Shipping & Returns",
             "description": "<p>Feel free to create additional blocks like this for <strong>Shipping, Payments, etc <\/strong>through the Shopify Theme editor. Also, you may easily adjust their order by dragging and dropping.<\/p>"
           }
-        },
-        "6013329c-a6f0-468d-b01b-b2faf3421650": {
-          "type": "trust_badges",
-          "settings": {
-            "label": "Trust badges list",
-            "max_width": "460",
-            "col_size": "col-4",
-            "icon_1": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-trophy\" viewbox=\"0 0 16 16\">\n  <path d=\"M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935zM3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z\"><\/path>\n<\/svg>",
-            "text_1": "No Compromises <br> In Quality",
-            "icon_2": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-arrow-through-heart\" viewbox=\"0 0 16 16\">\n  <path fill-rule=\"evenodd\" d=\"M2.854 15.854A.5.5 0 0 1 2 15.5V14H.5a.5.5 0 0 1-.354-.854l1.5-1.5A.5.5 0 0 1 2 11.5h1.793l.53-.53c-.771-.802-1.328-1.58-1.704-2.32-.798-1.575-.775-2.996-.213-4.092C3.426 2.565 6.18 1.809 8 3.233c1.25-.98 2.944-.928 4.212-.152L13.292 2 12.147.854A.5.5 0 0 1 12.5 0h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.854.354L14 2.707l-1.006 1.006c.236.248.44.531.6.845.562 1.096.585 2.517-.213 4.092-.793 1.563-2.395 3.288-5.105 5.08L8 13.912l-.276-.182a21.86 21.86 0 0 1-2.685-2.062l-.539.54V14a.5.5 0 0 1-.146.354l-1.5 1.5Zm2.893-4.894A20.419 20.419 0 0 0 8 12.71c2.456-1.666 3.827-3.207 4.489-4.512.679-1.34.607-2.42.215-3.185-.817-1.595-3.087-2.054-4.346-.761L8 4.62l-.358-.368c-1.259-1.293-3.53-.834-4.346.761-.392.766-.464 1.845.215 3.185.323.636.815 1.33 1.519 2.065l1.866-1.867a.5.5 0 1 1 .708.708L5.747 10.96Z\"><\/path>\n<\/svg>",
-            "text_2": "100% Satisfaction <br> Guarantee",
-            "icon_3": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-truck\" viewbox=\"0 0 16 16\">\n  <path d=\"M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z\"><\/path>\n<\/svg>",
-            "text_3": "Free Shipping <br> Over $100",
-            "icon_4": "",
-            "text_4": ""
-          }
-        },
-        "63acad5a-9780-4912-bd50-b63a4a10d2c8": {
-          "type": "inventory_bar",
-          "settings": {
-            "inventory_bar_low_threshold": 10,
-            "inventory_bar_max_threshold": 100,
-            "inventory_bar_color_low": "warning",
-            "inventory_bar_color_normal": "success"
-          }
-        },
-        "fbdb557a-90da-432b-984d-26c8ef0ef590": {
-          "type": "upsell_modal",
-          "settings": {
-            "modal_title": "Heads up, before it's too late...",
-            "metafield": "kondasoft.upsell",
-            "limit": 2,
-            "modal_footer_btn": "Continue with your purchase",
-            "countdown_timer": "1675209600",
-            "countdown_timer_pretext": "Offer expires in:"
-          }
-        },
-        "f706cec8-65d0-451f-a7e2-aab03ef5b5e0": {
-          "type": "bought_together",
-          "settings": {
-            "title": "Frequently Bought Together",
-            "metafield": "kondasoft.upsell",
-            "limit": 3,
-            "img_orientation": "square",
-            "img_border": "img-thumbnail"
-          }
-        },
-        "ca528907-98ac-4215-a696-a16f10fe4364": {
-          "type": "prev_next",
-          "settings": {
-            "img_orientation": "square",
-            "img_border": "img-thumbnail"
-          }
         }
       },
       "block_order": [
         "58913963-afac-40f1-aaef-9a8b2084dc99",
-        "8b1fb7b0-dfa9-43f1-90b7-3a36c06e06df",
-        "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5",
-        "6013329c-a6f0-468d-b01b-b2faf3421650",
-        "63acad5a-9780-4912-bd50-b63a4a10d2c8",
-        "fbdb557a-90da-432b-984d-26c8ef0ef590",
-        "f706cec8-65d0-451f-a7e2-aab03ef5b5e0",
-        "ca528907-98ac-4215-a696-a16f10fe4364"
+        "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5"
       ],
       "settings": {
         "title_size": "h2",
         "show_vendor": true,
-        "show_breadcrumbs": true,
         "show_share_btn": true,
         "gallery_img_orientation": "square",
         "gallery_img_border": "img-thumbnail",
         "form_light_bg": true,
-        "form_size_buttons_names": "Size,Sizes",
         "form_show_buy_btn": true,
         "pt": 10,
         "pb": 0,

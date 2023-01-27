@@ -133,6 +133,46 @@
 
 {% render 'offcanvas-menu' %}
 
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        {% if section.settings.logo %}
+            "logo": {{ section.settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+        {% endif %}
+        "sameAs": [
+            {{ settings.social_facebook | json }},
+            {{ settings.social_twitter | json }},
+            {{ settings.social_instagram | json }},
+            {{ settings.social_pinterest | json }},
+            {{ settings.social_tiktok | json }},
+            {{ settings.social_snapchat | json }},
+            {{ settings.social_snapchat | json }},
+            {{ settings.social_youtube | json }},
+            {{ settings.social_linkedin | json }}
+        ],
+        "url": {{ request.origin | append: page.url | json }}
+    }
+</script>
+  
+{%- if request.page_type == 'index' -%}
+    {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": {{ shop.name | json }},
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": {{ potential_action_target | json }},
+                "query-input": "required name=search_term_string"
+            },
+            "url": {{ request.origin | append: page.url | json }}
+        }
+    </script>
+{%- endif -%}
+
 {% schema %}
 {
     "name": "Navbar",
