@@ -12,6 +12,13 @@
             assign img_width  = 960
             assign img_height = 1200
     endcase
+
+    if product.has_only_default_variant 
+        assign active_media_position = 1
+    else 
+        assign active_media_position = current_variant.featured_media.position
+    endif
+
 %}
 
 <div 
@@ -25,7 +32,7 @@
                         type="button"
                         data-bs-target="#product-gallery"
                         data-bs-slide-to="{{ forloop.index0 }}"
-                        class="{% if current_variant.featured_media.position == forloop.index %}active{% endif %}"
+                        class=" {% if active_media_position == forloop.index %}active{% endif %}"
                         aria-current="true"
                         aria-label="Slide {{ forloop.index }}">
                     </button>
@@ -35,7 +42,7 @@
     {% endif %}
     <div class="carousel-inner">
         {% for media in product.media %}
-            <div class="carousel-item {% if current_variant.featured_media.position == forloop.index %}active{% endif %}">
+            <div class="carousel-item {% if active_media_position == forloop.index %}active{% endif %}">
                 {% case media.media_type %}
                     {% when 'image' %}
                         <img
