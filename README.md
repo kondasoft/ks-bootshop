@@ -40,11 +40,11 @@ https://ks-bootshop.myshopify.com
 
 
 ## Download 
-Go to [Releases](https://github.com/kondatheme/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.
+Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.
 
 ## Premium Shopify Themes 
 In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
-https://www.kondatheme.com
+https://www.kondasoft.com
 
 ## Installation
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
@@ -52,7 +52,7 @@ https://www.kondatheme.com
 ### 1- Clone this repository (download theme files)
 Create a new folder on your computer, `cd` to it, and run the following command to copy all theme files from our GitHub repository master branch. Note: Include the dot at the end of the command to clone into your current directory.
 
-`git clone https://github.com/kondatheme/ks-bootshop .`
+`git clone https://github.com/kondasoft/ks-bootshop .`
 
 ### 2- Create and configure theme with Theme Kit
 Run the following command to create a new theme in your Shopify store along with our theme files that you have just downloaded:
@@ -83,7 +83,7 @@ To deploy your changes on your Shopify store run the following Theme Kit command
 `theme deploy` or: `theme watch`
 
 ## Support
-Please submit a [new issue](https://github.com/kondatheme/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [website](https://www.kondatheme.com/) for further help.
+Please submit a [new issue](https://github.com/kondasoft/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [website](https://www.kondasoft.com/) for further help.
 
 ## Copyright and license
-Copyright 2022 [kondatheme.com](https://www.kondatheme.com). Code released under the [MIT License](https://github.com/kondatheme/ks-bootshop/blob/master/LICENSE).
+Copyright 2022 [kondasoft.com](https://www.kondasoft.com). Code released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).
