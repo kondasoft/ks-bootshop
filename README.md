@@ -3,7 +3,7 @@ Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting 
 
 Our goal is to make this project the most completed, robust, and of course the most awesome Shopify theme for the Bootstrap framework.
 
-## Download THeme
+## Download Theme
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Video introduction
