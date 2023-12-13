@@ -3,8 +3,15 @@ Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting 
 
 Our goal is to make this project the most completed, robust, and of course the most awesome Shopify theme for the Bootstrap framework.
 
+## Demo 
+https://ks-bootshop.myshopify.com
+
 ## Download Theme
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
+
+## Premium Shopify Themes 
+In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
+https://www.kondasoft.com
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.
@@ -37,17 +44,6 @@ Click on the screenshot below to play the video on YouTube.
 * Newsletter
 * Richtext
 * Separator
-
-## Demo 
-https://ks-bootshop.myshopify.com
-
-
-## Download 
-Go to [Releases](https://github.com/kondasoft/ks-bootshop/releases/) and get the latest v3.x.x version which is ready for Bootstrap v5.
-
-## Premium Shopify Themes 
-In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
-https://www.kondasoft.com
 
 ## Installation
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
