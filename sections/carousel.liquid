@@ -23,6 +23,18 @@
     {% endif %}
     <div class="carousel-inner">
         {% for block in section.blocks %}
+            {% liquid 
+                if block.settings.img_mobile_adapt == false
+                    assign img_mobile_height = block.settings.img_mobile_height | append: 'px;'
+                else
+                    assign img_mobile_height = 'auto'
+                endif
+                if block.settings.img_desktop_adapt == false
+                    assign img_desktop_height = block.settings.img_desktop_height | append: 'px;'
+                else
+                    assign img_desktop_height = 'auto'
+                endif
+            %}
             <div class="carousel-item {% if forloop.first == true %}active{% endif %}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
                 {% if block.settings.img_mobile == blank and block.settings.img_desktop == blank %}
                     {% capture current %}{% cycle 1, 2 %}{% endcapture %}
@@ -35,7 +47,11 @@
                         width="960"
                         height="{{ 960 | divided_by: block.settings.img_mobile.aspect_ratio | round }}"
                         loading="lazy"
-                        style="height: {{ block.settings.img_mobile_height }}px; opacity: {{ block.settings.img_mobile_opacity }};">
+                        style="
+                            height: {{ img_mobile_height }}; 
+                            opacity: {{ block.settings.img_mobile_opacity }};
+                            object-fit: cover;
+                        ">
                     <img 
                         class="carousel-item-img d-none d-lg-block w-100"
                         src="{{ block.settings.img_desktop | image_url: width: '1920', crop: 'center' }}" 
@@ -43,7 +59,11 @@
                         width="1920"
                         height="{{ 1920 | divided_by: block.settings.img_desktop.aspect_ratio | round }}"
                         loading="lazy"
-                        style="height: {{ block.settings.img_desktop_height }}px; opacity: {{ block.settings.img_desktop_opacity }};">
+                        style="
+                            height: {{ img_desktop_height }}; 
+                            opacity: {{ block.settings.img_desktop_opacity }};
+                            object-fit: cover;
+                        ">
                 {% endif %}
                 {% unless block.settings.title == blank %}
                     <div class="carousel-caption">
@@ -177,6 +197,13 @@
                     "default": 500
                 },
                 {
+                    "type": "checkbox",
+                    "id": "img_mobile_adapt",
+                    "label": "Adapt image",
+                    "default": false,
+                    "info": "If this setting is enabled, the original image propotions will be used."
+                },
+                {
                     "type": "range",
                     "id": "img_mobile_opacity",
                     "label": "Opacity",
@@ -202,6 +229,13 @@
                     "max": 1000,
                     "step": 10,
                     "default": 800
+                },
+                {
+                    "type": "checkbox",
+                    "id": "img_desktop_adapt",
+                    "label": "Adapt image",
+                    "default": false,
+                    "info": "If this setting is enabled, the original image propotions will be used."
                 },
                 {
                     "type": "range",
