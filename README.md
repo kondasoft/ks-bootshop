@@ -7,10 +7,9 @@ Our goal is to make this project the most completed, robust, and of course the m
 https://ks-bootshop.myshopify.com
 
 ## Download Theme
-https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
+[https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop](https://github.com/kondasoft/ks-bootshop/releases)
 
 ## Premium Shopify Themes 
-In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
 https://www.kondasoft.com
 
 ## Video introduction
