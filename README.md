@@ -7,7 +7,7 @@ Our goal is to make this project the most completed, robust, and of course the m
 https://ks-bootshop.myshopify.com
 
 ## Download Theme
-[https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop](https://github.com/kondasoft/ks-bootshop/releases)
+https://github.com/kondasoft/ks-bootshop/releases
 
 ## Premium Shopify Themes 
 https://www.kondasoft.com
