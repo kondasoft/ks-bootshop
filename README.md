@@ -10,6 +10,7 @@ https://ks-bootshop.myshopify.com
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Premium Shopify Themes 
+Premium Shopify Themes that are simple to use and easy to customize. 15+ years of coding experience, 50k+ customers served!
 https://www.kondasoft.com
 
 ## Video introduction
