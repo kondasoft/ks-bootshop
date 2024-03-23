@@ -1,0 +1,178 @@
+<section 
+  id="search-main-{{ collection.id }}" 
+  class="
+    search-main
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  ">
+  <header class="section-header text-center mb-9">
+    <div 
+      class="container" 
+      style="max-width: 600px;">
+      <h1 class="title mb-4 {{ section.settings.header_title_font_size }}">
+        {% if search.performed %}
+          {{ 'general.search.search_page.title_search_performed' | t }}
+        {% else %}
+          {{ 'general.search.search_page.title' | t }}
+        {% endif %}
+      </h1>
+      <form action="{{ routes.search_url }}" class="search-form" method="get" role="search">
+        <input name="options[prefix]" type="hidden" value="last">
+        <input type="hidden" name="type" value="product">
+        <div class="form-control-wrapper">
+          <div class="form-floating">
+            <input 
+              id="search-input"
+              class="form-control pe-13"
+              type="search"
+              placeholder="{{ 'general.search.input_label' | t }}"
+              name="q"
+              value="{{ search.terms | escape }}"
+              autocorrect="off" 
+              autocomplete="off" 
+              autocapitalize="off"
+              spellcheck="false">
+            <label for="newsletter-input-email">
+              {{ 'general.search.input_label' | t }}
+            </label>
+          </div>
+          <button type="submit" class="btn btn-link px-6" aria-label="{{ 'general.search.btn_label' | t }}">
+            {% render 'svg-icons', icon: 'search', size: 24, class: '' %}
+          </button>
+        </div>
+      </form>
+    </div>
+  </header>
+  
+  {% if search.performed %}
+    {% paginate search.results by section.settings.limit %}
+      <div class="search-inner">
+        <div class="container">
+          <div class="search-utilities mb-4">
+            <p class="search-product-count small mb-0">
+              {{ 'general.search.search_page.count_products' | t: count: search.results_count }}
+            </p>
+          </div>
+          {% if search.results_count == 0 %}
+            <p class="alert alert-warning my-6">
+              {{ 'general.search.search_page.no_results' | t: terms: search.terms }}
+            </p>
+          {% else %}
+            {% if search.results.first.object_type == 'product' %}
+              <div 
+                class="
+                  product-list mx-n3 mx-desktop-n4 mb-0 row 
+                  {{ section.settings.breakpoint_mobile | prepend: 'row-cols-' }}
+                  {{ section.settings.breakpoint_tablet | prepend: 'row-cols-tablet-' }}
+                  {{ section.settings.breakpoint_desktop | prepend: 'row-cols-desktop-' }}
+                " 
+                role="list">
+                {% for product in search.results %}
+                  <div class="p-3 p-desktop-4 mb-3 mb-desktop-4" role="list-item">
+                    {% render 'product-card', product: product %}
+                  </div>
+                {% endfor %}
+              </div>
+              {% render 'pagination', paginate: paginate %}
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% endpaginate %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "select",
+      "id": "header_title_font_size",
+      "label": "Title font-size",
+      "default": "h1",
+      "options": [
+        { "group": "Heading", "value": "h1", "label": "H1" },
+        { "group": "Heading", "value": "h2", "label": "H2" },
+        { "group": "Heading", "value": "h3", "label": "H3" },
+        { "group": "Heading", "value": "h4", "label": "H4" },
+        { "group": "Heading", "value": "h5", "label": "H5" },
+        { "group": "Heading", "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Limit products",
+      "min": 2,
+      "max": 50,
+      "default": 48,
+      "step": 1
+    },
+    {
+      "type": "header",
+      "content": "Breakpoints",
+      "info": "Adjust items per row based on the screen resolution"
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_mobile",
+      "label": "Mobile (<600px)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_tablet",
+      "label": "Tablet (≥600px)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_desktop",
+      "label": "Desktop (≥1200px)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 9
+    }
+  ],
+  "templates": ["search"],
+  "presets": [
+    {
+      "name": "Search"
+    }
+  ]
+}
+{% endschema %}

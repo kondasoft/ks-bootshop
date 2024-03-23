@@ -1,0 +1,515 @@
+<div
+  id="media-with-text--wrapper-{{ section.id }}" 
+  class="media-with-text-wrapper">
+  {% for block in section.blocks %}
+    <div 
+      id="media-with-text-{{ block.id }}"
+      class="
+        media-with-text
+        {{ block.settings.bg_color }} 
+        {{ section.settings.bg_gradient }}
+        {{ block.settings.text_color }}
+        {{ block.settings.border_top_width | prepend: 'border-top-' }}
+        {{ block.settings.border_bottom_width | prepend: 'border-bottom-' }}
+        {{ block.settings.border_color }}
+        {{ block.settings.pb | prepend: 'pb-' }} 
+        {{ block.settings.pt | prepend: 'pt-' }}
+      "
+      style="
+        --bs-bg-opacity: {{ block.settings.bg_opacity | append: '%' }};
+        --bs-border-opacity: {{ block.settings.border_opacity | append: '%' }};
+      "
+      {{ block.shopify_attributes }}>
+      <div 
+        class="container" 
+        style="max-width: {{ section.settings.container_max_width | append: 'px' }};">
+        <div class="row align-items-desktop-center {{ block.settings.media_align_desktop }}">
+          <div class="col-desktop-9 mb-6 mb-desktop-0">
+            {% if block.settings.external_video != blank %}
+              {% liquid 
+                if block.settings.external_video.type == 'youtube'
+                  assign video_src = 'https://www.youtube.com/embed/' | append: block.settings.external_video.id
+                else
+                  assign video_src = 'https://player.vimeo.com/video/' | append: block.settings.external_video.id
+                endif
+              %}
+              <div class="ratio ratio-16x9">
+                <iframe
+                  class="position-absolute {{ block.settings.media_border }}"
+                  src="{{ video_src }}"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                  frameborder="0"
+                  allowfullscreen
+                  loading="lazy">
+                </iframe>
+              </div>
+            {% elsif block.settings.video != blank %}
+              <div class="ratio {{ block.settings.video_ratio }}">
+                {{- 
+                  block.settings.video | video_tag: 
+                    class: block.settings.media_border,
+                    image_size: 900, 
+                    autoplay: block.settings.video_autoplay, 
+                    loop: block.settings.video_loop, 
+                    muted: block.settings.video_muted, 
+                    controls: block.settings.video_controls,
+                    loading: 'lazy'
+                -}}
+              </div>
+            {% elsif block.settings.img != blank %}
+              {% render 'image-url', img: block.settings.img, size: 900, orientation: block.settings.img_orientation, class: block.settings.media_border %}
+            {% else %}
+              {{ 'image' | placeholder_svg_tag: 'img-thumbnail' }}
+            {% endif %}
+          </div>
+          <div class="col-desktop-9 mb-4 mb-desktop-0">
+            <div class="{{ block.settings.text_align_mobile }} {{ block.settings.text_align_desktop }}">
+              {% unless block.settings.subtitle == blank %}
+                <div class="subtitle mb-2">
+                  {{ block.settings.subtitle }}
+                </div>
+              {% endunless %}
+              {% unless block.settings.title == blank %}
+                <h2 class="title {{ block.settings.title_font_size }}">
+                  {{ block.settings.title }}
+                </h2>
+              {% endunless %}
+              {% unless block.settings.description == blank %}
+                <div class="description rte {{ block.settings.description_font_size }}">
+                  {{ block.settings.description }}
+                </div>
+              {% endunless %}
+              {% unless block.settings.btn_primary_text == blank %}
+                <div class="d-inline-flex m-n2">
+                  {% unless block.settings.btn_primary_text == blank %}
+                    <a 
+                      class="btn m-2 {{ block.settings.btn_primary_color }}" 
+                      href="{{ block.settings.btn_primary_url }}">
+                      {{ block.settings.btn_primary_text }}
+                    </a>
+                  {% endunless %}
+                  {% unless block.settings.btn_secondary_text == blank %}
+                    <a 
+                      class="btn m-2 {{ block.settings.btn_secondary_color }}" 
+                      href="{{ block.settings.btn_secondary_url }}">
+                      {{ block.settings.btn_secondary_text }}
+                    </a>
+                  {% endunless %}
+                </div>
+              {% endunless %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Media with text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "container_max_width",
+      "label": "Container max-width (px)",
+      "info": "Leave empty to use the global container width"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Styling"
+        },
+        {
+          "type": "select",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "bg-body",
+          "options": [
+            { "value": "bg-primary", "label": "Primary" },
+            { "value": "bg-secondary", "label": "Secondary" },
+            { "value": "bg-body", "label": "Body" },
+            { "value": "bg-white", "label": "White" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "bg_opacity",
+          "label": "Background opacity",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 100,
+          "unit": "%"
+        },
+        {
+          "type": "select",
+          "id": "bg_gradient",
+          "label": "Background gradient",
+          "options": [
+            { "value": "bg-gradient", "label": "Yes" },
+            { "value": "", "label": "No" }
+          ],
+          "default": ""
+        },
+        {
+          "type": "select",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "text-body",
+          "options": [
+            { "value": "text-primary", "label": "Primary" },
+            { "value": "text-secondary", "label": "Secondary" },
+            { "value": "text-body", "label": "Body" },
+            { "value": "text-white", "label": "White" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "border_top_width",
+          "label": "Border top width",
+          "default": 0,
+          "min": 0,
+          "max": 16,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "range",
+          "id": "border_bottom_width",
+          "label": "Border bottom width",
+          "default": 0,
+          "min": 0,
+          "max": 16,
+          "step": 1,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "border_color",
+          "label": "Border color",
+          "default": "border-body",
+          "options": [
+            { "value": "border-primary", "label": "Primary" },
+            { "value": "border-secondary", "label": "Secondary" },
+            { "value": "border-body", "label": "Body" },
+            { "value": "border-white", "label": "White" }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "border_opacity",
+          "label": "Border opacity",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 100,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "General"
+        },
+        {
+          "type": "select",
+          "id": "media_align_desktop",
+          "label": "Media alignment on desktop",
+          "default": "",
+          "options": [
+            { "value": "", "label": "Left" },
+            { "value": "flex-desktop-row-reverse", "label": "Right" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "media_border",
+          "label": "Media border",
+          "default": "img-thumbnail",
+          "options": [
+            { "value": "", "label": "None" },
+            { "value": "rounded",  "label": "Rounded" },
+            { "value": "img-thumbnail", "label": "Thumbnail" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "img_orientation",
+          "label": "Image orientation",
+          "default": "adapt",
+          "options": [
+            { "group": "Adapt", "value": "adapt", "label": "Adapt" },
+            { "group": "Square", "value": "ratio-1x1", "label": "1x1" },
+            { "group": "Horizontal", "value": "ratio-4x3", "label": "4x3" },
+            { "group": "Horizontal", "value": "ratio-16x9", "label": "16x9" },
+            { "group": "Horizontal", "value": "ratio-21x9", "label": "21x9" },
+            { "group": "Vertical", "value": "ratio-3x4", "label": "3x4" },
+            { "group": "Vertical", "value": "ratio-9x16", "label": "9x16" },
+            { "group": "Vertical", "value": "ratio-9x21", "label": "9x21" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Video (MP4)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "select",
+          "id": "video_ratio",
+          "label": "Video ratio",
+          "default": "adapt",
+          "options": [
+            { "group": "Adapt", "value": "adapt", "label": "Adapt" },
+            { "group": "Square", "value": "ratio-1x1", "label": "1x1" },
+            { "group": "Horizontal", "value": "ratio-4x3", "label": "4x3" },
+            { "group": "Horizontal", "value": "ratio-16x9", "label": "16x9" },
+            { "group": "Horizontal", "value": "ratio-21x9", "label": "21x9" },
+            { "group": "Vertical", "value": "ratio-3x4", "label": "3x4" },
+            { "group": "Vertical", "value": "ratio-9x16", "label": "9x16" },
+            { "group": "Vertical", "value": "ratio-9x21", "label": "9x21" }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "video_autoplay",
+          "label": "Autoplay",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "video_loop",
+          "label": "Loop",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "video_muted",
+          "label": "Muted",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "video_controls",
+          "label": "Controls",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "External Video",
+          "info": "For a faster loading store, we recommend using MP4 videos (settings above) instead of external videos"
+        },
+        {
+          "type": "video_url",
+          "id": "external_video",
+          "label": "Video",
+          "accept": [
+            "youtube", "vimeo"
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "select",
+          "id": "text_align_mobile",
+          "label": "Text align - mobile",
+          "default": "text-center",
+          "options": [
+            { "value": "text-start", "label": "Left" },
+            { "value": "text-center", "label": "Center" },
+            { "value": "text-end", "label": "Right" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "text_align_desktop",
+          "label": "Text align - desktop",
+          "default": "text-desktop-start",
+          "options": [
+            { "value": "text-desktop-start", "label": "Left" },
+            { "value": "text-desktop-center", "label": "Center" },
+            { "value": "text-desktop-end", "label": "Right" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Optional Subtitle",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Media with text"
+        },
+        {
+          "type": "select",
+          "id": "title_font_size",
+          "label": "Title font-size",
+          "default": "h2",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "h6", "label": "H6" }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description (optional)",
+          "default": "<p>Either show an image, video (MP4) or an external video (YouTube). If no text block is shown, the media will take full section's space.</p>"
+        },
+        {
+          "type": "select",
+          "id": "description_font_size",
+          "label": "Description font-size",
+          "default": "fs-md",
+          "options": [
+            { "value": "fs-sm", "label": "sm" },
+            { "value": "fs-md", "label": "md" },
+            { "value": "fs-lg", "label": "lg" },
+            { "value": "fs-xl", "label": "xl" },
+            { "value": "fs-xxl", "label": "xxl" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Primary button"
+        },
+        {
+          "type": "text",
+          "id": "btn_primary_text",
+          "label": "Button text",
+          "default": "Primary button",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "url",
+          "id": "btn_primary_url",
+          "label": "Btton URL"
+        },
+        {
+          "type": "select",
+          "id": "btn_primary_color",
+          "label": "Button color",
+          "default": "btn-primary",
+          "options": [
+            { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+            { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+            { "group": "Solid", "value": "btn-white", "label": "White" },
+            { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+            { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+            { "group": "Light", "value": "btn-light-white", "label": "White" },
+            { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+            { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+            { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Secondary button"
+        },
+        {
+          "type": "text",
+          "id": "btn_secondary_text",
+          "label": "Button text",
+          "default": "Secondary button",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "url",
+          "id": "btn_secondary_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "select",
+          "id": "btn_secondary_color",
+          "label": "Button color",
+          "default": "btn-secondary",
+          "options": [
+            { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+            { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+            { "group": "Solid", "value": "btn-white", "label": "White" },
+            { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+            { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+            { "group": "Light", "value": "btn-light-white", "label": "White" },
+            { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+            { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+            { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Spacing"
+        },
+        {
+          "type": "range",
+          "id": "pt",
+          "label": "Top",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "range",
+          "id": "pb",
+          "label": "Bottom",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "presets": [
+    {
+      "name": "Media with text",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "subtitle": "Optional Subtitle",
+            "title": "Media With Text",
+            "description": "<p>Either show an image, video (MP4) or an external video (YouTube). If no text block is shown, the media will take full section's space.</p>",
+            "btn_primary_text": "Primary button",
+            "btn_secondary_text": "Secondary button"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,119 +1,116 @@
 /*
-    © 2022 KondaSoft.com
-    https://www.kondasoft.com
+  © 2024 KondaSoft
+  https://www.kondasoft.com
 */
 
 class PredictiveSearch extends HTMLElement {
-    constructor () {
-        super()
+  constructor () {
+    super()
 
-        this.input = this.querySelector('input[type="search"]')
-        this.results = this.querySelector('#predictive-search')
-        this.alert = this.querySelector('#predictive-search-alert')
-        this.footer = this.closest('#offcanvas-search').querySelector('.offcanvas-footer')
-        this.popularProducts = this.closest('#offcanvas-search').querySelector('#search-popular-products-wrapper')
+    this.form = this.querySelector('form.search-form')
+    this.input = this.form.querySelector('input[type="search"]')
+    this.results = this.form.querySelector('#predictive-search')
+    this.status = this.form.querySelector('#predictive-search-status')
 
-        this.input.addEventListener('input', this.debounce((event) => {
-            this.onChange(event)
-        }, 300).bind(this))
+    this.emptyContainer = this.querySelector('.search-empty')
+    this.cartUpsells = this.querySelector('.cart-upsells')
 
-        document.querySelector('#offcanvas-search')?.addEventListener('shown.bs.offcanvas', () => {
-            this.input.focus()
-        })
-    }
+    this.input.addEventListener('input', window.theme.debounce((event) => {
+      this.getSearchResults()
+    }, 300).bind(this))
 
-    onChange () {
-        const searchTerm = this.input.value.trim()
-        // console.log(searchTerm)
+    document.querySelector('#offcanvas-search')?.addEventListener('shown.bs.offcanvas', () => {
+      this.input.focus()
+    })
+    this.accessibilityEventIsInit = false
+  }
 
-        this.footer.querySelector('[name="q"]').value = searchTerm
-        this.footer.querySelector('.btn').textContent =
-            `${this.footer.querySelector('.btn').dataset.textSearchFor} "${searchTerm}"`
+  async getSearchResults () {
+    const searchTerm = this.input.value.trim()
 
-        if (!searchTerm.length) {
-            this.close()
-            return
-        }
+    if (searchTerm.length) {
+      const response = await fetch(`${window.Shopify.routes.predictive_search_url}?q=${searchTerm}&resources[type]=${this.dataset.resourcesType}&resources[limit]=10&section_id=predictive-search`)
 
-        this.getSearchResults(searchTerm)
-    }
+      if (response.ok) {
+        const data = await response.text()
+        const resultsMarkup = new DOMParser().parseFromString(data, 'text/html').querySelector('#shopify-section-predictive-search').innerHTML
 
-    async getSearchResults (searchTerm) {
-        let resourcesType = 'product'
-
-        if (this.input.dataset.searchCollections === 'true') {
-            resourcesType = `${resourcesType},collection`
-        }
-        if (this.input.dataset.searchPages === 'true') {
-            resourcesType = `${resourcesType},page`
-        }
-        if (this.input.dataset.searchArticles === 'true') {
-            resourcesType = `${resourcesType},article`
-        }
-
-        const response = await fetch(`/search/suggest?q=${searchTerm}&resources[type]=${resourcesType}&resources[limit]=10&section_id=predictive-search`)
-
-        if (!response.ok) {
-            const error = new Error(response.status)
-            this.close()
-            throw error
-        }
-
-        const text = await response.text()
-        const resultsMarkup = new DOMParser().parseFromString(text, 'text/html').querySelector('#shopify-section-predictive-search').innerHTML
         this.results.innerHTML = resultsMarkup
 
-        this.open()
-    }
+        this.emptyContainer.setAttribute('hidden', 'hidden')
+        this.cartUpsells.setAttribute('hidden', 'hidden')
+        this.input.setAttribute('aria-expanded', 'true')
+        this.status.textContent = this.querySelector('#predictive-search-results').dataset.resultsText
 
-    open () {
-        this.results.style.display = 'block'
-
-        const countResults = this.results.querySelectorAll('.product-item').length
-
-        switch (countResults) {
-        case 0:
-            this.alert.textContent = this.alert.dataset.textNoResults
-            break
-        case 1:
-            this.alert.textContent = this.alert.dataset.textResultFound
-            break
-        default:
-            this.alert.textContent = this.alert.dataset.textResultsFound.replace('[count]', countResults)
-            break
-        }
-
-        this.footer.removeAttribute('hidden')
-
-        window.SPR?.initDomEls()
-        window.SPR?.loadBadges()
-
-        document.querySelectorAll('#offcanvas-search .btn-atc').forEach(btn => {
-            btn.addEventListener('click', () => {
-                setTimeout(() => {
-                    bootstrap.Offcanvas.getOrCreateInstance('#offcanvas-search').hide()
-                }, 300)
-            })
+        this.results.querySelectorAll('.jdgm-prev-badge__stars').forEach(elem => {
+          elem.setAttribute('tabindex', '-1')
         })
-
-        this.popularProducts?.setAttribute('hidden', 'hidden')
+        this.handleAccessibility()
+      } else {
+        // TODO: Handle errors
+      }
+    } else {
+      this.emptyContainer.removeAttribute('hidden')
+      this.cartUpsells.removeAttribute('hidden')
+      this.results.innerHTML = ''
+      this.input.setAttribute('aria-expanded', 'false')
+      this.input.removeAttribute('aria-activedescendant')
+      this.status.textContent = ''
     }
+  }
 
-    close () {
-        this.results.style.display = 'none'
-        this.alert.textContent = ''
-        this.footer.setAttribute('hidden', 'hidden')
+  handleAccessibility () {
+    let x = -1
 
-        this.popularProducts?.removeAttribute('hidden')
-    }
+    function listenKeyup (event) {
+      const items = this.querySelectorAll('#predictive-search-results a, #predictive-search-results button')
 
-    debounce (fn, wait) {
-        let t
-        return (...args) => {
-            clearTimeout(t)
-            t = setTimeout(() => fn.apply(this, args), wait)
+      if (!items.length) return
+
+      if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
+        items.forEach(elem => {
+          elem.closest('[role="option"]').setAttribute('aria-selected', 'false')
+        })
+      }
+
+      switch (event.code) {
+      case 'ArrowUp':
+        if (x <= 0) {
+          x = items.length
         }
+        x--
+        items.forEach((elem, index) => {
+          if (index === x) {
+            elem.focus()
+            elem.closest('[role="option"]').setAttribute('aria-selected', 'true')
+            this.input.setAttribute('aria-activedescendant', elem.closest('[role="option"]').getAttribute('id'))
+          }
+        })
+        break
+      case 'ArrowDown':
+        if (x === items.length - 1) {
+          x = -1
+        }
+        x++
+        items.forEach((elem, index) => {
+          if (index === x) {
+            elem.focus()
+            elem.closest('[role="option"]').setAttribute('aria-selected', 'true')
+            this.input.setAttribute('aria-activedescendant', elem.closest('[role="option"]').getAttribute('id'))
+          }
+        })
+        break
+      case 'Enter':
+        console.log('Enter')
+        break
+      }
     }
+
+    if (!this.accessibilityEventIsInit) {
+      this.addEventListener('keyup', listenKeyup)
+      this.accessibilityEventIsInit = true
+    }
+  }
 }
 
 customElements.define('predictive-search', PredictiveSearch)

@@ -1,0 +1,40 @@
+{% case block.type %}
+  {% when 'richtext' %}
+    {% unless block.settings.description == blank %}
+      <div class="description rte mt-2 mb-6">
+        {{ block.settings.description }}
+      </div>
+    {% endunless %}
+    {% unless block.settings.btn_primary_text == blank %}
+      <div class="m-n2">
+        {% unless block.settings.btn_primary_text == blank %}
+          <a 
+            class="btn btn-sm m-2 {{ block.settings.btn_primary_color }}" 
+            href="{{ block.settings.btn_primary_url }}">
+            {{ block.settings.btn_primary_text }}
+          </a>
+        {% endunless %}
+        {% unless block.settings.btn_secondary_text == blank %}
+          <a 
+            class="btn btn-sm m-2 {{ block.settings.btn_secondary_color }}" 
+            href="{{ block.settings.btn_secondary_url }}">
+            {{ block.settings.btn_secondary_text }}
+          </a>
+        {% endunless %}
+      </div>
+    {% endunless %}
+  {% when 'menu' %}
+    <ul 
+      class="nav flex-column mb-0" 
+      aria-label="{{ block.settings.title }}">
+      {% for link in linklists[block.settings.menu].links %}
+        <li class="nav-item">
+          <a 
+            class="nav-link px-0 px-desktop-3 py-3 py-desktop-2" 
+            href="{{ link.url }}">
+            {{ link.title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+{% endcase %}

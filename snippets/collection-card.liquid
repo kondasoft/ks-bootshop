@@ -1,0 +1,38 @@
+{% comment %}
+  Renders a collection card within a collection list. Usually within a collection template or the Featured Collections section
+
+  Accepts:
+  - collection: {object} The collection object - https://shopify.dev/docs/api/liquid/objects/collection
+  - block: {object} (Optional) The section block, if rendered within the Featured Collections section.
+
+  Usage:
+  {% render 'collection-card' collection: collection, block: block  %}
+{% endcomment %}
+
+{% liquid 
+  assign img = block.settings.img | default: collection.image
+  assign title = block.settings.title | default: collection.title
+%}
+
+<div class="collection-card {{ section.settings.collection_card_text_align }}">
+  <a 
+    href="{{ collection.url }}" 
+    class="collection-card-link">
+    <div class="collection-card-img-wrapper">
+      {% render 'image-url', img: img, size: 900, orientation: section.settings.collection_card_img_orientation, class: section.settings.collection_card_img_border %}
+      {% if section.settings.collection_card_show_title %}
+        <h3 
+          class="
+            collection-card-title collection-title mb-0 
+            {{ section.settings.collection_card_title_font_size }}
+            {{ section.settings.collection_card_title_position }}
+          ">
+          {{ title }} 
+          {% if section.settings.collection_card_show_product_count %}
+            ({{ collection.products_count }})
+          {% endif %}
+        </h3>
+      {% endif %}
+    </div>
+  </a>
+</div>

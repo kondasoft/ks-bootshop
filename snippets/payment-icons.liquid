@@ -1,17 +1,18 @@
 {% unless shop.enabled_payment_types == empty %}
-    <div class="payment-icons">
-        <span class="visually-hidden">
-            {{ 'general.accessibility.payment_methods' | t }}
-        </span>
-        <ul class="list-unstyled d-inline-flex mb-1">
-            {% for type in shop.enabled_payment_types %}
-                <li class="p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ type | replace: "_", " " | camelcase }}">
-                    {{ type | payment_type_svg_tag: class: 'icon' }}
-                </li>
-            {% endfor %}
-        </ul>
-        <small class="d-block lh-sm opacity-75">
-            {{ 'general.general.secure_payments' | t }}
-        </small>
-    </div>
+  <ul 
+    class="payment-icons"
+    aria-label="{{ 'general.accessibility.payment_methods' | t }}">
+    {% for type in shop.enabled_payment_types %}
+      <li 
+        class="" 
+        data-bs-toggle="tooltip" 
+        data-bs-placement="top" 
+        title="{{ type | replace: "_", " " | camelcase }}">
+        {{ type | payment_type_svg_tag: class: 'icon' }}
+      </li>
+    {% endfor %}
+  </ul>
+  <small class="payment-icons-text">
+    {{ 'general.payment_icons.secure' | t }}
+  </small>
 {% endunless %}

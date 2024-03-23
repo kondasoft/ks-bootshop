@@ -1,0 +1,51 @@
+<ul class="nav-desktop-icons nav justify-content-end flex-nowrap">
+  {% if localization.available_countries.size > 1 %}
+    <li class="nav-item me-1">
+      <a
+        class="nav-link nav-link-icon"
+        href="#modal-localization"
+        data-bs-toggle="modal"
+        aria-controls="modal-localization" 
+        aria-label="{{ 'general.accessibility.localization' | t }} {{ localization.country.name }}"
+        role="button">
+        {{ localization.country | image_url: width: 20, height: 20 | image_tag }}
+      </a>
+    </li>
+  {% endif %}
+  {% if shop.customer_accounts_enabled %}
+    <li class="nav-item">
+      <a 
+        class="nav-link nav-link-icon {% if template.name == 'login' or template.name == 'account' %}active{% endif %}" 
+        aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}" 
+        href="{{ routes.account_url }}"
+        aria-label="{{ 'general.accessibility.account' | t }}">
+        {% render 'svg-icons', icon: 'account', size: 20 %}
+      </a>
+    </li>
+  {% endif %}
+  {% if settings.search %}
+    <li class="nav-item">
+      <a
+        class="nav-link nav-link-icon" 
+        href="#offcanvas-search" 
+        data-bs-toggle="offcanvas"
+        aria-controls="offcanvas-search" 
+        aria-label="{{ 'general.accessibility.search' | t }}"
+        role="button">
+        {% render 'svg-icons', icon: 'search', size: 20 %}
+      </a>
+    </li>
+  {% endif %}
+  <li class="nav-item">
+    <a 
+      class="nav-link nav-link-icon" 
+      href="#offcanvas-cart" 
+      data-bs-toggle="offcanvas" 
+      aria-controls="offcanvas-cart" 
+      aria-label="{{ 'general.accessibility.cart' | t }} {{ cart.item_count }}"
+      role="button">
+      {% render 'svg-icons', icon: 'cart', size: 20 %}
+      {% render 'cart-count-badge' %}
+    </a>
+  </li>
+</ul>

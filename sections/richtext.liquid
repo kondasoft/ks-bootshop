@@ -1,214 +1,305 @@
-{% liquid 
-    assign pt = section.settings.pt | prepend: 'pt-'
-    assign pb = section.settings.pb | prepend: 'pb-'
-    assign mt = section.settings.mt | prepend: 'mt-'
-    assign mb = section.settings.mb | prepend: 'mb-'
-%}
-
-<section 
-    id="richtext-{{ section.id }}" 
-    class="richtext {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="container">
-        <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px">
-            {% unless section.settings.title == blank %}
-                <h2 class="title mb-4 {{ section.settings.title_size }}">
-                    {{ section.settings.title }}
-                </h2>
-            {% endunless %}
-            {% unless section.settings.description == blank %}
-                <div class="description rte mt-n2 mb-6 {{ section.settings.description_size }}">
-                    {{ section.settings.description }}
-                </div>
-            {% endunless %}
-            {% unless section.settings.btn_text == blank %}
-                <a class="btn mb-1 {{ section.settings.btn_color }} {{ section.settings.btn_size }}" href="{{ section.settings.btn_url }}">
-                    {{ section.settings.btn_text }}
-                </a>
-            {% endunless %}
-        </div>
-    </div>
-</section>
+<div
+  id="richtext-{{ section.id }}" 
+  class="
+    richtext 
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }}
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.text_align }}
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  ">
+  <div 
+    class="container" 
+    style="max-width: {{ section.settings.container_max_width }}px;">
+    {% unless section.settings.title == blank %}
+      <h2 class="title mb-0 {{ section.settings.title_font_size }}">
+        {{ section.settings.title }}
+      </h2>
+    {% endunless %}
+    {% unless section.settings.description == blank %}
+      <div class="description rte mt-3 mb-0 {{ section.settings.description_font_size }}">
+        {{ section.settings.description }}
+      </div>
+    {% endunless %}
+    {% unless section.settings.btn_primary_text == blank %}
+      <div class="d-inline-flex mx-n2 mt-7">
+        {% unless section.settings.btn_primary_text == blank %}
+          <a 
+            class="btn m-2 {{ section.settings.btn_primary_color }}" 
+            href="{{ section.settings.btn_primary_url }}">
+            {{ section.settings.btn_primary_text }}
+          </a>
+        {% endunless %}
+        {% unless section.settings.btn_secondary_text == blank %}
+          <a 
+            class="btn m-2 {{ section.settings.btn_secondary_color }}" 
+            href="{{ section.settings.btn_secondary_url }}">
+            {{ section.settings.btn_secondary_text }}
+          </a>
+        {% endunless %}
+      </div>
+    {% endunless %}
+  </div>
+</div>
 
 {% schema %}
 {
-    "name": "Richtext",
-    "settings": [
-        {
-            "type": "header",
-            "content": "General"
-        },
-        {
-            "type": "select",
-            "id": "bg_color",
-            "label": "Background color",
-            "default": "",
-            "options": [
-                { "group": "Inherit", "value": "", "label": "Body" },
-                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
-                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
-                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
-                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
-                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
-            ]
-        },
-        {
-            "type": "text",
-            "id": "max_width",
-            "label": "Max width (px)",
-            "info": "Adjust container width (in pixels)",
-            "default": "960"
-        },
-        {
-            "type": "select",
-            "id": "text_align",
-            "label": "Text align",
-            "default": "text-center",
-            "options": [
-                { "value": "text-start", "label": "Left" },
-                { "value": "text-center", "label": "Center" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Text"
-        },
-        {
-            "type": "text",
-            "id": "title",
-            "label": "Title",
-            "default": "Richtext"
-        },
-        {
-            "type": "select",
-            "id": "title_size",
-            "label": "Title size",
-            "default": "h2",
-            "options": [
-                { "group": "Heading", "value": "h1", "label": "H1" },
-                { "group": "Heading", "value": "h2", "label": "H2" },
-                { "group": "Heading", "value": "h3", "label": "H3" },
-                { "group": "Heading", "value": "h4", "label": "H4" },
-                { "group": "Heading", "value": "h5", "label": "H5" },
-                { "group": "Heading", "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "richtext",
-            "id": "description",
-            "label": "Description (optional)",
-            "default": "<p>Add on optional description to this section</p>"
-        },
-        {
-            "type": "select",
-            "id": "description_size",
-            "label": "Description size",
-            "default": "fs-6",
-            "options": [
-                { "value": "fs-1", "label": "fs-1" },
-                { "value": "fs-2", "label": "fs-2" },
-                { "value": "fs-3", "label": "fs-3" },
-                { "value": "fs-4", "label": "fs-4" },
-                { "value": "fs-5", "label": "fs-5" },
-                { "value": "fs-6", "label": "fs-6" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Button"
-        },
-        {
-            "type": "text",
-            "id": "btn_text",
-            "label": "Button text",
-            "info": "Leave empty to disable"
-        },
-        {
-            "type": "url",
-            "id": "btn_url",
-            "label": "Button URL"
-        },
-        {
-            "type": "select",
-            "id": "btn_color",
-            "label": "Button color",
-            "default": "btn-primary",
-            "options": [
-                { "group": "Normal", "value": "btn-link", "label": "Link" },
-                { "group": "Normal", "value": "btn-light", "label": "Light" },
-                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
-                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
-                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                { "group": "Normal", "value": "btn-success", "label": "Success" },
-                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
-                { "group": "Normal", "value": "btn-info", "label": "Info" },
-                { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
-                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
-                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
-                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
-                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
-                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
-                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "btn_size",
-            "label": "Button size",
-            "default": "",
-            "options": [
-                { "value": "btn-sm", "label": "Small" },
-                { "value": "", "label": "Normal" },
-                { "value": "btn-lg", "label": "Large" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Spacing"
-        },
-        {
-            "type": "range",
-            "id": "pt",
-            "label": "Padding top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "pb",
-            "label": "Padding bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mt",
-            "label": "Margin top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mb",
-            "label": "Margin bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        }
-    ],
-    "presets": [
-        {
-            "name": "Richtext",
-            "category": "Text"
-        }
-    ]
+  "name": "Richtext",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "container_max_width",
+      "label": "Container max-width (px)",
+      "info": "Leave empty to use the global container width",
+      "default": "900"
+    },
+
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text align",
+      "default": "text-center",
+      "options": [
+        { "value": "text-start", "label": "Left" },
+        { "value": "text-center", "label": "Center" },
+        { "value": "text-end", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Richtext"
+    },
+    {
+      "type": "select",
+      "id": "title_font_size",
+      "label": "Title font-size",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description (optional)",
+      "default": "<p>Add on optional description for this section</p>"
+    },
+    {
+      "type": "select",
+      "id": "description_font_size",
+      "label": "Description font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_text",
+      "label": "Button text",
+      "default": "Primary button",
+      "info": "Leave empty to disable"
+    },
+    {
+      "type": "url",
+      "id": "btn_primary_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "btn_primary_color",
+      "label": "Button color",
+      "default": "btn-primary",
+      "options": [
+        { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+        { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+        { "group": "Solid", "value": "btn-white", "label": "White" },
+        { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+        { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+        { "group": "Light", "value": "btn-light-white", "label": "White" },
+        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+        { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Secondary button"
+    },
+    {
+      "type": "text",
+      "id": "btn_secondary_text",
+      "label": "Button text",
+      "default": "Secondary button",
+      "info": "Leave empty to disable"
+    },
+    {
+      "type": "url",
+      "id": "btn_secondary_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "btn_secondary_color",
+      "label": "Button color",
+      "default": "btn-secondary",
+      "options": [
+        { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+        { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+        { "group": "Solid", "value": "btn-white", "label": "White" },
+        { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+        { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+        { "group": "Light", "value": "btn-light-white", "label": "White" },
+        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+        { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 9
+    }
+  ],
+  "presets": [
+    {
+      "name": "Richtext"
+    }
+  ]
 }
 {% endschema %}

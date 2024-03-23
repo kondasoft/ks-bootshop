@@ -1,0 +1,74 @@
+{% liquid
+  # theme-check-disable ImgLazyLoading 
+  # theme-check-disable RemoteAsset
+%}
+
+{% comment %}
+  Renders an image tag throught the Shopify's, image_url filter
+  https://shopify.dev/docs/api/liquid/filters/image_url
+
+  Accepts:
+  - img: {object} The image object to apply the filter
+  - size: {Number} (Optional) The preferred image size which the image width/height will be handled. (default is 600)
+  - orientation: {String} (Optional) The image orientation. (default is square)
+  - loading {String} {Optional} The image loading mode. Either lazy or eager. (default is lazy)
+  - scale {Boolean} {Optional}. Useful if your images are looking blurred. (default is false)
+  - class: {String} (Optional) An optional class to apply to the Img element
+
+  Usage:
+  {% render 'image-url' img: product.featured_image, size: 600, orientation: 'square', loading: 'lazy', scale: false, class: "mb-4"  %}
+{% endcomment %}
+
+{% liquid
+  assign size = size | default: 600
+  assign orientation = orientation | default: 'square'
+  assign loading = loading | default: 'lazy'
+
+  case orientation
+    when 'ratio-1x1'
+      assign width = size
+      assign height = size 
+    when 'ratio-4x3'
+      assign width = size
+      assign height = size | divided_by: 4 | times: 3 | round
+    when 'ratio-16x9'
+      assign width = size
+      assign height = size | divided_by: 16 | times: 9 | round
+      when 'ratio-21x9'
+      assign width = size
+      assign height = size | divided_by: 21 | times: 9 | round
+    when 'ratio-3x4'
+      assign width = size | divided_by: 4 | times: 3 | round
+      assign height = size
+    when 'ratio-9x16'
+      assign width = size | divided_by: 16 | times: 9 | round
+      assign height = size
+    when 'ratio-9x21'
+      assign width = size | divided_by: 21 | times: 9 | round
+      assign height = size
+    else
+      assign width  = size
+      assign height = size | divided_by: img.aspect_ratio | round
+  endcase
+
+  if scale
+    assign width_scaled = width | times: 2
+    assign height_scaled = height | times: 2
+  else
+    assign width_scaled = width
+    assign height_scaled = height
+  endif
+%}
+
+<img
+  src="{{ img | image_url: width: width_scaled, height: height_scaled, crop: 'center' }}"
+  class="img-fluid {{ class }}"
+  alt="{{ img.alt }}"
+  width="{{ width }}"
+  height="{{ height }}"
+  loading="{{ loading }}">
+
+{% liquid
+  # theme-check-enable ImgLazyLoading 
+  # theme-check-enable RemoteAsset
+%}

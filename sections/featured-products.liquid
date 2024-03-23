@@ -1,324 +1,440 @@
-{% liquid 
-    assign pt = section.settings.pt | prepend: 'pt-'
-    assign pb = section.settings.pb | prepend: 'pb-'
-    assign mt = section.settings.mt | prepend: 'mt-'
-    assign mb = section.settings.mb | prepend: 'mb-'
-
-    assign row_xs = section.settings.breakpoint_xs | prepend: 'row-cols-'
-    assign row_sm = section.settings.breakpoint_sm | prepend: 'row-cols-sm-'
-    assign row_md = section.settings.breakpoint_md | prepend: 'row-cols-md-'
-    assign row_lg = section.settings.breakpoint_lg | prepend: 'row-cols-lg-'
-    assign row_xl = section.settings.breakpoint_xl | prepend: 'row-cols-xl-'
-    assign row_xxl = section.settings.breakpoint_xxl | prepend: 'row-cols-xxl-'
+{% liquid
+  if section.settings.collection == blank
+    assign products = section.settings.products
+  else
+    assign products = collections[section.settings.collection].products
+  endif
 %}
 
-<section 
-    id="featured-products-{{ section.id }}" 
-    class="featured-products position-relative overflow-hidden {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="container">
-        <h2 class="title mb-4 {{ section.settings.title_size }}">
-            {{ section.settings.title }}
-        </h2>
-        {% unless section.settings.description == blank %}
-            <div class="description rte mt-n3 mb-5 {{ section.settings.description_size }}">
-                {{ section.settings.description }}
+{% capture empty_state %}
+  {% unless request.page_type == 'product' %}
+    {% for num in (1..section.settings.limit) %}
+      <div class="swiper-slide p-4 p-desktop-5">
+        <div class="product-card text-center">
+          {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+          {{ 'product-' | append: current | placeholder_svg_tag: 'product-card-img img-thumbnail mb-4' }}
+          <h3 class="product-card-title h6 mb-1">
+            Product {{ current }}
+          </h3>
+          <p class="mb-0">
+            $19.99
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  {% endunless %}
+{% endcapture %}
+
+{% if section.settings.recommended_mode and request.page_type == 'product' %}
+<script>
+  async function initProductRecommendations ()  {
+    const sectionId = '{{ section.id }}'
+    const baseUrl = '{{ routes.product_recommendations_url }}'
+    const productId = {{ product.id }}
+    const limit = {{ section.settings.limit }}
+    const intent = '{{ section.settings.recommended_mode_intent }}'
+    
+    const url = `${baseUrl}?section_id=${sectionId}&product_id=${productId}&limit=${limit}&intent=${intent}`
+
+    const response = await fetch(url)
+    const data = await response.text()
+
+    // console.log(url)
+    // console.log(data)
+
+    document.querySelector('#featured-products-{{ section.id }}')
+      .closest('.shopify-section').outerHTML = data
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    initProductRecommendations()
+  })
+
+  document.addEventListener('shopify:section:load', (e) => {
+    if (e.target.querySelector('.featured-products')) {
+      initProductRecommendations()
+    }
+  })  
+</script>
+{% endif %}
+
+<swiper-slider
+  id="featured-products-{{ section.id }}" 
+  class="
+    featured-products swiper-slider
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }}
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  "
+  data-section-id="{{ section.id }}"
+  data-slider-speed="{{ section.settings.slider_speed }}"
+  data-slider-navigation="{{ section.settings.slider_navigation }}"
+  data-slider-pagination="{{ section.settings.slider_pagination }}"
+  data-slider-scrollbar="{{ section.settings.slider_scrollbar }}"
+  data-slider-autoplay="{{ section.settings.slider_autoplay }}"
+  data-breakpoint-mobile="{{ section.settings.breakpoint_mobile }}"
+  data-breakpoint-tablet="{{ section.settings.breakpoint_tablet }}"
+  data-breakpoint-desktop="{{ section.settings.breakpoint_desktop }}">
+  <div 
+    class="container"
+    style="max-width: {{ section.settings.container_max_width | append: 'px' }};">
+    {% render 'section-header' %}
+    <div class="swiper mx-n4 mx-desktop-n5 mt-n3 mt-desktop-n5">
+      <div class="swiper-wrapper">
+        {% if section.settings.recommended_mode and request.path contains 'recommendations' %}
+          {% for product in recommendations.products %}
+            <div class="swiper-slide p-4 p-desktop-5">
+              {% render 'product-card', product: product %}
             </div>
-        {% endunless %}
-        <ul class="product-list list-unstyled row mx-n3 mx-lg-n4 mb-0 {{ row_xs }} {{ row_sm }} {{ row_md }} {{ row_lg }} {{ row_xl }} {{ row_xxl }} {% if section.settings.mobile_scroll %}mobile-scroll{% endif %}">
-            {% liquid
-                for product in section.settings.products
-                    render 'product-item', product: product
-                endfor
-            %}
-        </ul>
-        {% if section.settings.btn_show %}
-            <a 
-                class="btn mt-6 mb-0 {{ section.settings.btn_color }}" 
-                href="{{ section.settings.btn_url }}">
-                {{ section.settings.btn_text }}
-            </a>
+          {% endfor %}
+        {% elsif products == blank %}
+          {{ empty_state }}
+        {% else %}
+          {% for product in products limit: section.settings.limit %} 
+            <div class="swiper-slide p-4 p-desktop-5">
+              {% render 'product-card', product: product %}
+            </div>
+          {% endfor %}
         {% endif %}
+      </div>
+      <div class="swiper-controls">
+        <div class="swiper-pagination"></div>
+        <div class="swiper-scrollbar"></div>
+        <div class="swiper-button-prev">
+          {% render 'svg-icons', icon: 'chevron-left', size: 24 %}
+        </div>
+        <div class="swiper-button-next">
+          {% render 'svg-icons', icon: 'chevron-right', size: 24 %}
+        </div>
+      </div>
     </div>
-</section>
+  </div>
+</swiper-slider>
 
 {% schema %}
 {
-    "name": "Featured Products",
-    "settings": [
-        {
-            "type": "product_list",
-            "id": "products",
-            "label": "Products"
-        },
-        {
-            "type": "header",
-            "content": "General"
-        },
-        {
-            "type": "select",
-            "id": "bg_color",
-            "label": "Background color",
-            "default": "",
-            "options": [
-                { "group": "Inherit", "value": "", "label": "Body" },
-                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
-                { "group": "Light", "value": "bg-light text-dark", "label": "Light" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "text_align",
-            "label": "Text align",
-            "default": "text-center",
-            "options": [
-                { "value": "text-start", "label": "Left" },
-                { "value": "text-center", "label": "Center" }
-            ]
-        },
-        {
-            "type": "text",
-            "id": "title",
-            "label": "Title",
-            "default": "Featured Products"
-        },
-        {
-            "type": "select",
-            "id": "title_size",
-            "label": "Title size",
-            "default": "h2",
-            "options": [
-                { "group": "Heading", "value": "h1", "label": "H1" },
-                { "group": "Heading", "value": "h2", "label": "H2" },
-                { "group": "Heading", "value": "h3", "label": "H3" },
-                { "group": "Heading", "value": "h4", "label": "H4" },
-                { "group": "Heading", "value": "h5", "label": "H5" },
-                { "group": "Heading", "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "richtext",
-            "id": "description",
-            "label": "Description (optional)",
-            "default": "<p>Add on optional description to this section</p>"
-        },
-        {
-            "type": "select",
-            "id": "description_size",
-            "label": "Description size",
-            "default": "fs-6",
-            "options": [
-                { "value": "fs-1", "label": "fs-1" },
-                { "value": "fs-2", "label": "fs-2" },
-                { "value": "fs-3", "label": "fs-3" },
-                { "value": "fs-4", "label": "fs-4" },
-                { "value": "fs-5", "label": "fs-5" },
-                { "value": "fs-6", "label": "fs-6" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Product"
-        },
-        {
-            "type": "select",
-            "id": "product_img_orientation",
-            "label": "Image orientation",
-            "default": "square",
-            "options": [
-                { "value": "square", "label": "Square" },
-                { "value": "landscape", "label": "Landscape" },
-                { "value": "potrait", "label": "Potrait" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "product_img_border",
-            "label": "Image border",
-            "default": "img-thumbnail",
-            "options": [
-                { "value": "", "label": "Square" },
-                { "value": "rounded", "label": "Rounded" },
-                { "value": "img-thumbnail", "label": "Thumbnail" }
-            ]
-        },
-        {
-            "type": "select",
-            "id": "product_title_size",
-            "label": "Title size",
-            "default": "h6",
-            "options": [
-                { "value": "h1", "label": "H1" },
-                { "value": "h2", "label": "H2" },
-                { "value": "h3", "label": "H3" },
-                { "value": "h4", "label": "H4" },
-                { "value": "h5", "label": "H5" },
-                { "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Breakpoints",
-            "info": "Adjust items per slide based on screen resolution"
-        },
-                {
-            "type": "checkbox",
-            "id": "mobile_scroll",
-            "label": "Scroll on mobile (xs)",
-            "info": "If enabled, the value for the settings below (Items per slide / xs) is not applicable.",
-            "default": true
-        },
-        {
-            "type": "range",
-            "id": "breakpoint_xs",
-            "label": "Items per slide / xs",
-            "info": "Screen width: less than 576px",
-            "min": 1,
-            "max": 3,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "breakpoint_sm",
-            "label": "Items per slide / sm",
-            "info": "Screen width: ≥576px",
-            "min": 1,
-            "max": 3,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "breakpoint_md",
-            "label": "Items per slide / md",
-            "info": "Screen width: ≥768px",
-            "min": 1,
-            "max": 4,
-            "step": 1,
-            "default": 2
-        },
-        {
-            "type": "range",
-            "id": "breakpoint_lg",
-            "label": "Items per slide / lg",
-            "info": "Screen width: ≥992px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 3
-        },
-        {
-            "type": "range",
-            "id": "breakpoint_xl",
-            "label": "Items per slide / xl",
-            "info": "Screen width: ≥1200px",
-            "min": 1,
-            "max": 6,
-            "step": 1,
-            "default": 4
-        },
-        {
-            "type": "range",
-            "id": "breakpoint_xxl",
-            "label": "Items per slide / xxl",
-            "info": "Screen width: ≥1400px",
-            "min": 1,
-            "max": 8,
-            "step": 1,
-            "default": 4
-        },
-        {
-            "type": "header",
-            "content": "'View more' Button"
-        },
-        {
-            "type": "checkbox",
-            "id": "btn_show",
-            "label": "Show button",
-            "default": true
-        },
-        {
-            "type": "text",
-            "id": "btn_text",
-            "label": "Button text",
-            "default": "View more products"
-        },
-        {
-            "type": "url",
-            "id": "btn_url",
-            "label": "Button URL"
-        },
-        {
-            "type": "select",
-            "id": "btn_color",
-            "label": "Button color",
-            "default": "btn-primary",
-            "options": [
-                { "group": "Normal", "value": "btn-link", "label": "Link" },
-                { "group": "Normal", "value": "btn-light", "label": "Light" },
-                { "group": "Normal", "value": "btn-dark", "label": "Dark" },
-                { "group": "Normal", "value": "btn-primary", "label": "Primary" },
-                { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                { "group": "Normal", "value": "btn-success", "label": "Success" },
-                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                { "group": "Normal", "value": "btn-warning", "label": "Warning" },
-                { "group": "Normal", "value": "btn-info", "label": "Info" },
-                { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
-                { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
-                { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
-                { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
-                { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
-                { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
-                { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Spacing"
-        },
-        {
-            "type": "range",
-            "id": "pt",
-            "label": "Padding top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "pb",
-            "label": "Padding bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mt",
-            "label": "Margin top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mb",
-            "label": "Margin bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        }
-    ],
-    "presets": [
-        {
-            "name": "Featured Products",
-            "category": "Products"
-        }
-    ]
+  "name": "Featured products",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "container_max_width",
+      "label": "Container max-width (px)",
+      "info": "Leave empty to use the global container width"
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "paragraph",
+      "content": "Choose whether to display your products by selecting them individually or through a collection. If this section is published on the product page, the \"recommended mode\" is suggested to be used."
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Limit products",
+      "min": 2,
+      "max": 24,
+      "default": 8,
+      "step": 1
+    },
+    {
+      "type": "header",
+      "content": "Recommended Mode",
+      "info": "Show recommended products based on Shopify AI algorithm. Applies only if this section is published on the product page. The product selection settings bove do not have effect if this setting is enabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "recommended_mode",
+      "label": "Enable \"Recommended mode\"",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "recommended_mode_intent",
+      "label": "Intent",
+      "default": "related",
+      "options": [
+        { "value": "related", "label": "Related" },
+        { "value": "complementary", "label": "Complementary" }
+      ],
+      "info": "\"Related\", offers customers a mix of products that are similar to a product the customer is interacting with. \"Complementary\" recommandations are products that supplement a product. Related recommendations are auto-generated by Shopify AI. Complementary recommendations need to be manually set up. Recommended products for each intent can be configured via the [Shopify Search & Discovery app](https://apps.shopify.com/search-and-discovery)"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "select",
+      "id": "header_title_font_size",
+      "label": "Title font-size",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "header_description",
+      "label": "Description (optional)",
+      "default": "<p>Add on optional description for this section</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_description_font_size",
+      "label": "Description font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Speed",
+      "default": 300,
+      "min": 0,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_navigation",
+      "label": "Show navigation (arrows)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "slider_pagination_type",
+      "label": "Pagination type",
+      "default": "bullets", 
+      "options": [
+        { "value": "bullets", "label": "Bullets" },
+        { "value": "fraction", "label": "Fraction" }
+      ],
+      "info": "NOTE: This feature is supported only in our Premium Shopify Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_scrollbar",
+      "label": "Show scrollbar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_partial_slides_mobile",
+      "label": "Partial slides on mobile",
+      "default": false,
+      "info": "NOTE: This feature is supported only in our Premium Shopify Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+    },
+    {
+      "type": "range",
+      "id": "slider_autoplay",
+      "label": "Autoplay",
+      "min": 0,
+      "max": 10,
+      "default": 0,
+      "unit": "sec",
+      "info": "Selecing \"0\" will disable autoplay."
+    },
+    {
+      "type": "header",
+      "content": "Breakpoints",
+      "info": "Adjust items per slide based on the screen resolution"
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_mobile",
+      "label": "Mobile (<600px)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_tablet",
+      "label": "Tablet (≥600px)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_desktop",
+      "label": "Desktop (≥1200px)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "presets": [
+    {
+      "name": "Featured products"
+    }
+  ]
 }
 {% endschema %}

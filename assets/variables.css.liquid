@@ -1,65 +1,86 @@
-/*
-    © 2022 KondaSoft.com
-    https://www.kondasoft.com
-*/
-
 {% comment %} 
     Fonts 
 {% endcomment %}
 {{ settings.font_headings | font_face: font_display: 'swap' }}
 
 {% unless settings.font_body.system %}
-    {{ settings.font_body | font_face: font_display: 'swap' }}
-    {{ settings.font_body | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-    {{ settings.font_body | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', '500' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
+  {{ settings.font_body | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
 {% endunless %}
-
-
-{% comment %} 
-    Variables
-{% endcomment %}
+ 
 :root {
-    --bs-primary: {{ settings.color_primary }};
-    --bs-primary-rgb: {{ settings.color_primary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
-    --bs-primary-lighten-5: {{ settings.color_primary | color_lighten: 5 }};
-    --bs-primary-lighten-10: {{ settings.color_primary | color_lighten: 5 }};
-    --bs-primary-darken-5:  {{ settings.color_primary | color_darken: 5 }};
-    --bs-primary-darken-10:  {{ settings.color_primary | color_darken: 10 }};
+  {%- comment -%} 
+    Colors
+  {%- endcomment -%}
+  --bs-primary: {{ settings.color_primary }};
+  --bs-primary-rgb: {{ settings.color_primary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+  --bs-secondary: {{ settings.color_secondary }};
+  --bs-secondary-rgb: {{ settings.color_secondary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+  --bs-body-bg: {{ settings.color_body_bg }};
+  --bs-body-bg-rgb: {{ settings.color_body_bg | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+  --bs-body-color: {{ settings.color_body_color }};
+  --bs-body-color-rgb: {{ settings.color_body_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
 
-    --bs-secondary: {{ settings.color_secondary }};
-    --bs-secondary-rgb: {{ settings.color_secondary | color_to_rgb | remove: 'rgb(' | remove: ')' }};
-    --bs-secondary-lighten-5: {{ settings.color_secondary | color_lighten: 5 }};
-    --bs-secondary-lighten-10: {{ settings.color_secondary | color_lighten: 10 }};
-    --bs-secondary-darken-5:  {{ settings.color_secondary | color_darken: 5 }};
-    --bs-secondary-darken-10:  {{ settings.color_secondary | color_darken: 10 }};
+  {% comment -%} 
+    General
+  {%- endcomment -%}
+  --bs-container-max-width: {{ settings.container_max_width | append: 'px' }};
+  --bs-border-radius: {{ settings.border_radius | append: 'rem' }};
 
-    --bs-dark: {{ settings.color_dark }};
-    --bs-dark-rgb: {{ settings.color_dark | color_to_rgb | remove: 'rgb(' | remove: ')' }};
-    --bs-dark-lighten-5: {{ settings.color_dark | color_lighten: 5 }};
-    --bs-dark-lighten-10: {{ settings.color_dark | color_lighten: 10 }};
-    --bs-dark-darken-5:  {{ settings.color_dark | color_darken: 5 }};
-    --bs-dark-darken-10:  {{ settings.color_dark | color_darken: 10 }};
+  {% comment -%} 
+    Typography
+  {%- endcomment -%}
+  --bs-body-font-family: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+  --bs-body-font-weight: {{ settings.font_body.weight }};
+  --bs-body-font-size: {{ settings.font_body_size | append: 'rem'  }};
+  --bs-headings-font-family: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
+  --bs-headings-font-weight: {{ settings.font_headings.weight }};
+  --bs-headings-text-transform: {{ settings.headings_text_transform }};
 
-    --bs-light: {{ settings.color_light }};
-    --bs-light-rgb: {{ settings.color_light | color_to_rgb | remove: 'rgb(' | remove: ')' }};
-    --bs-light-darken-5:  {{ settings.color_light | color_darken: 5 }};
-    --bs-light-darken-10:  {{ settings.color_light | color_darken: 10 }};
+  {% comment -%} 
+    Modal/Dialog
+  {%- endcomment -%}
+  --bs-dialog-backdrop-color-rgb: {{ settings.dialog_backdrop_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+  --bs-dialog-backdrop-opacity: {{ settings.dialog_backdrop_opacity | append: '%' }};
+  --bs-dialog-backdrop-blur: {{ settings.dialog_backdrop_blur | append: 'px' }};
+  --bs-dialog-backdrop-blur: {{ settings.dialog_backdrop_blur | append: 'px' }};
+  --bs-dialog-header-bg-color-rgb: {{ settings.dialog_header_bg_color | prepend: 'var(--bs-' | append: '-rgb)' }};
+  --bs-dialog-header-bg-opacity: {{ settings.dialog_header_bg_opacity | append: '%' }};
+  --bs-dialog-header-text-color: {{ settings.dialog_header_text_color }};
+  --bs-dialog-header-border-width: {{ settings.dialog_header_border_width | append: 'px' }};
+  --bs-dialog-header-border-color-rgb: {{ settings.dialog_header_border_color | prepend: 'var(--bs-' | append: '-rgb)'  }};
+  --bs-dialog-header-border-opacity: {{ settings.dialog_header_border_opacity | append: '%' }};
+  --bs-dialog-header-title-font-size: {{ settings.dialog_header_title_font_size | append: 'em' }};
 
-    --bs-body-bg: {{ settings.color_body_bg }};
-    --bs-body-bg-rgb: {{ settings.color_body_bg | color_to_rgb | remove: 'rgb(' | remove: ')' }};
-    --bs-body-color: {{ settings.color_body_text }};
-    --bs-body-color-rgb: {{ settings.color_body_text | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+  {% comment -%} 
+    Various
+  {%- endcomment -%}
+  --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075);
+  --bs-box-shadow-md: 0 0.25rem 0.5rem rgba(var(--bs-body-color-rgb), 0.125);
+  --bs-box-shadow-lg: 0 .5rem 1rem rgba(var(--bs-body-color-rgb), 0.175);
+  --bs-focus-box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .125);
+  --bs-box-shadow: var(--bs-box-shadow-md);
+}
 
-    --bs-border-color: var(--bs-light-darken-10);
+{%- comment -%} 
+  Buttons
+{%- endcomment -%}
+.btn {
+  --bs-btn-font-size: {{ settings.btn_font_size | append: 'rem' }};
+  --bs-btn-text-transform: {{ settings.btn_text_transform }};
+  --bs-btn-font-family-new: {{ settings.btn_font_family }};
+  --bs-btn-font-weight: {{ settings.btn_font_weight }};
+  --bs-btn-letter-spacing: {{ settings.btn_letter_spacing | times: 0.05 | append: 'rem' }};
+  --bs-btn-bg-gradient: {% if settings.btn_bg_gradient %}var(--bs-gradient){% endif %};
+  --bs-btn-padding-x: {{ settings.btn_padding_x | append: 'rem' }};
+  --bs-btn-padding-y: {{ settings.btn_padding_y | append: 'rem' }};
+}
 
-    --bs-link-color: var(--bs-primary);
-    --bs-link-hover-color: var(--bs-primary-darken-10);
-
-    --bs-headings-font-family: {{ settings.font_headings.family }}, {{ settings.font_headings.fallback_families }};
-    --bs-headings-font-weight: {{ settings.font_headings.weight }};
-    {% unless settings.font_body.system %}
-        --bs-body-font-family:  {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
-    {% endunless %}
-
-    --bs-border-radius: {{ settings.buttons_border_radius }};
+{%- comment -%} 
+  Other
+{%- endcomment -%}
+.form-check-input:checked[type=radio] {
+  --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23{{ settings.color_body_bg | remove: '#' }}'/%3e%3c/svg%3e");
 }

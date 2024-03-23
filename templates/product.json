@@ -1,79 +1,304 @@
 {
   "sections": {
-    "template-product": {
-      "type": "template-product",
+    "8f4f1b58-133b-491a-a7b2-8bf2e6fbc583": {
+      "type": "product-main",
       "blocks": {
-        "58913963-afac-40f1-aaef-9a8b2084dc99": {
-          "type": "product_description",
+        "8abeac2d-7b60-4697-891c-4d6201789d31": {
+          "type": "media_gallery",
           "settings": {
-            "title": "Details"
+            "img_orientation": "ratio-1x1",
+            "img_border": "img-thumbnail",
+            "effect": "slide",
+            "speed": 300,
+            "controls_color": "body-color",
+            "pagination_type": "bullets",
+            "scrollbar": true,
+            "show_thumbs": "show",
+            "thumbs_per_view": 5,
+            "full_screen": true,
+            "full_screen_effect": "slide"
           }
         },
-        "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5": {
+        "40d3cdd3-9d78-4f15-b346-c3f46d49f7b1": {
+          "type": "title",
+          "settings": {
+            "title_font_size": "h3",
+            "pt": 3,
+            "pb": 2
+          }
+        },
+        "judge_me_reviews_preview_badge_J3NUWe": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/preview_badge\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "bf49a5ff-d625-4485-a09c-44d883547f90": {
           "type": "richtext",
           "settings": {
-            "title": "Shipping & Returns",
-            "description": "<p>Feel free to create additional blocks like this for <strong>Shipping, Payments, etc <\/strong>through the Shopify Theme editor. Also, you may easily adjust their order by dragging and dropping.<\/p>"
+            "title": "",
+            "title_font_size": "h6",
+            "description": "<p>{{ product.metafields.descriptors.subtitle.value }}<\/p>",
+            "description_font_size": "",
+            "product_description": false,
+            "description_classes": "opacity-70",
+            "pt": 0,
+            "pb": 3
+          }
+        },
+        "095886ab-f46a-4a25-9d3d-e7c79235921b": {
+          "type": "price",
+          "settings": {
+            "font_size": "fs-lg",
+            "badge_discount_type": "percentage",
+            "pt": 0,
+            "pb": 3
+          }
+        },
+        "4566c39b-0f51-4900-b193-a0ac76bf0c8f": {
+          "type": "options",
+          "settings": {
+            "options_style": "buttons",
+            "color_swatches": "Color, color",
+            "pt": 0,
+            "pb": 3
+          }
+        },
+        "subscriptions_app_block_4aHTie": {
+          "type": "shopify:\/\/apps\/subscriptions\/blocks\/app-block\/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+          "settings": {
+            "color_text_title": "#212529",
+            "color_text_body": "#212529",
+            "dividers_color": "#212529",
+            "bacgkround_color": "#ffffff",
+            "border_thickness": 1,
+            "border_radius": 8,
+            "supporting_text_title": "Purchase options",
+            "subscription_policy_url": "shopify:\/\/policies\/privacy-policy",
+            "product": "{{product}}"
+          }
+        },
+        "a277dbff-85ae-4c5e-ad26-4f7bb2cadc74": {
+          "type": "stock_indicator",
+          "disabled": true,
+          "settings": {
+            "low_stock_threshold": 10,
+            "low_stock_bg_color": "bg-primary",
+            "has_stock_bg_color": "bg-primary",
+            "progress_height": 8,
+            "pt": 0,
+            "pb": 7
+          }
+        },
+        "ea44a44f-429a-4dd2-b40c-f1bf6304c554": {
+          "type": "atc_button",
+          "settings": {
+            "show_qty_field": true,
+            "show_dynamic_buttons": false,
+            "atc_btn_color": "btn-primary",
+            "atc_btn_size": "",
+            "show_buy_btn": true,
+            "buy_btn_color": "btn-outline-secondary",
+            "buy_btn_size": "",
+            "pt": 0,
+            "pb": 6
+          }
+        },
+        "08894b72-c532-44db-9228-5f14c9841895": {
+          "type": "trust_icons",
+          "settings": {
+            "label": "What we promise",
+            "max_width": "460",
+            "img_size": 24,
+            "img_1": "shopify:\/\/shop_images\/icon-star.svg",
+            "text_1": "<p>Commitment to<br\/>Excellence<\/p>",
+            "img_2": "shopify:\/\/shop_images\/hand-thumbs-up.svg",
+            "text_2": "<p>100% Satisfaction<br\/>Guarantee<\/p>",
+            "img_3": "shopify:\/\/shop_images\/icon-truck.svg",
+            "text_3": "<p>Free Shipping<br\/>Over $90<\/p>",
+            "text_4": "",
+            "pt": 0,
+            "pb": 7
+          }
+        },
+        "11016cfc-fdff-46f2-9b6b-26a6e68b7653": {
+          "type": "collapse",
+          "settings": {
+            "icon_size": 20,
+            "title": "Product Details",
+            "title_font_family": "",
+            "title_font_size": "fs-md",
+            "title_text_transform": "text-capitalize",
+            "title_letter_spacing": 1,
+            "description": "",
+            "product_description": true,
+            "description_font_size": "fs-md",
+            "border_top_width": 1,
+            "border_bottom_width": 0,
+            "border_color": "border-body",
+            "border_opacity": 100,
+            "open_by_default": true,
+            "pt": 0,
+            "pb": 0
+          }
+        },
+        "9ecd1e68-8c4b-4330-ac14-7459a1896521": {
+          "type": "collapse",
+          "settings": {
+            "icon_size": 20,
+            "title": "Shipping Information",
+            "title_font_family": "",
+            "title_font_size": "fs-md",
+            "title_text_transform": "text-capitalize",
+            "title_letter_spacing": 1,
+            "description": "<p>Feel free to create additional blocks like this for <strong>Shipping, Payments, etc <\/strong>through the Shopify Theme editor. Also, you may easily adjust their order by dragging and dropping.<\/p>",
+            "product_description": false,
+            "description_font_size": "fs-md",
+            "border_top_width": 1,
+            "border_bottom_width": 0,
+            "border_color": "border-body",
+            "border_opacity": 100,
+            "open_by_default": false,
+            "pt": 0,
+            "pb": 0
+          }
+        },
+        "0f571c64-329e-4ea3-9c76-ebf86266226a": {
+          "type": "collapse",
+          "settings": {
+            "icon_size": 20,
+            "title": "Returns & Warranty",
+            "title_font_family": "",
+            "title_font_size": "fs-md",
+            "title_text_transform": "text-capitalize",
+            "title_letter_spacing": 1,
+            "description": "<p>To return an item to us, follow the directions listed on the return exchange form included with your order. If you don’t have this form available, you can download one by clicking here<\/p>",
+            "product_description": false,
+            "description_font_size": "fs-md",
+            "border_top_width": 1,
+            "border_bottom_width": 1,
+            "border_color": "border-body",
+            "border_opacity": 100,
+            "open_by_default": false,
+            "pt": 0,
+            "pb": 0
+          }
+        },
+        "separator_cWJNG3": {
+          "type": "separator",
+          "settings": {
+            "bg_color": "bg-body",
+            "bg_opacity": 10,
+            "height": 1,
+            "pt": 3,
+            "pb": 3
+          }
+        },
+        "liquid_iDU3Rg": {
+          "type": "liquid",
+          "disabled": true,
+          "settings": {
+            "liquid": "<p class=\"bg-primary text-white rounded p-5\">Today's date: <b>{{ 'now' | date: \"%b %d, %Y\" }}<\/b><\/p>",
+            "pt": 3,
+            "pb": 3
           }
         }
       },
       "block_order": [
-        "58913963-afac-40f1-aaef-9a8b2084dc99",
-        "9bcd0fdf-578a-47f6-bc90-d14ef3dbeaa5"
+        "8abeac2d-7b60-4697-891c-4d6201789d31",
+        "40d3cdd3-9d78-4f15-b346-c3f46d49f7b1",
+        "judge_me_reviews_preview_badge_J3NUWe",
+        "bf49a5ff-d625-4485-a09c-44d883547f90",
+        "095886ab-f46a-4a25-9d3d-e7c79235921b",
+        "4566c39b-0f51-4900-b193-a0ac76bf0c8f",
+        "subscriptions_app_block_4aHTie",
+        "a277dbff-85ae-4c5e-ad26-4f7bb2cadc74",
+        "ea44a44f-429a-4dd2-b40c-f1bf6304c554",
+        "08894b72-c532-44db-9228-5f14c9841895",
+        "11016cfc-fdff-46f2-9b6b-26a6e68b7653",
+        "9ecd1e68-8c4b-4330-ac14-7459a1896521",
+        "0f571c64-329e-4ea3-9c76-ebf86266226a",
+        "separator_cWJNG3",
+        "liquid_iDU3Rg"
       ],
       "settings": {
-        "title_size": "h2",
-        "show_vendor": true,
-        "show_share_btn": true,
-        "gallery_img_orientation": "square",
-        "gallery_img_border": "img-thumbnail",
-        "form_light_bg": true,
-        "form_show_buy_btn": true,
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "bg_left_right_gradients": true,
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
         "pt": 10,
-        "pb": 0,
-        "mt": 0,
-        "mb": 0
+        "pb": 10
       }
     },
-    "a048e36f-1b13-4ad9-9fdd-e392f0e9489c": {
+    "1710322973d29fae05": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_XNFVCT": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_XNFVCT"
+      ],
+      "settings": {}
+    },
+    "8b8acb35-e69e-4471-a6cb-d0a09485fb41": {
+      "type": "featured-products",
+      "settings": {
+        "bg_color": "bg-body text-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "products": [],
+        "collection": "",
+        "limit": 8,
+        "recommended_mode": true,
+        "recommended_mode_intent": "related",
+        "header_title": "Recommended Products",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": true,
+        "slider_autoplay": 0,
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 4,
+        "pt": 2,
+        "pb": 11
+      }
+    },
+    "20426219-2b04-4ec4-9f23-1ed81a76c181": {
       "type": "separator",
       "settings": {
-        "full_width": false,
-        "opacity": 0.1,
-        "mt": 10,
-        "mb": 10
-      }
-    },
-    "5ca5d2db-2cba-4423-b260-a6a8749b20a8": {
-      "type": "recommended-products",
-      "settings": {
-        "bg_color": "",
-        "text_align": "text-center",
-        "limit": 8,
-        "title": "Recommended Products",
-        "title_size": "h2",
-        "description": "<p>Add on optional description to this section<\/p>",
-        "description_size": "fs-6",
-        "product_img_orientation": "square",
-        "product_img_border": "img-thumbnail",
-        "product_title_size": "h6",
-        "mobile_scroll": true,
-        "breakpoint_xs": 1,
-        "breakpoint_sm": 2,
-        "breakpoint_md": 2,
-        "breakpoint_lg": 3,
-        "breakpoint_xl": 4,
-        "breakpoint_xxl": 4,
+        "bg_color": "bg-body text-body",
+        "bg_opacity": 10,
+        "height": 1,
+        "container": "container-fluid",
+        "container_max_width": "",
         "pt": 0,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
+        "pb": 0
       }
     }
   },
   "order": [
-    "template-product",
-    "a048e36f-1b13-4ad9-9fdd-e392f0e9489c",
-    "5ca5d2db-2cba-4423-b260-a6a8749b20a8"
+    "8f4f1b58-133b-491a-a7b2-8bf2e6fbc583",
+    "1710322973d29fae05",
+    "8b8acb35-e69e-4471-a6cb-d0a09485fb41",
+    "20426219-2b04-4ec4-9f23-1ed81a76c181"
   ]
 }

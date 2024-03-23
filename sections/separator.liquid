@@ -1,61 +1,110 @@
-{% liquid 
-    assign mt = section.settings.mt | prepend: 'mt-'
-    assign mb = section.settings.mb | prepend: 'mb-'
-%}
-
-<div id="separator-{{ section.id }}" class="separator">
-    <div class="{% unless section.settings.full_width %}container{% endunless %}">
-        <hr class="{{ mt }} {{ mb }}" style="opacity: {{ section.settings.opacity }};">
-    </div>
+<div 
+  id="separator-wrapper-{{ section.id }}" 
+  class="
+    separator-wrapper 
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  ">
+  <div 
+    class="{{ section.settings.container }}" 
+    style="max-width: {{ section.settings.max_width }}px;">
+    <hr 
+      class="separator my-0 {{ section.settings.bg_color }}" 
+      style="
+        opacity: 1;
+        --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+        height: {{ section.settings.height | append: 'px' }}
+      ">
+  </div>
 </div>
-  
+
 {% schema %}
 {
-    "name": "Separator",
-    "settings": [
-        {
-            "type": "checkbox",
-            "id": "full_width",
-            "label": "Full width",
-            "default": false
-        },
-        {
-            "type": "range",
-            "id": "opacity",
-            "label": "Border opacity",
-            "min": 0,
-            "max": 1,
-            "step": 0.1,
-            "default": 0.1
-        },
-        {
-            "type": "header",
-            "content": "Spacing"
-        },
-        {
-            "type": "range",
-            "id": "mt",
-            "label": "Margin top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mb",
-            "label": "Margin bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        }
-    ],
-    "presets": [
-        {
-            "name": "Separator",
-            "category": "Layout"
-        }
+"name": "Separator",
+"settings": [
+  {
+    "type": "header",
+    "content": "Styling"
+  },
+  {
+    "type": "select",
+    "id": "bg_color",
+    "label": "Background color",
+    "default": "bg-primary",
+    "options": [
+      { "value": "bg-primary", "label": "Primary" },
+      { "value": "bg-secondary", "label": "Secondary" },
+      { "value": "bg-body", "label": "Body" },
+      { "value": "bg-white", "label": "White" }
     ]
+  },
+  {
+    "type": "range",
+    "id": "bg_opacity",
+    "label": "Background opacity",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "default": 10,
+    "unit": "%"
+  },
+  {
+    "type": "range",
+    "id": "height",
+    "label": "Height",
+    "min": 0,
+    "max": 16,
+    "default": 1,
+    "step": 1,
+    "unit": "px"
+  },
+  {
+    "type": "header",
+    "content": "General"
+  },
+  {
+    "type": "select",
+    "id": "container",
+    "label": "Container",
+    "default": "",
+    "options": [
+      { "value": "container", "label": "Yes" },
+      { "value": "", "label": "No" }
+    ]
+  },
+  {
+    "type": "text",
+    "id": "container_max_width",
+    "label": "Container max-width (px)",
+    "info": "Leave empty to use the global container width"
+  },
+  {
+    "type": "header",
+    "content": "Spacing"
+  },
+  {
+    "type": "range",
+    "id": "pt",
+    "label": "Top",
+    "min": 0,
+    "max": 20,
+    "step": 1,
+    "default": 10
+  },
+  {
+    "type": "range",
+    "id": "pb",
+    "label": "Bottom",
+    "min": 0,
+    "max": 20,
+    "step": 1,
+    "default": 10
+  }
+],
+"presets": [
+  {
+    "name": "Separator"
+  }
+]
 }
 {% endschema %}

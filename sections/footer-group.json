@@ -1,0 +1,97 @@
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "newsletter_fL4LWF": {
+      "type": "newsletter",
+      "settings": {
+        "bg_color": "bg-secondary",
+        "bg_opacity": 5,
+        "bg_gradient": "bg-gradient",
+        "text_color": "text-body",
+        "border_top_width": 1,
+        "border_bottom_width": 0,
+        "border_color": "border-secondary",
+        "border_opacity": 10,
+        "container_max_width": "600",
+        "header_title": "Newsletter Subscribe",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "btn_color": "btn-primary",
+        "btn_size": "",
+        "notice": "<p>By signing up for email, you agree to our <a href=\"\/policies\/terms-of-service\">Terms of Service<\/a> and <a href=\"\/policies\/privacy-policy\">Privacy Policy<\/a>.<\/p>",
+        "pt": 11,
+        "pb": 11
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "8b92bb0f-7aaa-4462-8660-b6a23bd9c31c": {
+          "type": "menu",
+          "settings": {
+            "menu": "shop",
+            "title_font_size": "fs-xl",
+            "title": "Collections"
+          }
+        },
+        "79b0b9d4-1bf4-4490-a48e-94be1aecf12a": {
+          "type": "menu",
+          "settings": {
+            "menu": "company",
+            "title_font_size": "fs-xl",
+            "title": "Company"
+          }
+        },
+        "7468602d-7e94-4bd5-9673-02b2f8269581": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer",
+            "title_font_size": "fs-xl",
+            "title": "Policies"
+          }
+        },
+        "0f9016c8-7819-40d8-a874-905df26582ca": {
+          "type": "richtext",
+          "settings": {
+            "title": "About us",
+            "title_font_size": "fs-xl",
+            "description": "<p>Finish your Shopify store within days, not months. 15+ years of coding experience, 50k+ customers served!<\/p>",
+            "btn_primary_text": "Browse themes",
+            "btn_primary_url": "https:\/\/www.kondasoft.com\/collections\/shopify-themes",
+            "btn_primary_color": "btn-primary",
+            "btn_secondary_text": "Learn more",
+            "btn_secondary_url": "https:\/\/www.kondasoft.com\/collections\/shopify-themes",
+            "btn_secondary_color": "btn-light-white"
+          }
+        }
+      },
+      "block_order": [
+        "8b92bb0f-7aaa-4462-8660-b6a23bd9c31c",
+        "79b0b9d4-1bf4-4490-a48e-94be1aecf12a",
+        "7468602d-7e94-4bd5-9673-02b2f8269581",
+        "0f9016c8-7819-40d8-a874-905df26582ca"
+      ],
+      "settings": {
+        "bg_color": "bg-secondary",
+        "bg_opacity": 100,
+        "bg_gradient": "bg-gradient",
+        "text_color": "text-white",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-white",
+        "border_opacity": 100,
+        "social_icons": true,
+        "show_payment_icons": true,
+        "show_powered_by": true,
+        "pt": 10,
+        "pb": 7
+      }
+    }
+  },
+  "order": [
+    "newsletter_fL4LWF",
+    "footer"
+  ]
+}

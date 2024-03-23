@@ -1,0 +1,60 @@
+{% liquid 
+  assign pt = block.settings.pt | prepend: 'pt-'
+  assign pb = block.settings.pb | prepend: 'pb-'
+%}
+
+<div 
+  class="product-block-collapse {{ pt }} {{ pb }}" 
+  {{ block.shopify_attributes }}>
+  <div 
+    class="
+      collapse-wrapper
+      {{ block.settings.border_top_width | prepend: 'border-top-' }}
+      {{ block.settings.border_bottom_width | prepend: 'border-bottom-' }}
+      {{ block.settings.border_color }} 
+    "
+    style="
+      border-top-style: solid;
+      border-bottom-style: solid;
+      --bs-border-opacity: {{ block.settings.border_opacity | append: '%' }};
+    ">
+    <button 
+      class="
+        {{ block.settings.title_font_family }}
+        {{ block.settings.title_font_size }} 
+        {{ block.settings.title_text_transform }} 
+        {{ block.settings.title_letter_spacing | prepend: 'ls-' }} 
+      " 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#collapse-{{ block.id }}" 
+      aria-expanded="{% if block.settings.open_by_default %}true{% else %}false{% endif %}" 
+      aria-controls="collapse-{{ block.id }}">
+      <div class="d-flex align-items-center">
+        {% unless block.settings.icon == blank %}
+          <img 
+            class="img-fluid me-5"
+            src="{{ block.settings.icon | image_url: width: block.settings.icon_size }}" 
+            alt="{{ block.settings.icon.alt }}"
+            width="{{ block.settings.icon_size }}"
+            height="{{ block.settings.icon_size | divided_by: block.settings.icon.aspect_ratio | round }}"
+            loading="lazy">
+        {% endunless %}
+        {{ block.settings.title }}
+      </div>
+      {% render 'svg-icons', icon: 'chevron-down', size: 18 %}
+    </button>
+    <div id="collapse-{{ block.id }}" class="collapse {% if block.settings.open_by_default %}show{% endif %}">
+      <div class="collapse-inner description rte mb-0 {{ block.settings.description_font_size }}">
+        {% if block.settings.description contains '[page' %}
+          {% assign page_handle = block.settings.description | split: '[page:' | last | split: ']' | first %}
+          {{ pages[page_handle].content }}
+        {% elsif block.settings.product_description %}
+          {{ product.description }}
+        {% else %}
+          {{ block.settings.description }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

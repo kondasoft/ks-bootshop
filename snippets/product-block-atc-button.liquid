@@ -1,0 +1,73 @@
+{% liquid 
+  assign current_variant = product.selected_or_first_available_variant
+
+  assign pt = block.settings.pt | prepend: 'pt-'
+  assign pb = block.settings.pb | prepend: 'pb-'
+%}
+
+<div 
+  class="product-block-atc {{ pt }} {{ pb }}" 
+  {{ block.shopify_attributes }}>
+  <div class="d-flex">
+    {% if block.settings.show_qty_field %}
+      <div 
+        class="qty-input-wrapper me-4"  
+        role="group" 
+        aria-label="{{ 'general.accessibility.quantity' | t }}">
+        <button 
+          class="btn btn-qty-minus"
+          type="button"
+          onclick="--this.nextElementSibling.value, this.nextElementSibling.value == 1 ?  this.disabled = true : ''" 
+          aria-label="{{ 'general.accessibility.decrease_qty' | t }}"
+          disabled>
+          {% render 'svg-icons', icon: 'minus', size: 14 %}
+        </button>
+        <input
+          class="form-control {{ block.settings.atc_btn_size | replace: 'btn-', 'form-control-' }}" 
+          name="quantity"
+          type="number"
+          value="1"
+          min="1"
+          aria-label="{{ 'product.quantity' | t }}">
+        <button 
+          class="btn btn-qty-plus"
+          type="button"
+          onclick="++this.previousElementSibling.value, this.previousElementSibling.previousElementSibling.disabled = false" 
+          aria-label="{{ 'general.accessibility.increase_qty' | t }}">
+          {% render 'svg-icons', icon: 'plus', size: 14 %}
+        </button>
+      </div>
+    {% endif %}
+    <button
+      class="btn btn-atc {{ block.settings.atc_btn_color }} {{ block.settings.atc_btn_size }}"
+      type="submit"
+      name="add"
+      {% unless current_variant.available %}
+        disabled
+      {% endunless %}>
+      {% if current_variant.available %}
+        {{ 'product.add_to_cart' | t }}
+      {% else %}
+        {{ 'product.sold_out' | t }}
+      {% endif %}
+    </button>
+  </div>
+
+  {% if block.settings.show_dynamic_buttons %}
+    <div class="product-dynamic-buttons mt-5 pb-2">
+      {{ form | payment_button }}
+    </div>
+  {% endif %}
+  
+  {% if block.settings.show_buy_btn %}
+    <button 
+      class="btn btn-buy mt-4 {{ block.settings.buy_btn_color }} {{ block.settings.buy_btn_size }}" 
+      type="button"
+      {% unless current_variant.available %}
+        disabled
+      {% endunless %}>
+      {{ 'product.buy_it_now' | t }}
+    </button>
+  {% endif %}
+
+</div>

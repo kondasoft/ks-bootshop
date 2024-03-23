@@ -1,60 +1,62 @@
 /*
-    © 2022 KondaSoft.com
-    https://www.kondasoft.com
+  © 2024 KondaSoft
+  https://www.kondasoft.com
 */
 
-/*
-    Announcement bar
-*/
-document.addEventListener('shopify:block:select', (event) => {
-    const carousel = event.target.closest('.announcement-bar .carousel')
+class Navbar extends HTMLElement {
+  constructor () {
+    super()
 
-    if (carousel) {
-        bootstrap.Carousel.getOrCreateInstance(carousel, { ride: false })
-            .to(event.target.dataset.index)
-    }
-})
+    this.handleDropdownsBackdrop()
+    this.handleHeaderReveal()
+    this.adjustOffcanvasMenu()
+  }
 
-/*
-    Carousel
-*/
-document.addEventListener('shopify:block:select', (event) => {
-    const carousel = event.target.closest('.carousel')
+  adjustOffcanvasMenu () {
+    const offcanvasMenu = document.querySelector('#offcanvas-menu')
+    const navbarMobile = document.querySelector('#navbar-mobile')
 
-    if (carousel) {
-        bootstrap.Carousel.getOrCreateInstance(carousel, { ride: false })
-            .to(event.target.dataset.index)
-    }
-})
+    offcanvasMenu?.addEventListener('show.bs.offcanvas', () => {
+      const navbarSpacing = document.querySelector('#navbar-mobile').getBoundingClientRect().bottom
+      offcanvasMenu.style.height = `${window.innerHeight - navbarSpacing}px`
 
-/*
-    Featured Products
-*/
+      navbarMobile.querySelector('.svg-icon-menu')?.classList.add('svg-icon-menu-close')
+    })
 
-/*
-    Recommended Products
-    https://shopify.dev/themes/product-merchandising/recommendations
-*/
-const initRecommendedProducts = async () => {
-    const section = document.querySelector('.recommended-products')
+    offcanvasMenu?.addEventListener('hide.bs.offcanvas', () => {
+      navbarMobile.querySelector('.svg-icon-menu')?.classList.remove('svg-icon-menu-close')
+    })
+  }
 
-    if (!section) return
+  handleHeaderReveal () {
+    let oldScroll = window.scrollY
+    const headerGroup = document.querySelector('#header-group')
 
-    const { sectionId, baseUrl, productId, limit } = section.dataset
-    const url = `${baseUrl}?section_id=${sectionId}&product_id=${productId}&limit=${limit}`
-    const response = await fetch(url)
-    const data = await response.text()
+    window.addEventListener('scroll', () => {
+      const newScroll = window.scrollY
+      if (newScroll > oldScroll) {
+        if (newScroll > headerGroup.clientHeight) {
+          headerGroup.classList.add('hide')
+        }
+      } else if (newScroll < oldScroll) {
+        headerGroup.classList.remove('hide')
+      }
 
-    section.closest('.shopify-section').outerHTML = data
+      oldScroll = Math.max(window.scrollY, 0)
+    })
+  }
 
-    const customEvent = new CustomEvent('init.ks.recommended_products')
-    window.dispatchEvent(customEvent)
+  handleDropdownsBackdrop () {
+    this.querySelectorAll('#navbar-desktop .dropdown-toggle').forEach(dropdown => {
+      dropdown.addEventListener('hidden.bs.dropdown', () => {
+        if (!document.querySelector('#navbar-desktop .dropdown-toggle.show')) {
+          document.body.classList.remove('navbar-dropdown-open')
+        }
+      })
+      dropdown.addEventListener('show.bs.dropdown', () => {
+        document.body.classList.add('navbar-dropdown-open')
+      })
+    })
+  }
 }
-initRecommendedProducts()
-
-// Listen for changes in the Shopify Theme Editor
-document.addEventListener('shopify:section:load', (e) => {
-    if (e.target.querySelector('.recommended-products')) {
-        initRecommendedProducts()
-    }
-})
+customElements.define('navbar-wrapper', Navbar)

@@ -1,0 +1,31 @@
+{% comment %}
+  Renders the price paragraph for the product card, but it may be used on other parts when
+  there is a product list
+
+  Accepts:
+  - product: {object} The product object
+
+  Usage:
+  {% render 'product-card-price' product: product  %}
+{% endcomment %}
+
+<p class="product-card-price product-price mb-4">
+  {% if product.compare_at_price > product.price %}
+    <s class="product-card-price-compare">
+      <span class="visually-hidden">
+        {{ 'product.regular_price' | t }} 
+      </span>
+      {{ product.compare_at_price | money_without_trailing_zeros }}
+    </s>
+    <span class="product-card-price-final product-price-final-sale">
+      <span class="visually-hidden">
+        {{ 'product.sale_price' | t }} 
+      </span>
+      {{ product.price | money_without_trailing_zeros }}
+    </span>
+  {% else %}
+    <span class="product-card-price-final">
+      {{ product.price | money_without_trailing_zeros }}
+    </span>
+  {% endif %}
+</p>

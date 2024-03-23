@@ -1,149 +1,99 @@
 {
   "current": {
     "color_primary": "#0d6efd",
-    "color_light": "#f8f9fa",
+    "color_secondary": "#455a64",
     "color_body_bg": "#ffffff",
-    "color_body_text": "#212529",
-    "font_headings": "roboto_n5",
+    "color_body_color": "#212529",
+    "container_max_width": 1350,
+    "border_radius": 0.3,
+    "logo": "shopify:\/\/shop_images\/logo.png",
+    "favicon": "shopify:\/\/shop_images\/favicon.png",
     "font_body": "sans-serif",
+    "font_headings": "ubuntu_n4",
+    "btn_text_transform": "none",
+    "btn_font_family": "var(--bs-body-font-family)",
+    "btn_font_weight": "500",
+    "btn_letter_spacing": 1,
+    "btn_bg_gradient": true,
+    "btn_padding_x": 1,
+    "btn_padding_y": 0.3,
+    "dialog_backdrop_color": "#212529",
+    "dialog_header_bg_color": "secondary",
+    "dialog_header_bg_opacity": 5,
+    "dialog_header_text_color": "body-color",
+    "dialog_header_border_width": 1,
+    "dialog_header_border_color": "secondary",
+    "dialog_header_border_opacity": 10,
+    "dialog_header_title_font_size": 1.3,
+    "product_card_img_mode": "carousel",
+    "product_card_img_orientation": "ratio-1x1",
+    "product_card_img_border": "img-thumbnail",
+    "product_card_carousel_controls_color": "body-color",
+    "product_card_carousel_transition": "slide",
+    "product_card_badge_discount_type": "value",
+    "product_card_title_font_size": "fs-lg",
+    "product_card_show_atc_form": true,
+    "product_card_atc_style": "quick-view",
+    "product_card_color_swatches": "Color, color",
+    "cart_icon": "cart",
+    "cart_goal_value": "USD:100, \nEUR:50",
+    "cart_goal_bg_color_before": "bg-primary",
+    "cart_goal_bg_color_after": "bg-primary",
+    "cart_upsells_title": "You might like",
+    "cart_upsells_collection": "best-selling",
+    "cart_upsells_limit": 5,
+    "cart_gift_upsell_product": "gift-wrap",
+    "recently_viewed": true,
     "social_facebook": "#",
-    "social_twitter": "#",
     "social_instagram": "#",
-    "social_pinterest": "",
+    "social_x": "#",
     "social_tiktok": "#",
-    "social_snapchat": "",
     "social_youtube": "#",
-    "social_linkedin": "",
-    "social_whatsapp": "#",
-    "buttons_border_radius": "0.25rem",
-    "cart_goal_enable": true,
-    "cart_goal_value": 300,
-    "search_show_popular_products": true,
-    "search_popular_products": [
-      "bag-series-1",
-      "glasses-series-1",
-      "heat-series-1",
-      "lamp-series-1",
-      "watch-series-14",
-      "bag-series-2",
-      "glasses-series-2",
-      "heat-series-2",
-      "lamp-series-2",
-      "shoes-series-2"
-    ],
-    "sections": {
-      "navbar": {
-        "type": "navbar",
-        "settings": {
-          "bg_color": "bg-white text-dark",
-          "shadow": "shadow-sm",
-          "menu_desktop": "dropdown-menu",
-          "logo_height_mobile": 40,
-          "logo_height_desktop": 40,
-          "offcanvas_menu_header_bg": "bg-dark text-white",
-          "menu_mobile": "dropdown-menu",
-          "utilities_menu": "utilities-menu",
-          "offcanvas_menu_show_social_icons": true,
-          "pt": 3,
-          "pb": 3
-        }
-      },
-      "footer": {
-        "type": "footer",
-        "blocks": {
-          "738cdbe4-d453-45ea-8940-aed81d08bf3b": {
-            "type": "menu",
-            "settings": {
-              "menu": "shop",
-              "title": "Shop",
-              "title_size": "h6"
-            }
-          },
-          "ac3b4c00-f362-4697-b848-3957315b3c61": {
-            "type": "menu",
-            "settings": {
-              "menu": "company",
-              "title": "Company",
-              "title_size": "h6"
-            }
-          },
-          "347c0c0a-1863-4236-a7ce-8cc6a91e5950": {
-            "type": "menu",
-            "settings": {
-              "menu": "footer",
-              "title": "Legal",
-              "title_size": "h6"
-            }
-          },
-          "3cda8bcc-909e-48bd-a7b7-2823ca9ea34b": {
-            "type": "richtext",
-            "settings": {
-              "title": "Richtext Block",
-              "title_size": "h6",
-              "description": "<p>This is a sample richtext block that you can use in the footer. It can have  a button as well.<\/p>",
-              "btn_text": "Learn more",
-              "btn_url": "#",
-              "btn_color": "btn-primary",
-              "btn_size": "btn-sm"
-            }
-          }
-        },
-        "block_order": [
-          "738cdbe4-d453-45ea-8940-aed81d08bf3b",
-          "ac3b4c00-f362-4697-b848-3957315b3c61",
-          "347c0c0a-1863-4236-a7ce-8cc6a91e5950",
-          "3cda8bcc-909e-48bd-a7b7-2823ca9ea34b"
-        ],
-        "settings": {
-          "bg_color": "bg-dark text-white",
-          "show_payment_icons": false,
-          "show_social_icons": true,
-          "show_powered_by": true,
-          "pt": 10,
-          "pb": 6
-        }
-      },
-      "template-cart": {
-        "type": "template-cart",
-        "settings": {
-          "show_note": true,
-          "mt": 10,
-          "mb": 10
-        }
-      },
-      "announcement-bar": {
-        "type": "announcement-bar",
-        "settings": {
-          "announcement": "<p>Announce something important here<\/p>",
-          "show": true,
-          "homepage": false,
-          "bg_color": "bg-dark text-white",
-          "max_width": "600",
-          "font_size": "small",
-          "text_transform": "text-capitalize",
-          "pt": 3,
-          "pb": 3
-        }
-      },
-      "newsletter": {
-        "type": "newsletter",
-        "settings": {
-          "bg_color": "bg-light text-dark",
-          "max_width": "560",
-          "title": "Newsletter Subscribe",
-          "title_size": "h3",
-          "description": "<p>Subscribe to get updates about our latest offers and other important stuff. We usually send once per week.<\/p>",
-          "description_size": "fs-6",
-          "input_group_size": "",
-          "btn_color": "btn-primary",
-          "notice": "<p>By signing up for email, you agree to our <a href=\"#\" title=\"#\">Terms of Service<\/a> and <a href=\"#\" title=\"#\">Privacy Policy<\/a>.<\/p>",
-          "pt": 10,
-          "pb": 10,
-          "mt": 0,
-          "mb": 0
-        }
+    "checkout_logo_image": "shopify:\/\/shop_images\/logo.png",
+    "checkout_logo_size": "small",
+    "checkout_accent_color": "#dc3545",
+    "checkout_button_color": "#dc3545",
+    "product_countdown_time": "1718358803",
+    "product_countdown_bg_color": "bg-primary",
+    "product_countdown_bg_opacity": 10,
+    "product_countdown_text_color": "text-primary",
+    "product_countdown_border_width": 1,
+    "product_countdown_border_color": "border-primary",
+    "product_countdown_border_opacity": 49,
+    "cart_gift_product": "gift-wrap",
+    "cart_upsells_bg_light": false,
+    "btn_shine_effect": true,
+    "headings_text_transform": "uppercase",
+    "headings_letter_spacing": 1,
+    "color_tertiary": "#1f2937",
+    "btn_border_width": 1,
+    "body_letter_spacing": 0,
+    "font_h1_size_mobile": 2.5,
+    "font_h2_size_mobile": 2,
+    "color_body_text": "#1f2937",
+    "font_desktop_h3_size": 2.5,
+    "font_h5_size": 1.5,
+    "product_img_orientation": "ratio-1x1",
+    "product_img_border": "img-thumbnail",
+    "product_img_controls_color": "dark",
+    "product_sale_badge_discount_type": "value",
+    "product_sale_badge_bg_color": "bg-danger",
+    "product_buy_btn_color": "btn-secondary",
+    "color_dark": "#27272a",
+    "color_light": "#f8f9fa",
+    "gradient_primary": "linear-gradient(90deg, rgba(146, 64, 14, 1), rgba(205, 103, 41, 1) 100%)",
+    "gradient_secondary": "linear-gradient(90deg, rgba(18, 18, 18, 1) 1%, rgba(50, 50, 50, 1) 99%)",
+    "product_card_controls_color": "dark",
+    "product_card_wishlist_color": "text-primary",
+    "product_card_img_carousel_dark": false,
+    "cart_img_border": "img-thumbnail",
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/judgeme_core\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
       }
-    },
-    "content_for_index": []
+    }
   }
 }

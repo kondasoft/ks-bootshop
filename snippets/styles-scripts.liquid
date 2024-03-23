@@ -1,0 +1,84 @@
+{% comment %} 
+  Global variables
+{% endcomment %}
+<script>
+  Shopify.moneyFormat = '{{ shop.money_format }}'
+  Shopify.routes = Shopify.routes || {}
+  Shopify.routes.cart_add_url = '{{ routes.cart_add_url }}'
+  Shopify.routes.cart_change_url = '{{ routes.cart_change_url }}'
+  Shopify.routes.cart_update_url = '{{ routes.cart_update_url }}'
+  Shopify.routes.cart_url = '{{ routes.cart_url }}'
+  Shopify.routes.predictive_search_url = '{{ routes.predictive_search_url }}'
+  theme = {
+    locales: {
+      accessibility: {
+        remove: '{{ 'general.accessibility.remove' | t }}',
+      },
+      times: {
+        ago: '{{ 'general.times.ago' | t }}',
+        moments: '{{ 'general.times.moments' | t }}',
+        second: '{{ 'general.times.second' | t }}',
+        seconds: '{{ 'general.times.seconds' | t }}',
+        minute: '{{ 'general.times.minute' | t }}',
+        minutes: '{{ 'general.times.minutes' | t }}',
+        hour: '{{ 'general.times.hour' | t }}',
+        hours: '{{ 'general.times.hours' | t }}',
+        day: '{{ 'general.times.day' | t }}',
+        days: '{{ 'general.times.days' | t }}',
+        expired: '{{ 'general.times.expired' | t }}',
+      },
+      product: {
+        add_to_cart: '{{ 'product.add_to_cart' | t }}',
+        buy_it_now: '{{ 'product.buy_it_now' | t }}',
+        save: '{{ 'product.save' | t }}',
+        sold_out: '{{ 'product.sold_out' | t }}',
+        unavilable: '{{ 'product.unavilable' | t }}',
+        quantity: '{{ 'product.quantity' | t }}',
+        unavailable: '{{ 'product.unavailable' | t }}',
+        product_options: '{{ 'product.product_options' | t }}',
+        choose_options: '{{ 'product.choose_options' | t }}',
+        quick_view: '{{ 'product.quick_view' | t }}',
+        regular_price:'{{ 'product.regular_price' | t }}',
+        sale_price: '{{ 'product.sale_price' | t }}',
+      },
+      wishlist: {
+        add: '{{ 'general.wishlist.add' | t }}',
+        remove: '{{ 'general.wishlist.remove' | t }}',
+      }
+    }
+  }
+</script>
+
+{% comment %} 
+  Vendor 
+{% endcomment %} 
+<link href="{{ 'vendor-bootstrap.min.css' | asset_url }}" rel="stylesheet">
+<script src="{{ 'vendor-bootstrap.bundle.min.js' | asset_url }}" defer></script>
+<link href="{{ 'vendor-swiper.bundle.min.css' | asset_url }}" rel="stylesheet">
+<script src="{{ 'vendor-swiper.bundle.min.js' | asset_url }}" defer></script>
+
+{% comment %} 
+  Styles 
+{% endcomment %}
+<link href="{{ 'variables.css' | asset_url }}" rel="stylesheet">
+<link href="{{ 'base.css' | asset_url }}" rel="stylesheet">
+<link href="{{ 'sections.css' | asset_url }}" rel="stylesheet">
+<link href="{{ 'cart.css' | asset_url }}" rel="stylesheet">
+<link href="{{ 'collection.css' | asset_url }}" rel="stylesheet">
+<link href="{{ 'product.css' | asset_url }}" rel="stylesheet">
+
+{% comment %} 
+  Scripts 
+{% endcomment %}
+<script src="{{ 'base.js' | asset_url }}" defer></script>
+<script src="{{ 'sections.js' | asset_url }}" defer></script>
+<script src="{{ 'cart.js' | asset_url }}" defer></script>
+<script src="{{ 'collection.js' | asset_url }}" defer></script>
+<script src="{{ 'product.js' | asset_url }}" defer></script>
+<script src="{{ 'search.js' | asset_url }}" defer></script>
+
+{% comment %} 
+  Custom 
+{% endcomment %}
+<link href="{{ 'custom.css' | asset_url }}" rel="stylesheet">
+<script src="{{ 'custom.js' | asset_url }}" defer></script>

@@ -1,0 +1,148 @@
+<article 
+  id="article-main-{{ collection.id }}" 
+  class="
+    article-main
+    {{  section.settings.pt | prepend: 'pt-' }}
+    {{  section.settings.pb | prepend: 'pb-' }}
+  ">
+  {% if section.settings.img_show and article.image %}
+    <div class="img-wrapper mb-8">
+      <div class="container">
+        {% render 'image-url', img: article.image, size: 1600, orientation: section.settings.img_orientation, class: section.settings.img_border %}
+      </div>
+    </div>
+  {% endif %}
+  <div class="article-content">
+    <div 
+      class="container" 
+      style="max-width: {{ section.settings.max_width }}px">
+      <h1 class="article-title title mb-4 {{ section.settings.title_font_size }}">
+        {{ article.title }}
+      </h1>
+      {% if section.settings.article_meta %}
+        <p class="article-meta opacity-70 mb-5">
+          {{ article.author }} @ {{ article.created_at | time_tag: '%b %d, %Y' }}
+        </p>
+      {% endif %}
+      <div class="article-content rte mb-6">
+        {{ article.content }}
+      </div>
+      {% if section.settings.show_tags and article.tags.size > 0 %}
+        <div class="article-tags small opacity-70 mb-7">
+          {{ 'general.blog.posted_in' | t }}: 
+          {% for tag in article.tags %}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
+            {{ tag }}</a>{% unless forloop.last %}, {% endunless %}
+          {% endfor %}
+        </div>
+      {% endif %} 
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article main",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "img_show",
+      "label": "Show article image",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "img_orientation",
+      "label": "Image orientation",
+      "default": "adapt",
+      "options": [
+        { "group": "Adapt", "value": "adapt", "label": "Adapt" },
+        { "group": "Square", "value": "ratio-1x1", "label": "1x1" },
+        { "group": "Horizontal", "value": "ratio-4x3", "label": "4x3" },
+        { "group": "Horizontal", "value": "ratio-16x9", "label": "16x9" },
+        { "group": "Horizontal", "value": "ratio-21x9", "label": "21x9" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "img_border",
+      "label": "Image border",
+      "default": "img-thumbnail",
+      "options": [
+        { "value": "", "label": "None" },
+        { "value": "rounded", "label": "Rounded" },
+        { "value": "img-thumbnail", "label": "Thumbnail" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "max_width",
+      "label": "Content max-width (px)",
+      "default": "720"
+    },
+    {
+      "type": "select",
+      "id": "title_font_size",
+      "label": "Title font-size",
+      "default": "h1",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "article_meta",
+      "label": "Show article meta",
+      "info": "Author and date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show tags",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "templates": ["article"],
+  "presets": [
+    {
+      "name": "Article main"
+    }
+  ]
+}
+{% endschema %}

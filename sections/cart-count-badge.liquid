@@ -1,0 +1,6 @@
+{% liquid 
+  # This section is needed to dynamically fetch it using Shopify's
+  # "Bundled section rendering" mode after the cart has been updated.
+  # https://www.shopify.dev/docs/api/ajax/reference/cart#bundled-section-rendering
+%}
+{% render 'cart-count-badge' %}

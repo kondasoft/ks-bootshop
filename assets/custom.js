@@ -1,3 +1,3 @@
 /*
-    Add here your own custom javascript
+  Add here your own custom javascript codes
 */

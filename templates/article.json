@@ -1,14 +1,17 @@
 {
   "sections": {
     "template-article": {
-      "type": "template-article",
+      "type": "article-main",
       "settings": {
-        "title_size": "h1",
+        "img_show": true,
+        "img_orientation": "ratio-16x9",
+        "img_border": "img-thumbnail",
         "max_width": "720",
+        "title_font_size": "h1",
+        "article_meta": true,
         "show_tags": true,
-        "show_share_btn": true,
-        "mt": 6,
-        "mb": 10
+        "pt": 8,
+        "pb": 10
       }
     }
   },

@@ -1,0 +1,8 @@
+{% liquid 
+  assign pt = block.settings.pt | prepend: 'pt-'
+  assign pb = block.settings.pb | prepend: 'pb-'
+%}
+
+<div class="product-block-liquid {{ pt }} {{ pb }}" {{ block.shopify_attributes }}>
+  {{ block.settings.liquid }}
+</div>

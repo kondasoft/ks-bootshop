@@ -1,0 +1,15 @@
+<div 
+  class="
+    product-block-separator separator-wrappe
+    {{ block.settings.pt | prepend: 'pt-' }} 
+    {{ block.settings.pb | prepend: 'pb-' }}
+  " 
+  {{ block.shopify_attributes }}>
+  <hr 
+    class="separator my-0 {{ block.settings.bg_color }}" 
+    style="
+      opacity: 1;
+      --bs-bg-opacity: {{ block.settings.bg_opacity | append: '%' }};
+      height: {{ block.settings.height | append: 'px' }}
+    ">
+</div>

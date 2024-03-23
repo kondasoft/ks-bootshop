@@ -1,0 +1,581 @@
+<swiper-slider
+  id="testimonials-{{ section.id }}" 
+  class="
+    testimonials swiper-slider
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }}
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  "
+  data-section-id="{{ section.id }}"
+  data-slider-speed="{{ section.settings.slider_speed }}"
+  data-slider-navigation="{{ section.settings.slider_navigation }}"
+  data-slider-pagination="{{ section.settings.slider_pagination }}"
+  data-slider-pagination-type="{{ section.settings.slider_pagination_type }}"
+  data-slider-scrollbar="{{ section.settings.slider_scrollbar }}"
+  data-slider-partial-slides-mobile="{{ section.settings.slider_partial_slides_mobile }}"
+  data-slider-autoplay="{{ section.settings.slider_autoplay }}"
+  data-breakpoint-mobile="{{ section.settings.breakpoint_mobile }}"
+  data-breakpoint-tablet="{{ section.settings.breakpoint_tablet }}"
+  data-breakpoint-desktop="{{ section.settings.breakpoint_desktop }}">
+  <div 
+    class="container"
+    style="max-width: {{ section.settings.container_max_width | append: 'px' }};">
+    {% render 'section-header' %}
+    <div class="swiper m-n4 m-desktop-n4">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div
+            class="swiper-slide p-4 p-desktop-5"
+            {{ block.shopify_attributes }}>
+            <div 
+              class="
+                card h-100
+                {{ section.settings.card_bg_color }}
+                {{ section.settings.card_text_color }}
+                {{ section.settings.card_border_width | prepend: 'border-' }}
+                {{ section.settings.card_shadow }} 
+                {{ section.settings.card_border_color }}
+                {{ section.settings.card_text_align }}
+              "
+              style="
+                --bs-bg-opacity: {{ section.settings.card_bg_opacity | append: '%' }};
+                --bs-border-opacity: {{ section.settings.card_border_opacity | append: '%' }};
+              ">
+              <div class="card-body">
+                {% unless block.settings.title == blank %}
+                  <h3 class="title mb-2 {{ section.settings.card_title_font_size }}">
+                    {{ block.settings.title }}
+                  </h3>
+                {% endunless %}
+                {% if section.settings.card_show_stars %}
+                  <div class="testimonials-card-stars mb-3" aria-hidden="true">
+                    {% for n in (1..5) %}
+                      {% render 'svg-icons', icon: 'star', size: 16 %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                {% unless block.settings.description == blank %}
+                  <div class="description rte mb-0 {{ section.settings.card_description_font_size }}">
+                    {{ block.settings.description }}
+                  </div>
+                {% endunless %}
+              </div>
+            </div>
+            {% if block.settings.img != blank or block.settings.author != blank %}
+              <div class="d-flex align-items-center mt-4 ms-1">
+                {% unless block.settings.img == blank %}
+                  <div class="testimonials-card-img me-4">
+                    {% render 'image-url', img: block.settings.img, size: 40, scale: true, orientation: 'ratio-1x1', class: 'rounded-circle' %}
+                  </div>
+                {% endunless %}
+                {% unless block.settings.author == blank %}
+                  <p class="testimonials-card-author fw-500 mb-0 lh-sm small">
+                    {{ block.settings.author }} 
+                    {% unless block.settings.author_subtitle == blank %}
+                      <span class="text-primary small d-flex align-items-center mt-1">
+                        <svg class="me-1" width="16" height="16" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z" fill="currentColor"></path>
+                        </svg>
+                        {{ block.settings.author_subtitle }}
+                      </span>
+                    {% endunless %}
+                  </p>
+                {% endunless %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-controls">
+        <div class="swiper-pagination"></div>
+        <div class="swiper-scrollbar"></div>
+        <div class="swiper-button-prev">
+          {% render 'svg-icons', icon: 'chevron-left', size: 24 %}
+        </div>
+        <div class="swiper-button-next">
+          {% render 'svg-icons', icon: 'chevron-right', size: 24 %}
+        </div>
+      </div>
+    </div>
+  </div>
+</swiper-slider>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "container_max_width",
+      "label": "Container max-width (px)",
+      "info": "Leave empty to use the global container width"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Title",
+      "default": "Testimonials"
+    },
+    {
+      "type": "select",
+      "id": "header_title_font_size",
+      "label": "Title font-size",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "header_description",
+      "label": "Description (optional)",
+      "default": "<p>Add on optional description for this section</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_description_font_size",
+      "label": "Description font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Speed",
+      "default": 300,
+      "min": 0,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_navigation",
+      "label": "Show navigation (arrows)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "slider_pagination_type",
+      "label": "Pagination type",
+      "default": "bullets", 
+      "options": [
+        { "value": "bullets", "label": "Bullets" },
+        { "value": "fraction", "label": "Fraction" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_scrollbar",
+      "label": "Show scrollbar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "slider_partial_slides_mobile",
+      "label": "Partial slides on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slider_autoplay",
+      "label": "Autoplay",
+      "min": 0,
+      "max": 10,
+      "default": 0,
+      "unit": "sec",
+      "info": "Selecing \"0\" will disable autoplay."
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "select",
+      "id": "card_bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "card_text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "card_border_color",
+      "label": "Border Color",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ],
+      "default": "border-body"
+    },
+    {
+      "type": "range",
+      "id": "card_border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "card_shadow",
+      "label": "Shadow",
+      "options": [
+        { "value": "shadow-none", "label": "None" },
+        { "value": "shadow-sm", "label": "sm" },
+        { "value": "shadow-md", "label": "md" },
+        { "value": "shadow-lg", "label": "lg" }
+      ],
+      "default": "shadow-sm"
+    },
+    {
+      "type": "select",
+      "id": "card_text_align",
+      "label": "Text align",
+      "default": "text-start",
+      "options": [
+        { "value": "text-start", "label": "Left" },
+        { "value": "text-center", "label": "Center" },
+        { "value": "text-end", "label": "Right" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "card_show_stars",
+      "label": "Show stars",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "card_title_font_size",
+      "label": "Title font-size",
+      "default": "h5",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "card_description_font_size",
+      "label": "Description font-size",
+      "default": "fs-sm",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Breakpoints",
+      "info": "Adjust items per slide based on the screen resolution"
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_mobile",
+      "label": "Mobile (<600px)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_tablet",
+      "label": "Tablet (≥600px)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_desktop",
+      "label": "Desktop (≥1200px)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Author's Name",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "text",
+          "id": "author_subtitle",
+          "label": "Author's subtitle",
+          "default": "Verified Customer",
+          "info": "Leave empty to disable"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "title": "First Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Second Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Third Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Fourth Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Fifth Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Sixth Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

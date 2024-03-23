@@ -1,0 +1,9 @@
+{% comment %} 
+  Loox
+{% endcomment %}
+<div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+
+{% comment %} 
+  JudgeMe
+{% endcomment %}
+<div style="{{ jm_style }}" class="jdgm-widget jdgm-preview-badge"  data-id="{{ product.id }}">{{ product.metafields.judgeme.badge }}</div>  

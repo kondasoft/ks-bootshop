@@ -1,0 +1,118 @@
+{% if cart.items == empty %}
+  <div class="cart-empty pt-10 pb-12 text-center">
+    {% render 'svg-icons', icon: 'cart', class: 'mb-3' %}
+    {{ 'cart.empty_html' | t }} 
+    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="offcanvas">
+      {{ 'cart.continue_shopping' | t }}
+    </button>
+  </div>
+{% else %}
+  <ul 
+    class="cart-items-list list-unstyled mb-6 border-bottom-1" 
+    aria-label="{{ 'general.accessibility.cart_items' | t }}">
+    {% for line_item in cart.items %}
+      <li class="cart-item py-3">
+        <div class="row mx-n3 align-items-center">
+          <div class="col-6 px-3">
+            <a href="{{ line_item.url }}" tabindex="-1">
+              {% render 'image-url', img: line_item.image, orientation: settings.product_card_img_orientation, class: settings.product_card_img_border %}
+            </a>
+          </div>
+          <div class="col-12 px-3 position-relative">
+            <div class="me-10">
+              <h3 class="cart-item-product-title h6 mb-1">
+                <a href="{{ line_item.url }}" class="link-dark text-decoration-none">
+                  {{ line_item.product.title }}
+                </a>
+              </h3>
+              {% unless line_item.product.has_only_default_variant %}
+                <p class="cart-item-variant-title d-block opacity-70 mb-1 small">
+                  {{ line_item.variant.title }}
+                </p>
+              {% endunless %}
+              {% unless line_item.selling_plan_allocation == empty %}
+                <p class="cart-item-selling-plan d-block opacity-70 mb-1 small">
+                  {{ line_item.selling_plan_allocation.selling_plan.name }}
+                </p>
+              {% endunless %}
+              {% unless line_item.properties == empty %}
+                <ul class="cart-item-properties list-unstyled opacity-70 small mb-1">
+                  {% for property in line_item.properties %}
+                    {% assign first_character_in_key = property.first | slice: 0 %}
+                    {% unless first_character_in_key == '_' %}
+                      <li>
+                        {% if property.last contains 'https' %}
+                          {{ property.first }}: 
+                          <a href="{{ property.last }}" target="_blank">
+                            {{ 'cart.property_view_file' | t }}
+                          </a>
+                        {% else %}
+                          {{ property.first }}: {{ property.last }}
+                        {% endif %}
+                      </li>
+                    {% endunless %}
+                  {% endfor %}
+                </ul>
+              {% endunless %}
+              {% if line_item.line_level_discount_allocations.size > 0 %}
+                <ul 
+                  class="cart-item-discounts list-unstyled fs-xs mb-1 alert alert-primary py-2 px-3" 
+                  aria-label="{{ 'cart.applied_discounts' | t }}">
+                  {%- for discount in line_item.line_level_discount_allocations -%}
+                    <li class="">
+                      {% render 'svg-icons', icon: 'tag', size: 12, class: 'me-1' %}
+                      {{ discount.discount_application.title }}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {% endif %}
+            </div>
+            <div class="d-flex align-items-center justify-content-between pt-4">
+              <div class="qty-input-wrapper me-3" role="group" aria-label="{{ 'general.accessibility.quantity' | t }}">
+                <button 
+                  class="btn btn-qty-minus"
+                  type="button"
+                  onclick="--this.nextElementSibling.value, this.nextElementSibling.dispatchEvent(new Event('change'))" 
+                  aria-label="{{ 'general.accessibility.decrease_qty' | t }}">
+                  {% render 'svg-icons', icon: 'minus', size: 14 %}
+                </button>
+                <input
+                  class="form-control form-control-sm" 
+                  name="updates[]"
+                  type="number"
+                  value="{{ line_item.quantity }}"
+                  min="0"
+                  aria-label="{{ 'product.quantity' | t }}"
+                  data-line-item-key="{{ line_item.key }}">
+                <button 
+                  class="btn btn-qty-plus"
+                  type="button"
+                  onclick="++this.previousElementSibling.value, this.previousElementSibling.dispatchEvent(new Event('change'))" 
+                  aria-label="{{ 'general.accessibility.increase_qty' | t }}">
+                  {% render 'svg-icons', icon: 'plus', size: 14 %}
+                </button>
+              </div>
+              <p class="cart-item-price text-end lh-sm mb-0">
+                {% if line_item.original_line_price > line_item.final_line_price %}
+                  <s class="product-price-compare small opacity-70 me-2">
+                    {{ line_item.original_line_price | money }}
+                  </s>
+                {% endif %}
+                <span class="cart-item-price-final">
+                  {{ line_item.final_line_price | money }}
+                </span>
+              </p> 
+            </div>
+            <button 
+              class="btn btn-line-item-remove btn-icon position-absolute top-0 end-0 mt-n4 me-n1"
+              type="button"
+              data-line-item-key="{{ line_item.key }}"
+              aria-label="{{ 'general.accessibility.remove' | t }}">
+              {% render 'svg-icons', icon: 'remove', size: 16 %}
+            </button>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

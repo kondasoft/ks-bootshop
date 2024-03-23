@@ -1,0 +1,51 @@
+{% liquid 
+  assign pt = block.settings.pt | prepend: 'pt-'
+  assign pb = block.settings.pb | prepend: 'pb-'
+%}
+
+{% unless product.has_only_default_variant %}
+  <ul 
+    class="product-options list-unstyled mb-0 {{ pt }} {{ pb }}"
+    aria-label="{{ 'product.product_options' | t }}">
+    {% for option in product.options_with_values %}
+      <li class="py-3">
+        {% if block.settings.options_style == 'buttons' %}       
+          <p class="mb-1">
+            {{ option.name }}
+          </p>
+          <ul class="size-buttons list-unstyled">
+            {% for value in option.values %}
+              <li>
+                <input 
+                  class="visually-hidden" 
+                  type="radio" 
+                  name="option-{{ option.name | handleize }}" 
+                  id="option-{{ option.name | handleize }}-{{ value | handleize }}" 
+                  value="{{ value | escape }}"
+                  {% if option.selected_value == value %}checked{% endif %}>
+                <label for="option-{{ option.name | handleize }}-{{ value | handleize }}">
+                  {{ value }}
+                </label>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <label class="form-label" for="option-{{ option.name | handleize }}">
+            {{ option.name }}
+          </label>
+          <select
+            id="option-{{ option.name | handleize }}"
+            name="option-{{ option.name | handleize }}"
+            class="form-select">
+            {% for value in option.values %}
+              <option 
+                value="{{ value | escape }}" {% if value == option.selected_value %}selected{% endif %}>
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endunless %}

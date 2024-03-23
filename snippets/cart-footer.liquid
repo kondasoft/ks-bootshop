@@ -1,0 +1,45 @@
+{% if cart.items != empty %}
+  <div class="offcanvas-footer pt-5">
+    {% if cart.cart_level_discount_applications.size > 0 %}
+      <ul 
+        class="cart-discounts list-unstyled fs-xs mb-3 text-center alert alert-primary py-2 px-2" 
+        aria-label="{{ 'cart.applied_discounts' | t }}">
+        {% for discount in cart.cart_level_discount_applications %}
+          <li class="">
+            {% render 'svg-icons', icon: 'tag', size: 12, class: 'me-1' %}
+            {{ discount.title }}
+            (-{{ discount.total_allocated_amount | money }})
+          </li>
+        {% endfor %}
+      </ul>
+    {%- endif -%}
+    <p class="cart-subtotal fs-5 mb-4" role="status">
+      <span class="opacity-70 me-2">
+        {{ 'cart.subtotal' | t }}: 
+      </span>
+      <span>
+        {% if cart.items_subtotal_price > cart.total_price %}
+          <s class="opacity-70 me-2">
+            {{ cart.items_subtotal_price | money }}
+          </s>
+        {% endif %}
+        <b>
+          {{ cart.total_price | money }}
+        </b>
+      </span>
+    </p>
+    {% form 'cart', cart %}
+      <button 
+        class="btn btn-checkout btn-primary btn-lg" 
+        name="checkout" 
+        type="submit"
+        onclick="this.classList.add('loading')">
+        {% render 'svg-icons', icon: 'lock', size: 18, class: 'me-4' %}
+        {{ 'cart.checkout' | t }}
+      </button>
+    {% endform %}
+    <p class="small text-center mt-3 mb-n2 fst-italic">
+      {{ 'cart.taxes_shipping_at_checkout_html' | t }}
+    </p>
+  </div>
+{% endif %}

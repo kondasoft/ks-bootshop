@@ -1,0 +1,55 @@
+{% liquid 
+  assign pt = block.settings.pt | prepend: 'pt-'
+  assign pb = block.settings.pb | prepend: 'pb-'
+
+  if block.settings.text_1 != blank
+    assign text_list = block.settings.text_1 | append: ','
+  endif
+  if block.settings.text_2 != blank
+    assign text_list = block.settings.text_2 | append: ',' | prepend: text_list
+  endif
+  if block.settings.text_3 != blank
+    assign text_list = block.settings.text_3 | append: ',' | prepend: text_list
+  endif
+  if block.settings.text_4 != blank
+    assign text_list = block.settings.text_4 | append: ',' | prepend: text_list
+  endif
+
+  assign text_list = text_list | split: ','
+%}
+
+<div 
+  class="product-block-icons {{ pt }} {{ pb }} mx-auto" 
+  style="max-width: {{ block.settings.max_width }}px;"
+  {{ block.shopify_attributes }}>
+  <ul
+    class="list-unstyled row justify-content-center text-center mx-n2 mb-0"
+    aria-label="{{ block.settings.label }}">
+    {% for text in text_list %}
+      {% liquid
+        case forloop.index
+          when 1
+            assign img = block.settings.img_1
+          when 2
+            assign img = block.settings.img_2
+          when 3
+            assign img = block.settings.img_3
+          when 4
+            assign img = block.settings.img_4
+        endcase
+      %}
+      <li class="col p-2">
+        <img 
+          class="img-fluid mb-3"
+          src="{{ img | image_url: width: block.settings.img_size }}" 
+          alt="{{ img.alt }}"
+          width="{{ block.settings.img_size }}"
+          height="{{ block.settings.img_size | divided_by: img.aspect_ratio | round }}"
+          loading="lazy">
+        <div class="rte small lh-sm">
+          {{ text }}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

@@ -1,6 +1,9 @@
 
 # Change Log
 
+## [5.0.0] - 2024-03-23
+- New release
+
 ## [4.0.0] - 2022-12-26
 - New release
 

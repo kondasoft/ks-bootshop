@@ -1,0 +1,19 @@
+{% liquid 
+  assign metafield_namespace = settings.product_custom_badge_metafield | split: '.' | first
+  assign metafield_key = settings.product_custom_badge_metafield | split: '.' | last
+  assign metafield = product.metafields[metafield_namespace][metafield_key]
+
+  assign text = metafield | split: '|' | first
+  assign color = metafield | split: '|' | last 
+%}
+
+{% if metafield != blank %}
+  <span 
+    class="product-custom-badge badge {{ settings.product_custom_badge_bg_color }}"
+    style="{% if color != blank %}background: {{ color }} !important{% endif %}">
+    {% if color != blank %}
+      <span style="border-bottom-color: {{ color | strip | color_darken: 15 }}"></span>
+    {% endif %}
+    {{ text }}
+  </span>
+{% endif %}

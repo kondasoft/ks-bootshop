@@ -1,0 +1,49 @@
+{% comment %}
+  Renders a product card within a product list. Usually within a collection template or the Product list section
+
+  Accepts:
+  - product: {object} The product object - https://shopify.dev/docs/api/liquid/objects/product
+
+  Usage:
+  {% render 'product-card' product: product  %}
+{% endcomment %}
+
+<div class="product-card {{ settings.product_card_text_align }}">
+  <a 
+    href="{{ product.url | within: collection }}" 
+    class="product-card-link">
+    <div class="product-card-img-wrapper mb-4">      
+      {% if product.available == false %}
+        <span class="product-sold-out-badge badge"
+          {% if current_variant.available %}hidden{% endif %}>
+          {{ 'product.sold_out' | t }}
+        </span>  
+      {% elsif product.compare_at_price > product.price %}
+        <span 
+          class="product-sale-badge badge"
+          data-discount-type="{{ settings.product_card_badge_discount_type }}"> 
+          {% if product.compare_at_price > 0 %}
+            {% if settings.product_card_badge_discount_type == 'percentage' %} 
+              <span class="visually-hidden">
+                {{ 'product.save' | t }} 
+              </span>
+              {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price | round | prepend: '-' | append: '%' }}
+            {% else %}
+              {{ 'product.save' | t }} 
+              {{ product.compare_at_price | minus: product.price | money_without_trailing_zeros }}
+            {% endif %}
+          {% endif %}
+        </span>
+      {% endif %}
+      {% render 'image-url', img: product.featured_image, orientation: settings.product_card_img_orientation, class: settings.product_card_img_border %}
+    </div>
+    <h3 class="product-card-title product-title {{ settings.product_card_title_font_size }}">
+      {{ product.title }}
+    </h3>
+    {% render 'product-rating-badge', product: product %}
+    {% render 'product-card-price', product: product %}
+  </a>
+  {% if settings.product_card_show_atc_form %}
+    {% render 'product-card-form', product: product %}
+  {% endif %}
+</div>

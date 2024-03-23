@@ -1,0 +1,43 @@
+{% comment %}
+  Renders an article card within a article list. Usually within a blog template or the Article list section
+
+  Accepts:
+  - article: {object} The article object - https://shopify.dev/docs/api/liquid/objects/article
+
+  Usage:
+  {% render 'article-card' article: article  %}
+{% endcomment %}
+
+<div class="article-card {{ section.settings.article_card_text_align }}">
+  <a 
+    href="{{ article.url }}" 
+    class="article-card-link">
+    <div class="article-card-img-wrapper position-relative mb-4">
+      {% if section.settings.article_card_tags %}
+        <ul 
+          class="article-card-tags list-unstyled d-flex m-4" 
+          aria-label="{{ 'general.blog.posted_in' | t }}">
+          {% for tag in article.tags %}
+            <span class="article-card-tag badge bg-primary m-1">
+              {{ tag }}
+            </span>  
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% render 'image-url', img: article.image, orientation: section.settings.article_card_img_orientation, class: section.settings.article_card_img_border %}
+    </div>
+    <h3 class="article-card-title mb-0 {{ section.settings.article_card_title_size }}">
+      {{ article.title }}
+    </h3>
+    {% if section.settings.article_card_meta %}
+      <p class="article-card-meta opacity-70 mt-2 mb-0 small">
+          {{ article.author }} @ {{ article.created_at | time_tag: '%b %d, %Y' }}
+      </p>
+    {% endif %}
+    {% if section.settings.article_card_excerpt and article.excerpt != blank %}
+      <div class="article-card-excerpt rte small mt-3">
+        {{ article.excerpt }}
+      </div>
+    {% endif %}
+  </a>
+</div>

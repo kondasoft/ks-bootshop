@@ -1,0 +1,514 @@
+<div
+  id="card-list-{{ section.id }}" 
+  class="
+    card-list 
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }}
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  ">
+  <div 
+    class="container" 
+    style="max-width: {{ section.settings.container_max_width }}px">
+    {% render 'section-header' %}
+    <div 
+      class="
+        m-n4 m-desktop-n5 align-items-desktop-center row
+        {{ section.settings.breakpoint_mobile | prepend: 'row-cols-' }}
+        {{ section.settings.breakpoint_tablet | prepend: 'row-cols-tablet-' }}
+        {{ section.settings.breakpoint_desktop | prepend: 'row-cols-desktop-' }}
+      ">
+      {% for block in section.blocks %}
+        <div 
+          class="p-4 p-desktop-5"
+          {{ block.shopify_attributes }}>
+          <div 
+            class="
+              card h-100
+              {{ section.settings.item_bg_color }}
+              {{ section.settings.item_text_color }}
+              {{ section.settings.item_border_width | prepend: 'border-' }}
+              {{ section.settings.item_shadow }} 
+              {{ section.settings.item_border_color }}
+              {{ section.settings.item_text_align }}
+            "
+            style="
+              --bs-bg-opacity: {{ section.settings.item_bg_opacity | append: '%' }};
+              --bs-border-opacity: {{ section.settings.item_border_opacity | append: '%' }};
+            ">
+            {% unless block.settings.img == blank %}
+              <div class="card-img-top overflow-hidden">
+                {% render 'image-url', img: block.settings.img, orientation: section.settings.item_img_orientation, class: '' %}
+              </div>
+            {% endunless %}
+            <div class="card-body">
+              {% unless block.settings.title == blank %}
+                <h3 class="title mb-2 {{ section.settings.item_title_font_size }}">
+                  {{ block.settings.title }}
+                </h3>
+              {% endunless %}
+              {% unless block.settings.description == blank %}
+                <div class="description rte mb-0 {{ section.settings.item_description_font_size }}">
+                  {{ block.settings.description }}
+                </div>
+              {% endunless %}
+              {% unless block.settings.btn_text == blank %}
+                <a 
+                  class="btn w-100 mt-5 {{ section.settings.item_btn_color }} {{ section.settings.item_btn_size }}" 
+                  href="{{ block.settings.btn_url }}">
+                  {{ block.settings.btn_text }}
+                </a>
+              {% endunless %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Card list",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "container_max_width",
+      "label": "Container max-width (px)",
+      "info": "Leave empty to use the global container width"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Title",
+      "default": "Card List"
+    },
+    {
+      "type": "select",
+      "id": "header_title_font_size",
+      "label": "Title font-size",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "header_description",
+      "label": "Description (optional)",
+      "default": "<p>Add on optional description for this section</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_description_font_size",
+      "label": "Description font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Item"
+    },
+    {
+      "type": "select",
+      "id": "item_bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "item_bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "item_text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "item_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "item_border_color",
+      "label": "Border Color",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ],
+      "default": "border-body"
+    },
+    {
+      "type": "range",
+      "id": "item_border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "item_shadow",
+      "label": "Shadow",
+      "options": [
+        { "value": "shadow-none", "label": "None" },
+        { "value": "shadow-sm", "label": "sm" },
+        { "value": "shadow-md", "label": "md" },
+        { "value": "shadow-lg", "label": "lg" }
+      ],
+      "default": "shadow-sm"
+    },
+    {
+      "type": "select",
+      "id": "item_text_align",
+      "label": "Text align",
+      "default": "text-start",
+      "options": [
+        { "value": "text-start", "label": "Left" },
+        { "value": "text-center", "label": "Center" },
+        { "value": "text-end", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "item_img_orientation",
+      "label": "Image orientation",
+      "default": "ratio-4x3",
+      "options": [
+        { "group": "Adapt", "value": "adapt", "label": "Adapt" },
+        { "group": "Square", "value": "ratio-1x1", "label": "1x1" },
+        { "group": "Horizontal", "value": "ratio-4x3", "label": "4x3" },
+        { "group": "Horizontal", "value": "ratio-16x9", "label": "16x9" },
+        { "group": "Horizontal", "value": "ratio-21x9", "label": "21x9" },
+        { "group": "Vertical", "value": "ratio-3x4", "label": "3x4" },
+        { "group": "Vertical", "value": "ratio-9x16", "label": "9x16" },
+        { "group": "Vertical", "value": "ratio-9x21", "label": "9x21" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "item_title_font_size",
+      "label": "Title font-size",
+      "default": "h5",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "item_description_font_size",
+      "label": "Description font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "item_btn_color",
+      "label": "Button color",
+      "default": "btn-outline-primary",
+      "options": [
+        { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+        { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+        { "group": "Solid", "value": "btn-white", "label": "White" },
+        { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+        { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+        { "group": "Light", "value": "btn-light-white", "label": "White" },
+        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+        { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "item_btn_size",
+      "label": "Button size",
+      "default": "btn-sm",
+      "options": [
+        { "value": "btn-sm", "label": "Small" },
+        { "value": "btn-md", "label": "Medium" },
+        { "value": "btn-lg", "label": "Large" }
+      ]
+    }, 
+    {
+      "type": "header",
+      "content": "Breakpoints",
+      "info": "Adjust items per row based on the screen resolution"
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_mobile",
+      "label": "Mobile (<600px)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_tablet",
+      "label": "Tablet (≥600px)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "breakpoint_desktop",
+      "label": "Desktop (≥1200px)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "btn_text",
+          "label": "Button text",
+          "default": "Learn more",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "presets": [
+    {
+      "name": "Card list",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "title": "First Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Second Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Third Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Fourth Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

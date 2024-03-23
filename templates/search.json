@@ -1,30 +1,15 @@
 {
   "sections": {
     "template-search": {
-      "type": "template-search",
+      "type": "search-main",
       "settings": {
-        "container": "container",
-        "text_align": "text-center",
+        "header_title_font_size": "h3",
         "limit": 48,
-        "title_size": "h2",
-        "form_max_width": "540",
-        "show_search_types_select": true,
-        "product_img_gallery": true,
-        "product_img_orientation": "square",
-        "product_img_border": "img-thumbnail",
-        "product_title_size": "h6",
-        "product_show_atc_form": true,
-        "product_show_wishlist_btn": true,
-        "breakpoint_xs": 2,
-        "breakpoint_sm": 2,
-        "breakpoint_md": 3,
-        "breakpoint_lg": 3,
-        "breakpoint_xl": 4,
-        "breakpoint_xxl": 4,
-        "pt": 0,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
+        "breakpoint_mobile": 2,
+        "breakpoint_tablet": 3,
+        "breakpoint_desktop": 4,
+        "pt": 9,
+        "pb": 10
       }
     }
   },

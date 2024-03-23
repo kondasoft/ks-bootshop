@@ -1,36 +1,72 @@
 {
   "sections": {
-    "template-collection": {
-      "type": "template-collection",
+    "collection_header_JKf7mh": {
+      "type": "collection-header",
       "settings": {
-        "container": "container",
-        "text_align": "text-center",
-        "limit": 40,
+        "bg_color": "bg-primary",
+        "bg_opacity": 10,
+        "bg_gradient": "",
+        "text_color": "text-white",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "600",
+        "img_show": true,
+        "img_overlay_color": "#000000",
+        "img_overlay_opacity": 30,
+        "img_overlay_blur": 0,
+        "title_font_size": "h2",
+        "description_show": true,
+        "description_font_size": "fs-md",
+        "pt": 12,
+        "pb": 12,
+        "pt_desktop": 14,
+        "pb_desktop": 14
+      }
+    },
+    "collection_products_Fx3hb6": {
+      "type": "collection-products",
+      "settings": {
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "limit": 48,
+        "show_product_count": true,
         "show_filters": true,
         "filters_btn_color": "btn-outline-secondary",
         "show_sort_by": true,
-        "show_collection_img": true,
-        "img_opacity": 0.3,
-        "img_blur": 0,
-        "title_size": "h1",
-        "show_collection_description": true,
-        "description_size": "fs-5",
-        "product_img_gallery": true,
-        "product_img_orientation": "square",
-        "product_img_border": "img-thumbnail",
-        "product_title_size": "h6",
-        "product_show_atc_form": true,
-        "product_show_wishlist_btn": true,
-        "breakpoint_xs": 2,
-        "breakpoint_sm": 2,
-        "breakpoint_md": 3,
-        "breakpoint_lg": 3,
-        "breakpoint_xl": 4,
-        "breakpoint_xxl": 4
+        "sort_by_btn_color": "btn-outline-secondary",
+        "breakpoint_mobile": 2,
+        "breakpoint_tablet": 3,
+        "breakpoint_desktop": 4,
+        "pt": 10,
+        "pb": 10
+      }
+    },
+    "da87b500-2710-4252-99e4-4bd5db55af39": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "bg_color": "bg-body text-body",
+        "bg_opacity": 10,
+        "height": 1,
+        "container": "container",
+        "container_max_width": "",
+        "pt": 0,
+        "pb": 0
       }
     }
   },
   "order": [
-    "template-collection"
+    "collection_header_JKf7mh",
+    "collection_products_Fx3hb6",
+    "da87b500-2710-4252-99e4-4bd5db55af39"
   ]
 }

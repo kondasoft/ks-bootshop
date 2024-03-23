@@ -1,0 +1,24 @@
+{% comment %}
+  Renders a header (title and description) that is usually the same accross sections
+
+  Accepts:
+  - class: {String} (Optional) An optional class (or classes) to apply to header element
+
+  Usage:
+  {% render 'section-header' %}
+{% endcomment %}
+
+{% if section.settings.header_title != blank or section.settings.header_description != blank %}
+  <header class="section-header text-center {{ class }}">
+    {% unless section.settings.header_title == blank %}
+      <h2 class="title {{ section.settings.header_title_font_size }}">
+        {{ section.settings.header_title }}
+      </h2>
+    {% endunless %}
+    {% unless section.settings.header_description == blank %}
+      <div class="description rte opacity-70 {{ section.settings.header_description_font_size }}">
+        {{ section.settings.header_description }}
+      </div>
+    {% endunless %}
+  </header>
+{% endif %}

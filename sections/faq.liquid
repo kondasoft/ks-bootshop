@@ -1,244 +1,346 @@
-{% liquid 
-    assign pt = section.settings.pt | prepend: 'pt-'
-    assign pb = section.settings.pb | prepend: 'pb-'
-    assign mt = section.settings.mt | prepend: 'mt-'
-    assign mb = section.settings.mb | prepend: 'mb-'
-%}
-
-<section 
-    id="faq-{{ section.id }}" 
-    class="faq {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="container">
-        <div class="mx-auto" style="max-width: {{ section.settings.max_width }}px">
-            {% unless section.settings.title == blank %}
-                <h2 class="title mb-5 {{ section.settings.text_align }} {{ section.settings.title_size }}">
-                    {{ section.settings.title }}
-                </h2>
-            {% endunless %}
-            {% unless section.settings.description == blank %}
-                <div class="description text-muted rte mt-n3 mb-7 {{ section.settings.text_align }} {{ section.settings.description_size }}">
-                    {{ section.settings.description }}
+<div
+  id="faq-{{ section.id }}" 
+  class="
+    faq 
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }}
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  ">
+  <div 
+    class="container" 
+    style="max-width: {{ section.settings.container_max_width }}px">
+    <div class="row align-items-center">
+      <div class="col-desktop-8">
+        {% render 'section-header' %}
+      </div>
+      <div class="col-desktop-10">
+        <div 
+          id="faq-accordion-{{ section.id }}" 
+          class="accordion">
+          {% for block in section.blocks %}
+            <div 
+              class="accordion-item" 
+              data-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}>
+              <h3 
+                id="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
+                class="accordion-header">
+                <button 
+                  class="accordion-button {% unless section.settings.open_first_item == true and forloop.first %}collapsed{% endunless %}" 
+                  type="button" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
+                  aria-expanded="{% if section.settings.open_first_item == true and forloop.first %}true{% else %}false{% endif %}" 
+                  aria-controls="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}">
+                  {{ block.settings.title | escape }}
+                </button>
+              </h3>
+              <div 
+                id="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
+                class="accordion-collapse collapse {% if section.settings.open_first_item == true and forloop.first %}show{% endif %}" 
+                aria-labelledby="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
+                data-bs-parent="#faq-accordion-{{ section.id }}">
+                <div class="accordion-body rte">
+                  {{ block.settings.description }}
                 </div>
-            {% endunless %}
-            <div id="faq-accordion-{{ section.id }}" class="accordion">
-                {% for block in section.blocks %}
-                    <div class="accordion-item">
-                        <h3 
-                            id="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
-                            class="accordion-header">
-                            <button 
-                                class="accordion-button {% unless forloop.first %}collapsed{% endunless %}" 
-                                type="button" 
-                                data-bs-toggle="collapse" 
-                                data-bs-target="#faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
-                                aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" 
-                                aria-controls="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}">
-                                {{ block.settings.title | escape }}
-                            </button>
-                        </h3>
-                        <div 
-                            id="faq-accordion-{{ section.id }}-collapse-{{ forloop.index }}" 
-                            class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
-                            aria-labelledby="faq-accordion-{{ section.id }}-heading-{{ forloop.index }}" 
-                            data-bs-parent="#faq-accordion-{{ section.id }}">
-                            <div class="accordion-body rte pt-4 pb-6">
-                                {{ block.settings.description }}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+              </div>
             </div>
+          {% endfor %}
         </div>
+      </div>
     </div>
-</section>
+  </div>
+</div>
+
+{% if request.design_mode %}
+  <script>
+    document.addEventListener('shopify:block:select', (event) => {
+      const faq = event.target.closest('#faq-{{ section.id }}')
+    
+      if (faq) {
+        const index = Number(event.target.dataset.index) + 1
+        const collapseEl = faq.querySelector(`#faq-accordion-{{ section.id }}-collapse-${index}`)
+        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl)
+        bsCollapse.show()
+      }
+    })
+  </script>
+{% endif %}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+    {% for block in section.blocks %}
+      {
+        "@type": "Question",
+        "name": {{ block.settings.title | json }},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {{ block.settings.description | json }}
+        }
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ]
+  }
+</script>
 
 {% schema %}
 {
-    "name": "F.A.Q",
-    "settings": [
+  "name": "FAQs",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "container_max_width",
+      "label": "Container max-width (px)",
+      "info": "Leave empty to use the global container width"
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first_item",
+      "label": "Open first item by default",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Title",
+      "default": "FAQs"
+    },
+    {
+      "type": "select",
+      "id": "header_title_font_size",
+      "label": "Title font-size",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "header_description",
+      "label": "Description (optional)",
+      "default": "<p>Add on optional description for this section</p>"
+    },
+    {
+      "type": "select",
+      "id": "header_description_font_size",
+      "label": "Description font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
         {
-            "type": "header",
-            "content": "General"
+          "type": "text",
+          "id": "title",
+          "label": "Title"
         },
         {
-            "type": "select",
-            "id": "bg_color",
-            "label": "Background color",
-            "default": "",
-            "options": [
-                { "group": "Inherit", "value": "", "label": "Body" },
-                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
-                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
-                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
-                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
-                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
-            ]
-        },
-        {
-            "type": "text",
-            "id": "max_width",
-            "label": "Max width (px)",
-            "info": "Adjust container width (in pixels)",
-            "default": "960"
-        },
-        {
-            "type": "select",
-            "id": "text_align",
-            "label": "Text align",
-            "default": "text-center",
-            "options": [
-                { "value": "text-start", "label": "Left" },
-                { "value": "text-center", "label": "Center" }
-            ]
-        },
-        {
-            "type": "text",
-            "id": "title",
-            "label": "Title",
-            "default": "F.A.Q"
-        },
-        {
-            "type": "select",
-            "id": "title_size",
-            "label": "Title Size",
-            "default": "h2",
-            "options": [
-                {  "value": "h1", "label": "H1" },
-                {  "value": "h2", "label": "H2" },
-                {  "value": "h3", "label": "H3" },
-                {  "value": "h4", "label": "H4" },
-                {  "value": "h5", "label": "H5" },
-                {  "value": "h6", "label": "H6" }
-            ]
-        },
-        {
-            "type": "richtext",
-            "id": "description",
-            "label": "Description (optional)",
-            "default": "<p>Add on optional description to this section</p>"
-        },
-        {
-            "type": "select",
-            "id": "description_size",
-            "label": "Description size",
-            "default": "fs-6",
-            "options": [
-                { "value": "fs-1", "label": "fs-1" },
-                { "value": "fs-2", "label": "fs-2" },
-                { "value": "fs-3", "label": "fs-3" },
-                { "value": "fs-4", "label": "fs-4" },
-                { "value": "fs-5", "label": "fs-5" },
-                { "value": "fs-6", "label": "fs-6" }
-            ]
-        },
-        {
-            "type": "header",
-            "content": "Spacing"
-        },
-        {
-            "type": "range",
-            "id": "pt",
-            "label": "Padding top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "pb",
-            "label": "Padding bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mt",
-            "label": "Margin top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
-        },
-        {
-            "type": "range",
-            "id": "mb",
-            "label": "Margin bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 0
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
         }
-    ],
-    "blocks": [
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "presets": [
+    {
+      "name": "FAQs",
+      "blocks": [
         {
-            "type": "text",
-            "name": "Item",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title"
-                },
-                {
-                    "type": "richtext",
-                    "id": "description",
-                    "label": "Description"
-                }
-            ]
-        }
-    ],
-    "presets": [
+          "type": "item",
+          "settings": {
+            "title": "Where do you ship?",
+            "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.</p>"
+          }
+        },
         {
-            "name": "F.A.Q",
-            "category": "Text",
-            "blocks": [
-                {
-                    "type": "text",
-                    "settings": {
-                        "title": "Where do you ship?",
-                        "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.</p>"
-                    }
-                },
-                {
-                    "type": "text",
-                    "settings": {
-                        "title": "How long will it take to receive my order",
-                        "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.</p>"
-                    }
-                },
-                {
-                    "type": "text",
-                    "settings": {
-                        "title": "What payment methods do you support?",
-                        "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.</p>"
-                    }
-                },
-                {
-                    "type": "text",
-                    "settings": {
-                        "title": "How can I track my order?",
-                        "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567</p>"
-                    }
-                },
-                {
-                    "type": "text",
-                    "settings": {
-                        "title": "Can I order as a gift for someone else?",
-                        "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.</p>"
-                    }
-                },
-                {
-                    "type": "text",
-                    "settings": {
-                        "title": "How can I get a refund for my order?",
-                        "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.</p>"
-                    }
-                }
-            ]
+          "type": "item",
+          "settings": {
+            "title": "How long will it take to receive my order",
+            "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "What payment methods do you support?",
+            "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "How can I track my order?",
+            "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "Can I order as a gift for someone else?",
+            "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "How can I get a refund for my order?",
+            "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.</p>"
+          }
         }
-    ]
+      ]
+    }
+  ]
 }
 {% endschema %}

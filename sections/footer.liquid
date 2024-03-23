@@ -1,254 +1,367 @@
-{% liquid 
-    assign pt = section.settings.pt | prepend: 'pt-'
-    assign pb = section.settings.pb | prepend: 'pb-'
-%}
-
-<footer id="footer" class="{{ section.settings.bg_color }} {{ pt }} {{ pb }}">
-    <div class="container">
-        <div id="footer-blocks" class="list-unstyled row mb-10">
-            {% for block in section.blocks %}
-                <div class="footer-block col-lg">
-                    <a 
-                        class="nav-link h6 collapsed d-lg-none" 
-                        href="#block-collapse-{{ block.id }}"
-                        data-bs-toggle="collapse"
-                        aria-expanded="false" 
-                        aria-controls="block-collapse-{{ block.id }}"
-                        role="button">
-                        {{ block.settings.title }}
-                    </a>
-                    <h3 class="title d-none d-lg-inline-block {{ block.settings.title_size }}">
-                        <span>
-                            {{ block.settings.title }}
-                        </span>
-                    </h3>
-                    <div id="block-collapse-{{ block.id }}" class="collapse d-lg-block">
-                        <div class="mt-4 mb-6 my-lg-0">
-                            {% case block.type %}
-                                {% when 'richtext' %}
-                                    {% unless block.settings.description == blank %}
-                                        <div class="rte mt-2 small">
-                                            {{ block.settings.description }}
-                                        </div>
-                                    {% endunless %}
-                                    {% unless block.settings.btn_text == blank %}
-                                        <a class="btn mt-6 {{ block.settings.btn_color }} {{ block.settings.btn_size }}" href="{{ block.settings.btn_url }}">
-                                            {{ block.settings.btn_text }}
-                                        </a>
-                                    {% endunless %}
-                                {% when 'menu' %}
-                                    <ul class="nav flex-column mb-0">
-                                        {% for link in linklists[block.settings.menu].links %}
-                                            <li class="nav-item">
-                                                <a class="nav-link px-0 py-3 py-lg-2" href="{{ link.url }}">
-                                                    {{ link.title }}
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                            {% endcase %}
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        
-        <hr class="d-none d-sm-block mb-7">
-
-        <div id="footer-copyright" class="small text-center">
-            <p class="mb-0">
-                &copy; {{ 'now' | date: "%Y" }} {{ shop.name }}. {{ 'general.general.all_rights_reserved' | t }}
-            </p>
-            {% if section.settings.show_powered_by %}
-                <p class="mb-0">
-                    Powered by <a href="https://www.shopify.com" target="_blank" rel="sponsored">Shopify</a>. 
-                    Theme by <a href="https://www.kondasoft.com" target="_blank" rel="sponsored">KondaSoft</a>
-                </p>
-            {% endif %}
-            {% if section.settings.show_social_icons %}
-                <div class="social-icons-wrapper mt-4">
-                    <small class="opacity-75 lh-sm visually-hidden">
-                        {{ 'general.general.follow_us' | t }}
-                    </small>
-                    {% render 'social-icons', icon_size: 18 %}
-                </div>
-            {% endif %}
-            {% if section.settings.show_payment_icons %}
-                <div class="payment-icons-wrapper mt-4">
-                    {% render 'payment-icons' %}
-                </div>
-            {% endif %}
-        </div>
+<footer 
+  id="footer" 
+  class="
+    small 
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }} 
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.pt | prepend: 'pt-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+    "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  ">
+  <div class="container">
+    <div
+      id="footer-mobile" 
+      class="d-desktop-none">
+      <div class="mb-8" role="list">
+        {% for block in section.blocks %}
+          <div class="collapse-wrapper" role="listitem" {{ block.shopify_attributes }}>
+            <button
+              id="footer-mobile-collapse-btn-{{ forloop.index }}" 
+              class="heading {{ block.settings.title_font_size }}" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#footer-mobile-collapse-{{ forloop.index }}" 
+              aria-expanded="false" 
+              aria-controls="footer-mobile-collapse-{{ forloop.index }}">
+              {{ block.settings.title }}
+              {% render 'svg-icons', icon: 'chevron-down', size: 18 %}
+            </button>
+            <div id="footer-mobile-collapse-{{ forloop.index }}" class="collapse">
+              <div class="collapse-inner">
+                {% render 'footer-block', block: block %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
+    <div 
+      id="footer-desktop" 
+      class="d-none d-desktop-block">
+      <div class="row" role="list">
+        {% for block in section.blocks %}
+          <div class="footer-block col" role="listitem" {{ block.shopify_attributes }}>
+            <h3 class="title {{ block.settings.title_font_size }}">
+              <span>
+                {{ block.settings.title }}
+              </span>
+            </h3>
+            {% render 'footer-block', block: block %}
+          </div>
+        {% endfor %}
+      </div>
+      <hr class="my-8">
+    </div>
+
+    <div 
+      id="footer-copyright" 
+      class="">
+      <div class="row align-items-center">
+        <div class="col-desktop-5">
+          {% if section.settings.social_icons %}
+            <div class="social-icons-wrapper text-center text-desktop-start mb-5 mb-desktop-0">
+              {% render 'social-icons', icon_size: 18, show_title: false %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-desktop-8">
+          <div class="fs-sm text-center">
+            &copy; {{ 'now' | date: "%Y" }} {{ shop.name | replace: ' (', '<span hidden>' | replace: ')', '</span>' }}.
+            {% if section.settings.show_powered_by %}
+              Theme by <a href="https://www.kondasoft.com" target="_blank" rel="sponsored">KondaSoft</a>,
+              Powered by <a href="https://www.shopify.com" target="_blank" rel="sponsored">Shopify</a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-desktop-5">
+          {% if section.settings.show_payment_icons %}
+            <div class="payment-icons-wrapper text-center text-desktop-end mt-5 mt-desktop-0">
+              {% render 'payment-icons' %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
 </footer>
 
 {% schema %}
 {
-    "name": "Footer",
-    "settings": [
+  "name": "Footer",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-body",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "checkbox",
+      "id": "social_icons",
+      "label": "Show social icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_powered_by",
+      "label": "Show powered by",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "richtext",
+      "name": "Richtext",
+      "settings": [
         {
-            "type": "select",
-            "id": "bg_color",
-            "label": "Background color",
-            "default": "bg-dark text-white",
-            "options": [
-                { "group": "Inherit", "value": "", "label": "Body" },
-                { "group": "Light", "value": "bg-white text-dark", "label": "White" },
-                { "group": "Light", "value": "bg-light text-dark", "label": "Light" },
-                { "group": "Dark", "value": "bg-primary text-white", "label": "Primary" },
-                { "group": "Dark", "value": "bg-secondary text-white", "label": "Secondary" },
-                { "group": "Dark", "value": "bg-dark text-white", "label": "Dark" }
-            ]
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Block Title"
         },
         {
-            "type": "checkbox",
-            "id": "show_payment_icons",
-            "label": "Show payment icons",
-            "default": true
+          "type": "select",
+          "id": "title_font_size",
+          "label": "Title",
+          "options": [
+            { "value": "fs-sm", "label": "sm" },
+            { "value": "fs-md", "label": "md" },
+            { "value": "fs-lg", "label": "lg" },
+            { "value": "fs-xl", "label": "xl" },
+            { "value": "fs-xxl", "label": "xxl" }
+          ],
+          "default": "fs-lg",
+          "info": "Only on desktop"
         },
         {
-            "type": "checkbox",
-            "id": "show_social_icons",
-            "label": "Show social icons",
-            "default": true
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Some description for this block</p>"
         },
         {
-            "type": "checkbox",
-            "id": "show_powered_by",
-            "label": "Show Powered by",
-            "default": true
+          "type": "header",
+          "content": "Buttons"
         },
         {
-            "type": "header",
-            "content": "Spacing"
+          "type": "text",
+          "id": "btn_primary_text",
+          "label": "Primary button text",
+          "info": "Leave empty to disable"
         },
         {
-            "type": "range",
-            "id": "pt",
-            "label": "Padding top",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 11
+          "type": "url",
+          "id": "btn_primary_url",
+          "label": "Primary button URL"
         },
         {
-            "type": "range",
-            "id": "pb",
-            "label": "Padding bottom",
-            "min": 0,
-            "max": 20,
-            "step": 1,
-            "default": 6
+          "type": "select",
+          "id": "btn_primary_color",
+          "label": "Primary button color",
+          "default": "btn-primary",
+          "options": [
+            { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+            { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+            { "group": "Solid", "value": "btn-white", "label": "White" },
+            { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+            { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+            { "group": "Light", "value": "btn-light-white", "label": "White" },
+            { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+            { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+            { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "btn_secondary_text",
+          "label": "Secondary button text",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "url",
+          "id": "btn_secondary_url",
+          "label": "Secondary button URL"
+        },
+        {
+          "type": "select",
+          "id": "btn_secondary_color",
+          "label": "Secondary button color",
+          "default": "btn-secondary",
+          "options": [
+            { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+            { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+            { "group": "Solid", "value": "btn-white", "label": "White" },
+            { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+            { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+            { "group": "Light", "value": "btn-light-white", "label": "White" },
+            { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+            { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+            { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+          ]
         }
-    ],
-    "blocks": [
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
         {
-            "type": "richtext",
-            "name": "Richtext",
-            "settings": [
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title"
-                },
-                {
-                    "type": "select",
-                    "id": "title_size",
-                    "label": "Title size",
-                    "default": "h6",
-                    "options": [
-                        { "group": "Heading", "value": "h1", "label": "H1" },
-                        { "group": "Heading", "value": "h2", "label": "H2" },
-                        { "group": "Heading", "value": "h3", "label": "H3" },
-                        { "group": "Heading", "value": "h4", "label": "H4" },
-                        { "group": "Heading", "value": "h5", "label": "H5" },
-                        { "group": "Heading", "value": "h6", "label": "H6" }
-                    ]
-                },
-                {
-                    "type": "richtext",
-                    "id": "description",
-                    "label": "Description"
-                },
-                {
-                    "type": "text",
-                    "id": "btn_text",
-                    "label": "Button text",
-                    "info": "Leave empty to disable"
-                },
-                {
-                    "type": "url",
-                    "id": "btn_url",
-                    "label": "Button URL"
-                },
-                {
-                    "type": "select",
-                    "id": "btn_color",
-                    "label": "Button color",
-                    "default": "btn-primary",
-                    "options": [
-                        { "group": "Normal", "value": "btn-link", "label": "Link" },
-                        { "group": "Normal", "value": "btn-light", "label": "Light" },
-                        { "group": "Normal", "value": "btn-dark", "label": "Dark" },
-                        { "group": "Normal", "value": "btn-primary", "label": "Primary" },
-                        { "group": "Normal", "value": "btn-secondary", "label": "Secondary" },
-                        { "group": "Normal", "value": "btn-success", "label": "Success" },
-                        { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                        { "group": "Normal", "value": "btn-warning", "label": "Warning" },
-                        { "group": "Normal", "value": "btn-info", "label": "Info" },
-                        { "group": "Outline", "value": "btn-outline-light", "label": "Light Outline" },
-                        { "group": "Outline", "value": "btn-outline-dark", "label": "Dark Outline" },
-                        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary Outline" },
-                        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary Outline" },
-                        { "group": "Outline", "value": "btn-outline-success", "label": "Success Outline" },
-                        { "group": "Outline", "value": "btn-outline-danger", "label": "Danger Outline" },
-                        { "group": "Outline", "value": "btn-outline-warning", "label": "Warning Outline" },
-                        { "group": "Outline", "value": "btn-outline-info", "label": "Info Outline" }
-                    ]
-                },
-                {
-                    "type": "select",
-                    "id": "btn_size",
-                    "label": "Button size",
-                    "default": "btn-sm",
-                    "options": [
-                        { "value": "btn-sm", "label": "Small" },
-                        { "value": "", "label": "Normal" },
-                        { "value": "btn-lg", "label": "Large" }
-                    ]
-                }
-            ]
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
         },
         {
-            "type": "menu",
-            "name": "Menu",
-            "settings": [
-                {
-                    "type": "link_list",
-                    "id": "menu",
-                    "label": "Menu"
-                },
-                {
-                    "type": "text",
-                    "id": "title",
-                    "label": "Title"
-                },
-                {
-                    "type": "select",
-                    "id": "title_size",
-                    "label": "Title size",
-                    "default": "h6",
-                    "options": [
-                        { "group": "Heading", "value": "h1", "label": "H1" },
-                        { "group": "Heading", "value": "h2", "label": "H2" },
-                        { "group": "Heading", "value": "h3", "label": "H3" },
-                        { "group": "Heading", "value": "h4", "label": "H4" },
-                        { "group": "Heading", "value": "h5", "label": "H5" },
-                        { "group": "Heading", "value": "h6", "label": "H6" }
-                    ]
-                }
-            ]
+          "type": "select",
+          "id": "title_font_size",
+          "label": "Title",
+          "options": [
+            { "value": "fs-sm", "label": "sm" },
+            { "value": "fs-md", "label": "md" },
+            { "value": "fs-lg", "label": "lg" },
+            { "value": "fs-xl", "label": "xl" },
+            { "value": "fs-xxl", "label": "xxl" }
+          ],
+          "default": "fs-lg",
+          "info": "Only on desktop"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Block Title"
         }
-    ]
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
 }
 {% endschema %}

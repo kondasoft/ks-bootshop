@@ -1,0 +1,179 @@
+<div 
+  id="offcanvas-collection-filters" 
+  class="offcanvas offcanvas-end" 
+  tabindex="-1"
+  aria-labelledby="offcanvas-collection-filters-label">
+  <collection-filters 
+    id="collection-filters" 
+    class="collection-filters">
+    <div class="offcanvas-header border-0">
+      <h2 id="offcanvas-collection-filters-label" class="offcanvas-title">
+        {{ 'collection.filters.title' | t }}
+      </h2>
+      <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'svg-icons', icon: 'x' %}
+      </button>
+    </div>
+    <div class="offcanvas-body p-0">
+      <form class="collection-filters-form">
+        <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+        <div       
+          role="list" 
+          aria-labelledby="offcanvas-collection-filters-label">
+          {% for filter in collection.filters %}
+            <div class="collapse-wrapper" role="listitem">
+              <button
+                id="filters-collapse-btn-{{ forloop.index }}" 
+                class="" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#filters-collapse-{{ forloop.index }}" 
+                aria-expanded="true" 
+                aria-controls="filters-collapse-{{ forloop.index }}">
+                {{ filter.label }}
+                {% render 'svg-icons', icon: 'chevron-down', size: 18 %}
+              </button>
+              <div id="filters-collapse-{{ forloop.index }}" class="collapse show">
+                <div class="collapse-inner">
+                  {% case filter.type %}
+                    {% when 'boolean' %}
+                      <ul 
+                        class="list-unstyled mb-0"
+                        ari-labelledby="filters-collapse-btn-{{ forloop.index }}">
+                        <li class="form-check">
+                          <input 
+                            type="checkbox" 
+                            id="filter-{{ filter.param_name }}-{{ filter.true_value.value }}"
+                            class="form-check-input" 
+                            name="{{ filter.param_name }}" 
+                            value="{{ filter.true_value.value }}"
+                            {% if filter.true_value.active %}checked{% endif %}
+                            {% if filter.true_value.count == 0 and filter.true_value.active == false %}disabled{% endif %}>
+                          <label 
+                            class="form-check-label" 
+                            for="filter-{{ filter.param_name }}-{{ filter.true_value.value }}">
+                            {{ filter.true_value.label }} ({{ filter.true_value.count }})
+                          </label>
+                        </li>
+                        <li class="form-check">
+                          <input 
+                            type="checkbox" 
+                            id="filter-{{ filter.param_name }}-{{ filter.false_value.value }}"
+                            class="form-check-input" 
+                            name="{{ filter.param_name }}" 
+                            value="{{ filter.false_value.value }}"
+                            {% if filter.false_value.active %}checked{% endif %}
+                            {% if filter.false_value.count == 0 and filter.false_value.active == false %}disabled{% endif %}>
+                          <label 
+                            class="form-check-label" 
+                            for="filter-{{ filter.param_name }}-{{ filter.false_value.value }}">
+                            <div class="d-flex">
+                              <span>{{ filter.false_value.label }}</span>
+                              <span class="ms-2">({{ filter.false_value.count }})</span>
+                            </div>
+                          </label>
+                        </li>
+                      </ul>
+                    {% when 'list' %}
+                      <ul 
+                        class="list-unstyled mb-0"
+                        ari-labelledby="filters-collapse-btn-{{ forloop.index }}">
+                        {% for filter_value in filter.values %}
+                          <li class="form-check">
+                            <input 
+                              type="checkbox" 
+                              id="filter-{{ filter.param_name }}-{{ forloop.index }}"
+                              class="form-check-input" 
+                              name="{{ filter_value.param_name }}" 
+                              value="{{ filter_value.value }}"
+                              {% if filter_value.active -%}checked{%- endif %}
+                              {% if filter_value.count == 0 and filter_value.active == false -%}disabled{%- endif %}>
+                            <label 
+                              class="form-check-label" 
+                              for="filter-{{ filter.param_name }}-{{ forloop.index }}">
+                              <div class="d-flex">
+                                <span>{{ filter_value.label | escape }}</span>
+                                <span class="ms-2">({{ filter_value.count }})</span>
+                              </div>
+                            </label>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% when 'price_range' %}
+                      {% liquid                                           
+                        if filter.min_value.value
+                          assign filter_min_value = filter.min_value.value | money_without_currency | replace: ',', ''
+                        else 
+                          assign filter_min_value = 0
+                        endif
+
+                        if filter.max_value.value
+                          assign filter_max_value = filter.max_value.value | money_without_currency | replace: ',', ''
+                        else 
+                          assign filter_max_value = filter.range_max | money_without_currency | replace: ',', ''
+                        endif
+                      %}
+                      
+                      <div class="filter-price-group row mx-n2">
+                        <div class="col-9 px-2">
+                          <div class="input-group">
+                            <span class="input-group-text px-3">
+                              {{ cart.currency.symbol }}
+                            </span>
+                            <input 
+                              class="form-control"
+                              name="{{ filter.min_value.param_name }}"
+                              value="{{ filter_min_value }}"
+                              type="number"
+                              min="0"
+                              max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                              placeholder="{{ 'collection.filters.from' | t }}"
+                              aria-label=" {{ 'collection.filters.from' | t }}">
+                          </div>
+                        </div>
+                        <div class="col-9 px-2">
+                          <div class="input-group">
+                            <span class="input-group-text px-3">
+                              {{ cart.currency.symbol }}
+                            </span>
+                            <input 
+                              class="form-control"
+                              name="{{ filter.max_value.param_name }}"
+                              value="{{ filter_max_value }}"
+                              type="number"
+                              min="0"
+                              max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                              placeholder="{{ 'collection.filters.to' | t }}"
+                              aria-label="{{ 'collection.filters.to' | t }}">
+                          </div>
+                        </div>
+                      </div>
+                  {% endcase %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </form>
+    </div>
+    <div
+      class="offcanvas-footer border-top px-5 py-4">
+      <button class="btn btn-primary btn-filters-view-results w-100" type="button" data-bs-dismiss="offcanvas">
+        {{ 'collection.filters.view_results' | t: count: collection.products_count }}
+      </button>
+      <button 
+        class="btn btn-link btn-filters-clear-all btn-sm w-100 mt-2 mb-n2" 
+        type="button" 
+        data-bs-dismiss="offcanvas"
+        hidden>
+        {{ 'collection.filters.clear_all' | t }}
+      </button>
+    </div>
+  </collection-filters>
+</div>
+
+
+
+
+      
+      

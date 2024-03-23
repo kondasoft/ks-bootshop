@@ -1,6 +1,6 @@
 {
     "css.styleSheets": [
-        "/assets/vendor-bootstrap.min.css"
+        "/assets/utilities.css"
     ],
     "search.exclude": {
         "/assets/bootstrap.bundle.js": true,

@@ -1,0 +1,66 @@
+{% liquid 
+  for filter in collection.filters
+    if filter.type == "price_range"
+      if filter.min_value.value > 0 or filter.max_value.value < filter.range_max
+        assign active_filter_values = 1 | plus: active_filter_values
+      endif
+    else
+      assign active_filter_values = filter.active_values.size | plus: active_filter_values
+    endif
+  endfor
+%}
+
+<div class="collection-utilities mb-5 {% unless section.settings.show_product_count %}justify-content-end{% endunless %}">
+  {% if section.settings.show_product_count %}
+    <p class="collection-product-count small mb-0">
+      {{ 'collection.count_products' | t: count: collection.products_count }}
+    </p>
+  {% endif %}
+  {% if section.settings.show_filters or section.settings.show_sort_by %}
+    <div class="d-flex align-items-center mx-n2">
+      {% if section.settings.show_filters %}
+        <button 
+          class="btn btn-sm mx px-4 mx-2 {{ section.settings.filters_btn_color }}" 
+          type="button" 
+          data-bs-toggle="offcanvas" 
+          data-bs-target="#offcanvas-collection-filters"
+          aria-controls="offcanvas-collection-filters">
+          <span class="d-flex align-items-center">
+            {% render 'svg-icons', icon: 'filter', size: 16, class: 'me-3' %}
+            {{ 'collection.filters.btn_text' | t }}
+            {% if active_filter_values > 0 %}
+              ({{ active_filter_values }})
+            {% endif %}
+          </span>
+        </button>
+      {% endif %}
+      {% if section.settings.show_sort_by %}
+        <sort-by class="sort-by dropdown">
+          <button 
+            class="btn btn-sm px-4 dropdown-toggle mx-2 {{ section.settings.sort_by_btn_color }}" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+            {{ 'collection.sort_by' | t }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            {% for option in collection.sort_options %}
+              <li>
+                <input 
+                  type="radio" 
+                  class="btn-check" 
+                  name="sort_by" 
+                  id="sort-by-{{ option.value }}" 
+                  value="{{ option.value }}"
+                  {% if option.value == collection.sort_by %}checked{% endif %}>
+                <label class="dropdown-item" for="sort-by-{{ option.value }}">
+                  {{ option.name }}
+                </label>
+              </li>
+            {% endfor %}
+          </ul>
+        </sort-by>
+      {% endif %}
+    </div>
+  {% endif  %}
+</div>

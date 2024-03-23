@@ -1,96 +1,115 @@
 /*
-    © 2022 KondaSoft.com
-    https://www.kondasoft.com
+  © 2024 KondaSoft
+  https://www.kondasoft.com
 */
 
-// Load collection elements dynamically (after ajax change)
 const loadCollection = async () => {
-    const productList = document.querySelector('.collection .product-list')
+  const collectionProducts = document.querySelector('.collection-products')
+  const productList = collectionProducts.querySelector('.product-list')
+  const filters = document.querySelector('.collection-filters')
 
-    if (productList) {
-        productList.style.opacity = '.2'
-    }
+  if (productList) {
+    productList.style.opacity = '.2'
+  }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  const response = await fetch(window.location.href)
+  const data = await response.text()
+  const parser = new DOMParser()
+  const newDocument = parser.parseFromString(data, 'text/html')
 
-    const response = await fetch(window.location.href)
-    const data = await response.text()
-    const parser = new DOMParser()
-    const newDocument = parser.parseFromString(data, 'text/html')
+  collectionProducts?.replaceWith(newDocument.querySelector('.collection-products'))
+  filters?.replaceWith(newDocument.querySelector('.collection-filters'))
 
-    document.querySelector('.collection')
-        ?.replaceWith(newDocument.querySelector('.collection'))
+  window.dispatchEvent(new CustomEvent('kt.collection.loaded'))
 
-    document.querySelectorAll('#offcanvas-filters .collapse-inner').forEach((collapse) => {
-        const collapseId = collapse.closest('.collapse').getAttribute('id')
-        collapse.replaceWith(newDocument.querySelector(`#offcanvas-filters #${collapseId} .collapse-inner`))
+  const newCollectionProducts = document.querySelector('.collection-products')
+  const navbarHeight = document.querySelector('[id*="__navbar"].sticky-top')?.clientHeight || 0
+  newCollectionProducts.style.scrollMarginTop = `${navbarHeight}px`
+  newCollectionProducts.scrollIntoView()
+}
+
+class CollectionFilters extends HTMLElement {
+  constructor () {
+    super()
+
+    this.form = this.querySelector('form')
+
+    this.form.querySelectorAll('input').forEach(input => {
+      input.addEventListener('change', () => {
+        const params = new URLSearchParams(new FormData(this.form))
+        const url = `${window.location.pathname}?${params.toString()}`
+        window.history.replaceState({}, '', url)
+
+        loadCollection()
+      })
     })
 
-    document.querySelector('#offcanvas-filters .offcanvas-footer')
-        ?.replaceWith(newDocument.querySelector('#offcanvas-filters .offcanvas-footer'))
+    this.querySelectorAll('.btn-filters-clear-all').forEach(btn => {
+      const params = new URLSearchParams(window.location.search)
 
-    document.querySelector('#offcanvas-filters .btn-filters-clear-all')
-        ?.replaceWith(newDocument.querySelector('#offcanvas-filters .btn-filters-clear-all'))
+      for (const key of params.keys()) {
+        if (key.includes('filter.')) {
+          btn.removeAttribute('hidden')
+        }
+      }
 
-    document.querySelector('#offcanvas-filters [name="sort_by"]')
-        ?.replaceWith(newDocument.querySelector('#offcanvas-filters [name="sort_by"]'))
+      btn.addEventListener('click', () => {
+        for (const key of [...params.keys()]) {
+          if (key.includes('filter.')) {
+            params.delete(key)
+          }
+        }
 
-    const customEvent = new CustomEvent('updated.ks.collection')
-    window.dispatchEvent(customEvent)
-}
-
-// Handle collection filters change events
-window.onChangeCollectionFilter = async (input, event) => {
-    const form = input.closest('form')
-    const params = new URLSearchParams(new FormData(form))
-    const url = `${window.location.pathname}?${params.toString()}`
-    window.history.replaceState({}, '', url)
-
-    await loadCollection()
-}
-
-// Handle collection price filters change
-const initCollectionFiltersPriceChange = () => {
-    document.querySelectorAll('.filter-price-group input').forEach(input => {
-        input.addEventListener('input', window.debounce(async (event) => {
-            const form = input.closest('form')
-            const params = new URLSearchParams(new FormData(form))
-            const url = `${window.location.pathname}?${params.toString()}`
-            window.history.replaceState({}, '', url)
-
-            await loadCollection()
-        }, 750))
+        const url = `${window.location.pathname}?${params.toString()}`
+        window.history.replaceState({}, '', url)
+        loadCollection()
+      })
     })
+  }
 }
-initCollectionFiltersPriceChange()
-window.addEventListener('updated.ks.collection', initCollectionFiltersPriceChange)
+customElements.define('collection-filters', CollectionFilters)
 
-// 'View more' within collection filters
-window.onClickFiltersViewMore = (btn, event) => {
-    btn.closest('.collapse').querySelectorAll('.form-check').forEach((elem) => {
-        elem.removeAttribute('hidden')
+class SortBy extends HTMLElement {
+  constructor () {
+    super()
+
+    this.querySelectorAll('input').forEach(input => {
+      input.addEventListener('change', () => {
+        this.setUrl(input.value)
+        loadCollection()
+      })
     })
+  }
 
-    btn.remove()
-}
-
-// 'Clear all' within collection filters
-window.onClickClearAllFilters = async (btn, event) => {
-    const form = btn.closest('form')
-    const params = new URLSearchParams()
-    params.set('sort_by', form.querySelector('[name="sort_by"]').value)
-    const url = `${window.location.pathname}?${params.toString()}`
-    window.history.replaceState({}, '', url)
-
-    await loadCollection()
-}
-
-// Sort-by select change event
-window.onChangeCollectionSortBy = (value) => {
+  setUrl (value) {
     const params = new URLSearchParams(window.location.search)
     params.set('sort_by', value)
+    params.delete('page')
     const url = `${window.location.pathname}?${params.toString()}`
     window.history.replaceState({}, '', url)
-
-    loadCollection()
+  }
 }
+customElements.define('sort-by', SortBy)
+
+class Pagination extends HTMLElement {
+  constructor () {
+    super()
+
+    this.querySelectorAll('a').forEach(elem => {
+      elem.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        this.setUrl(elem.dataset.newPage)
+        loadCollection()
+      })
+    })
+  }
+
+  setUrl (value) {
+    const params = new URLSearchParams(window.location.search)
+    params.set('page', value)
+    const url = `${window.location.pathname}?${params.toString()}`
+    window.history.replaceState({}, '', url)
+  }
+}
+customElements.define('collection-pagination', Pagination)

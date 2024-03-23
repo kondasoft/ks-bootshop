@@ -1,45 +1,45 @@
 {
   "sections": {
-    "16362755981cd0f0ec": {
+    "91492711-8ea6-4c3d-b346-30c8b72100ec": {
       "type": "faq",
       "blocks": {
-        "16362755981cd0f0ec-0": {
-          "type": "text",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-1": {
+          "type": "item",
           "settings": {
             "title": "Where do you ship?",
             "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.<\/p>"
           }
         },
-        "16362755981cd0f0ec-1": {
-          "type": "text",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-2": {
+          "type": "item",
           "settings": {
             "title": "How long will it take to receive my order",
             "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.<\/p>"
           }
         },
-        "16362755981cd0f0ec-2": {
-          "type": "text",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-3": {
+          "type": "item",
           "settings": {
             "title": "What payment methods do you support?",
             "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.<\/p>"
           }
         },
-        "16362755981cd0f0ec-3": {
-          "type": "text",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-4": {
+          "type": "item",
           "settings": {
             "title": "How can I track my order?",
             "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567<\/p>"
           }
         },
-        "16362755981cd0f0ec-4": {
-          "type": "text",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-5": {
+          "type": "item",
           "settings": {
             "title": "Can I order as a gift for someone else?",
             "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.<\/p>"
           }
         },
-        "16362755981cd0f0ec-5": {
-          "type": "text",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-6": {
+          "type": "item",
           "settings": {
             "title": "How can I get a refund for my order?",
             "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.<\/p>"
@@ -47,167 +47,62 @@
         }
       },
       "block_order": [
-        "16362755981cd0f0ec-0",
-        "16362755981cd0f0ec-1",
-        "16362755981cd0f0ec-2",
-        "16362755981cd0f0ec-3",
-        "16362755981cd0f0ec-4",
-        "16362755981cd0f0ec-5"
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-1",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-2",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-3",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-4",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-5",
+        "template--15846749896843__91492711-8ea6-4c3d-b346-30c8b72100ec-item-6"
       ],
       "settings": {
-        "bg_color": "bg-white text-body",
-        "max_width": "900",
-        "text_align": "text-center",
-        "title": "General Questions",
-        "title_size": "h2",
-        "description": "<p>Write something useful to describe this section.<\/p>",
-        "description_size": "fs-6",
-        "pt": 9,
-        "pb": 0,
-        "mt": 0,
-        "mb": 10
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "open_first_item": true,
+        "header_title": "FAQs",
+        "header_title_font_size": "h1",
+        "header_description": "<p>Still need to reach us? Please <a href=\"\/pages\/contact-us\" title=\"Contact us\">contact us<\/a> anytime<\/p>",
+        "header_description_font_size": "fs-md",
+        "pt": 11,
+        "pb": 11
       }
     },
-    "16362756175b67188d": {
-      "type": "faq",
-      "blocks": {
-        "16362756175b67188d-0": {
-          "type": "text",
-          "settings": {
-            "title": "Where do you ship?",
-            "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.<\/p>"
-          }
-        },
-        "16362756175b67188d-1": {
-          "type": "text",
-          "settings": {
-            "title": "How long will it take to receive my order",
-            "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.<\/p>"
-          }
-        },
-        "16362756175b67188d-2": {
-          "type": "text",
-          "settings": {
-            "title": "What payment methods do you support?",
-            "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.<\/p>"
-          }
-        },
-        "16362756175b67188d-3": {
-          "type": "text",
-          "settings": {
-            "title": "How can I track my order?",
-            "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567<\/p>"
-          }
-        },
-        "16362756175b67188d-4": {
-          "type": "text",
-          "settings": {
-            "title": "Can I order as a gift for someone else?",
-            "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.<\/p>"
-          }
-        },
-        "16362756175b67188d-5": {
-          "type": "text",
-          "settings": {
-            "title": "How can I get a refund for my order?",
-            "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.<\/p>"
-          }
-        }
-      },
-      "block_order": [
-        "16362756175b67188d-0",
-        "16362756175b67188d-1",
-        "16362756175b67188d-2",
-        "16362756175b67188d-3",
-        "16362756175b67188d-4",
-        "16362756175b67188d-5"
-      ],
+    "664feedb-7180-4e8f-a84d-1cf45bc1dd42": {
+      "type": "richtext",
       "settings": {
-        "bg_color": "bg-white text-body",
-        "max_width": "900",
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 10,
+        "container_max_width": "900",
         "text_align": "text-center",
-        "title": "Shipping",
-        "title_size": "h2",
-        "description": "<p>Write something useful to describe this section.<\/p>",
-        "description_size": "fs-6",
-        "pt": 0,
-        "pb": 0,
-        "mt": 0,
-        "mb": 10
-      }
-    },
-    "1636275627013a4cd3": {
-      "type": "faq",
-      "blocks": {
-        "1636275627013a4cd3-0": {
-          "type": "text",
-          "settings": {
-            "title": "Where do you ship?",
-            "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.<\/p>"
-          }
-        },
-        "1636275627013a4cd3-1": {
-          "type": "text",
-          "settings": {
-            "title": "How long will it take to receive my order",
-            "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.<\/p>"
-          }
-        },
-        "1636275627013a4cd3-2": {
-          "type": "text",
-          "settings": {
-            "title": "What payment methods do you support?",
-            "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.<\/p>"
-          }
-        },
-        "1636275627013a4cd3-3": {
-          "type": "text",
-          "settings": {
-            "title": "How can I track my order?",
-            "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567<\/p>"
-          }
-        },
-        "1636275627013a4cd3-4": {
-          "type": "text",
-          "settings": {
-            "title": "Can I order as a gift for someone else?",
-            "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.<\/p>"
-          }
-        },
-        "1636275627013a4cd3-5": {
-          "type": "text",
-          "settings": {
-            "title": "How can I get a refund for my order?",
-            "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.<\/p>"
-          }
-        }
-      },
-      "block_order": [
-        "1636275627013a4cd3-0",
-        "1636275627013a4cd3-1",
-        "1636275627013a4cd3-2",
-        "1636275627013a4cd3-3",
-        "1636275627013a4cd3-4",
-        "1636275627013a4cd3-5"
-      ],
-      "settings": {
-        "bg_color": "bg-white text-body",
-        "max_width": "900",
-        "text_align": "text-center",
-        "title": "Payments",
-        "title_size": "h2",
-        "description": "<p>Write something useful to describe this section.<\/p>",
-        "description_size": "fs-6",
-        "pt": 0,
-        "pb": 0,
-        "mt": 0,
-        "mb": 11
+        "title": "Still have questions?",
+        "title_font_size": "h3",
+        "description": "<p>Please contact us anytime from Monday to Friday<\/p>",
+        "description_font_size": "fs-md",
+        "btn_primary_text": "Contact us",
+        "btn_primary_url": "shopify:\/\/pages\/contact",
+        "btn_primary_color": "btn-primary",
+        "btn_secondary_text": "",
+        "btn_secondary_url": "",
+        "btn_secondary_color": "btn-secondary",
+        "pt": 6,
+        "pb": 12
       }
     }
   },
   "order": [
-    "16362755981cd0f0ec",
-    "16362756175b67188d",
-    "1636275627013a4cd3"
+    "91492711-8ea6-4c3d-b346-30c8b72100ec",
+    "664feedb-7180-4e8f-a84d-1cf45bc1dd42"
   ]
 }

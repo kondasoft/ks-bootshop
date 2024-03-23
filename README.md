@@ -10,8 +10,7 @@ https://ks-bootshop.myshopify.com
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Premium Shopify Themes 
-In case you are interested in our Premium Shopify Themes with advanced features to increase your store conversion rates (CVR) and average order value (AOV), please visit our website
-https://www.kondasoft.com
+Premium Shopify Themes that are simple to use and easy to customize. 15+ years of coding experience, 50k+ customers served! https://www.kondasoft.com
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.

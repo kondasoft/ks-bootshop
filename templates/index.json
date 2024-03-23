@@ -1,137 +1,207 @@
 {
   "sections": {
-    "carousel": {
-      "type": "carousel",
+    "hero_carousel_CmDneU": {
+      "type": "hero-carousel",
       "blocks": {
-        "7c7200c0-9e25-4d6f-8e80-68098f92561e": {
+        "slide_Q4UPQq": {
           "type": "slide",
           "settings": {
             "img_mobile": "shopify:\/\/shop_images\/lifestyle-1-mobile.jpg",
-            "img_mobile_height": 500,
-            "img_mobile_opacity": 0.7,
             "img_desktop": "shopify:\/\/shop_images\/lifestyle-1.jpg",
-            "img_desktop_height": 800,
-            "img_desktop_opacity": 0.7,
+            "overlay_color": "#000000",
+            "overlay_opacity": 10,
+            "overlay_blur": 2,
+            "subtitle": "Developed by KondaSoft",
             "title": "Welcome to KS BootShop Theme",
-            "title_size": "h2",
-            "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
-            "description_size": "fs-5",
-            "btn_text": "Download Free",
-            "btn_url": "https:\/\/www.kondasoft.com\/products\/ks-bootshop",
-            "btn_color": "btn-primary",
-            "btn_size": ""
+            "description": "<p>Free Shopify Theme inspired by simplicity and elegance.<\/p>",
+            "btn_primary_text": "Shop all",
+            "btn_primary_url": "shopify:\/\/collections\/all",
+            "btn_secondary_text": "Latest arrivals",
+            "btn_secondary_url": "shopify:\/\/collections\/latest"
           }
         },
-        "45eefe8d-75a6-4c0d-83c1-bf904392cb96": {
+        "slide_TddqxQ": {
           "type": "slide",
           "settings": {
             "img_mobile": "shopify:\/\/shop_images\/lifestyle-2-mobile.jpg",
-            "img_mobile_height": 500,
-            "img_mobile_opacity": 0.7,
             "img_desktop": "shopify:\/\/shop_images\/lifestyle-2.jpg",
-            "img_desktop_height": 800,
-            "img_desktop_opacity": 0.7,
+            "overlay_color": "#000000",
+            "overlay_opacity": 10,
+            "overlay_blur": 2,
+            "subtitle": "Developed by KondaSoft",
             "title": "Simple to Use, Easy to Customize",
-            "title_size": "h2",
-            "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
-            "description_size": "fs-5",
-            "btn_text": "Download Free",
-            "btn_url": "https:\/\/www.kondasoft.com",
-            "btn_color": "btn-primary",
-            "btn_size": ""
+            "description": "<p>Free Shopify Theme inspired by simplicity and elegance.<\/p>",
+            "btn_primary_text": "Primary button",
+            "btn_primary_url": "",
+            "btn_secondary_text": "Secondary button",
+            "btn_secondary_url": ""
           }
         }
       },
       "block_order": [
-        "7c7200c0-9e25-4d6f-8e80-68098f92561e",
-        "45eefe8d-75a6-4c0d-83c1-bf904392cb96"
+        "slide_Q4UPQq",
+        "slide_TddqxQ"
       ],
       "settings": {
-        "controls": true,
-        "indicators": true,
-        "autoplay": true,
-        "animation": "slide",
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-white",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "carousel_controls": true,
+        "carousel_indicators": true,
+        "carousel_transition": "slide",
+        "carousel_transition_duration": 500,
+        "carousel_autoplay": 5,
+        "carousel_effect": "carousel-zoom-in",
+        "media_mobile_height": 500,
+        "media_desktop_height": 700,
+        "media_adapt": false,
+        "media_full": true,
+        "caption_max_width": "900",
+        "caption_position": "carousel-caption-center",
+        "subtitle_font_size": "fs-md",
+        "title_font_size": "h2",
+        "description_font_size": "fs-lg",
+        "btn_primary_color": "btn-primary",
+        "btn_secondary_color": "btn-secondary",
+        "btn_font_size": "fs-md",
+        "pt": 0,
+        "pb": 0
       }
     },
-    "165151877352b831f8": {
+    "featured_products_nXJKQn": {
       "type": "featured-products",
       "settings": {
-        "products": [
-          "bag-series-1",
-          "glasses-series-3",
-          "heat-series-2",
-          "lamp-series-2",
-          "watch-series-1",
-          "bag-series-3",
-          "lamp-series-1",
-          "glasses-series-2"
-        ],
-        "bg_color": "",
-        "text_align": "text-center",
-        "title": "Featured Products",
-        "title_size": "h2",
-        "description": "<p>Add on optional description to this section<\/p>",
-        "description_size": "fs-6",
-        "product_img_orientation": "square",
-        "product_img_border": "img-thumbnail",
-        "product_title_size": "h6",
-        "breakpoint_xs": 2,
-        "breakpoint_sm": 2,
-        "breakpoint_md": 2,
-        "breakpoint_lg": 3,
-        "breakpoint_xl": 4,
-        "breakpoint_xxl": 4,
-        "btn_show": true,
-        "btn_text": "View more products »",
-        "btn_url": "shopify:\/\/collections\/all",
-        "btn_color": "btn-outline-secondary",
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-primary",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "products": [],
+        "collection": "latest",
+        "limit": 8,
+        "recommended_mode": true,
+        "recommended_mode_intent": "related",
+        "header_title": "Featured Products",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": false,
+        "slider_autoplay": 0,
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 4,
         "pt": 10,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
+        "pb": 11
       }
     },
-    "1651733459a1bea1c2": {
+    "richtext_4miPYL": {
+      "type": "richtext",
+      "settings": {
+        "bg_color": "bg-primary",
+        "bg_opacity": 5,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 1,
+        "border_bottom_width": 1,
+        "border_color": "border-primary",
+        "border_opacity": 100,
+        "container_max_width": "900",
+        "text_align": "text-center",
+        "title": "Richtext",
+        "title_font_size": "h3",
+        "description": "<p>Add on optional description for this section<\/p>",
+        "description_font_size": "fs-md",
+        "btn_primary_text": "Primary button",
+        "btn_primary_url": "",
+        "btn_primary_color": "btn-primary",
+        "btn_secondary_text": "Secondary button",
+        "btn_secondary_url": "",
+        "btn_secondary_color": "btn-secondary",
+        "pt": 12,
+        "pb": 12
+      }
+    },
+    "richtext_AtYwxr": {
+      "type": "richtext",
+      "disabled": true,
+      "settings": {
+        "bg_color": "bg-primary",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-white",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "900",
+        "text_align": "text-center",
+        "title": "Richtext",
+        "title_font_size": "h2",
+        "description": "<p>Add on optional description for this section<\/p>",
+        "description_font_size": "fs-md",
+        "btn_primary_text": "Primary button",
+        "btn_primary_url": "",
+        "btn_primary_color": "btn-white",
+        "btn_secondary_text": "Secondary button",
+        "btn_secondary_url": "",
+        "btn_secondary_color": "btn-light-white",
+        "pt": 11,
+        "pb": 11
+      }
+    },
+    "featured_collections_n3Br7m": {
       "type": "featured-collections",
       "blocks": {
-        "8c529e86-7b51-4d75-baa3-1d4681b8c75c": {
+        "collection_rznnLq": {
           "type": "collection",
           "settings": {
             "collection": "men",
             "title": ""
           }
         },
-        "77c3798e-6857-46a0-92bc-df3c48109366": {
+        "collection_KdHXk9": {
           "type": "collection",
           "settings": {
             "collection": "women",
             "title": ""
           }
         },
-        "ec048dd5-f669-4b0e-811b-cd904f95bde5": {
+        "collection_b7ELCB": {
           "type": "collection",
           "settings": {
             "collection": "children",
             "title": ""
           }
         },
-        "ec7164c1-d2b0-4fd9-b81f-18204c938d9a": {
+        "collection_XRMXNt": {
           "type": "collection",
           "settings": {
             "collection": "babies",
             "title": ""
           }
         },
-        "9e860958-3e5a-44e1-ace8-49e74c8ea9ef": {
+        "collection_fQ9QDf": {
           "type": "collection",
           "settings": {
             "collection": "latest",
             "title": ""
           }
         },
-        "e86d0893-60ca-4bbf-aa40-c1ea7de37bec": {
+        "collection_kRQqkR": {
           "type": "collection",
           "settings": {
             "collection": "sale",
@@ -140,221 +210,280 @@
         }
       },
       "block_order": [
-        "8c529e86-7b51-4d75-baa3-1d4681b8c75c",
-        "77c3798e-6857-46a0-92bc-df3c48109366",
-        "ec048dd5-f669-4b0e-811b-cd904f95bde5",
-        "ec7164c1-d2b0-4fd9-b81f-18204c938d9a",
-        "9e860958-3e5a-44e1-ace8-49e74c8ea9ef",
-        "e86d0893-60ca-4bbf-aa40-c1ea7de37bec"
+        "collection_rznnLq",
+        "collection_KdHXk9",
+        "collection_b7ELCB",
+        "collection_XRMXNt",
+        "collection_fQ9QDf",
+        "collection_kRQqkR"
       ],
       "settings": {
-        "bg_color": "bg-light text-dark",
-        "text_align": "text-center",
-        "title": "Featured Collections",
-        "title_size": "h2",
-        "description": "<p>Add on optional description to this section<\/p>",
-        "description_size": "fs-6",
-        "collection_img_orientation": "landscape",
-        "collection_img_border": "img-thumbnail",
-        "btn_text": "View all collections",
-        "btn_color": "btn-outline-secondary",
-        "breakpoint_xs": 1,
-        "breakpoint_sm": 2,
-        "breakpoint_md": 2,
-        "breakpoint_lg": 3,
-        "breakpoint_xl": 3,
-        "breakpoint_xxl": 3,
-        "pt": 10,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 1,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 10,
+        "container_max_width": "",
+        "header_title": "Featured Collections",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": false,
+        "slider_autoplay": 0,
+        "collection_card_text_align": "text-center",
+        "collection_card_img_orientation": "ratio-16x9",
+        "collection_card_img_border": "img-thumbnail",
+        "collection_card_show_title": true,
+        "collection_card_title_font_size": "fs-md",
+        "collection_card_title_position": "collection-card-title-normal",
+        "collection_card_show_product_count": true,
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 3,
+        "pt": 11,
+        "pb": 11
       }
     },
-    "16527743361f98366e": {
-      "type": "cards-with-image",
+    "separator_kfq8kz": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "bg_color": "bg-primary",
+        "bg_opacity": 10,
+        "height": 1,
+        "container": "container",
+        "container_max_width": "",
+        "pt": 0,
+        "pb": 10
+      }
+    },
+    "media_with_text_xTY8gi": {
+      "type": "media-with-text",
       "blocks": {
-        "a31f2a51-209c-40f5-8782-38280ee0b30d": {
-          "type": "item",
+        "row_JkMDbM": {
+          "type": "row",
           "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-5.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "Card with image",
-            "title_size": "h5",
-            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post.<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": ""
-          }
-        },
-        "8e95535f-a8b1-440c-8dc1-47263a1da13e": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow",
+            "bg_color": "bg-secondary",
+            "bg_opacity": 5,
+            "bg_gradient": "",
+            "text_color": "text-body",
+            "border_top_width": 1,
+            "border_bottom_width": 1,
             "border_color": "border-primary",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-3.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "Card with image",
-            "title_size": "h5",
-            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post.<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-primary",
-            "btn_size": ""
-          }
-        },
-        "9450772e-4e92-4251-97cd-69e844e7fe9f": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-2.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "Card with image",
-            "title_size": "h5",
-            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post.<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": ""
-          }
-        },
-        "5f2ca4c4-dfa9-477b-95dc-1887e7efbb45": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-4.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "Card with image",
-            "title_size": "h5",
-            "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post.<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": ""
+            "border_opacity": 10,
+            "media_align_desktop": "",
+            "media_border": "img-thumbnail",
+            "img_orientation": "ratio-9x16",
+            "video": "",
+            "video_ratio": "adapt",
+            "video_autoplay": true,
+            "video_loop": true,
+            "video_muted": true,
+            "video_controls": true,
+            "external_video": "",
+            "text_align_mobile": "text-center",
+            "text_align_desktop": "text-desktop-start",
+            "subtitle": "Optional Subtitle",
+            "title": "Media with text",
+            "title_font_size": "h3",
+            "description": "<p>Either show an image, video (MP4) or an external video (YouTube). If no text block is shown, the media will take full section's space.<\/p>",
+            "description_font_size": "fs-md",
+            "btn_primary_text": "Primary button",
+            "btn_primary_url": "",
+            "btn_primary_color": "btn-primary",
+            "btn_secondary_text": "Secondary button",
+            "btn_secondary_url": "",
+            "btn_secondary_color": "btn-outline-primary",
+            "pt": 10,
+            "pb": 10
           }
         }
       },
       "block_order": [
-        "a31f2a51-209c-40f5-8782-38280ee0b30d",
-        "8e95535f-a8b1-440c-8dc1-47263a1da13e",
-        "9450772e-4e92-4251-97cd-69e844e7fe9f",
-        "5f2ca4c4-dfa9-477b-95dc-1887e7efbb45"
+        "row_JkMDbM"
       ],
       "settings": {
-        "bg_color": "bg-white text-dark",
-        "text_align": "text-center",
-        "title": "Cards With Image",
-        "title_size": "h2",
-        "description": "<p>Add on optional description to this section<\/p>",
-        "description_size": "fs-6",
-        "row_xs": 1,
-        "row_sm": 2,
-        "row_lg": 4,
+        "container_max_width": ""
+      }
+    },
+    "card_slider_BFzjjF": {
+      "type": "card-slider",
+      "blocks": {
+        "item_qp7jPa": {
+          "type": "item",
+          "settings": {
+            "title": "First Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "item_h9wANh": {
+          "type": "item",
+          "settings": {
+            "title": "Second Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "item_hAPJWn": {
+          "type": "item",
+          "settings": {
+            "title": "Third Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "item_9EkHYL": {
+          "type": "item",
+          "settings": {
+            "title": "Fourth Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "item_iKKgHJ": {
+          "type": "item",
+          "settings": {
+            "title": "Fifth Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "item_Je3xNm": {
+          "type": "item",
+          "settings": {
+            "title": "Sixth Card",
+            "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa velit, sagittis nec pharetra id, iaculis non sapien.<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_qp7jPa",
+        "item_h9wANh",
+        "item_hAPJWn",
+        "item_9EkHYL",
+        "item_iKKgHJ",
+        "item_Je3xNm"
+      ],
+      "settings": {
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "header_title": "Card Slider",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": true,
+        "slider_autoplay": 0,
+        "item_bg_color": "bg-body",
+        "item_bg_opacity": 0,
+        "item_text_color": "text-body",
+        "item_border_width": 1,
+        "item_border_color": "",
+        "item_border_opacity": 100,
+        "item_shadow": "shadow-sm",
+        "item_text_align": "text-start",
+        "item_img_orientation": "ratio-4x3",
+        "item_title_font_size": "h5",
+        "item_description_font_size": "",
+        "item_btn_color": "btn-outline-primary",
+        "item_btn_size": "btn-sm",
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 4,
         "pt": 10,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
+        "pb": 11
       }
     },
-    "1651754599ab801902": {
-      "type": "image-with-text",
+    "html_Y7Cp8x": {
+      "type": "html",
       "settings": {
-        "bg_color": "bg-light text-body",
-        "text_align": "text-start",
-        "image": "shopify:\/\/shop_images\/no-image.jpg",
-        "img_orientation": "landscape-x2",
-        "img_crop": "center",
-        "img_border": "img-thumbnail",
-        "img_align_desktop": "flex-lg-row",
-        "title": "Image With Text",
-        "title_size": "h2",
-        "subtitle": "Some Optional Subtitle",
-        "subtitle_size": "fs-6",
-        "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-        "description_size": "fs-6",
-        "btn_text": "Learn more",
-        "btn_url": "#",
-        "btn_color": "btn-primary",
-        "btn_size": "",
-        "pt": 11,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
+        "liquid": "<p class=\"alert alert-primary text-center\">Current datetime is: <b>{{ \"now\" | date: \"%Y-%m-%d %H:%M\" }}<\/b><\/p>\n\n<iframe class=\"rounded\" src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d5458.176837636101!2d7.264440042281333!3d43.69609386612476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12cddaa162b4a50b%3A0x77566707bed909ce!2sFontaine%20du%20Soleil!5e0!3m2!1sen!2s!4v1651756644654!5m2!1sen!2s\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"><\/iframe>",
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 1,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 10,
+        "container": "container",
+        "container_max_width": "",
+        "text_align": "text-center",
+        "header_title": "HTML and Liquid",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "pt": 10,
+        "pb": 10
       }
     },
-    "f79472bd-ea06-4791-b546-621b9bdf76a3": {
-      "type": "external-video",
-      "settings": {
-        "external_video": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
-        "bg_color": "",
-        "max_width": "960",
-        "video_border": "img-thumbnail",
-        "pt": 11,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
-      }
-    },
-    "165175524396f2667c": {
+    "faq_7TT7z4": {
       "type": "faq",
       "blocks": {
-        "1651755243f618171d-0": {
-          "type": "text",
+        "item_AgKJ3m": {
+          "type": "item",
           "settings": {
             "title": "Where do you ship?",
             "description": "<p>We ship all around the world... Please provide here you own shipping information, including times, prices, options etc.<\/p>"
           }
         },
-        "1651755243f618171d-1": {
-          "type": "text",
+        "item_EemRD3": {
+          "type": "item",
           "settings": {
             "title": "How long will it take to receive my order",
             "description": "<p>This depends on whether it is an International or a Domestic order. All orders within the U.S. are considered domestic orders and they are shipped and delivered within 2-5 business days. Please see International Orders for more details.<\/p>"
           }
         },
-        "1651755243f618171d-2": {
-          "type": "text",
+        "item_jyLYkB": {
+          "type": "item",
           "settings": {
             "title": "What payment methods do you support?",
             "description": "<p>We accept PayPal, Visa, MasterCard, Discover, and American Express but feel free to contact us for other payment options.<\/p>"
           }
         },
-        "1651755243f618171d-3": {
-          "type": "text",
+        "item_pHCJRG": {
+          "type": "item",
           "settings": {
             "title": "How can I track my order?",
             "description": "<p>We will send tracking information to the e-mail address associated with your order once the item has shipped. If you have not received your tracking information and it has been over 2 business day, please contact us at (012) 123 - 4567<\/p>"
           }
         },
-        "1651755243f618171d-4": {
-          "type": "text",
+        "item_kWLWrb": {
+          "type": "item",
           "settings": {
             "title": "Can I order as a gift for someone else?",
             "description": "<p>When ordering as a gift for someone, be sure to enter in your email address to receive all summary information but enter in the recipient’s name and shipping information. We will be sure to keep all prices and receipts out of the package.<\/p>"
           }
         },
-        "1651755243f618171d-5": {
-          "type": "text",
+        "item_dizKmG": {
+          "type": "item",
           "settings": {
             "title": "How can I get a refund for my order?",
             "description": "<p>If for any reason you are not completely satisfied with your purchase, within 30 days of placing your order, we will refund you for your purchase with no questions asked.<\/p>"
@@ -362,84 +491,209 @@
         }
       },
       "block_order": [
-        "1651755243f618171d-0",
-        "1651755243f618171d-1",
-        "1651755243f618171d-2",
-        "1651755243f618171d-3",
-        "1651755243f618171d-4",
-        "1651755243f618171d-5"
+        "item_AgKJ3m",
+        "item_EemRD3",
+        "item_jyLYkB",
+        "item_pHCJRG",
+        "item_kWLWrb",
+        "item_dizKmG"
       ],
       "settings": {
-        "bg_color": "bg-white text-body",
-        "max_width": "960",
-        "text_align": "text-center",
-        "title": "F.A.Q",
-        "title_size": "h2",
-        "description": "<p>Write something useful to describe this section.<\/p>",
-        "description_size": "fs-6",
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "open_first_item": true,
+        "header_title": "FAQs",
+        "header_title_font_size": "h2",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "pt": 2,
+        "pb": 11
+      }
+    },
+    "testimonials_eFtnyC": {
+      "type": "testimonials",
+      "blocks": {
+        "item_B99dNi": {
+          "type": "item",
+          "settings": {
+            "title": "First Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"<\/p>",
+            "img": "shopify:\/\/shop_images\/icon-user.svg",
+            "author": "Author's Name",
+            "author_subtitle": "Verified Customer"
+          }
+        },
+        "item_VPnR9Q": {
+          "type": "item",
+          "settings": {
+            "title": "Second Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"<\/p>",
+            "img": "shopify:\/\/shop_images\/icon-user.svg",
+            "author": "Author's Name",
+            "author_subtitle": "Verified Customer"
+          }
+        },
+        "item_XTUtYy": {
+          "type": "item",
+          "settings": {
+            "title": "Third Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"<\/p>",
+            "img": "shopify:\/\/shop_images\/icon-user.svg",
+            "author": "Author's Name",
+            "author_subtitle": "Verified Customer"
+          }
+        },
+        "item_79nB3i": {
+          "type": "item",
+          "settings": {
+            "title": "Fourth Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"<\/p>",
+            "img": "shopify:\/\/shop_images\/icon-user.svg",
+            "author": "Author's Name",
+            "author_subtitle": "Verified Customer"
+          }
+        },
+        "item_BUkPE7": {
+          "type": "item",
+          "settings": {
+            "title": "Fifth Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"<\/p>",
+            "img": "shopify:\/\/shop_images\/icon-user.svg",
+            "author": "Author's Name",
+            "author_subtitle": "Verified Customer"
+          }
+        },
+        "item_DtBFNc": {
+          "type": "item",
+          "settings": {
+            "title": "Sixth Testimonial",
+            "description": "<p>\"Shopping at [Store Name] has been an absolute delight! The carefully curated selection of products is a testament to the store's commitment to quality. From trendy fashion pieces to unique home decor items, every product exudes style and craftsmanship.\"<\/p>",
+            "img": "shopify:\/\/shop_images\/icon-user.svg",
+            "author": "Author's Name",
+            "author_subtitle": "Verified Customer"
+          }
+        }
+      },
+      "block_order": [
+        "item_B99dNi",
+        "item_VPnR9Q",
+        "item_XTUtYy",
+        "item_79nB3i",
+        "item_BUkPE7",
+        "item_DtBFNc"
+      ],
+      "settings": {
+        "bg_color": "bg-primary",
+        "bg_opacity": 5,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 1,
+        "border_bottom_width": 1,
+        "border_color": "border-primary",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "header_title": "Testimonials",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": true,
+        "slider_autoplay": 0,
+        "card_bg_color": "bg-primary",
+        "card_bg_opacity": 10,
+        "card_text_color": "text-body",
+        "card_border_width": 1,
+        "card_border_color": "border-primary",
+        "card_border_opacity": 50,
+        "card_shadow": "shadow-none",
+        "card_text_align": "text-start",
+        "card_show_stars": true,
+        "card_title_font_size": "h5",
+        "card_description_font_size": "fs-sm",
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 4,
         "pt": 10,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
+        "pb": 12
       }
     },
-    "c74ebbe2-8be5-4594-80c9-25bb5250e03b": {
-      "type": "richtext",
+    "blog_slider_UUweWT": {
+      "type": "blog-slider",
       "settings": {
-        "bg_color": "",
-        "max_width": "768",
-        "text_align": "text-center",
-        "title": "Richtext Section",
-        "title_size": "h2",
-        "description": "<p>Free Shopify Theme powered by Bootstrap v5 framework<\/p>",
-        "description_size": "fs-6",
-        "btn_text": "Download Free",
-        "btn_url": "https:\/\/www.kondasoft.com",
-        "btn_color": "btn-outline-primary",
-        "btn_size": "",
-        "pt": 6,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "header_title": "Latest Posts",
+        "header_title_font_size": "h3",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": true,
+        "slider_autoplay": 0,
+        "blog": "news",
+        "limit": 8,
+        "article_card_text_align": "text-start",
+        "article_card_img_orientation": "ratio-16x9",
+        "article_card_img_border": "img-thumbnail",
+        "article_card_title_size": "fs-xl",
+        "article_card_meta": true,
+        "article_card_tags": true,
+        "article_card_excerpt": true,
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 3,
+        "pt": 10,
+        "pb": 12
       }
     },
-    "16517348541d37c171": {
+    "separator_pMbxtB": {
       "type": "separator",
+      "disabled": true,
       "settings": {
-        "full_width": false,
-        "opacity": 0.1,
-        "mt": 0,
-        "mb": 0
-      }
-    },
-    "1ab6c22f-7e79-4e79-b4b5-e0939ba5593b": {
-      "type": "html",
-      "settings": {
-        "html": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d5458.176837636101!2d7.264440042281333!3d43.69609386612476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12cddaa162b4a50b%3A0x77566707bed909ce!2sFontaine%20du%20Soleil!5e0!3m2!1sen!2s!4v1651756644654!5m2!1sen!2s\" width=\"100%\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"><\/iframe>",
-        "bg_color": "",
-        "container": "",
-        "text_align": "text-center",
-        "title": "HTML Section",
-        "title_size": "h2",
-        "description": "<p>Display any HTML codes in this section like embed maps, videos, etc.<\/p>",
-        "description_size": "fs-6",
-        "pt": 11,
-        "pb": 0,
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-secondary",
+        "bg_opacity": 25,
+        "height": 1,
+        "container": "container",
+        "container_max_width": "",
+        "pt": 0,
+        "pb": 0
       }
     }
   },
   "order": [
-    "carousel",
-    "165151877352b831f8",
-    "1651733459a1bea1c2",
-    "16527743361f98366e",
-    "1651754599ab801902",
-    "f79472bd-ea06-4791-b546-621b9bdf76a3",
-    "165175524396f2667c",
-    "c74ebbe2-8be5-4594-80c9-25bb5250e03b",
-    "16517348541d37c171",
-    "1ab6c22f-7e79-4e79-b4b5-e0939ba5593b"
+    "hero_carousel_CmDneU",
+    "featured_products_nXJKQn",
+    "richtext_4miPYL",
+    "richtext_AtYwxr",
+    "featured_collections_n3Br7m",
+    "separator_kfq8kz",
+    "media_with_text_xTY8gi",
+    "card_slider_BFzjjF",
+    "html_Y7Cp8x",
+    "faq_7TT7z4",
+    "testimonials_eFtnyC",
+    "blog_slider_UUweWT",
+    "separator_pMbxtB"
   ]
 }

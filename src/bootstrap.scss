@@ -1,37 +1,58 @@
 /*
-    © 2022 KondaSoft.com
-    https://www.kondasoft.com
+  © 2024 KondaSoft
+  https://www.kondasoft.com
 */
 
 @use "sass:math";
 
-// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+/*
+  Bootstrap Required Import
+*/
 @import '../node_modules/bootstrap/scss/functions';
 
-// 2. Include any default variable overrides here
-$spacer:        1rem;
+/*
+  Variable overrides
+*/
+$enable-negative-margins:   true;
+$enable-container-classes:  true;
+$grid-columns:              18;
+$grid-gutter-width:         2rem;
+$grid-row-columns:          10; 
+$headings-font-family:      var(--bs-headings-font-family);
+$headings-font-weight:      var(--bs-headings-font-weight);
+$font-family-base:          var(--bs-body-font-family);
+$small-font-size:           .9em;
+$lead-font-size:            1.1em;
+
+$grid-breakpoints: (
+  mobile: 0,
+  tablet: 600px,
+  desktop: 1200px
+);
+
+$spacer: 1rem;
 $spacers: (
-    0: 0,
-    1: $spacer * 0.125,
-    2: $spacer * 0.25,
-    3: $spacer * 0.5,
-    4: $spacer * 0.75,
-    5: $spacer * 1,
-    6: $spacer * 1.25,
-    7: $spacer * 1.5,
-    8: $spacer * 1.75,
-    9: $spacer * 2,
-    10: $spacer * 2.5,
-    11: $spacer * 3,
-    12: $spacer * 4,
-    13: $spacer * 5,
-    14: $spacer * 6,
-    15: $spacer * 7,
-    16: $spacer * 8,
-    17: $spacer * 9,
-    18: $spacer * 10,
-    19: $spacer * 12,
-    20: $spacer * 14,
+  0: 0,
+  1: $spacer * 0.125,
+  2: $spacer * 0.25,
+  3: $spacer * 0.375,
+  4: $spacer * 0.5,
+  5: $spacer * 0.75,
+  6: $spacer * 1,
+  7: $spacer * 1.25,
+  8: $spacer * 1.5,
+  9: $spacer * 1.75,
+  10: $spacer * 2,
+  11: $spacer * 2.5,
+  12: $spacer * 3,
+  13: $spacer * 4,
+  14: $spacer * 5,
+  15: $spacer * 7.5,
+  16: $spacer * 10,
+  17: $spacer * 12.5,
+  18: $spacer * 15,
+  19: $spacer * 17.5,
+  20: $spacer * 20,
 );
 
 $h1-font-size: 3rem;
@@ -42,31 +63,128 @@ $h5-font-size: 1.25rem;
 $h6-font-size: 1rem;
 
 $font-sizes: (
-    1: 2.5rem,
-    2: 2rem,
-    3: 1.5rem,
-    4: 1.25rem,
-    5: 1.125rem,
-    6: 1rem
+  1: 2.5rem,
+  2: 2rem,
+  3: 1.5rem,
+  4: 1.25rem,
+  5: 1.125rem,
+  6: 1rem
 );
 
-$headings-font-family:      var(--bs-headings-font-family);
-$headings-font-weight:      var(--bs-headings-font-weight);
-$font-family-base:          var(--bs-body-font-family);
-
-$enable-negative-margins:   true;
-
-// 3. Include remainder of required Bootstrap stylesheets
+/*
+  Bootstrap Required Import
+*/
 @import '../node_modules/bootstrap/scss/variables';
-
-// 4. Include any default map overrides here
-
-// 5. Include remainder of required parts
+@import "../node_modules/bootstrap/scss/variables-dark";
 @import "../node_modules/bootstrap/scss/maps";
 @import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/utilities";
 
-// 6. Optionally include any other parts as needed
+/*
+  Map Overrides 
+*/ 
+$theme-colors: map-remove($theme-colors, "light");
+$theme-colors: map-remove($theme-colors, "dark");
+$theme-colors: map-remove($theme-colors, "gray");
+
+$utilities: (
+  "opacity": (
+    property: opacity,
+    values: (
+      0: 0,
+      10: .1,
+      20: .2,
+      30: .3,
+      40: .4,
+      50: .5,
+      60: .6,
+      70: .7,
+      80: .8,
+      90: .9,
+      100: 1,
+    )
+  ),
+  "font-size": (
+    property: font-size,
+    class: fs,
+    responsive: true,
+    values: (
+      xs: .8em,
+      sm: .9em,
+      md: 1em,
+      lg: 1.1em,
+      xl: 1.2em,
+      xxl: 1.4em,
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "letter-spacing": (
+      property: letter-spacing, 
+      class: ls,
+      values: (
+        0: 0,
+        1: .05rem,
+        2: .1rem,
+        3: .15rem,
+        4: .2rem,
+        5: .25rem,
+        6: .3rem,
+        7: .35rem,
+        8: .4rem,
+        9: .45rem,
+        10: .5rem,
+      )
+    )
+  )
+);
+
+$border-widths: (
+  0: 0px,
+  1: 1px,
+  2: 2px,
+  3: 3px,
+  4: 4px,
+  5: 5px,
+  6: 6px,
+  7: 7px,
+  8: 8px,
+  9: 9px,
+  10: 10px,
+  11: 11px,
+  12: 12px,
+  13: 13px,
+  14: 14px,
+  15: 15px,
+  16: 16px
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "border-top": (
+      property: border-top-width, 
+      class: border-top,
+      values: $border-widths
+    )
+  )
+);
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "border-bottom": (
+      property: border-bottom-width, 
+      class: border-bottom,
+      values: $border-widths
+    )
+  )
+);
+
+/*
+  Bootstrap Required Import
+*/
 @import '../node_modules/bootstrap/scss/bootstrap';
-
-// 8. Add additional custom code here

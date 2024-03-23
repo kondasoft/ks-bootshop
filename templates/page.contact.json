@@ -1,22 +1,72 @@
 {
   "sections": {
-    "23e845c6-1e65-48b9-b6fb-62265282463d": {
+    "ba94d905-ea2f-4198-8472-5296b1853fb5": {
       "type": "contact-form",
       "settings": {
-        "bg_color": "bg-light text-dark",
-        "max_width": "992",
-        "title": "Contact us",
-        "title_size": "h1",
-        "description": "<p>Add on optional description to this section.<br\/>Want to call? <a href=\"tel:+1-555-555-1234\" title=\"tel:+1-555-555-1234\">(555) 555-1234<\/a><\/p>",
-        "description_size": "fs-6",
-        "pt": 11,
-        "pb": 11,
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "header_title": "Contact form",
+        "header_title_font_size": "h1",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "",
+        "img": "shopify:\/\/shop_images\/product-1_d69f3fea-71ab-46c3-a095-43b62ba2a441.jpg",
+        "img_orientation": "ratio-3x4",
+        "img_border": "img-thumbnail",
+        "pt": 10,
+        "pb": 10
+      }
+    },
+    "5d7e9d3e-ba1d-498d-a3fd-144ce2e406e5": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "bg_color": "bg-light text-body",
+        "bg_opacity": 10,
+        "height": 1,
+        "container": "container",
+        "container_max_width": "",
+        "pt": 0,
+        "pb": 0
+      }
+    },
+    "9b5ef318-8d23-40cd-a163-d1f62c2d0834": {
+      "type": "richtext",
+      "settings": {
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "900",
+        "text_align": "text-center",
+        "title": "Looking for FAQs?",
+        "title_font_size": "h3",
+        "description": "<p>View answers to some of the most common questions.<\/p>",
+        "description_font_size": "",
+        "btn_primary_text": "Read FAQs",
+        "btn_primary_url": "shopify:\/\/pages\/faqs",
+        "btn_primary_color": "btn-outline-primary",
+        "btn_secondary_text": "",
+        "btn_secondary_url": "",
+        "btn_secondary_color": "btn-secondary",
+        "pt": 8,
+        "pb": 12
       }
     }
   },
   "order": [
-    "23e845c6-1e65-48b9-b6fb-62265282463d"
+    "ba94d905-ea2f-4198-8472-5296b1853fb5",
+    "5d7e9d3e-ba1d-498d-a3fd-144ce2e406e5",
+    "9b5ef318-8d23-40cd-a163-d1f62c2d0834"
   ]
 }

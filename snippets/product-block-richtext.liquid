@@ -1,0 +1,22 @@
+{% liquid 
+  assign pt = block.settings.pt | prepend: 'pt-'
+  assign pb = block.settings.pb | prepend: 'pb-'
+%}
+
+<div 
+  class="product-block-richtext {{ pt }} {{ pb }}" 
+  {{ block.shopify_attributes }}>
+  {% unless block.settings.title == blank %}
+    <h2 class="title {{ block.settings.title_font_size }}">
+      {{ block.settings.title }}
+    </h2>
+  {% endunless %}
+  {% if block.settings.description != blank or block.settings.product_description != false %}
+    <div class="description rte mb-0 {{ block.settings.description_font_size }} {{ block.settings.description_classes }}">
+      {{ block.settings.description }}
+      {% if block.settings.product_description %}
+        {{ product.description }}
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

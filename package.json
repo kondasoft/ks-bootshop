@@ -1,31 +1,35 @@
 {
-    "scripts": {
-        "watch": "npm-watch",
-        "bs-css": "sass --no-source-map src/bootstrap.scss:assets/vendor-bootstrap.css && postcss assets/vendor-bootstrap.css --replace --no-map --use autoprefixer && minify assets/vendor-bootstrap.css > assets/vendor-bootstrap.min.css && rm assets/vendor-bootstrap.css"
-    },
-    "watch": {
-        "bs-css": {
-            "patterns": [
-                "src"
-            ],
-            "extensions": "scss",
-            "runOnChangeOnly": true
-        }
-    },
-    "dependencies": {
-        "@types/bootstrap": "^5.2.6",
-        "autoprefixer": "^10.4.13",
-        "bootstrap": "^5.2.3",
-        "caniuse-lite": "^1.0.30001441",
-        "eslint": "^8.30.0",
-        "eslint-config-standard": "^17.0.0",
-        "eslint-plugin-import": "^2.26.0",
-        "eslint-plugin-n": "^15.6.0",
-        "eslint-plugin-promise": "^6.1.1",
-        "minify": "^9.1.0",
-        "npm-watch": "^0.11.0",
-        "postcss": "^8.4.20",
-        "postcss-cli": "^10.1.0",
-        "sass": "^1.57.1"
+  "scripts": {
+    "watch": "npm-watch",
+    "bs-scss": "sass --no-source-map src/bootstrap.scss:assets/vendor-bootstrap.css && postcss assets/vendor-bootstrap.css --replace --no-map --use autoprefixer && minify assets/vendor-bootstrap.css > assets/vendor-bootstrap.min.css && rm assets/vendor-bootstrap.css",
+    "bs-js": "cp node_modules/bootstrap/dist/js/bootstrap.bundle.min.js assets/vendor-bootstrap.bundle.min.js",
+    "swiper": "cp node_modules/swiper/swiper-bundle.min.js assets/vendor-swiper.bundle.min.js && cp node_modules/swiper/swiper-bundle.min.css assets/vendor-swiper.bundle.min.css"
+  },
+  "watch": { 
+    "bs-scss": { 
+      "patterns": [
+        "src"
+      ],
+      "extensions": "scss",
+      "runOnChangeOnly": true
     }
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2",
+    "swiper": "^11.0.6"
+  },
+  "devDependencies": { 
+    "autoprefixer": "^10.4.17",
+    "caniuse-lite": "^1.0.30001585",
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "minify": "^11.0.1",
+    "npm-watch": "^0.11.0",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.70.0"
+  }
 }

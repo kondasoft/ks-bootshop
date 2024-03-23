@@ -1,0 +1,94 @@
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement_bar_Ge9W3V": {
+      "type": "announcement-bar",
+      "blocks": {
+        "slide_j46kwk": {
+          "type": "slide",
+          "settings": {
+            "announcement": "Announce something important here"
+          }
+        },
+        "slide_mwF4Tk": {
+          "type": "slide",
+          "settings": {
+            "announcement": "Free Shipping For All Orders Over $100"
+          }
+        }
+      },
+      "block_order": [
+        "slide_j46kwk",
+        "slide_mwF4Tk"
+      ],
+      "settings": {
+        "bg_color": "bg-primary",
+        "bg_opacity": 100,
+        "bg_gradient": "bg-gradient",
+        "text_color": "text-white",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "600",
+        "font_size": "fs-xs",
+        "font_size_desktop": "fs-desktop-sm",
+        "text_transform": "",
+        "letter_spacing": 1,
+        "carousel_autoplay": 5,
+        "carousel_vertical": true,
+        "pt": 4,
+        "pb": 4
+      }
+    },
+    "navbar": {
+      "type": "navbar",
+      "blocks": {
+        "37d4f863-aecd-4a86-87c1-a5887bf87140": {
+          "type": "mobile",
+          "settings": {
+            "container_max_width": "",
+            "logo": "shopify:\/\/shop_images\/ks-bootshop-logo.png",
+            "logo_height": 30,
+            "main_menu": "dropdown-menu",
+            "collections_menu": "",
+            "social_icons": true,
+            "pt": 2,
+            "pb": 2
+          }
+        },
+        "069e870e-aed4-4929-bf73-c0daca8be18e": {
+          "type": "desktop",
+          "settings": {
+            "container_max_width": "",
+            "logo": "shopify:\/\/shop_images\/ks-bootshop-logo.png",
+            "logo_height": 32,
+            "main_menu": "dropdown-menu",
+            "pt": 5,
+            "pb": 5
+          }
+        }
+      },
+      "block_order": [
+        "37d4f863-aecd-4a86-87c1-a5887bf87140",
+        "069e870e-aed4-4929-bf73-c0daca8be18e"
+      ],
+      "settings": {
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "shadow": "shadow-sm"
+      }
+    }
+  },
+  "order": [
+    "announcement_bar_Ge9W3V",
+    "navbar"
+  ]
+}

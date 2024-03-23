@@ -1,0 +1,628 @@
+{% liquid
+  if section.settings.media_adapt == false
+    assign media_mobile_height = section.settings.media_mobile_height | prepend: 'height: ' | append: 'px;'
+    assign media_desktop_height = section.settings.media_desktop_height | prepend: 'height: ' | append: 'px;'
+  endif
+%}
+
+<div 
+  id="hero-carousel-{{ section.id }}" 
+  class="
+    hero-carousel 
+    {{ section.settings.bg_color }} 
+    {{ section.settings.bg_gradient }}
+    {{ section.settings.text_color }} 
+    {{ section.settings.border_top_width | prepend: 'border-top-' }}
+    {{ section.settings.border_bottom_width | prepend: 'border-bottom-' }}
+    {{ section.settings.border_color }} 
+    {{ section.settings.pb | prepend: 'pb-' }} 
+    {{ section.settings.pb | prepend: 'pb-' }}
+  "
+  style="
+    --bs-bg-opacity: {{ section.settings.bg_opacity | append: '%' }};
+    --bs-border-opacity: {{ section.settings.border_opacity | append: '%' }};
+  ">
+  <div 
+    id="carousel-{{ section.id }}" 
+    class="carousel {{ section.settings.carousel_transition }} {{ section.settings.carousel_effect }}"
+    style="--transition-duration: {{ section.settings.carousel_transition_duration | append: 'ms' }};"
+    data-bs-ride="{% if section.settings.carousel_autoplay > 0 %}carousel{% else %}false{% endif %}"
+    data-bs-interval="{{ section.settings.carousel_autoplay | times: 1000 }}"
+    data-bs-pause="false">
+    <div class="carousel-inner">
+      {% for block in section.blocks %}
+        {% liquid 
+          if section.index > 1 or forloop.index > 1
+            assign media_loading = 'lazy'
+          else
+            assign media_loading = 'eager'
+          endif
+        %}
+        <div 
+          class="carousel-item {% if forloop.first %}active{% endif %}" 
+          data-index="{{ forloop.index0 }}" 
+          {{ block.shopify_attributes }}>
+          <div 
+            class="media-wrapper" 
+            style="
+              --overlay-color-rgb: {{ block.settings.overlay_color | color_to_rgb | remove: 'rgb(' | remove: ')' }};
+              --overlay-opacity: {{ block.settings.overlay_opacity | append: '%' }};
+              --overlay-blur: {{ block.settings.overlay_blur | append: 'px' }}">
+            {% if block.settings.img_mobile != blank or block.settings.img_desktop != blank %}
+              <div class="d-tablet-none">
+                <img 
+                  class="carousel-media"
+                  src="{{ block.settings.img_mobile | image_url: width: '800', crop: 'center' }}" 
+                  alt=" {{ block.settings.img_mobile.alt }}"
+                  width="800"
+                  height="{{ 800 | divided_by: block.settings.img_mobile.aspect_ratio | round }}"
+                  loading="{{ media_loading }}"
+                  style="{{ media_mobile_height }}">
+              </div>
+              <div class="d-none d-tablet-block">
+                <img 
+                  class="carousel-media"
+                  src="{{ block.settings.img_desktop | image_url: width: '1600', crop: 'center' }}" 
+                  alt=" {{ block.settings.img_desktop.alt }}"
+                  width="1600"
+                  height="{{ 1600 | divided_by: block.settings.img_desktop.aspect_ratio | round }}"
+                  loading="{{ media_loading }}"
+                  style="{{ media_desktop_height }}">
+              </div>
+            {% else %}
+              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+              {{ 'lifestyle-' | append: current | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+          <div class="carousel-caption {{ section.settings.caption_position }}">
+            <div 
+              class="carousel-caption-inner" 
+              style="max-width: {{ section.settings.caption_max_width | append: 'px' }};">
+              {% unless block.settings.subtitle == blank %}
+                <p class="subtitle {{ section.settings.subtitle_font_size }}">
+                  {{ block.settings.subtitle }}
+                </p>
+              {% endunless %}
+              {% unless block.settings.title == blank %}
+                <h2 class="title mb-4 mb-desktop-5 {{ section.settings.title_font_size }}">
+                  {{ block.settings.title }}
+                </h2>
+              {% endunless %}
+              {% unless block.settings.description == blank %}
+                <div class="description rte {{ section.settings.description_font_size }}">
+                  {{ block.settings.description }}
+                </div>
+              {% endunless %}
+              {% if block.settings.btn_primary_text != blank or block.settings.btn_secondary_text != blank %}
+                <div class="btn-wrapper m-n2">
+                  {% unless block.settings.btn_primary_text == blank %}
+                    <a 
+                      class="btn m-2 {{ section.settings.btn_primary_color }} {{ section.settings.btn_font_size }}"  
+                      href="{{ block.settings.btn_primary_url }}">
+                      {{ block.settings.btn_primary_text }}
+                    </a>
+                  {% endunless %}
+                  {% unless block.settings.btn_secondary_text == blank %}
+                    <a 
+                      class="btn m-2 {{ section.settings.btn_secondary_color }} {{ section.settings.btn_font_size }}"  
+                      href="{{ block.settings.btn_secondary_url }}">
+                      {{ block.settings.btn_secondary_text }}
+                    </a>
+                  {% endunless %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.blocks.size > 1 and section.settings.carousel_indicators %}
+      <div 
+        class="carousel-indicators"
+        style="--duration: {{ section.settings.carousel_autoplay | append: 's' }}">
+        {% for block in section.blocks %}
+          <button 
+            type="button" 
+            data-bs-target="#carousel-{{ section.id }}" 
+            data-bs-slide-to="{{ forloop.index0 }}" 
+            class="{% if forloop.first == true %}active{% endif %}" 
+            aria-current="{% if forloop.first == true %}true{% endif %}"
+            aria-label="{{ 'general.accessibility.slide_no' | t: number: forloop.index }}">
+            <span></span>
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if section.blocks.size > 1 and section.settings.carousel_controls %}
+      <div class="d-none d-tablet-block">
+        <button 
+          class="carousel-control carousel-control-prev" 
+          type="button" 
+          data-bs-target="#carousel-{{ section.id }}" 
+          data-bs-slide="prev"
+          aria-label="{{ 'general.accessibility.previous' | t }}">
+          {% render 'svg-icons', icon: 'chevron-left', size: 24 %}
+        </button>
+        <button 
+          class="carousel-control carousel-control-next" 
+          type="button" 
+          data-bs-target="#carousel-{{ section.id }}" 
+          data-bs-slide="next"
+          aria-label="{{ 'general.accessibility.next' | t }}">
+          {% render 'svg-icons', icon: 'chevron-right', size: 24 %}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if request.design_mode %}
+  <script>
+    document.addEventListener('shopify:block:select', (event) => {
+      const carousel = event.target.closest('#carousel-{{ section.id }}')
+    
+      if (carousel) {
+        bootstrap.Carousel.getOrCreateInstance(carousel, { ride: false })
+          .to(event.target.dataset.index)
+      }
+    })
+  </script>
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Hero carousel",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "bg-body",
+      "options": [
+        { "value": "bg-primary", "label": "Primary" },
+        { "value": "bg-secondary", "label": "Secondary" },
+        { "value": "bg-body", "label": "Body" },
+        { "value": "bg-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "select",
+      "id": "bg_gradient",
+      "label": "Background gradient",
+      "options": [
+        { "value": "bg-gradient", "label": "Yes" },
+        { "value": "", "label": "No" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "text-white",
+      "options": [
+        { "value": "text-primary", "label": "Primary" },
+        { "value": "text-secondary", "label": "Secondary" },
+        { "value": "text-body", "label": "Body" },
+        { "value": "text-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_top_width",
+      "label": "Border top width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "label": "Border bottom width",
+      "default": 0,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "border-body",
+      "options": [
+        { "value": "border-primary", "label": "Primary" },
+        { "value": "border-secondary", "label": "Secondary" },
+        { "value": "border-body", "label": "Body" },
+        { "value": "border-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "label": "Border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_controls",
+      "label": "Show controls",
+      "info": "Prev/Next buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_indicators",
+      "label": "Show indicators",
+      "info": "Small dots at the end",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "carousel_transition", 
+      "label": "Transition",
+      "options": [
+          { "value": "slide", "label": "Slide" },
+          { "value": "slide carousel-fade", "label": "Fade" }
+      ],
+      "default": "slide"
+    },
+    {
+      "type": "range",
+      "id": "carousel_transition_duration",
+      "label": "Transition duration",
+      "min": 100,
+      "max": 1000,
+      "step": 50,
+      "default": 500,
+      "unit": "ms"
+    },
+    {
+      "type": "range",
+      "id": "carousel_autoplay",
+      "label": "Autoplay",
+      "min": 0,
+      "max": 10,
+      "default": 5,
+      "unit": "sec",
+      "info": "Selecing \"0\" will disable autoplay."
+    },
+    {
+      "type": "select",
+      "id": "carousel_effect",
+      "label": "Effect",
+      "default": "carousel-zoom-in",
+      "options": [
+        { "value": "", "label": "None" },
+        { "value": "carousel-zoom-in", "label": "Zoom-in" },
+        { "value": "carousel-zoom-out", "label": "Zoom-out" }
+      ]
+    },
+    {
+      "type": "header", 
+      "content": "Media (Image/Video)",
+      "info": "NOTE: Video format is supported only in our Premium Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+    },
+    {
+      "type": "range",
+      "id": "media_mobile_height",
+      "label": "Mobile media height (px)",
+      "min": 400,
+      "max": 1000,
+      "step": 10,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "media_desktop_height",
+      "label": "Desktop media height (px)",
+      "min": 400,
+      "max": 1000,
+      "step": 10,
+      "default": 700
+    },
+    {
+      "type": "checkbox",
+      "id": "media_adapt",
+      "label": "Adapt media",
+      "default": false,
+      "info": "If this setting is enabled, the original media propotions will be used. Also, the two settings above will not have effect."
+    },
+    {
+      "type": "checkbox",
+      "id": "media_full",
+      "label": "Full-screen media",
+      "info": "NOTE: Full-screen carousel is supported only in our Premium themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Caption"
+    },
+    {
+      "type": "text",
+      "id": "caption_max_width",
+      "label": "Caption max-width (px)",
+      "default": "900"
+    },
+    {
+      "type": "select",
+      "id": "caption_position",
+      "label": "Position",
+      "default": "carousel-caption-center",
+      "options": [
+        { "value": "carousel-caption-center", "label": "Center" },
+        { "value": "carousel-caption-bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font_size",
+      "label": "Subtitle font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-xs", "label": "xs" },
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_font_size",
+      "label": "Title font-size",
+      "default": "h2",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "description_font_size",
+      "label": "Description font-size",
+      "default": "fs-lg",
+      "options": [
+        { "value": "fs-xs", "label": "xs" },
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_primary_color",
+      "label": "Primary button color",
+      "default": "btn-primary",
+      "options": [
+        { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+        { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+        { "group": "Solid", "value": "btn-white", "label": "White" },
+        { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+        { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+        { "group": "Light", "value": "btn-light-white", "label": "White" },
+        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+        { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_secondary_color",
+      "label": "Secondary button color",
+      "default": "btn-secondary",
+      "options": [
+        { "group": "Solid", "value": "btn-primary", "label": "Primary" },
+        { "group": "Solid", "value": "btn-secondary", "label": "Secondary" },
+        { "group": "Solid", "value": "btn-white", "label": "White" },
+        { "group": "Light", "value": "btn-light-primary", "label": "Primary" },
+        { "group": "Light", "value": "btn-light-secondary", "label": "Secondary" },
+        { "group": "Light", "value": "btn-light-white", "label": "White" },
+        { "group": "Outline", "value": "btn-outline-primary", "label": "Primary" },
+        { "group": "Outline", "value": "btn-outline-secondary", "label": "Secondary" },
+        { "group": "Outline", "value": "btn-outline-white", "label": "White" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "btn_font_size",
+      "label": "Button font-size",
+      "default": "fs-md",
+      "options": [
+        { "value": "fs-xs", "label": "xs" },
+        { "value": "fs-sm", "label": "sm" },
+        { "value": "fs-md", "label": "md" },
+        { "value": "fs-lg", "label": "lg" },
+        { "value": "fs-xl", "label": "xl" },
+        { "value": "fs-xxl", "label": "xxl" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Top",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Bottom",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_mobile",
+          "label": "Image - mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_desktop",
+          "label": "Image - desktop"
+        },
+        {
+          "type": "header",
+          "content": "Video"
+        },
+        {
+          "type": "video",
+          "id": "video_mobile",
+          "label": "Video - mobile",
+          "info": "NOTE: Video format is supported only in our Premium Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+        },
+        {
+          "type": "video",
+          "id": "video_desktop",
+          "label": "Video - desktop",
+          "info": "NOTE: Video format is supported only in our Premium Themes. [Browse premium themes](https://www.kondasoft.com/collections/shopify-themes)"
+        },
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Opacity",
+          "min": 0,
+          "max": 100,
+          "step": 10,
+          "default": 30,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "overlay_blur",
+          "label": "Blur",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Caption"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Optional Subtitle",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Welcome to our store",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>An optional description for this slide</p>",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "btn_primary_text",
+          "label": "Primary button text",
+          "default": "Primary button",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "url",
+          "id": "btn_primary_url",
+          "label": "Primary button URL"
+        },
+        {
+          "type": "text",
+          "id": "btn_secondary_text",
+          "label": "Secondary button text",
+          "default": "Secondary button",
+          "info": "Leave empty to disable"
+        },
+        {
+          "type": "url",
+          "id": "btn_secondary_url",
+          "label": "Secondary button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero carousel",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

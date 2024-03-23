@@ -1,241 +1,222 @@
 {
   "sections": {
-    "165268949817e427ae": {
-      "type": "carousel",
+    "hero_carousel_tdHVay": {
+      "type": "hero-carousel",
       "blocks": {
-        "1652689498756fb688-0": {
+        "slide_eGdG3z": {
           "type": "slide",
           "settings": {
-            "img_mobile": "shopify:\/\/shop_images\/lifestyle-2-mobile.jpg",
-            "img_mobile_height": 360,
-            "img_mobile_opacity": 0.7,
-            "img_mobile_blur": 0,
-            "caption_position_mobile": "carousel-caption-mobile-center",
-            "img_desktop": "shopify:\/\/shop_images\/lifestyle-2.jpg",
-            "img_desktop_height": 600,
-            "img_desktop_opacity": 0.7,
-            "img_desktop_blur": 0,
-            "caption_position_desktop": "carousel-caption-desktop-bottom",
-            "subtitle": "",
-            "subtitle_size": "fs-5",
-            "title": "",
-            "title_size": "h2",
-            "description": "",
-            "description_size": "fs-5",
-            "btn_text": "",
-            "btn_url": "",
-            "btn_color": "btn-primary",
-            "btn_size": "",
+            "img_desktop": "shopify:\/\/shop_images\/lifestyle-1.jpg",
+            "overlay_color": "#000000",
+            "overlay_opacity": 30,
+            "overlay_blur": 5,
+            "subtitle": "Optional Subtitle",
+            "title": "Welcome to our store",
+            "description": "<p>An optional description for this page<\/p>",
+            "btn_primary_text": "",
+            "btn_primary_url": "",
             "btn_secondary_text": "",
-            "btn_secondary_url": "",
-            "btn_secondary_color": "btn-primary",
-            "btn_secondary_size": ""
+            "btn_secondary_url": ""
           }
         }
       },
       "block_order": [
-        "1652689498756fb688-0"
+        "slide_eGdG3z"
       ],
       "settings": {
-        "controls": true,
-        "controls_style": "carousel-controls-arrows",
-        "indicators": true,
-        "indicators_style": "carousel-indicators-circles",
-        "autoplay": false,
-        "animation": "slide",
-        "ken_burns": true,
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-white",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "carousel_controls": true,
+        "carousel_indicators": true,
+        "carousel_transition": "slide",
+        "carousel_transition_duration": 500,
+        "carousel_autoplay": 5,
+        "carousel_effect": "carousel-zoom-in",
+        "media_mobile_height": 400,
+        "media_desktop_height": 500,
+        "media_adapt": false,
+        "media_full": false,
+        "caption_max_width": "900",
+        "caption_position": "carousel-caption-center",
+        "subtitle_font_size": "fs-md",
+        "title_font_size": "h2",
+        "description_font_size": "fs-lg",
+        "btn_primary_color": "btn-primary",
+        "btn_secondary_color": "btn-secondary",
+        "btn_font_size": "fs-md",
+        "pt": 0,
+        "pb": 0
       }
     },
-    "1652689700430c7f0b": {
-      "type": "richtext",
-      "settings": {
-        "bg_color": "bg-white text-dark",
-        "max_width": "768",
-        "text_align": "text-start",
-        "title": "About us",
-        "title_size": "h1",
-        "description": "<p>Welcome to [company name], your number one source for all things [product]. We're dedicated to giving you the very best of [product], with a focus on [store characteristic 1], [store characteristic 2], [store characteristic 3].<\/p><p>Founded in [year] by [founder name], [company name] has come a long way from its beginnings in [starting location]. When [founder name] first started out, [his\/her\/their] passion for [brand message - e.g. \"eco-friendly cleaning products\"] drove them to [action: quit day job, do tons of research, etc.] so that [company name] can offer you [competitive differentiator - e.g. \"the world's most advanced toothbrush\"]. We now serve customers all over [place - town, country, the world], and are thrilled that we're able to turn our passion into [my\/our] own website.<\/p><p>[I\/we] hope you enjoy [my\/our] products as much as [I\/we] enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact [me\/us].<\/p><p>Sincerely,<br\/>[founder name]<\/p>",
-        "description_size": "fs-6",
-        "btn_text": "",
-        "btn_url": "",
-        "btn_color": "btn-outline-primary",
-        "btn_size": "",
-        "pt": 10,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
-      }
-    },
-    "751e8a6f-3175-422f-918b-79bfa3efbba6": {
-      "type": "cards-with-image",
-      "blocks": {
-        "e6fbab57-3cca-47b2-bb1b-e2b18653ae1b": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-1.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "John Doe",
-            "title_size": "h5",
-            "description": "<p>Team Position<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": "btn-sm"
-          }
-        },
-        "751a5030-aaaa-44b1-bca1-8f5d9a811a8b": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-6.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "Jane Doe",
-            "title_size": "h5",
-            "description": "<p>Team Position<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": "btn-sm"
-          }
-        },
-        "13b37b67-199f-46d5-9083-3e27d855729b": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-4.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "John Doe",
-            "title_size": "h5",
-            "description": "<p>Team Position<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": "btn-sm"
-          }
-        },
-        "4eb76491-34b9-433c-b644-3e29b11754cf": {
-          "type": "item",
-          "settings": {
-            "text_align": "text-start",
-            "shadow": "shadow-sm",
-            "border_color": "",
-            "border_width": 1,
-            "img": "shopify:\/\/shop_images\/collection-2.jpg",
-            "img_orientation": "landscape",
-            "img_crop": "center",
-            "title": "Jane Doe",
-            "title_size": "h5",
-            "description": "<p>Team Position<\/p>",
-            "description_size": "fs-6",
-            "btn_text": "Learn more",
-            "btn_url": "",
-            "btn_color": "btn-outline-primary",
-            "btn_size": "btn-sm"
-          }
-        }
-      },
-      "block_order": [
-        "e6fbab57-3cca-47b2-bb1b-e2b18653ae1b",
-        "751a5030-aaaa-44b1-bca1-8f5d9a811a8b",
-        "13b37b67-199f-46d5-9083-3e27d855729b",
-        "4eb76491-34b9-433c-b644-3e29b11754cf"
-      ],
-      "settings": {
-        "bg_color": "bg-light text-dark",
-        "text_align": "text-center",
-        "title": "Our Team",
-        "title_size": "h2",
-        "description": "<p>Add on optional description to this section<\/p>",
-        "description_size": "fs-6",
-        "row_xs": 1,
-        "row_sm": 2,
-        "row_lg": 4,
-        "pt": 10,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
-      }
-    },
-    "bcc4442b-9440-4589-9f26-b0c513404d8c": {
-      "type": "image-with-text",
-      "settings": {
-        "bg_color": "",
-        "text_align": "text-start",
-        "image": "shopify:\/\/shop_images\/collection-5.jpg",
-        "img_orientation": "landscape",
-        "img_crop": "center",
-        "img_border": "img-thumbnail",
-        "img_align_desktop": "flex-lg-row",
-        "title": "The Best Products!",
-        "title_size": "h2",
-        "subtitle": "Some Optional Subtitle",
-        "subtitle_size": "fs-6",
-        "description": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-        "description_size": "fs-6",
-        "btn_text": "Shop now",
-        "btn_url": "shopify:\/\/collections\/all",
-        "btn_color": "btn-primary",
-        "btn_size": "",
-        "pt": 10,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
-      }
-    },
-    "d751c1ef-ae9a-4d2f-b415-f968dcca9f73": {
+    "18e3bb8e-f1ba-421c-91c3-37c1c5b25a2a": {
       "type": "separator",
+      "disabled": true,
       "settings": {
-        "full_width": false,
-        "opacity": 0.1,
-        "mt": 0,
-        "mb": 0
+        "bg_color": "bg-body text-body",
+        "bg_opacity": 10,
+        "height": 1,
+        "container": "true",
+        "container_max_width": "",
+        "pt": 0,
+        "pb": 0
       }
     },
-    "9ef7cc85-571e-4685-b0f4-c655656a9c8c": {
+    "91fa2e27-741f-431f-b658-c6ce03d0f6eb": {
+      "type": "page-content",
+      "settings": {
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 10,
+        "container_max_width": "800",
+        "show_title": true,
+        "title_font_size": "h1",
+        "description_font_size": "fs-md",
+        "pt": 9,
+        "pb": 9
+      }
+    },
+    "54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e": {
+      "type": "card-list",
+      "blocks": {
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-1": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/product-1_baca2f7d-a8b0-4db2-aa52-c4074f562b1d.jpg",
+            "title": "John Doe",
+            "description": "<p>CEO & Founder<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-2": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/product-5_4bfb97ab-4193-4461-a4e3-6e06d63b8249.jpg",
+            "title": "Jane Doe",
+            "description": "<p>Marketing<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-4": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/product-3.jpg",
+            "title": "Jim Doe",
+            "description": "<p>Sales<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        },
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-3": {
+          "type": "item",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/product-2_51119e0e-dd95-4bc4-85bc-2db1278575ad.jpg",
+            "title": "Jill Doe",
+            "description": "<p>Developer<\/p>",
+            "btn_text": "Learn more",
+            "btn_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-1",
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-2",
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-4",
+        "template--15889379819659__54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e-item-3"
+      ],
+      "settings": {
+        "bg_color": "bg-gradient-body-light text-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "header_title": "Our Team",
+        "header_title_font_size": "h2",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "item_bg_color": "bg-body",
+        "item_bg_opacity": 100,
+        "item_text_color": "text-body",
+        "item_border_width": 1,
+        "item_border_color": "border-body",
+        "item_border_opacity": 100,
+        "item_shadow": "shadow-sm",
+        "item_text_align": "text-center",
+        "item_img_orientation": "ratio-4x3",
+        "item_title_font_size": "h5",
+        "item_description_font_size": "fs-md",
+        "item_btn_color": "btn-primary",
+        "item_btn_size": "btn-sm",
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 4,
+        "pt": 6,
+        "pb": 11
+      }
+    },
+    "664feedb-7180-4e8f-a84d-1cf45bc1dd42": {
       "type": "richtext",
       "settings": {
-        "bg_color": "",
-        "max_width": "960",
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "900",
         "text_align": "text-center",
-        "title": "Want To Say Hi?",
-        "title_size": "h3",
-        "description": "<p>Add on optional description to this section<\/p>",
-        "description_size": "fs-6",
-        "btn_text": "Drop us an email",
-        "btn_url": "shopify:\/\/pages\/contact",
-        "btn_color": "btn-primary",
-        "btn_size": "",
-        "pt": 10,
-        "pb": 10,
-        "mt": 0,
-        "mb": 0
+        "title": "Want to get in touch?!",
+        "title_font_size": "h3",
+        "description": "<p>Please contact us anytime from Monday to Friday<\/p>",
+        "description_font_size": "",
+        "btn_primary_text": "Contact us",
+        "btn_primary_url": "shopify:\/\/pages\/contact-us",
+        "btn_primary_color": "btn-outline-primary",
+        "btn_secondary_text": "",
+        "btn_secondary_url": "",
+        "btn_secondary_color": "btn-secondary",
+        "pt": 6,
+        "pb": 12
+      }
+    },
+    "cfc6ff50-e3a5-4219-8350-f2db73f829c8": {
+      "type": "separator",
+      "disabled": true,
+      "settings": {
+        "bg_color": "bg-light text-body",
+        "bg_opacity": 10,
+        "height": 1,
+        "container": "container",
+        "container_max_width": "",
+        "pt": 0,
+        "pb": 0
       }
     }
   },
   "order": [
-    "165268949817e427ae",
-    "1652689700430c7f0b",
-    "751e8a6f-3175-422f-918b-79bfa3efbba6",
-    "bcc4442b-9440-4589-9f26-b0c513404d8c",
-    "d751c1ef-ae9a-4d2f-b415-f968dcca9f73",
-    "9ef7cc85-571e-4685-b0f4-c655656a9c8c"
+    "hero_carousel_tdHVay",
+    "18e3bb8e-f1ba-421c-91c3-37c1c5b25a2a",
+    "91fa2e27-741f-431f-b658-c6ce03d0f6eb",
+    "54fb0ae0-8c55-432c-8b0a-1211e6ba4a0e",
+    "664feedb-7180-4e8f-a84d-1cf45bc1dd42",
+    "cfc6ff50-e3a5-4219-8350-f2db73f829c8"
   ]
 }

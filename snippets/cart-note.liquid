@@ -1,0 +1,37 @@
+{% if settings.cart_note_show and cart.items != empty %} 
+  <div class="collapse-wrapper">
+    <button 
+      class="" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#cart-note-collapse" 
+      aria-expanded="false" 
+      aria-controls="cart-note-collapse">
+      <div class="d-flex align-items-center">
+        {% render 'svg-icons', icon: 'edit', size: 16, class: 'me-4' %}
+        {{ 'cart.note.title' | t }}
+      </div>
+      {% render 'svg-icons', icon: 'chevron-down', size: 18 %}
+    </button>
+    <div id="cart-note-collapse" class="collapse">
+      <div class="collapse-inner">
+        <cart-note class="cart-note">
+          <textarea
+            class="form-control mb-3" 
+            rows="3"
+            name="note"
+            value="{{ cart.note }}"
+            placeholder="{{ 'cart.note.label' | t }}"
+            aria-labelledby="cart-note-title">{{ cart.note }}</textarea>
+          <button 
+            type="button"
+            class="btn btn-sm btn-outline-secondary w-100"
+            data-text-note-saved="{{ 'cart.note.saved' | t }}"
+            data-text-btn-save="{{ 'cart.note.button' | t }}">
+            {{ 'cart.note.button' | t }}
+          </button>
+        </cart-note>
+      </div>
+    </div>
+  </div>
+{% endif %}

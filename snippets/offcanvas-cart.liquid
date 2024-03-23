@@ -1,253 +1,31 @@
-{% liquid
-    case settings.offcanvas_img_orientation
-        when 'square'
-            assign img_width  = 600
-            assign img_height = 600
-        when 'landscape'
-            assign img_width  = 600
-            assign img_height = 480
-        when 'potrait'
-            assign img_width  = 480
-            assign img_height = 600
-    endcase
-%}
-
-<div 
-    id="offcanvas-cart" 
-    class="offcanvas offcanvas-end offcanvas-mobile-full" 
-    tabindex="-1" 
-    aria-labelledby="offcanvas-cart-label">
-    <div class="offcanvas-header bg-light">
-        <h5 id="offcanvas-cart-label" class="offcanvas-title">
-            {{ 'cart.title' | t }}
-        </h5>
-        <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
-        </button>
+<div
+  id="offcanvas-cart"
+  class="offcanvas-cart offcanvas offcanvas-end" 
+  tabindex="-1" 
+  aria-labelledby="offcanvas-cart-label"
+  {% if settings.cart_upsells_enable %}data-cart-upsells{% endif %}
+>
+  <cart-container class="cart-container">
+    <div class="offcanvas-header">
+      <h2 id="offcanvas-cart-label" class="offcanvas-title">
+        {{ 'cart.title' | t }}
+      </h2>
+      <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'svg-icons', icon: 'x' %}
+      </button>
     </div>
     <div class="offcanvas-body">
-        <div
-            id="offcanvas-cart-alert-error" 
-            class="offcanvas-cart-alert alert alert-danger fw-500 lh-sm py-3 mb-4" 
-            role="alert"
-            hidden>
-            <div class="d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="me-3 flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <span>
-                    {% comment %} Messages injected via JS {% endcomment %}
-                </span>
-            </div>
+      <div id="cart-alert" class="cart-alert alert alert-danger small px-4 py-3" role="alert" hidden>
+        <div class="alert-icon me-4 flex-shrink-0">
+          {% render 'svg-icons', icon: 'alert-circle', size: 18 %}
         </div>
-        <div
-            id="offcanvas-cart-alert-add" 
-            class="offcanvas-cart-alert alert alert-success fw-500 py-3 mb-4" 
-            role="alert" 
-            hidden>
-            <div class="d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="me-3 flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                {{ 'cart.alert_item_added' | t }} 
-            </div>
-        </div>
-        <div
-            id="offcanvas-cart-alert-updated" 
-            class="offcanvas-cart-alert alert alert-info fw-500 py-3 mb-4" 
-            role="alert" 
-            hidden>
-            <div class="d-flex align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="me-3 flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                {{ 'cart.alert_cart_updated' | t }} 
-            </div>
-        </div>
-        {% if cart.item_count == 0 %}
-            <div id="offcanvas-cart-empty" class="text-muted">
-                <svg xmlns="http://www.w3.org/2000/svg" class="opacity-75 mb-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="10" cy="20.5" r="1"/><circle cx="18" cy="20.5" r="1"/><path d="M2.5 2.5h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6l1.6-8.4H7.1"/>
-                </svg>
-                {{ 'cart.empty_html' | t }} 
-            </div>
-        {% else %}
-            <ul 
-                class="product-list list-unstyled mb-6" 
-                aria-label="{{ 'general.accessibility.cart_product_list' | t }}">
-                {% for line_item in cart.items %}
-                    <li class="product-item py-3">
-                        <div class="row align-items-center mx-n3">
-                            <div class="col-4 px-3">
-                                <a class="" href="{{ line_item.url }}">
-                                    <img 
-                                        class="product-item-img img-fluid {{ settings.offcanvas_img_border }}"
-                                        src="{{ line_item.image.src | image_url: width: img_width, height: img_height, crop: 'center' }}"
-                                        alt="{{ line_item.image.alt | escape }}" 
-                                        width="{{ img_width }}"
-                                        height="{{ img_height }}" 
-                                        loading="lazy">
-                                </a>
-                            </div>
-                            <div class="col-8 px-3">
-                                <h3 class="product-item-title h6 mb-1">
-                                    <a href="{{ line_item.url }}" class="link-dark">
-                                        {{ line_item.product.title }}
-                                    </a>
-                                </h3>
-                                {% unless line_item.product.has_only_default_variant %}
-                                    <small class="d-block text-muted mb-1">
-                                        {{ line_item.variant.title }}
-                                    </small>
-                                {% endunless %}
-                                {% unless line_item.selling_plan_allocation == empty %}
-                                    <small class="d-block text-muted mb-1">
-                                        {{ line_item.selling_plan_allocation.selling_plan.name }}
-                                    </small>
-                                {% endunless %}
-                                {% unless line_item.properties == empty %}
-                                    <ul class="list-unstyled text-muted small mb-1">
-                                        {% for property in line_item.properties %}
-                                            <li>
-                                                {% if property.last contains 'https' %}
-                                                    {{ property.first }}: <a href="{{ property.last }}" target="_blank">View file</a>
-                                                {% else %}
-                                                    {{ property.first }}: {{ property.last }}
-                                                {% endif %}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endunless %}
-                                <p class="product-item-price pt-2 mb-4">
-                                    {% if line_item.original_line_price != line_item.final_line_price %}
-                                        <span class="product-item-price-final">
-                                            <span class="visually-hidden">
-                                                {{ 'product.price_sale' | t }} &nbsp;
-                                            </span>
-                                            {{ line_item.final_line_price | money }}
-                                        </span>
-                                        <span class="product-item-price-compare text-muted ms-1">
-                                            <span class="visually-hidden">
-                                                {{ 'product.price_regular' | t }} &nbsp;
-                                            </span>
-                                            <s>
-                                                {{ line_item.original_line_price | money }}
-                                            </s>
-                                        </span>
-                                    {% else %}
-                                        <span class="product-item-price-final">
-                                            {{ line_item.original_line_price | money }}
-                                        </span>
-                                    {% endif %}
-                                </p>
-                                <div class="d-flex align-items-center">
-                                    <input 
-                                        id="updates_{{ line_item.key }}"
-                                        class="form-control me-2" 
-                                        name="updates[]"
-                                        type="number"
-                                        value="{{ line_item.quantity }}"
-                                        data-line-item-key="{{ line_item.key }}"
-                                        aria-label="{{ 'cart.quantity' | t }}"
-                                        onchange="onChangeCartQty(this)">
-                                    <button 
-                                        class="btn"
-                                        type="button"
-                                        data-remove-line-item
-                                        data-line-item-key="{{ line_item.key }}"
-                                        onclick="onRemoveCartItem(this)"
-                                        aria-label="{{ 'cart.remove' | t }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="opacity-60" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
-                                        </svg>
-                                    </button>
-                                </div>    
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-            {% if settings.cart_drawer_show_note %}
-                <div id="cart-note">
-                    <h3 id="cart-note-title" class="h6 mb-3">
-                        {{ 'cart.note_label' | t }}
-                    </h3>
-                    <textarea
-                        id="cart-note-input"
-                        class="form-control mb-3" 
-                        rows="4"
-                        name="note"
-                        placeholder="{{ 'cart.note_placeholder' | t }}"
-                        aria-label="{{ 'cart.note_placeholder' | t }}"
-                        onfocus="showNoteButton(this)">{{ cart.note }}</textarea> {%- comment -%} Live this line as this to prevent empty spaces {%- endcomment -%}
-                    <button 
-                        type="button"
-                        class="cart-note-btn btn btn-secondary btn-sm w-100"
-                        data-text-note-saved="{{ 'cart.note_saved' | t }}"
-                        data-text-btn-save="{{ 'cart.note_button' | t }}"
-                        onclick="onSaveCartNote(this, event)"
-                        hidden>
-                        {{ 'cart.note_button' | t }}
-                    </button>
-                </div>
-            {% endif %}
-        {% endif %}
+        <p class="mb-0" data-alert-msg></p>
+      </div>
+      {% liquid 
+        render 'cart-items' 
+        render 'cart-note'
+      %}
     </div>
-    <div class="offcanvas-footer border-top p-5">
-        {% if cart.item_count == 0 %}
-            <button class="btn btn-outline-primary w-100" type="button" data-bs-dismiss="offcanvas"">
-                {{ 'cart.continue_shopping' | t }}
-            </button>
-        {% else %}
-            <p id="offcanvas-cart-subtotal" class="lead text-center mb-3">
-                <span class="text-muted">
-                    {{ 'cart.subtotal' | t }}: 
-                </span>
-                <span>
-                    {% if cart.items_subtotal_price > cart.total_price %}
-                        <span class="visually-hidden">
-                            {{ 'cart.subtotal_regular' | t }} &nbsp;
-                        </span>
-                        <s class="opacity-75 me-2">
-                            {{ cart.items_subtotal_price | money }}
-                        </s>
-                        <span class="visually-hidden">
-                            {{ 'cart.subtotal_discounted' | t }} &nbsp;
-                        </span>
-                        <b>
-                            {{ cart.total_price | money }}
-                        </b>
-                    {% else %}
-                        <b>
-                            {{ cart.total_price | money }}
-                        </b>
-                    {% endif %}
-                </span>
-            </p>
-            <p class="small text-muted text-center mt-n3 mb-4">
-                {{ 'cart.taxes_shipping_at_checkout_html' | t }}
-            </p>
-            <form class="" method="post" action="{{ routes.cart_url }}">
-                <button 
-                    class="btn-checkout btn btn-primary w-100 py-3 fs-5 d-flex align-items-center justify-content-center" 
-                    name="checkout" 
-                    type="submit" 
-                    onclick="onClickCheckoutBtn(this)">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="me-3" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    {{ 'cart.checkout' | t }}
-                </button>
-            </form>
-            {% if settings.cart_drawer_show_cart_link %}
-                <a class="btn btn-link btn-sm w-100 mt-1 text-dark" href="{{ routes.cart_url }}">
-                    {{ 'cart.view_cart' | t }}
-                </a>
-            {% endif %}
-            {% if settings.cart_drawer_show_payment_icons %}
-                <div class="payment-icons-wrapper text-center mt-3 mb-n2">
-                    {% render 'payment-icons' %}
-                </div>
-            {% endif %}
-        {% endif %}
-    </div>
+    {% render 'cart-footer' %}
+  </cart-container>
 </div>
