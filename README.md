@@ -1,7 +1,5 @@
 # KS BootShop - Shopify Theme
-Shopify Starter Theme powered by Bootstrap framework (v5), developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements), accessibility best practices, and of course our own experience in developing themes for more than 15 years now.
-
-Our goal is to make this project the most completed, robust, and of course the most awesome Shopify theme for the Bootstrap framework.
+Free Shopify theme powered by the Bootstrap framework (v5), developed respecting <a rel="nofollow" href="https://shopify.dev/tutorials/review-theme-store-requirements">Shopify theme requirements</a>, accessibility best practices, and of course our own experience developing high-quality themes for more than 15 years. We aim to make this project the most complete, robust, and awesome Shopify Theme for the Bootstrap framework.&nbsp;&nbsp;
 
 ## Demo 
 https://ks-bootshop.myshopify.com
@@ -10,14 +8,11 @@ https://ks-bootshop.myshopify.com
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Premium Shopify Themes 
-Premium Shopify Themes that are simple to use and easy to customize. 15+ years of coding experience, 50k+ customers served! https://www.kondasoft.com
-
-## Video introduction
-Click on the screenshot below to play the video on YouTube.
-
-[<img src="https://img.youtube.com/vi/_G9IRSFAI_A/maxresdefault.jpg" width="50%">](https://youtu.be/_G9IRSFAI_A)
+Premium Shopify Themes that are simple to use and easy to customize. 15+ years of coding experience, 50k+ customers served! 
+https://www.kondasoft.com
 
 ## Highlighted features:
+* Advanced styling for each section (New)
 * Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
 * Developed respecting [Shopify themes requirements](https://shopify.dev/tutorials/review-theme-store-requirements)
 * All elements are fully accessible with [aria attributes](https://www.w3.org/WAI/standards-guidelines/aria/)
@@ -30,19 +25,25 @@ Click on the screenshot below to play the video on YouTube.
 * Ajax add to cart
 * Recommended products section [Learn more](https://shopify.dev/tutorials/develop-theme-recommended-products)
 
-## Homepage sections
-* Carousel
+## Sections
+* Announcement bar
+* Card slider/list
+* Contact form
+* FAQ
+* Featured collections
 * Featured Products
-* Featured Collections
-* Cards with image
-* Video
-* Contact Form
-* F.A.Q
+* Hero carousel
 * HTML
-* Image with text
+* Media with text
 * Newsletter
 * Richtext
-* Separator
+* Separator 
+* Testimonials
+
+## Video introduction
+Click on the screenshot below to play the video on YouTube.
+
+[<img src="https://img.youtube.com/vi/_G9IRSFAI_A/maxresdefault.jpg" width="50%">](https://youtu.be/_G9IRSFAI_A)
 
 ## Installation
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
