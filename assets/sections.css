@@ -75,7 +75,6 @@
 
 #navbar-wrapper .navbar-logo {
   display: flex;
-  justify-content: center;
   font-size: 1.5rem;
   text-decoration: none;
   color: currentColor;
