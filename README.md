@@ -9,6 +9,7 @@ https://github.com/kondasoft/ks-bootshop/releases
 
 ## Premium Shopify Themes 
 Are you looking to take your Shopify store to the next level?! Browse our Premium Themes
+
 https://www.kondasoft.com
 
 ## Highlighted features:
