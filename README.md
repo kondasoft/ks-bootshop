@@ -5,10 +5,10 @@ Free Shopify theme powered by the Bootstrap framework (v5), developed respecting
 https://ks-bootshop.myshopify.com
 
 ## Download Theme
-https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
+https://github.com/kondasoft/ks-bootshop/releases
 
 ## Premium Shopify Themes 
-Premium Shopify Themes that are simple to use and easy to customize. 15+ years of coding experience, 50k+ customers served! 
+Are you looking to take your Shopify store to the next level?! Browse our Premium Themes
 https://www.kondasoft.com
 
 ## Highlighted features:
