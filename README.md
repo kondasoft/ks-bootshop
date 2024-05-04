@@ -37,7 +37,9 @@ https://ks-bootshop.myshopify.com
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Premium Shopify Themes 
-Are you looking to take your Shopify store to the next level?! Browse our Premium Themes
+Ready to take your Shopify store to the next level?!
+
+https://www.kondasoft.com/collections/shopify-themes
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.
