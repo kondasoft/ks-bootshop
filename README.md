@@ -1,17 +1,6 @@
 # KS BootShop - Shopify Theme
 Free Shopify theme powered by the Bootstrap framework (v5), developed respecting <a rel="nofollow" href="https://shopify.dev/tutorials/review-theme-store-requirements">Shopify theme requirements</a>, accessibility best practices, and of course our own experience developing high-quality themes for more than 15 years. We aim to make this project the most complete, robust, and awesome Shopify Theme for the Bootstrap framework.&nbsp;&nbsp;
 
-## Demo 
-https://ks-bootshop.myshopify.com
-
-## Download Theme
-https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
-
-## Premium Shopify Themes 
-Are you looking to take your Shopify store to the next level?! Browse our Premium Themes
-
-https://www.kondasoft.com
-
 ## Highlighted features:
 * Advanced styling for each section (New)
 * Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
@@ -40,6 +29,15 @@ https://www.kondasoft.com
 * Richtext
 * Separator 
 * Testimonials
+
+## Demo 
+https://ks-bootshop.myshopify.com
+
+## Download Theme
+https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
+
+## Premium Shopify Themes 
+Are you looking to take your Shopify store to the next level?! Browse our Premium Themes
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.
