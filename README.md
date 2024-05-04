@@ -37,9 +37,22 @@ https://ks-bootshop.myshopify.com
 https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Premium Shopify Themes 
-Ready to take your Shopify store to the next level?!
+Ready to take your Shopify store to the next level with  advanced features like:
+- Cart upsells
+- Cart goal
+- Cart gift
+- Shipping Calculator
+- Quantity Breaks
+- Combo cross-sells
+- Wishlist
+- Recently viewed
+- Megamenu
+- Color swatches
+- Quick view
+- Inventory bar
+- and much more 
 
-https://www.kondasoft.com/collections/shopify-themes
+Browse all themes: https://www.kondasoft.com/collections/shopify-themes
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.
