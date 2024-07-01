@@ -30,12 +30,6 @@ Free Shopify theme powered by the Bootstrap framework (v5), developed respecting
 * Separator 
 * Testimonials
 
-## Demo 
-https://ks-bootshop.myshopify.com
-
-## Download Theme
-https://github.com/kondasoft/ks-bootshop/releases
-
 ## Premium Shopify Themes 
 Ready to take your Shopify store to the next level with  advanced features like:
 - Cart upsells
@@ -52,7 +46,13 @@ Ready to take your Shopify store to the next level with  advanced features like:
 - Inventory bar
 - and much more 
 
-Browse all themes: https://www.kondasoft.com/collections/shopify-themes
+[Browse our Premium Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
+
+## Demo 
+https://ks-bootshop.myshopify.com
+
+## Download Theme
+https://github.com/kondasoft/ks-bootshop/releases
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.
