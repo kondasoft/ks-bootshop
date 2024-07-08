@@ -31,7 +31,7 @@ Free Shopify theme powered by the Bootstrap framework (v5), developed respecting
 * Testimonials
 
 ## Premium Shopify Themes 
-Ready to take your Shopify store to the next level with  advanced features like:
+Ready to take your Shopify store to the next level with advanced features like:
 - Cart upsells
 - Cart goal
 - Cart gift
@@ -46,13 +46,13 @@ Ready to take your Shopify store to the next level with  advanced features like:
 - Inventory bar
 - and much more 
 
-[Browse our Premium Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
+[Browse our Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
 
 ## Demo 
 https://ks-bootshop.myshopify.com
 
 ## Download Theme
-https://github.com/kondasoft/ks-bootshop/releases
+https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Video introduction
 Click on the screenshot below to play the video on YouTube.
