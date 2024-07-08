@@ -44,7 +44,8 @@ Ready to take your Shopify store to the next level with advanced features like:
 - Color swatches
 - Quick view
 - Inventory bar
-- and much more 
+- Bundle Builder
+- and much more...
 
 [Browse our Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
 
