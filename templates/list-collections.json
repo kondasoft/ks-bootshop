@@ -1,0 +1,44 @@
+{
+  "sections": {
+    "featured_collections_CGE4nM": {
+      "type": "featured-collections",
+      "settings": {
+        "bg_color": "bg-body",
+        "bg_opacity": 100,
+        "bg_gradient": "",
+        "text_color": "text-body",
+        "border_top_width": 0,
+        "border_bottom_width": 0,
+        "border_color": "border-body",
+        "border_opacity": 100,
+        "container_max_width": "",
+        "header_title": "Featured Collections",
+        "header_title_font_size": "h2",
+        "header_description": "<p>Add on optional description for this section<\/p>",
+        "header_description_font_size": "fs-md",
+        "slider_speed": 300,
+        "slider_navigation": true,
+        "slider_pagination": true,
+        "slider_pagination_type": "bullets",
+        "slider_scrollbar": true,
+        "slider_partial_slides_mobile": false,
+        "slider_autoplay": 0,
+        "collection_card_text_align": "text-center",
+        "collection_card_img_orientation": "ratio-4x3",
+        "collection_card_img_border": "img-thumbnail",
+        "collection_card_show_title": true,
+        "collection_card_title_font_size": "fs-lg",
+        "collection_card_title_position": "collection-card-title-bottom",
+        "collection_card_show_product_count": true,
+        "breakpoint_mobile": 1,
+        "breakpoint_tablet": 2,
+        "breakpoint_desktop": 4,
+        "pt": 10,
+        "pb": 10
+      }
+    }
+  },
+  "order": [
+    "featured_collections_CGE4nM"
+  ]
+}

@@ -14,10 +14,10 @@
             "subtitle": "Developed by KondaSoft",
             "title": "Welcome to KS BootShop Theme",
             "description": "<p>Free Shopify Theme inspired by simplicity and elegance.<\/p>",
-            "btn_primary_text": "Shop all",
-            "btn_primary_url": "shopify:\/\/collections\/all",
-            "btn_secondary_text": "Latest arrivals",
-            "btn_secondary_url": "shopify:\/\/collections\/latest"
+            "btn_primary_text": "Get theme",
+            "btn_primary_url": "https:\/\/www.kondasoft.com\/collections\/shopify-themes\/products\/ks-bootshop",
+            "btn_secondary_text": "Learn more",
+            "btn_secondary_url": "https:\/\/www.kondasoft.com\/collections\/shopify-themes\/products\/ks-bootshop"
           }
         },
         "slide_TddqxQ": {
@@ -659,7 +659,7 @@
         "article_card_title_size": "fs-xl",
         "article_card_meta": true,
         "article_card_tags": true,
-        "article_card_excerpt": true,
+        "article_card_excerpt": false,
         "breakpoint_mobile": 1,
         "breakpoint_tablet": 2,
         "breakpoint_desktop": 3,
