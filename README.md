@@ -50,7 +50,7 @@ Ready to take your Shopify store to the next level with advanced features like:
 [Browse our Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
 
 ## Demo 
-https://falcon-theme-lite.myshopify.com
+https://lite.falcontheme.com
 
 ## Download Theme
 https://github.com/falcontheme-com/falcon-theme-lite/releases
