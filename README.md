@@ -1,5 +1,5 @@
-# KS BootShop - Shopify Theme
-Free Shopify theme powered by the Bootstrap framework (v5), developed respecting <a rel="nofollow" href="https://shopify.dev/tutorials/review-theme-store-requirements">Shopify theme requirements</a>, accessibility best practices, and of course our own experience developing high-quality themes for more than 15 years. We aim to make this project the most complete, robust, and awesome Shopify Theme for the Bootstrap framework.&nbsp;&nbsp;
+# Falcon Theme Lite (KS BootShop)
+Free Shopify theme powered by the Bootstrap framework (v5), developed respecting <a rel="nofollow" href="https://shopify.dev/tutorials/review-theme-store-requirements">Shopify theme requirements</a>, accessibility best practices, and of course our own experience developing high-quality themes for more than 15 years. We aim to make this project the most complete, robust, and awesome Shopify Theme for the Bootstrap framework.
 
 ## Highlighted features:
 * Advanced styling for each section (New)
@@ -50,15 +50,10 @@ Ready to take your Shopify store to the next level with advanced features like:
 [Browse our Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
 
 ## Demo 
-https://ks-bootshop.myshopify.com
+https://falcon-theme-lite.myshopify.com
 
 ## Download Theme
-https://github.com/kondasoft/ks-bootshop/releases
-
-## Video introduction
-Click on the screenshot below to play the video on YouTube.
-
-[<img src="https://img.youtube.com/vi/_G9IRSFAI_A/maxresdefault.jpg" width="50%">](https://youtu.be/_G9IRSFAI_A)
+https://github.com/falcontheme-com/falcon-theme-lite/releases
 
 ## Installation
 **Note:** Please, make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
@@ -97,7 +92,7 @@ To deploy your changes on your Shopify store run the following Theme Kit command
 `theme deploy` or: `theme watch`
 
 ## Support
-Please submit a [new issue](https://github.com/kondasoft/ks-bootshop/issues/new) in case you want to submit a bug or feature request. Additionally, you may visit our [website](https://www.kondasoft.com/) for further help.
+Please submit a [new issue](https://github.com/falcontheme-com/falcon-theme-lite/issues/new) in case you want to submit a bug or feature request. Also, you can visit our [website](https://www.kondasoft.com/) for more help.
 
 ## Copyright and license
-Copyright 2022 [kondasoft.com](https://www.kondasoft.com). Code released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).
+Copyright 2024 [kondasoft.com](https://www.kondasoft.com). The code was released under the [MIT License](https://github.com/kondasoft/ks-bootshop/blob/master/LICENSE).
