@@ -47,7 +47,7 @@ Ready to take your Shopify store to the next level with advanced features like:
 - Bundle Builder
 - and much more...
 
-[Browse our Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
+[Browse 15+ Premium Shopify Themes](https://www.kondasoft.com/collections/shopify-themes)
 
 ## Demo 
 https://ks-bootshop.myshopify.com
