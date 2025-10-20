@@ -1,10 +1,6 @@
 # KS BootShop - Free Shopify Theme
 Free Shopify theme powered by the Bootstrap framework (v5), developed respecting <a rel="nofollow" href="https://shopify.dev/tutorials/review-theme-store-requirements">Shopify theme requirements</a>, accessibility best practices, and of course our own experience developing high-quality themes for more than 15 years. We aim to make this project the most complete, robust, and awesome Shopify Theme for the Bootstrap framework.
 
-## "Falcon Pro" — The most advanced Shopify theme ever built!
-Take your Shopify store to the next level with Falcon Pro, our next-generation Shopify theme.
-Take a look 👉 https://www.falcontheme.com
-
 ## Highlighted features:
 * Advanced styling for each section (New)
 * Powered by [Bootstrap framework](https://getbootstrap.com/) (v5)
@@ -38,7 +34,7 @@ Take a look 👉 https://www.falcontheme.com
 https://ks-bootshop.myshopify.com
 
 ## Download Theme
-https://github.com/kondasoft/ks-bootshop/releases
+https://www.falcontheme.com/collections/shopify-themes/products/ks-bootshop
 
 ## Installation
 **Note:** Please make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
