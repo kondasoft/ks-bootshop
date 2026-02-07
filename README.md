@@ -34,7 +34,7 @@ Free Shopify theme powered by the Bootstrap framework (v5), developed respecting
 https://ks-bootshop.myshopify.com
 
 ## Download Theme
-https://github.com/kondasoft/ks-bootshop/releases
+https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
 
 ## Installation
 **Note:** Please make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
