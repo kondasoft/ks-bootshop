@@ -33,25 +33,20 @@ Free Shopify theme powered by the Bootstrap framework (v5), developed respecting
 ## Demo 
 https://ks-bootshop.myshopify.com
 
-## Download Theme
-https://www.kondasoft.com/collections/shopify-themes/products/ks-bootshop
+## Download and install
+Download the Shopify-ready package from the [latest release](https://github.com/kondasoft/ks-bootshop/releases/latest):
 
-## Installation
-**Note:** Please make sure you are familiar with [Theme kit](https://shopify.github.io/themekit/), and official documentation before proceeding. We are assuming that at this point you have already installed the Theme Kit.
+1. [Download `ks-bootshop.zip`](https://github.com/kondasoft/ks-bootshop/releases/latest/download/ks-bootshop.zip). Don't extract it, and don't use the release's Source code archives.
+2. In your Shopify admin, go to **Online Store → Themes**.
+3. Choose **Add theme → Upload zip file**, then select the downloaded package.
+4. Open the theme editor to customize and preview the theme before publishing it.
 
-### 1- Clone this repository (download theme files)
-Create a new folder on your computer, `cd` to it, and run the following command to copy all theme files from our GitHub repository master branch. Note: Include the dot at the end of the command to clone into your current directory.
+Developers can also clone this repository and work on it with [Shopify CLI](https://shopify.dev/docs/api/shopify-cli).
 
-`git clone https://github.com/kondasoft/ks-bootshop .`
+This theme is no longer actively developed. It is free to use under the MIT License.
 
-### 2- Create and configure a theme with Theme Kit
-Run the following command to create a new theme in your Shopify store, along with our theme files that you have just downloaded:
-
-`theme new --password=[your-api-password] --store=[your-store.myshopify.com] --name="ks-bootshop-v3"`
-
-Optional: You can just run this command to open your Shopify store with our theme in preview mode.
-
-`theme open`
+## Premium Shopify themes
+Looking for more? Our [premium Shopify themes](https://www.kondasoft.com/collections/shopify-themes) are each designed for a specific kind of store, with updates, support, and an option to have us set up your store.
 
 ## Customization
 Please don't directly modify theme files, as you will lose any changes when you upgrade our theme. The recommended approach is to create a copy of our theme and then modify it. Please follow this [official tutorial](https://help.shopify.com/en/manual/online-store/legacy/using-themes/managing-themes/duplicating-themes) to learn more. 
